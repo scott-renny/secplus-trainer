@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Security+ Readiness Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#07080c;--panel:#0e1018;--panel2:#141720;--panel3:#1a1e29;
+  --border:rgba(255,255,255,0.055);--border2:rgba(255,255,255,0.1);
+  --text:#e4e8f5;--text2:#6b7494;--text3:#3a4060;
+  --accent:#00e5ff;--green:#00ff88;--red:#ff3d5a;--amber:#ffcc00;
+  --mono:'JetBrains Mono',monospace;
+}
+*{font-family:'Segoe UI',sans-serif}
+body{background:var(--bg);color:var(--text);min-height:100vh;position:relative}
+body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(0,229,255,0.018) 1px,transparent 1px),linear-gradient(90deg,rgba(0,229,255,0.018) 1px,transparent 1px);background-size:48px 48px;pointer-events:none;z-index:0}
+.wrap{position:relative;z-index:1;max-width:1000px;margin:0 auto;padding:28px 20px 80px}
+.mono{font-family:var(--mono)!important}
+
+.header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:28px;flex-wrap:wrap;gap:16px}
+.eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+h1{font-size:clamp(22px,4vw,32px);font-weight:800;line-height:1.1;letter-spacing:-.02em;margin-bottom:8px}
+h1 em{font-style:normal;color:var(--accent)}
+.header-meta{font-family:var(--mono);font-size:11px;color:var(--text2);display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:4px;vertical-align:middle}
+
+.countdown{background:var(--panel);border:1px solid var(--border2);border-radius:16px;padding:18px 22px;text-align:center;min-width:230px;position:relative;overflow:hidden}
+.countdown::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(0,229,255,0.07),transparent 70%);pointer-events:none}
+.cd-lbl{font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--text2);margin-bottom:10px}
+.cd-row{display:flex;gap:5px;justify-content:center;align-items:flex-end;margin-bottom:12px}
+.cd-block{text-align:center}
+.cd-n{font-family:var(--mono);font-size:30px;font-weight:500;color:var(--accent);line-height:1;display:block}
+.cd-u{font-family:var(--mono);font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--text3);margin-top:3px}
+.cd-sep{font-family:var(--mono);font-size:22px;color:var(--text3);padding-bottom:5px;line-height:1}
+.date-row{display:flex;align-items:center;justify-content:center;gap:8px}
+.date-txt{font-family:var(--mono);font-size:11px;color:var(--text3)}
+.btn-sm{background:transparent;border:1px solid var(--border2);border-radius:4px;color:var(--text3);font-family:var(--mono);font-size:9px;padding:2px 7px;cursor:pointer;letter-spacing:.08em;transition:all .15s}
+.btn-sm:hover{border-color:var(--accent);color:var(--accent)}
+.edit-row{display:none;gap:6px;justify-content:center;align-items:center;flex-wrap:wrap}
+input[type=date]{background:var(--panel2);border:1px solid var(--accent);border-radius:6px;color:var(--text);padding:4px 8px;font-family:var(--mono);font-size:11px;color-scheme:dark}
+.btn-accent{background:var(--accent);border:none;border-radius:6px;color:#000;padding:5px 10px;font-family:var(--mono);font-size:10px;cursor:pointer;font-weight:600}
+.btn-ghost{background:transparent;border:1px solid var(--border2);border-radius:6px;color:var(--text3);padding:5px 8px;font-family:var(--mono);font-size:10px;cursor:pointer}
+
+.r-row{display:grid;grid-template-columns:auto 1fr;gap:24px;align-items:center;background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:24px;margin-bottom:16px;position:relative;overflow:hidden}
+.r-row::after{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--accent),transparent);opacity:.35}
+.ring{position:relative;width:120px;height:120px;flex-shrink:0}
+.ring svg{transform:rotate(-90deg)}
+.ring-inner{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center}
+.ring-pct{font-family:var(--mono);font-size:22px;font-weight:600;line-height:1}
+.ring-lbl{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--text2)}
+.r-title{font-size:20px;font-weight:700;margin-bottom:6px}
+.r-verdict{font-family:var(--mono);font-size:12px;margin-bottom:14px}
+.bar-bg{height:6px;background:rgba(255,255,255,.05);border-radius:99px;overflow:hidden}
+.bar{height:100%;border-radius:99px;width:0;transition:width 1.2s cubic-bezier(.4,0,.2,1)}
+
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px}
+.sc{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:15px 13px;position:relative;overflow:hidden}
+.sc-line{position:absolute;bottom:0;left:0;right:0;height:2px}
+.sc-lbl{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--text2);margin-bottom:7px}
+.sc-val{font-family:var(--mono);font-size:24px;font-weight:500;line-height:1}
+.sc-val.sm{font-size:12px;padding-top:4px}
+
+.sec-lbl{font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--text3);margin-bottom:10px}
+.dom-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:16px}
+.dom-card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:16px}
+.dom-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px}
+.dom-name{font-size:13px;font-weight:600;line-height:1.3;max-width:70%}
+.dom-pct{font-family:var(--mono);font-size:20px;font-weight:500}
+.dom-wt{font-family:var(--mono);font-size:10px;color:var(--text3);margin-bottom:8px}
+.dom-bar-bg{height:5px;background:rgba(255,255,255,.05);border-radius:99px;overflow:hidden;margin-bottom:8px}
+.dom-bar{height:100%;border-radius:99px;width:0;transition:width 1s ease}
+.dom-foot{display:flex;justify-content:space-between;align-items:center}
+.dom-sess{font-family:var(--mono);font-size:10px;color:var(--text3)}
+.badge{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;padding:3px 8px;border-radius:4px}
+
+.log-card{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:22px;margin-bottom:16px}
+.log-title{font-size:16px;font-weight:700;margin-bottom:4px}
+.log-sub{font-family:var(--mono);font-size:11px;color:var(--text2);margin-bottom:18px}
+.log-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+.f-lbl{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--text2);margin-bottom:6px}
+select{width:100%;background:var(--panel2);border:1px solid var(--border2);border-radius:8px;color:var(--text);padding:10px 12px;font-family:var(--mono);font-size:12px;cursor:pointer}
+select:focus{outline:none;border-color:var(--accent)}
+.score-row{display:flex;align-items:center;gap:12px}
+input[type=range]{flex:1;accent-color:var(--accent)}
+.score-disp{font-family:var(--mono);font-size:18px;font-weight:500;color:var(--accent);min-width:44px;text-align:right}
+.btn-log{width:100%;padding:13px;border-radius:10px;font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;font-weight:500;transition:all .3s;border:1px solid var(--accent);background:rgba(0,229,255,.08);color:var(--accent)}
+.btn-log.saved{border-color:var(--green);background:rgba(0,255,136,.1);color:var(--green)}
+
+.hist-card{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:22px;margin-bottom:16px}
+.hist-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.btn-clr{background:transparent;border:1px solid var(--border2);border-radius:6px;color:var(--text3);font-family:var(--mono);font-size:10px;padding:4px 10px;cursor:pointer;transition:all .15s}
+.btn-clr:hover{color:var(--red);border-color:var(--red)}
+.hist-list{display:flex;flex-direction:column;gap:7px;max-height:300px;overflow-y:auto}
+.h-item{display:flex;align-items:center;gap:10px;padding:9px 13px;background:var(--panel2);border-radius:8px;border:1px solid var(--border)}
+.h-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.h-name{font-size:12px;font-weight:600;flex:1}
+.h-sc{font-family:var(--mono);font-size:13px;font-weight:500}
+.h-type{font-family:var(--mono);font-size:10px;color:var(--text3);min-width:80px;text-align:right}
+.h-date{font-family:var(--mono);font-size:10px;color:var(--text3);min-width:55px;text-align:right}
+.btn-del{background:transparent;border:none;color:var(--text3);cursor:pointer;font-size:16px;padding:0 3px;line-height:1;flex-shrink:0;transition:color .15s}
+.btn-del:hover{color:var(--red)}
+.empty{font-family:var(--mono);font-size:12px;color:var(--text3);text-align:center;padding:24px}
+
+.plan-card{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:22px}
+.plan-item{display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:10px;margin-bottom:9px}
+.p-pri{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;min-width:58px}
+.p-txt{font-size:13px;flex:1}
+.p-act{font-family:var(--mono);font-size:11px;color:var(--text2)}
+
+@media(max-width:600px){
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .dom-grid{grid-template-columns:1fr}
+  .log-grid{grid-template-columns:1fr}
+  .r-row{grid-template-columns:1fr;justify-items:center;text-align:center}
+  .header{flex-direction:column}
+  .countdown{width:100%}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <div>
+      <div class="eyebrow">CompTIA Security+ · SY0-701</div>
+      <h1>Exam <em>Readiness</em> Dashboard</h1>
+      <div class="header-meta">
+        <span id="today"></span>
+        <span style="color:var(--text3)">·</span>
+        <span id="sync-lbl"><span class="dot" style="background:var(--green)"></span>ready</span>
+        <button class="btn-sm" onclick="manualRefresh()">↻ refresh</button>
+      </div>
+    </div>
+
+    <div class="countdown">
+      <div class="cd-lbl" id="cd-lbl">Time until exam</div>
+      <div class="cd-row">
+        <div class="cd-block"><span class="cd-n" id="cd-d">00</span><span class="cd-u">days</span></div>
+        <div class="cd-sep">:</div>
+        <div class="cd-block"><span class="cd-n" id="cd-h">00</span><span class="cd-u">hrs</span></div>
+        <div class="cd-sep">:</div>
+        <div class="cd-block"><span class="cd-n" id="cd-m">00</span><span class="cd-u">min</span></div>
+        <div class="cd-sep">:</div>
+        <div class="cd-block"><span class="cd-n" id="cd-s">00</span><span class="cd-u">sec</span></div>
+      </div>
+      <div class="date-row" id="date-row">
+        <span class="date-txt" id="date-txt"></span>
+        <button class="btn-sm" onclick="startEdit()">edit</button>
+      </div>
+      <div class="edit-row" id="edit-row">
+        <input type="date" id="date-input">
+        <button class="btn-accent" onclick="saveDate()">Save</button>
+        <button class="btn-ghost" onclick="cancelEdit()">✕</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="r-row">
+    <div class="ring">
+      <svg width="120" height="120" viewBox="0 0 120 120">
+        <circle cx="60" cy="60" r="52" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="8"/>
+        <circle id="ring-arc" cx="60" cy="60" r="52" fill="none" stroke="var(--accent)" stroke-width="8"
+          stroke-linecap="round" stroke-dasharray="326.7" stroke-dashoffset="326.7"
+          style="transition:stroke-dashoffset 1.2s cubic-bezier(.4,0,.2,1)"/>
+      </svg>
+      <div class="ring-inner">
+        <div class="ring-pct" id="ring-pct" style="color:var(--accent)">0%</div>
+        <div class="ring-lbl">ready</div>
+      </div>
+    </div>
+    <div>
+      <div class="r-title" id="r-title">Getting Started</div>
+      <div class="r-verdict" id="r-verdict" style="color:var(--text2)">Log your first study session to begin tracking.</div>
+      <div class="bar-bg"><div class="bar" id="r-bar" style="background:var(--accent)"></div></div>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div class="sc"><div class="sc-line" style="background:var(--accent)"></div><div class="sc-lbl">Overall Score</div><div class="sc-val" id="s-overall" style="color:var(--accent)">—</div></div>
+    <div class="sc"><div class="sc-line" style="background:var(--green)"></div><div class="sc-lbl">Sessions Logged</div><div class="sc-val" id="s-sess" style="color:var(--green)">0</div></div>
+    <div class="sc"><div class="sc-line" style="background:var(--red)"></div><div class="sc-lbl">Weakest Domain</div><div class="sc-val sm" id="s-weak" style="color:var(--red)">—</div></div>
+    <div class="sc"><div class="sc-line" style="background:var(--amber)"></div><div class="sc-lbl">Strongest Domain</div><div class="sc-val sm" id="s-strong" style="color:var(--amber)">—</div></div>
+  </div>
+
+  <div class="sec-lbl">Domain Readiness</div>
+  <div class="dom-grid" id="dom-grid"></div>
+
+  <div class="log-card">
+    <div class="log-title">Log a Study Session</div>
+    <div class="log-sub">Track any tool — updates domain scores and readiness instantly</div>
+    <div class="log-grid">
+      <div>
+        <div class="f-lbl">Domain</div>
+        <select id="log-domain">
+          <option value="0">All Domains (Mock Exam)</option>
+          <option value="1">Domain 1 — General Security Concepts</option>
+          <option value="2">Domain 2 — Threats, Vulnerabilities & Mitigations</option>
+          <option value="3">Domain 3 — Security Architecture</option>
+          <option value="4">Domain 4 — Security Operations</option>
+          <option value="5">Domain 5 — Security Program Management</option>
+        </select>
+      </div>
+      <div>
+        <div class="f-lbl">Activity Type</div>
+        <select id="log-type">
+          <option>Mock Exam A</option>
+          <option>Mock Exam B</option>
+          <option>Mock Exam C</option>
+          <option>Mock Exam D</option>
+          <option>Acronym Trainer</option>
+          <option>Definitions Trainer</option>
+          <option>Ports &amp; Protocols Trainer</option>
+          <option>Malware &amp; Phishing Trainer</option>
+          <option>Risk Management Trainer</option>
+          <option>Flashcards</option>
+          <option>Video / Reading</option>
+        </select>
+      </div>
+    </div>
+    <div style="margin-bottom:16px">
+      <div class="f-lbl">Score / Confidence <span id="score-lbl" style="color:var(--accent)">75%</span></div>
+      <div class="score-row">
+        <input type="range" min="0" max="100" value="75" id="log-score"
+          oninput="document.getElementById('score-lbl').textContent=this.value+'%';document.getElementById('score-disp').textContent=this.value+'%'">
+        <span class="score-disp" id="score-disp">75%</span>
+      </div>
+    </div>
+    <button class="btn-log" id="btn-log" onclick="logSession()">+ Log Session</button>
+  </div>
+
+  <div class="hist-card">
+    <div class="hist-head">
+      <div class="sec-lbl" style="margin-bottom:0">Session History <span id="sess-ct" style="color:var(--text3)">(0)</span></div>
+      <button class="btn-clr" onclick="clearHistory()">Clear All</button>
+    </div>
+    <div class="hist-list" id="hist-list">
+      <div class="empty">No sessions logged yet — add your first one above</div>
+    </div>
+  </div>
+
+  <div class="plan-card" style="margin-bottom:16px">
+    <div class="sec-lbl" style="margin-bottom:14px">Study Toolkit</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
+      <div style="background:var(--panel2);border:1px solid var(--border2);border-radius:10px;padding:14px;text-align:center">
+        <div style="font-size:22px;margin-bottom:8px">🎯</div>
+        <div style="font-size:13px;font-weight:600;margin-bottom:4px">Mock Exam</div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--text3);margin-bottom:10px">90 questions · 4 types</div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--text2)">Open secplus_mock_exam.html</div>
+      </div>
+      <div style="background:var(--panel2);border:1px solid var(--border2);border-radius:10px;padding:14px;text-align:center">
+        <div style="font-size:22px;margin-bottom:8px">⚡</div>
+        <div style="font-size:13px;font-weight:600;margin-bottom:4px">Acronym Trainer</div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--text3);margin-bottom:10px">160+ acronyms · SY0-701</div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--text2)">Open secplus_acronym_trainer_full.html</div>
+      </div>
+      <div style="background:var(--panel2);border:1px solid var(--border2);border-radius:10px;padding:14px;text-align:center">
+        <div style="font-size:22px;margin-bottom:8px">📖</div>
+        <div style="font-size:13px;font-weight:600;margin-bottom:4px">Definitions Trainer</div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--text3);margin-bottom:10px">180 terms · 2 modes</div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--text2)">Open secplus_definitions_trainer.html</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="plan-card">
+    <div class="sec-lbl" style="margin-bottom:14px">Recommended Focus</div>
+    <div id="plan-list"></div>
+  </div>
+
+</div>
+<script>
+const DOMAINS={1:{name:'General Security Concepts',short:'Gen. Security',weight:12,color:'#00e5ff'},2:{name:'Threats, Vulnerabilities & Mitigations',short:'Threats & Vuln',weight:22,color:'#ff3d5a'},3:{name:'Security Architecture',short:'Architecture',weight:18,color:'#bf87ff'},4:{name:'Security Operations',short:'SecOps',weight:28,color:'#00ff88'},5:{name:'Security Program Management',short:'Prog. Mgmt',weight:20,color:'#ffcc00'}};
+
+function save(k,v){try{localStorage.setItem('sp_'+k,JSON.stringify(v));}catch(e){}}
+function load(k,d){try{const v=localStorage.getItem('sp_'+k);return v?JSON.parse(v):d;}catch(e){return d;}}
+
+let sessions=load('sessions',[]);
+let examDate=load('examDate','2025-06-23');
+
+function pad(n){return String(n??0).padStart(2,'0');}
+
+function updateCountdown(){
+  const diff=new Date(examDate+'T09:00:00')-new Date();
+  if(diff<=0){document.getElementById('cd-lbl').textContent='Exam date passed';['d','h','m','s'].forEach(x=>document.getElementById('cd-'+x).textContent='00');return;}
+  document.getElementById('cd-d').textContent=pad(Math.floor(diff/86400000));
+  document.getElementById('cd-h').textContent=pad(Math.floor((diff%86400000)/3600000));
+  document.getElementById('cd-m').textContent=pad(Math.floor((diff%3600000)/60000));
+  document.getElementById('cd-s').textContent=pad(Math.floor((diff%60000)/1000));
+}
+
+function updateDateDisplay(){
+  const fmt=new Date(examDate+'T12:00:00').toLocaleDateString('en-CA',{year:'numeric',month:'long',day:'numeric'});
+  document.getElementById('date-txt').textContent=fmt;
+  document.getElementById('date-input').value=examDate;
+}
+
+function startEdit(){document.getElementById('date-row').style.display='none';document.getElementById('edit-row').style.display='flex';}
+function cancelEdit(){document.getElementById('date-row').style.display='flex';document.getElementById('edit-row').style.display='none';}
+function saveDate(){const v=document.getElementById('date-input').value;if(!v)return;examDate=v;save('examDate',v);updateDateDisplay();cancelEdit();renderAll();}
+
+function getDomainScores(){
+  const acc={};Object.keys(DOMAINS).forEach(d=>{acc[d]={total:0,count:0};});
+  sessions.forEach(s=>{const t=s.domain===0?Object.keys(DOMAINS):[String(s.domain)];t.forEach(d=>{acc[d].total+=s.score;acc[d].count++;});});
+  const r={};Object.keys(DOMAINS).forEach(d=>{r[d]=acc[d].count>0?Math.round(acc[d].total/acc[d].count):null;});return r;
+}
+
+function getOverall(ds){let ws=0,tw=0;Object.entries(DOMAINS).forEach(([d,i])=>{if(ds[d]!==null){ws+=ds[d]*i.weight;tw+=i.weight;}});return tw>0?Math.round(ws/tw):0;}
+function scoreColor(p){if(p===null||p===undefined)return'#3a4060';if(p>=80)return'#00ff88';if(p>=65)return'#ffcc00';return'#ff3d5a';}
+function statusFor(p){if(p===null)return{cls:'none',label:'No data'};if(p>=80)return{cls:'strong',label:'Strong'};if(p>=65)return{cls:'mid',label:'Review'};return{cls:'low',label:'Focus'};}
+function readinessLabel(o){
+  if(o===0)return{title:'Getting Started',verdict:'Log your first study session to begin tracking.',color:'#6b7494'};
+  if(o<40)return{title:'Early Stage',verdict:'Solid start — keep building across all domains.',color:'#00e5ff'};
+  if(o<55)return{title:'Building Momentum',verdict:'Making progress — focus on your weakest domains.',color:'#00e5ff'};
+  if(o<65)return{title:'Developing',verdict:'Over halfway — tighten up your weak spots.',color:'#ffcc00'};
+  if(o<80)return{title:'Getting Close',verdict:'Almost at the 80% passing threshold — push weak domains over 80%.',color:'#ffcc00'};
+  if(o<85)return{title:'Exam Ready ✓',verdict:'Tracking above the 80% pass threshold — stay consistent.',color:'#00ff88'};
+  return{title:'High Confidence',verdict:'Excellent readiness — review and sit confidently.',color:'#00ff88'};
+}
+
+function renderAll(){
+  const ds=getDomainScores(),overall=getOverall(ds),rl=readinessLabel(overall);
+  const daysLeft=Math.max(0,Math.floor((new Date(examDate+'T09:00:00')-new Date())/86400000));
+  const color=scoreColor(overall>0?overall:null);
+
+  // Ring
+  const arc=document.getElementById('ring-arc');
+  arc.style.stroke=color;
+  setTimeout(()=>{arc.style.strokeDashoffset=326.7-(overall/100)*326.7;},50);
+  document.getElementById('ring-pct').textContent=overall+'%';
+  document.getElementById('ring-pct').style.color=color;
+  document.getElementById('r-title').textContent=rl.title;
+  document.getElementById('r-verdict').textContent=rl.verdict;
+  document.getElementById('r-verdict').style.color=rl.color;
+  const rb=document.getElementById('r-bar');rb.style.background=rl.color;
+  setTimeout(()=>{rb.style.width=overall+'%';},50);
+
+  // Stats
+  const scored=Object.entries(ds).filter(([,v])=>v!==null);
+  const weak=scored.length?scored.reduce((a,b)=>a[1]<b[1]?a:b):null;
+  const strong=scored.length?scored.reduce((a,b)=>a[1]>b[1]?a:b):null;
+  document.getElementById('s-overall').textContent=overall>0?overall+'%':'—';
+  document.getElementById('s-sess').textContent=sessions.length;
+  document.getElementById('s-weak').textContent=weak?`D${weak[0]} · ${DOMAINS[weak[0]].short}`:'—';
+  document.getElementById('s-strong').textContent=strong?`D${strong[0]} · ${DOMAINS[strong[0]].short}`:'—';
+
+  // Domains
+  const grid=document.getElementById('dom-grid');grid.innerHTML='';
+  Object.entries(DOMAINS).forEach(([d,info])=>{
+    const sc=ds[d],c=scoreColor(sc),st=statusFor(sc);
+    const sessCount=sessions.filter(s=>s.domain==d||s.domain===0).length;
+    const stC={strong:{bg:'rgba(0,255,136,0.08)',c:'#00ff88'},mid:{bg:'rgba(255,204,0,0.08)',c:'#ffcc00'},low:{bg:'rgba(255,61,90,0.08)',c:'#ff3d5a'},none:{bg:'#1a1e29',c:'#3a4060'}};
+    const s2=stC[st.cls];
+    const card=document.createElement('div');card.className='dom-card';
+    card.innerHTML=`<div class="dom-head"><div class="dom-name">${info.name}</div><div class="dom-pct" style="color:${c}">${sc!==null?sc+'%':'—'}</div></div><div class="dom-wt">Exam weight: ${info.weight}% · D${d}</div><div class="dom-bar-bg"><div class="dom-bar" style="width:${sc??0}%;background:${c}"></div></div><div class="dom-foot"><div class="dom-sess">${sessCount} session${sessCount!==1?'s':''}</div><div class="badge" style="background:${s2.bg};color:${s2.c}">${st.label}</div></div>`;
+    grid.appendChild(card);
+  });
+
+  // History
+  document.getElementById('sess-ct').textContent=`(${sessions.length})`;
+  const list=document.getElementById('hist-list');list.innerHTML='';
+  if(!sessions.length){list.innerHTML='<div class="empty">No sessions logged yet — add your first one above</div>';}
+  else{[...sessions].reverse().forEach(sess=>{
+    const di=sess.domain===0?{name:'All Domains',color:'#00e5ff'}:DOMAINS[sess.domain];
+    const sc=scoreColor(sess.score);
+    const item=document.createElement('div');item.className='h-item';
+    item.innerHTML=`<div class="h-dot" style="background:${di?.color||'#00e5ff'}"></div><div class="h-name">${di?.name||'Unknown'}</div><div class="h-sc" style="color:${sc}">${sess.score}%</div><div class="h-type">${sess.type}</div><div class="h-date">${sess.date}</div><button class="btn-del" onclick="delSession(${sess.ts})" title="Remove">×</button>`;
+    list.appendChild(item);
+  });}
+
+  // Plan
+  const planItems=[];
+  if(daysLeft>0&&daysLeft<=14&&sessions.length>0)planItems.push({cls:'high',p:'urgent',t:`${daysLeft} days left — focus on highest-weight weak domains`,a:'time critical'});
+  Object.entries(DOMAINS).forEach(([d,info])=>{if(ds[d]===null)planItems.push({cls:'high',p:'high',t:`Domain ${d} (${info.name}) — no data yet`,a:`${info.weight}% of exam`});});
+  scored.filter(([,v])=>v<65).sort((a,b)=>a[1]-b[1]).forEach(([d,v])=>planItems.push({cls:'high',p:'high',t:`D${d} · ${DOMAINS[d].short} — ${v}% needs intensive work (target: 80%)`,a:`${DOMAINS[d].weight}% of exam`}));
+  scored.filter(([,v])=>v>=65&&v<80).forEach(([d,v])=>planItems.push({cls:'mid',p:'review',t:`D${d} · ${DOMAINS[d].short} — ${v}% — push this above 80%`,a:`${DOMAINS[d].weight}% of exam`}));
+  scored.filter(([,v])=>v>=80).forEach(([d,v])=>planItems.push({cls:'low',p:'maintain',t:`D${d} · ${DOMAINS[d].short} — ${v}% above 80% target ✓`,a:'keep reviewing'}));
+  if(!planItems.length)planItems.push({cls:'mid',p:'start',t:'Log study sessions to get personalized recommendations',a:'↑ log below'});
+  const pc={high:{bg:'rgba(255,61,90,0.08)',b:'rgba(255,61,90,0.2)',c:'#ff3d5a'},mid:{bg:'rgba(255,204,0,0.08)',b:'rgba(255,204,0,0.2)',c:'#ffcc00'},low:{bg:'rgba(0,255,136,0.08)',b:'rgba(0,255,136,0.15)',c:'#00ff88'}};
+  const pl=document.getElementById('plan-list');pl.innerHTML='';
+  planItems.slice(0,6).forEach(item=>{const c=pc[item.cls]||pc.mid;const el=document.createElement('div');el.className='plan-item';el.style.cssText=`background:${c.bg};border:1px solid ${c.b}`;el.innerHTML=`<span class="p-pri" style="color:${c.c}">${item.p}</span><span class="p-txt">${item.t}</span><span class="p-act">${item.a}</span>`;pl.appendChild(el);});
+}
+
+function logSession(){
+  const domain=parseInt(document.getElementById('log-domain').value);
+  const type=document.getElementById('log-type').value;
+  const score=parseInt(document.getElementById('log-score').value);
+  const now=new Date();
+  sessions.push({domain,type,score,date:now.toLocaleDateString('en-CA',{month:'short',day:'numeric'}),ts:now.getTime()});
+  save('sessions',sessions);renderAll();
+  document.getElementById('log-score').value=75;
+  document.getElementById('score-lbl').textContent='75%';
+  document.getElementById('score-disp').textContent='75%';
+  const btn=document.getElementById('btn-log');btn.textContent='✓ Saved!';btn.classList.add('saved');
+  setTimeout(()=>{btn.textContent='+ Log Session';btn.classList.remove('saved');},2000);
+  setSynced();
+}
+
+function delSession(ts){sessions=sessions.filter(s=>s.ts!==ts);save('sessions',sessions);renderAll();setSynced();}
+function clearHistory(){if(!confirm('Clear all history? Cannot be undone.'))return;sessions=[];save('sessions',sessions);renderAll();}
+function manualRefresh(){sessions=load('sessions',[]);examDate=load('examDate','2025-06-23');updateDateDisplay();renderAll();setSynced();}
+
+function setSynced(){
+  const t=new Date().toLocaleTimeString('en-CA',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+  document.getElementById('sync-lbl').innerHTML=`<span class="dot" style="background:var(--green)"></span>saved ${t}`;
+}
+
+// Init
+document.getElementById('today').textContent=new Date().toLocaleDateString('en-CA',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
+updateDateDisplay();updateCountdown();setInterval(updateCountdown,1000);renderAll();
+</script>
+</body>
+</html>
