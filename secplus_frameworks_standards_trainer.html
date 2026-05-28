@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Frameworks & Standards Trainer — Security+</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Fira+Code:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#080c14;--s1:#0d1220;--s2:#121929;--s3:#19223a;
+  --border:rgba(79,209,197,0.08);--border2:rgba(79,209,197,0.16);--border3:rgba(79,209,197,0.28);
+  --text:#e2eaf8;--text2:#7a90b8;--text3:#3d4f70;
+  --teal:#4fd1c5;--teal-dim:rgba(79,209,197,0.1);--teal-glow:rgba(79,209,197,0.2);
+  --blue:#63b3ed;--blue-dim:rgba(99,179,237,0.1);
+  --amber:#f6ad55;--amber-dim:rgba(246,173,85,0.1);
+  --green:#68d391;--green-dim:rgba(104,211,145,0.1);
+  --red:#fc8181;--red-dim:rgba(252,129,129,0.1);
+  --purple:#b794f4;--purple-dim:rgba(183,148,244,0.1);
+  --mono:'Fira Code',monospace;--sans:'Space Grotesk',sans-serif;
+  --r:12px;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 60% 40% at 15% 20%,rgba(79,209,197,0.04) 0%,transparent 60%),radial-gradient(ellipse 50% 30% at 85% 80%,rgba(99,179,237,0.04) 0%,transparent 60%),radial-gradient(ellipse 40% 50% at 55% 10%,rgba(183,148,244,0.03) 0%,transparent 50%);pointer-events:none;z-index:0}
+body::after{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(79,209,197,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(79,209,197,0.02) 1px,transparent 1px);background-size:48px 48px;pointer-events:none;z-index:0}
+.wrap{position:relative;z-index:1;max-width:800px;margin:0 auto;padding:40px 20px 80px}
+
+/* SPLASH */
+#splash{text-align:center;padding:60px 0 40px}
+.splash-icon{width:64px;height:64px;margin:0 auto 24px;background:var(--teal-dim);border:1px solid rgba(79,209,197,0.25);border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:28px}
+.splash-eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--teal);margin-bottom:16px}
+.splash-title{font-size:clamp(28px,5vw,44px);font-weight:700;line-height:1.1;letter-spacing:-.02em;margin-bottom:16px}
+.splash-title span{color:var(--teal)}
+.splash-sub{font-size:14px;color:var(--text2);line-height:1.7;max-width:500px;margin:0 auto 40px}
+.splash-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:40px;text-align:left}
+.splash-stat{background:var(--s1);border:1px solid var(--border);border-radius:var(--r);padding:16px}
+.splash-stat-val{font-family:var(--mono);font-size:24px;font-weight:500;color:var(--teal)}
+.splash-stat-lbl{font-size:12px;color:var(--text2);margin-top:4px}
+.btn-start{padding:14px 48px;background:var(--teal);color:var(--bg);font-family:var(--sans);font-size:15px;font-weight:600;border:none;border-radius:var(--r);cursor:pointer;transition:all .2s;letter-spacing:-.01em}
+.btn-start:hover{filter:brightness(1.12);transform:translateY(-1px)}
+
+/* EXAM HEADER */
+.exam-hdr{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:24px;flex-wrap:wrap}
+.exam-title{font-family:var(--mono);font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--text2)}
+.timer{font-family:var(--mono);font-size:20px;font-weight:500;color:var(--text);background:var(--s1);border:1px solid var(--border2);padding:8px 18px;border-radius:8px;letter-spacing:.05em}
+.timer.warn{color:var(--amber)}
+.timer.danger{color:var(--red);animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.55}}
+
+/* Progress */
+.prog-wrap{margin-bottom:20px}
+.prog-bar{height:3px;background:var(--border);border-radius:99px;overflow:hidden}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--teal),var(--blue));border-radius:99px;transition:width .4s ease}
+.prog-row{display:flex;justify-content:space-between;margin-top:8px;font-family:var(--mono);font-size:11px;color:var(--text3)}
+
+/* Stats */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px}
+.stat-box{background:var(--s1);border:1px solid var(--border);border-radius:10px;padding:10px;text-align:center;position:relative;overflow:hidden}
+.stat-box::before{content:'';position:absolute;top:0;left:0;right:0;height:2px}
+.stat-box.s-prog::before{background:var(--teal)}
+.stat-box.s-correct::before{background:var(--green)}
+.stat-box.s-wrong::before{background:var(--red)}
+.stat-box.s-acc::before{background:var(--amber)}
+.stat-val{font-family:var(--mono);font-size:20px;font-weight:500}
+.stat-box.s-correct .stat-val{color:var(--green)}
+.stat-box.s-wrong .stat-val{color:var(--red)}
+.stat-box.s-acc .stat-val{color:var(--amber)}
+.stat-lbl{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);margin-top:3px}
+
+/* QUESTION CARD */
+.q-card{background:var(--s1);border:1px solid var(--border2);border-radius:16px;padding:28px 26px;margin-bottom:14px;position:relative;overflow:hidden}
+.q-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--teal-glow),transparent)}
+.q-meta{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+.q-num{font-family:var(--mono);font-size:10px;color:var(--text3)}
+.q-badge{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;padding:3px 10px;border-radius:6px}
+.badge-compliance{background:var(--teal-dim);color:var(--teal);border:1px solid rgba(79,209,197,.2)}
+.badge-framework{background:var(--blue-dim);color:var(--blue);border:1px solid rgba(99,179,237,.2)}
+.badge-governance{background:var(--purple-dim);color:var(--purple);border:1px solid rgba(183,148,244,.2)}
+.badge-privacy{background:var(--green-dim);color:var(--green);border:1px solid rgba(104,211,145,.2)}
+.badge-audit{background:var(--amber-dim);color:var(--amber);border:1px solid rgba(246,173,85,.2)}
+.badge-scenario{background:var(--amber-dim);color:var(--amber);border:1px solid rgba(246,173,85,.2)}
+.q-stem{font-size:16px;font-weight:500;line-height:1.65;color:var(--text);margin-bottom:20px}
+.scenario-box{background:var(--s2);border:1px solid var(--border2);border-left:3px solid var(--amber);border-radius:10px;padding:14px 18px;margin-bottom:20px}
+.scenario-lbl{font-family:var(--mono);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--amber);margin-bottom:8px}
+.scenario-text{font-size:13px;color:var(--text2);line-height:1.75}
+
+/* Options */
+.opts{display:flex;flex-direction:column;gap:9px}
+.opt{display:flex;align-items:flex-start;gap:14px;padding:13px 16px;border-radius:10px;border:1px solid var(--border2);background:var(--s2);cursor:pointer;text-align:left;width:100%;transition:all .15s}
+.opt:hover:not(:disabled){border-color:var(--border3);background:var(--s3)}
+.opt-letter{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--text2);min-width:18px;margin-top:1px;flex-shrink:0}
+.opt-text{font-size:14px;color:var(--text);line-height:1.5}
+.opt.correct{border-color:var(--green)!important;background:var(--green-dim)!important}
+.opt.correct .opt-letter,.opt.correct .opt-text{color:var(--green)!important}
+.opt.wrong{border-color:var(--red)!important;background:var(--red-dim)!important}
+.opt.wrong .opt-letter,.opt.wrong .opt-text{color:var(--red)!important}
+.opt.reveal{border-color:rgba(104,211,145,.35)!important;background:rgba(104,211,145,.05)!important}
+.opt.reveal .opt-letter,.opt.reveal .opt-text{color:var(--green)!important;opacity:.65}
+.opt:disabled{cursor:default}
+
+/* Explanation */
+.explanation{display:none;background:var(--s2);border:1px solid var(--border2);border-left:3px solid var(--teal);border-radius:10px;padding:14px 18px;margin-top:14px}
+.explanation.show{display:block}
+.exp-lbl{font-family:var(--mono);font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--teal);margin-bottom:8px}
+.exp-text{font-size:13px;color:var(--text2);line-height:1.7}
+.exp-text strong{color:var(--text);font-weight:500}
+
+/* Next */
+.btn-next{width:100%;margin-top:12px;padding:13px;border-radius:10px;border:1px solid var(--border2);background:transparent;color:var(--text2);font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;display:none;transition:all .15s}
+.btn-next:hover{border-color:var(--teal);color:var(--teal)}
+
+/* RESULTS */
+.results-wrap{padding:32px 0 20px;text-align:center}
+.results-ring{width:150px;height:150px;margin:0 auto 24px;position:relative}
+.results-ring svg{transform:rotate(-90deg)}
+.ring-inner{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center}
+.ring-pct{font-family:var(--mono);font-size:36px;font-weight:600;color:var(--text)}
+.ring-lbl{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--text3)}
+.results-verdict{font-size:24px;font-weight:700;margin-bottom:6px}
+.results-sub{font-family:var(--mono);font-size:12px;color:var(--text2);margin-bottom:32px}
+.breakdown{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:32px;text-align:left}
+.bd-card{background:var(--s1);border:1px solid var(--border);border-radius:12px;padding:16px}
+.bd-title{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px}
+.bd-bar-bg{height:5px;background:var(--border);border-radius:99px;overflow:hidden;margin-bottom:6px}
+.bd-bar-fill{height:100%;border-radius:99px;transition:width 1s ease}
+.bd-score{font-family:var(--mono);font-size:22px;font-weight:500}
+.bd-detail{font-family:var(--mono);font-size:10px;color:var(--text3);margin-top:4px}
+.btn-retake{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;padding:13px 40px;background:transparent;border:1px solid var(--border2);color:var(--text2);border-radius:10px;cursor:pointer;transition:all .2s;margin-right:12px}
+.btn-retake:hover{border-color:var(--teal);color:var(--teal)}
+
+/* TABS */
+.tabs{display:flex;gap:4px;background:var(--s1);border:1px solid var(--border);border-radius:var(--r);padding:4px;margin-bottom:24px}
+.tab{flex:1;padding:9px 8px;font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;border:none;background:transparent;color:var(--text3);cursor:pointer;border-radius:8px;transition:all .2s}
+.tab.active{background:var(--teal);color:var(--bg);font-weight:500}
+.tab:not(.active):hover{color:var(--text2)}
+
+/* REFERENCE */
+.ref-section{margin-bottom:28px}
+.ref-section-title{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--teal);margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.ref-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(215px,1fr));gap:10px}
+.ref-card{background:var(--s1);border:1px solid var(--border);border-radius:12px;padding:14px;transition:border-color .15s}
+.ref-card:hover{border-color:var(--border3)}
+.ref-name{font-size:14px;font-weight:600;color:var(--text);margin-bottom:6px}
+.ref-def{font-size:12px;color:var(--text2);line-height:1.6}
+.ref-tag{display:inline-block;font-family:var(--mono);font-size:10px;padding:2px 8px;border-radius:4px;margin-top:8px}
+.tag-teal{background:var(--teal-dim);color:var(--teal)}
+.tag-blue{background:var(--blue-dim);color:var(--blue)}
+.tag-amber{background:var(--amber-dim);color:var(--amber)}
+.tag-purple{background:var(--purple-dim);color:var(--purple)}
+.tag-green{background:var(--green-dim);color:var(--green)}
+.tag-red{background:var(--red-dim);color:var(--red)}
+.ref-key{font-family:var(--mono);font-size:10px;color:var(--text3);margin-top:8px;border-top:1px solid var(--border);padding-top:6px}
+.acc-row{display:grid;grid-template-columns:175px 1fr 42px;gap:12px;align-items:center;margin-bottom:10px}
+.acc-lbl{font-size:13px;color:var(--text2);text-align:right}
+.acc-bg{height:18px;background:var(--s2);border-radius:8px;overflow:hidden}
+.acc-fill{height:100%;border-radius:8px;transition:width .8s ease}
+.acc-pct{font-family:var(--mono);font-size:11px;color:var(--text2);font-weight:500}
+
+@media(max-width:520px){
+  .stats-row{grid-template-columns:repeat(2,1fr)}
+  .breakdown{grid-template-columns:1fr}
+  .splash-grid{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- SPLASH -->
+<div id="splash">
+  <div class="splash-icon">📐</div>
+  <div class="splash-eyebrow">CompTIA Security+ · SY0-701 · Domains 1, 3 &amp; 5</div>
+  <h1 class="splash-title">Frameworks <span>&amp; Standards</span></h1>
+  <p class="splash-sub">Master compliance frameworks, security models, governance documents, privacy regulations, and audit types — topics that appear across multiple domains and are frequently tested on the exam.</p>
+  <div class="splash-grid">
+    <div class="splash-stat"><div class="splash-stat-val">80</div><div class="splash-stat-lbl">Questions</div></div>
+    <div class="splash-stat"><div class="splash-stat-val">6</div><div class="splash-stat-lbl">Categories</div></div>
+    <div class="splash-stat"><div class="splash-stat-val">∞</div><div class="splash-stat-lbl">Randomised</div></div>
+  </div>
+  <button class="btn-start" onclick="startQuiz()">Start Training</button>
+</div>
+
+<!-- QUIZ -->
+<div id="quiz-view" style="display:none">
+  <div class="exam-hdr">
+    <div class="exam-title">Frameworks &amp; Standards Trainer</div>
+    <div class="timer" id="timer">90:00</div>
+  </div>
+  <div class="stats-row">
+    <div class="stat-box s-prog"><div class="stat-val" id="s-prog">0/80</div><div class="stat-lbl">Progress</div></div>
+    <div class="stat-box s-correct"><div class="stat-val" id="s-correct">0</div><div class="stat-lbl">Correct</div></div>
+    <div class="stat-box s-wrong"><div class="stat-val" id="s-wrong">0</div><div class="stat-lbl">Wrong</div></div>
+    <div class="stat-box s-acc"><div class="stat-val" id="s-acc">—</div><div class="stat-lbl">Accuracy</div></div>
+  </div>
+  <div class="prog-wrap">
+    <div class="prog-bar"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
+    <div class="prog-row"><span id="prog-text">Question 1 of 80</span><span id="prog-pct">0%</span></div>
+  </div>
+  <div id="q-area"></div>
+  <div id="results-area" style="display:none"></div>
+</div>
+
+<!-- REFERENCE -->
+<div id="ref-view" style="display:none">
+  <div class="tabs">
+    <button class="tab active" onclick="setTab('quiz')" id="tab-quiz">Quiz</button>
+    <button class="tab" onclick="setTab('ref')" id="tab-ref">Reference</button>
+  </div>
+  <div style="margin-bottom:24px">
+    <div class="ref-section-title" style="margin-bottom:12px">Accuracy by Category</div>
+    <div id="acc-chart"></div>
+  </div>
+  <div class="ref-section-title">Key Frameworks &amp; Standards</div>
+  <div class="ref-grid" id="ref-cards"></div>
+</div>
+
+</div>
+<script>
+function logToDashboard(domain,type,score){
+  try{
+    const s=JSON.parse(localStorage.getItem('sp_sessions')||'[]');
+    const now=new Date();
+    s.push({domain,type,score,date:now.toLocaleDateString('en-CA',{month:'short',day:'numeric'}),ts:now.getTime()});
+    localStorage.setItem('sp_sessions',JSON.stringify(s));
+  }catch(e){}
+}
+
+const TERMS=[
+  {name:'NIST CSF',def:'NIST Cybersecurity Framework — a voluntary framework of five functions (Identify, Protect, Detect, Respond, Recover) for managing cybersecurity risk.',tag:'tag-teal',tagLabel:'US Framework',key:'Identify → Protect → Detect → Respond → Recover'},
+  {name:'NIST RMF',def:'NIST Risk Management Framework — a 7-step process for managing security risk in federal information systems.',tag:'tag-teal',tagLabel:'US Framework',key:'Prepare → Categorise → Select → Implement → Assess → Authorise → Monitor'},
+  {name:'ISO 27001',def:'International standard specifying requirements for establishing, implementing, and maintaining an Information Security Management System (ISMS).',tag:'tag-blue',tagLabel:'International',key:'Certifiable — auditors verify compliance against its requirements'},
+  {name:'ISO 27002',def:'A companion to ISO 27001 providing best-practice guidance on implementing the security controls referenced in Annex A.',tag:'tag-blue',tagLabel:'International',key:'Guidance only — not certifiable, unlike ISO 27001'},
+  {name:'SOC 2',def:'Service Organization Control 2 — an audit report assessing a service provider\'s controls for security, availability, processing integrity, confidentiality, and privacy.',tag:'tag-blue',tagLabel:'Audit Standard',key:'Type 1 = point in time; Type 2 = over a period (stronger)'},
+  {name:'PCI-DSS',def:'Payment Card Industry Data Security Standard — mandatory for any organisation that stores, processes, or transmits credit card data.',tag:'tag-amber',tagLabel:'Compliance',key:'12 requirements; non-compliance = loss of card processing ability'},
+  {name:'HIPAA',def:'Health Insurance Portability and Accountability Act — US law protecting the privacy and security of Protected Health Information (PHI).',tag:'tag-amber',tagLabel:'US Regulation',key:'Security Rule, Privacy Rule, Breach Notification Rule'},
+  {name:'GDPR',def:'General Data Protection Regulation — EU law protecting personal data of EU residents, applying to any organisation processing that data regardless of location.',tag:'tag-green',tagLabel:'EU Regulation',key:'Right to erasure, data portability, 72-hour breach notification'},
+  {name:'CCPA',def:'California Consumer Privacy Act — gives California residents rights over their personal data collected by businesses.',tag:'tag-green',tagLabel:'US State Law',key:'Right to know, delete, opt out of sale of personal data'},
+  {name:'SOX',def:'Sarbanes-Oxley Act — US law requiring accurate financial reporting and internal controls for publicly traded companies.',tag:'tag-amber',tagLabel:'US Regulation',key:'Section 404 requires annual internal control assessment'},
+  {name:'CMMC',def:'Cybersecurity Maturity Model Certification — US DoD framework requiring defence contractors to meet specific cybersecurity maturity levels.',tag:'tag-amber',tagLabel:'US DoD',key:'5 maturity levels; required for federal defence contracts'},
+  {name:'FISMA',def:'Federal Information Security Modernization Act — US law requiring federal agencies to implement information security programmes aligned with NIST standards.',tag:'tag-teal',tagLabel:'US Federal Law',key:'Requires NIST RMF implementation for federal systems'},
+  {name:'Zero Trust',def:'A security model that assumes no user, device, or network is inherently trusted — every access request is verified regardless of location.',tag:'tag-teal',tagLabel:'Security Model',key:'Never trust, always verify — identity is the new perimeter'},
+  {name:'Defence in Depth',def:'A layered security strategy where multiple overlapping controls protect assets so that failure of one layer does not compromise the whole.',tag:'tag-teal',tagLabel:'Security Model',key:'Multiple layers — no single control is relied upon exclusively'},
+  {name:'Cyber Kill Chain',def:'Lockheed Martin model describing the 7 stages of an attack: Reconnaissance, Weaponisation, Delivery, Exploitation, Installation, C2, Actions on Objectives.',tag:'tag-blue',tagLabel:'Security Model',key:'Interrupt the chain at any stage to defeat the attack'},
+  {name:'MITRE ATT&CK',def:'A knowledge base of adversary tactics and techniques based on real-world observations across 14 tactic categories.',tag:'tag-blue',tagLabel:'Framework',key:'Used for threat hunting, detection engineering, red teaming'},
+  {name:'Diamond Model',def:'A threat intelligence model representing intrusions as relationships between adversary, capability, infrastructure, and victim.',tag:'tag-blue',tagLabel:'Framework',key:'4 points: Adversary — Capability — Infrastructure — Victim'},
+  {name:'STRIDE',def:'A threat modelling framework: Spoofing, Tampering, Repudiation, Information Disclosure, Denial of Service, Elevation of Privilege.',tag:'tag-purple',tagLabel:'Threat Modelling',key:'Used during design to identify threats before development'},
+  {name:'PASTA',def:'Process for Attack Simulation and Threat Analysis — a risk-centric threat modelling methodology with 7 stages.',tag:'tag-purple',tagLabel:'Threat Modelling',key:'Risk-centric — aligns threats with business objectives'},
+  {name:'CIS Benchmarks',def:'Center for Internet Security configuration guidelines providing prescriptive hardening recommendations for operating systems, applications, and cloud environments.',tag:'tag-teal',tagLabel:'Hardening',key:'Two levels: Level 1 (basic) and Level 2 (high-security environments)'},
+  {name:'DISA STIGs',def:'Defense Information Systems Agency Security Technical Implementation Guides — mandatory hardening standards for US DoD systems.',tag:'tag-teal',tagLabel:'Hardening',key:'More stringent than CIS Benchmarks — mandatory for DoD'},
+  {name:'SCAP',def:'Security Content Automation Protocol — a suite of standards enabling automated vulnerability management and compliance checking.',tag:'tag-teal',tagLabel:'Standard',key:'Automates compliance checking using CVE, CVSS, CPE, XCCDF, OVAL'},
+  {name:'Policy',def:'A high-level management directive stating what must be done to protect organisational assets. Sets the what.',tag:'tag-purple',tagLabel:'Governance Doc',key:'What must be done — signed by senior management'},
+  {name:'Standard',def:'Specific, mandatory requirements defining how a policy must be implemented — e.g. all passwords must be minimum 12 characters.',tag:'tag-purple',tagLabel:'Governance Doc',key:'How precisely — mandatory, not advisory'},
+  {name:'Procedure',def:'Step-by-step instructions for completing a specific task in compliance with policies and standards.',tag:'tag-purple',tagLabel:'Governance Doc',key:'Step-by-step how-to — operational instructions'},
+  {name:'Guideline',def:'Recommended but non-mandatory advice providing best practice suggestions to support compliance with policies.',tag:'tag-purple',tagLabel:'Governance Doc',key:'Advisory only — recommended, not required'},
+  {name:'MOU',def:'Memorandum of Understanding — an informal, usually non-binding agreement establishing mutual expectations between parties before a formal contract.',tag:'tag-blue',tagLabel:'Agreement',key:'Non-binding — precursor to a formal agreement'},
+  {name:'ISA',def:'Interconnection Security Agreement — defines the security requirements and controls when two organisations connect their systems or networks.',tag:'tag-blue',tagLabel:'Agreement',key:'Formalises mutual security obligations for system interconnections'},
+  {name:'NDA',def:'Non-Disclosure Agreement — a legal contract preventing parties from disclosing confidential information shared during a business relationship.',tag:'tag-amber',tagLabel:'Agreement',key:'Legally binding — protects confidential business information'},
+  {name:'SLA',def:'Service Level Agreement — a contract defining performance expectations, uptime guarantees, and penalties for non-compliance between a provider and customer.',tag:'tag-amber',tagLabel:'Agreement',key:'Defines RTO equivalents contractually — penalties for failure'},
+  {name:'Privacy by Design',def:'Integrating data protection and privacy controls into systems from the outset of design, not as an afterthought.',tag:'tag-green',tagLabel:'Privacy',key:'7 principles — proactive, default, full functionality, end-to-end'},
+  {name:'Data Sovereignty',def:'Data is subject to the laws of the country in which it is stored or processed — critical for cloud deployments.',tag:'tag-green',tagLabel:'Privacy',key:'Cloud data may reside in multiple jurisdictions simultaneously'},
+  {name:'Data Residency',def:'The requirement that data physically remain within a specific geographic location or jurisdiction.',tag:'tag-green',tagLabel:'Privacy',key:'Contractual or regulatory requirement — different from sovereignty'},
+];
+
+const CATS=['Compliance Frameworks','Security Models','Governance Documents','Privacy and Regulations','Audit and Assessment','Scenario'];
+const CAT_COLORS={'Compliance Frameworks':'var(--teal)','Security Models':'var(--blue)','Governance Documents':'var(--purple)','Privacy and Regulations':'var(--green)','Audit and Assessment':'var(--amber)','Scenario':'var(--amber)'};
+const BADGE_MAP={'Compliance Frameworks':'badge-compliance','Security Models':'badge-framework','Governance Documents':'badge-governance','Privacy and Regulations':'badge-privacy','Audit and Assessment':'badge-audit','Scenario':'badge-scenario'};
+
+const Q_BANK=[
+// ── COMPLIANCE FRAMEWORKS ───────────────────────────────────────
+{type:'identify',cat:'Compliance Frameworks',q:"Which framework uses the five functions: Identify, Protect, Detect, Respond, and Recover?",o:["NIST RMF","ISO 27001","NIST CSF","CMMC"],a:2,e:"<strong>NIST CSF</strong> (Cybersecurity Framework) — a voluntary framework built around 5 core functions. Widely adopted across industries. The RMF is a different NIST publication with 7 steps."},
+{type:'identify',cat:'Compliance Frameworks',q:"Which framework's 7 steps include Categorise, Select, Implement, Assess, Authorise, and Monitor?",o:["NIST CSF","ISO 31000","NIST RMF","CMMC"],a:2,e:"<strong>NIST RMF</strong> — the full sequence is Prepare → Categorise → Select → Implement → Assess → Authorise → Monitor. Mandatory for federal information systems."},
+{type:'identify',cat:'Compliance Frameworks',q:"What is the PRIMARY difference between ISO 27001 and ISO 27002?",o:["ISO 27001 is for large enterprises; ISO 27002 is for small businesses","ISO 27001 specifies requirements and is certifiable; ISO 27002 provides implementation guidance and is not","ISO 27001 covers physical security only; ISO 27002 covers logical security","They are identical — different names for the same standard"],a:1,e:"<strong>ISO 27001</strong> sets the ISMS requirements — organisations get audited and certified against it. <strong>ISO 27002</strong> is the companion guide explaining how to implement the controls in ISO 27001 Annex A."},
+{type:'identify',cat:'Compliance Frameworks',q:"Which compliance framework is mandatory for organisations that process, store, or transmit credit card data?",o:["HIPAA","SOX","GDPR","PCI-DSS"],a:3,e:"<strong>PCI-DSS</strong> (Payment Card Industry Data Security Standard) — non-compliance can result in loss of card processing privileges. Applies worldwide to any organisation touching card data."},
+{type:'identify',cat:'Compliance Frameworks',q:"Which US law protects Protected Health Information and applies to healthcare providers and their business associates?",o:["SOX","FISMA","HIPAA","CMMC"],a:2,e:"<strong>HIPAA</strong> — covers PHI (Protected Health Information). Three key rules: Privacy Rule (data use), Security Rule (safeguards), Breach Notification Rule (72-hour reporting). Business associates are also bound."},
+{type:'identify',cat:'Compliance Frameworks',q:"Which regulation gives EU residents rights over their personal data and requires breach notification within 72 hours?",o:["CCPA","PIPEDA","HIPAA","GDPR"],a:3,e:"<strong>GDPR</strong> — applies to any organisation processing EU resident data regardless of where the organisation is located. Key rights: erasure, portability, restriction. 72-hour breach notification to supervisory authority."},
+{type:'identify',cat:'Compliance Frameworks',q:"Which US law requires publicly traded companies to maintain accurate financial records and strong internal controls?",o:["HIPAA","FISMA","CMMC","SOX"],a:3,e:"<strong>SOX</strong> (Sarbanes-Oxley) — Section 404 requires annual assessment of internal controls over financial reporting. IT controls are included. Non-compliance is a criminal offence for executives."},
+{type:'identify',cat:'Compliance Frameworks',q:"Which framework uses maturity levels and is required for organisations seeking US Department of Defense contracts?",o:["FISMA","NIST RMF","CMMC","FedRAMP"],a:2,e:"<strong>CMMC</strong> (Cybersecurity Maturity Model Certification) — five maturity levels from basic cyber hygiene to advanced. Required for DoD contractors handling Controlled Unclassified Information (CUI)."},
+{type:'identify',cat:'Compliance Frameworks',q:"Which US federal law requires government agencies to implement information security programmes using NIST standards?",o:["SOX","HIPAA","CMMC","FISMA"],a:3,e:"<strong>FISMA</strong> (Federal Information Security Modernization Act) — mandates NIST-based security programmes for federal agencies. NIST RMF is the implementation vehicle for FISMA compliance."},
+{type:'identify',cat:'Compliance Frameworks',q:"What is the PRIMARY purpose of a SOC 2 Type 2 report compared to a SOC 2 Type 1?",o:["Type 2 covers more Trust Service Criteria","Type 2 assesses controls over a period of time rather than at a single point in time","Type 2 is required by law; Type 1 is voluntary","Type 2 is conducted by internal auditors; Type 1 by external auditors"],a:1,e:"<strong>SOC 2 Type 1</strong> assesses control design at a single point in time. <strong>Type 2</strong> tests the operating effectiveness of controls over a period (typically 6-12 months) — much stronger evidence of consistent compliance."},
+{type:'identify',cat:'Compliance Frameworks',q:"Which California privacy law gives residents the right to know what personal data is collected and to opt out of its sale?",o:["GDPR","HIPAA","CCPA","PIPEDA"],a:2,e:"<strong>CCPA</strong> (California Consumer Privacy Act) — applies to businesses meeting certain revenue or data volume thresholds. Key rights: know, delete, opt out of sale, non-discrimination for exercising rights."},
+{type:'identify',cat:'Compliance Frameworks',q:"A cloud provider gives customers a report confirming their security controls have been independently audited. What type of report is this MOST likely?",o:["ISO 27001 certificate","SOC 2 Type 2 report","PCI-DSS attestation","NIST CSF assessment"],a:1,e:"<strong>SOC 2 Type 2</strong> — cloud providers routinely publish these to give customers assurance about their security, availability, and confidentiality controls. It covers a time period and is independently audited."},
+
+// ── SECURITY MODELS ─────────────────────────────────────────────
+{type:'identify',cat:'Security Models',q:"Which security model assumes no user or device is inherently trusted and requires continuous verification?",o:["Defence in Depth","Least Privilege","Zero Trust","Perimeter Security"],a:2,e:"<strong>Zero Trust</strong> — 'never trust, always verify.' Identity becomes the new perimeter. Every access request is authenticated, authorised, and continuously validated regardless of network location."},
+{type:'identify',cat:'Security Models',q:"Which security principle layers multiple overlapping controls so no single failure compromises the entire system?",o:["Zero Trust","Least Privilege","Separation of Duties","Defence in Depth"],a:3,e:"<strong>Defence in Depth</strong> — if the firewall fails, the IPS still runs; if the IPS misses something, EDR catches it on the endpoint. Multiple layers ensure redundancy of protection."},
+{type:'identify',cat:'Security Models',q:"Which model describes an attack in 7 stages from Reconnaissance through to Actions on Objectives?",o:["Diamond Model","MITRE ATT&CK","Cyber Kill Chain","STRIDE"],a:2,e:"<strong>Cyber Kill Chain</strong> (Lockheed Martin) — Reconnaissance, Weaponisation, Delivery, Exploitation, Installation, Command and Control, Actions on Objectives. Defenders disrupt the chain at any stage."},
+{type:'identify',cat:'Security Models',q:"Which framework catalogues adversary tactics and techniques across 14 categories based on real-world observations?",o:["Cyber Kill Chain","Diamond Model","NIST CSF","MITRE ATT&CK"],a:3,e:"<strong>MITRE ATT&CK</strong> — 14 tactic categories including Initial Access, Execution, Persistence, Privilege Escalation, and Exfiltration. Used for threat hunting, red teaming, and detection engineering."},
+{type:'identify',cat:'Security Models',q:"Which threat intelligence model represents an intrusion as relationships between adversary, capability, infrastructure, and victim?",o:["Cyber Kill Chain","STRIDE","Diamond Model","PASTA"],a:2,e:"<strong>Diamond Model</strong> — four core features: Adversary (who), Capability (how), Infrastructure (where), Victim (target). Used to analyse intrusions and understand threat actor patterns."},
+{type:'identify',cat:'Security Models',q:"Which threat modelling framework uses the acronym STRIDE?",o:["A compliance framework for healthcare","A threat modelling method identifying Spoofing, Tampering, Repudiation, Info Disclosure, DoS, Elevation of Privilege","A network segmentation model","A framework for privacy programme design"],a:1,e:"<strong>STRIDE</strong> — developed by Microsoft for threat modelling during software design: Spoofing identity, Tampering with data, Repudiation, Information Disclosure, Denial of Service, Elevation of Privilege."},
+{type:'identify',cat:'Security Models',q:"Which threat modelling methodology is risk-centric and aligns threats with business objectives through 7 stages?",o:["STRIDE","Diamond Model","PASTA","DREAD"],a:2,e:"<strong>PASTA</strong> (Process for Attack Simulation and Threat Analysis) — 7 stages from defining business objectives to attack simulation. Unlike STRIDE, it prioritises risks by business impact."},
+{type:'identify',cat:'Security Models',q:"Which configuration hardening framework provides two levels of guidance — basic and high-security — for operating systems and applications?",o:["DISA STIGs","SCAP","CIS Benchmarks","NIST SP 800-53"],a:2,e:"<strong>CIS Benchmarks</strong> — Level 1 provides basic hardening for most environments. Level 2 is for high-security environments and may impact functionality. Free to download from the Center for Internet Security."},
+{type:'identify',cat:'Security Models',q:"Which hardening standard is mandatory for US Department of Defense systems and is more stringent than CIS Benchmarks?",o:["CIS Benchmarks","NIST CSF","DISA STIGs","ISO 27002"],a:2,e:"<strong>DISA STIGs</strong> (Security Technical Implementation Guides) — mandatory for DoD systems. More restrictive than CIS Benchmarks. Automated compliance can be checked using SCAP tools."},
+{type:'identify',cat:'Security Models',q:"Which standard enables automated vulnerability management and compliance checking using a suite of protocols including CVE and CVSS?",o:["MITRE ATT&CK","SCAP","SOC 2","ISO 27002"],a:1,e:"<strong>SCAP</strong> (Security Content Automation Protocol) — uses CVE (vulnerability IDs), CVSS (severity scores), CPE (platform enumeration), XCCDF (checklists), and OVAL (assessment language) for automated compliance."},
+
+// ── GOVERNANCE DOCUMENTS ────────────────────────────────────────
+{type:'identify',cat:'Governance Documents',q:"Which governance document is a high-level management directive stating what must be done to protect organisational assets?",o:["Standard","Guideline","Procedure","Policy"],a:3,e:"<strong>Policy</strong> — the highest-level governance document. Signed by senior management. Sets the what. Standards define how precisely, procedures define step-by-step, guidelines are advisory."},
+{type:'identify',cat:'Governance Documents',q:"Which governance document provides specific, mandatory requirements for how a policy must be implemented?",o:["Policy","Guideline","Standard","Procedure"],a:2,e:"<strong>Standard</strong> — mandatory and specific. Example: 'All passwords must be minimum 12 characters with complexity.' Policies set direction; standards define the exact requirements."},
+{type:'identify',cat:'Governance Documents',q:"Which governance document provides step-by-step operational instructions for completing a specific task?",o:["Policy","Standard","Procedure","Guideline"],a:2,e:"<strong>Procedure</strong> — the most granular governance document. Tells staff exactly how to perform a task in compliance with policies and standards. Examples: incident response playbook, backup procedure."},
+{type:'identify',cat:'Governance Documents',q:"Which governance document is recommended but not mandatory, providing best-practice advice?",o:["Policy","Standard","Procedure","Guideline"],a:3,e:"<strong>Guideline</strong> — advisory only. Offers best-practice recommendations but not enforceable. Example: 'It is recommended to use a password manager.' Policies and standards are mandatory; guidelines are not."},
+{type:'identify',cat:'Governance Documents',q:"What is the correct hierarchy of governance documents from highest to lowest authority?",o:["Standard → Policy → Guideline → Procedure","Policy → Standard → Procedure → Guideline","Procedure → Standard → Policy → Guideline","Guideline → Procedure → Standard → Policy"],a:1,e:"<strong>Policy → Standard → Procedure → Guideline</strong> — Policy sets direction, Standard sets requirements, Procedure provides instructions, Guideline offers advice. Each level supports the one above."},
+{type:'identify',cat:'Governance Documents',q:"Which agreement is typically informal and non-binding, establishing mutual expectations before a formal contract is signed?",o:["NDA","SLA","ISA","MOU"],a:3,e:"<strong>MOU</strong> (Memorandum of Understanding) — not typically legally enforceable. Used to establish shared understanding before formal agreements. Common between government agencies and partners."},
+{type:'identify',cat:'Governance Documents',q:"Which agreement defines the security requirements and controls when two organisations interconnect their systems?",o:["MOU","NDA","ISA","SLA"],a:2,e:"<strong>ISA</strong> (Interconnection Security Agreement) — formalises security obligations for both parties in a system interconnection. Specifies data types, security controls, and responsibilities for each side."},
+{type:'identify',cat:'Governance Documents',q:"Which agreement legally prevents parties from disclosing confidential information shared during a business relationship?",o:["MOU","SLA","ISA","NDA"],a:3,e:"<strong>NDA</strong> (Non-Disclosure Agreement) — legally binding. Required before sharing sensitive business information with vendors, contractors, or partners. Breach can result in legal action."},
+{type:'identify',cat:'Governance Documents',q:"Which agreement defines uptime guarantees, performance expectations, and financial penalties for service failures?",o:["NDA","MOU","ISA","SLA"],a:3,e:"<strong>SLA</strong> (Service Level Agreement) — contractually defines what the provider must deliver. Uptime guarantees (99.9%), response times, and penalties for breaches. Relates to RTO and RPO targets."},
+{type:'identify',cat:'Governance Documents',q:"A company requires employees to read and sign a document agreeing to use IT systems only for authorised purposes. What is this document called?",o:["NDA","SLA","Acceptable Use Policy","Information Security Policy"],a:2,e:"<strong>Acceptable Use Policy (AUP)</strong> — sets boundaries for how employees may use organisational IT resources. Covers internet use, email, personal device use, and consequences for violations."},
+{type:'identify',cat:'Governance Documents',q:"Which type of policy defines how sensitive data is categorised and handled based on its sensitivity level?",o:["Acceptable Use Policy","Change Management Policy","Data Classification Policy","Incident Response Policy"],a:2,e:"<strong>Data Classification Policy</strong> — assigns categories (Public, Internal, Confidential, Restricted) and defines handling, storage, transmission, and destruction requirements for each level."},
+
+// ── PRIVACY AND REGULATIONS ─────────────────────────────────────
+{type:'identify',cat:'Privacy and Regulations',q:"Which privacy principle requires that data protection be built into systems from the design stage rather than added later?",o:["Data minimisation","Privacy by design","Right to erasure","Purpose limitation"],a:1,e:"<strong>Privacy by design</strong> — one of 7 foundational principles. Proactively embeds privacy as the default, not reactive. Required under GDPR and considered a global best practice."},
+{type:'identify',cat:'Privacy and Regulations',q:"What does data sovereignty mean?",o:["Data must be encrypted before crossing national borders","Data is subject to the laws of the country where it is stored or processed","Individuals have full control over their personal data","Data can only be stored in government-approved facilities"],a:1,e:"<strong>Data sovereignty</strong> — a country's laws apply to data stored within its borders. Critical for cloud deployments where data may reside in multiple jurisdictions with conflicting legal requirements."},
+{type:'identify',cat:'Privacy and Regulations',q:"What is the difference between data sovereignty and data residency?",o:["They mean the same thing","Sovereignty is about which laws apply; residency is about where data must physically be stored","Residency is about laws; sovereignty is about physical location","Sovereignty applies to governments; residency applies to businesses"],a:1,e:"<strong>Data sovereignty</strong> = legal jurisdiction over data. <strong>Data residency</strong> = physical location requirement. A company may be required (residency) to store data in Germany, and that data would then be subject to German/EU law (sovereignty)."},
+{type:'identify',cat:'Privacy and Regulations',q:"Under GDPR, within how many hours must a data breach be reported to the supervisory authority?",o:["24 hours","48 hours","72 hours","7 days"],a:2,e:"<strong>72 hours</strong> — GDPR Article 33 requires breach notification to the supervisory authority within 72 hours of becoming aware. Notification to affected individuals may also be required if the breach is high risk."},
+{type:'identify',cat:'Privacy and Regulations',q:"Which GDPR right allows individuals to request deletion of their personal data?",o:["Right to portability","Right to access","Right to erasure (right to be forgotten)","Right to restriction"],a:2,e:"<strong>Right to erasure</strong> (Article 17) — also called the right to be forgotten. Individuals can request deletion when data is no longer necessary, consent is withdrawn, or data was unlawfully processed."},
+{type:'identify',cat:'Privacy and Regulations',q:"Which regulation gives individuals the right to receive their personal data in a portable, machine-readable format?",o:["HIPAA","CCPA","GDPR — right to data portability","SOX"],a:2,e:"<strong>GDPR right to data portability</strong> (Article 20) — individuals can request their data in a structured, commonly used, machine-readable format to transfer to another service provider."},
+{type:'identify',cat:'Privacy and Regulations',q:"Which role is responsible for overseeing an organisation's compliance with data protection regulations under GDPR?",o:["Chief Information Security Officer","Data Custodian","Data Protection Officer","Privacy Officer"],a:2,e:"<strong>DPO</strong> (Data Protection Officer) — mandatory under GDPR for organisations processing large volumes of personal data or sensitive data. Reports to the highest management level and is independent."},
+{type:'identify',cat:'Privacy and Regulations',q:"What does data minimisation mean in the context of GDPR?",o:["Encrypting all data before storage","Only collecting and processing personal data that is adequate, relevant, and limited to what is necessary","Retaining data for the minimum legally required period","Anonymising data before processing"],a:1,e:"<strong>Data minimisation</strong> (GDPR Article 5) — collect only what you need for the stated purpose. Excessive data collection is a GDPR violation even if the data is never misused."},
+{type:'identify',cat:'Privacy and Regulations',q:"A company operating in California collects customer browsing data to sell to advertisers. Which regulation gives customers the right to opt out of this?",o:["GDPR","HIPAA","CCPA","SOX"],a:2,e:"<strong>CCPA</strong> — Californians have the right to opt out of the sale of their personal information. Businesses must provide a clear 'Do Not Sell My Personal Information' link."},
+
+// ── AUDIT AND ASSESSMENT ────────────────────────────────────────
+{type:'identify',cat:'Audit and Assessment',q:"Which type of penetration test gives the tester no prior knowledge of the environment?",o:["White box","Grey box","Black box","Red team"],a:2,e:"<strong>Black box</strong> — simulates an external attacker with no insider knowledge. Most realistic but least efficient. White box provides full knowledge; grey box provides partial."},
+{type:'identify',cat:'Audit and Assessment',q:"Which type of penetration test gives the tester full knowledge including source code, network diagrams, and credentials?",o:["Black box","Grey box","White box","Crystal box"],a:2,e:"<strong>White box</strong> (also called crystal box) — full knowledge enables the most thorough testing. Testers can find deep logic flaws. Less realistic but maximises coverage."},
+{type:'identify',cat:'Audit and Assessment',q:"Which assessment type identifies vulnerabilities without attempting to exploit them?",o:["Penetration test","Vulnerability assessment","Red team exercise","Threat hunt"],a:1,e:"<strong>Vulnerability assessment</strong> — automated scanning to identify known weaknesses. Does not exploit. Faster and less disruptive than penetration testing but provides less evidence of actual risk."},
+{type:'identify',cat:'Audit and Assessment',q:"Which exercise simulates a full adversarial attack testing people, processes, and technology comprehensively?",o:["Tabletop exercise","Vulnerability assessment","Penetration test","Red team exercise"],a:3,e:"<strong>Red team exercise</strong> — a full-scope adversarial simulation. Tests the entire kill chain. Includes physical, social engineering, and technical components. The blue team defends without knowing the timing."},
+{type:'identify',cat:'Audit and Assessment',q:"Which exercise has red and blue teams working collaboratively to improve detection and response in real time?",o:["Red team exercise","Tabletop exercise","Purple team exercise","Capture the Flag"],a:2,e:"<strong>Purple team</strong> — red team demonstrates attack techniques while blue team validates detection and improves controls immediately. Maximises learning per unit of time."},
+{type:'identify',cat:'Audit and Assessment',q:"Which exercise is discussion-based, walking teams through a hypothetical incident scenario without touching real systems?",o:["Penetration test","Red team exercise","Tabletop exercise","War game"],a:2,e:"<strong>Tabletop exercise</strong> — no systems are touched. Teams discuss their response to a scenario, identifying gaps in plans, roles, and communication. Low cost and low risk."},
+{type:'identify',cat:'Audit and Assessment',q:"What is the PRIMARY difference between a security audit and a vulnerability assessment?",o:["An audit is technical; an assessment is administrative","An audit verifies compliance against a standard or policy; an assessment identifies technical vulnerabilities","They are the same activity described differently","An audit is performed internally; an assessment must be external"],a:1,e:"<strong>Audit</strong> — measures compliance against a standard, policy, or regulation. <strong>Vulnerability assessment</strong> — identifies technical weaknesses. Both are important but answer different questions."},
+{type:'identify',cat:'Audit and Assessment',q:"A security team proactively searches through systems and logs assuming the network may already be compromised. This is called:",o:["Incident response","Vulnerability scanning","Threat hunting","Red teaming"],a:2,e:"<strong>Threat hunting</strong> — proactive, hypothesis-driven search for threats that evaded automated detection. Assumes compromise. Complements SIEM and EDR by finding low-and-slow attacks."},
+{type:'identify',cat:'Audit and Assessment',q:"Which document must be agreed before a penetration test begins, defining scope, rules, and authorised activities?",o:["NDA","SLA","Rules of Engagement","Statement of Work"],a:2,e:"<strong>Rules of Engagement</strong> — defines what systems are in scope, permitted techniques, timing restrictions, and emergency contacts. Without it, the test may be legally indistinguishable from an actual attack."},
+{type:'identify',cat:'Audit and Assessment',q:"Which type of assessment specifically tests whether employees will fall for social engineering attempts?",o:["Penetration test","Phishing simulation","Vulnerability scan","Red team exercise"],a:1,e:"<strong>Phishing simulation</strong> — sends fake phishing emails to employees to measure click rates and credential submission. Results drive targeted security awareness training."},
+
+// ── SCENARIOS ──────────────────────────────────────────────────
+{type:'scenario',cat:'Scenario',scenario:"A US defence contractor wants to bid on a contract involving Controlled Unclassified Information. The DoD requires them to demonstrate a specific level of cybersecurity maturity before the contract is awarded.",q:"Which framework does the contractor need to comply with?",o:["NIST CSF","FISMA","CMMC","ISO 27001"],a:2,e:"<strong>CMMC</strong> (Cybersecurity Maturity Model Certification) — mandatory for DoD contractors handling CUI. The maturity level required depends on the sensitivity of the information involved."},
+{type:'scenario',cat:'Scenario',scenario:"A healthcare company is implementing a new patient records system. The project manager asks what security framework they should use to ensure they comply with US healthcare data protection law.",q:"Which regulation MUST they comply with?",o:["GDPR","PCI-DSS","HIPAA","SOC 2"],a:2,e:"<strong>HIPAA</strong> — mandatory for healthcare providers and their business associates handling PHI. The Security Rule requires administrative, physical, and technical safeguards. GDPR applies if they also process EU patient data."},
+{type:'scenario',cat:'Scenario',scenario:"An e-commerce company based in the US processes credit card payments for customers worldwide. A security auditor asks which framework they must comply with for cardholder data protection.",q:"Which framework applies?",o:["GDPR","HIPAA","SOX","PCI-DSS"],a:3,e:"<strong>PCI-DSS</strong> — applies to any organisation worldwide that stores, processes, or transmits cardholder data. Non-compliance risks loss of card processing privileges. GDPR also applies to EU customer data."},
+{type:'scenario',cat:'Scenario',scenario:"A software company is designing a new mobile app that will collect user location data. The legal team wants privacy protections built into the architecture from day one rather than patched on later.",q:"Which privacy principle does this describe?",o:["Data minimisation","Right to erasure","Privacy by design","Data sovereignty"],a:2,e:"<strong>Privacy by design</strong> — embedding privacy into the architecture proactively. Required under GDPR and global best practice. The alternative — bolting on privacy controls after launch — is more expensive and less effective."},
+{type:'scenario',cat:'Scenario',scenario:"A multinational company wants to move EU customer data to servers in the United States. Their legal team is concerned about whether EU data protection laws still apply to the data once it is stored in the US.",q:"Which concept does this describe?",o:["Data residency","Data minimisation","Data sovereignty","Data classification"],a:2,e:"<strong>Data sovereignty</strong> — GDPR follows EU resident data regardless of where it is stored. Transferring EU data to the US requires mechanisms like Standard Contractual Clauses or adequacy decisions to remain compliant."},
+{type:'scenario',cat:'Scenario',scenario:"A security team has just completed a discussion-based walkthrough of their ransomware response plan. No systems were touched and no technical testing was performed.",q:"What type of exercise was this?",o:["Red team exercise","Penetration test","Tabletop exercise","Purple team exercise"],a:2,e:"<strong>Tabletop exercise</strong> — purely discussion-based. Teams walk through how they would respond, identifying gaps in plans and communication. No systems affected. Low cost, high value for testing plans."},
+{type:'scenario',cat:'Scenario',scenario:"An organisation wants to verify that its access control policies are being enforced correctly across all systems. They hire an external firm to check compliance against their documented security standards.",q:"What type of activity is this?",o:["Vulnerability assessment","Security audit","Penetration test","Threat hunt"],a:1,e:"<strong>Security audit</strong> — measures actual practice against documented standards and policies. The external firm is verifying compliance, not finding technical vulnerabilities. Audits answer 'are you doing what you said you would?'"},
+{type:'scenario',cat:'Scenario',scenario:"A new employee is asked to sign a document acknowledging that company computers may only be used for authorised work purposes and that personal use of social media during work hours is not permitted.",q:"What type of document is this?",o:["Information Security Policy","Non-Disclosure Agreement","Acceptable Use Policy","Employment Contract"],a:2,e:"<strong>Acceptable Use Policy (AUP)</strong> — sets boundaries for how employees may use IT resources. Separate from the NDA (confidentiality) and information security policy (overall programme). Signed acknowledgement is required for enforcement."},
+{type:'scenario',cat:'Scenario',scenario:"A cloud provider is required by a customer to store all data within the European Union and never replicate it to servers in other regions.",q:"Which requirement is the customer imposing?",o:["Data sovereignty","Data minimisation","Data residency","Privacy by design"],a:2,e:"<strong>Data residency</strong> — a contractual or regulatory requirement that data physically remain within a geographic boundary. Different from data sovereignty, which is about which laws apply. Both may apply simultaneously."},
+{type:'scenario',cat:'Scenario',scenario:"A CISO wants to implement a security programme that maps their controls to a voluntary framework showing Identify, Protect, Detect, Respond, and Recover capabilities — and communicate their security posture to the board.",q:"Which framework is BEST suited for this purpose?",o:["NIST RMF","ISO 27001","NIST CSF","CMMC"],a:2,e:"<strong>NIST CSF</strong> — designed for communicating security posture and managing risk at a business level. Its five functions map clearly to business outcomes. Widely used for board-level reporting and cross-sector communication."},
+{type:'scenario',cat:'Scenario',scenario:"During a security review, a tester is given full access to source code, architecture diagrams, and database schemas to perform a thorough assessment of an application.",q:"What type of assessment is this?",o:["Black box penetration test","Grey box penetration test","White box penetration test","Red team exercise"],a:2,e:"<strong>White box penetration test</strong> — full knowledge testing. The tester can trace code paths, identify logic flaws, and find vulnerabilities that black box testing might miss. Most thorough but least realistic."},
+];
+
+let questions=[],qi=0,correct=0,wrong=0;
+let timerSecs=90*60,timerInterval=null;
+let catStats={};
+CATS.forEach(c=>catStats[c]={c:0,t:0});
+
+function shuffle(a){return[...a].sort(()=>Math.random()-.5)}
+
+function buildQuestions(){
+  const pool=shuffle([...Q_BANK]).slice(0,80);
+  return pool.map(q=>{
+    const idxs=q.o.map((_,i)=>i);
+    const shuf=shuffle(idxs);
+    return{...q,o:shuf.map(i=>q.o[i]),a:shuf.indexOf(q.a)};
+  });
+}
+
+function startQuiz(){
+  document.getElementById('splash').style.display='none';
+  document.getElementById('quiz-view').style.display='block';
+  questions=buildQuestions();
+  qi=0;correct=0;wrong=0;
+  CATS.forEach(c=>catStats[c]={c:0,t:0});
+  startTimer();updateStats();renderQ();
+}
+
+function startTimer(){
+  timerSecs=90*60;clearInterval(timerInterval);
+  timerInterval=setInterval(()=>{
+    timerSecs--;
+    const m=Math.floor(timerSecs/60),s=timerSecs%60;
+    const el=document.getElementById('timer');
+    if(el){
+      el.textContent=String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
+      el.className='timer'+(timerSecs<=300?' danger':timerSecs<=600?' warn':'');
+    }
+    if(timerSecs<=0){clearInterval(timerInterval);showResults();}
+  },1000);
+}
+
+function updateStats(){
+  const total=correct+wrong;
+  document.getElementById('s-prog').textContent=qi+'/80';
+  document.getElementById('s-correct').textContent=correct;
+  document.getElementById('s-wrong').textContent=wrong;
+  document.getElementById('s-acc').textContent=total?Math.round(correct/total*100)+'%':'—';
+  document.getElementById('prog-fill').style.width=Math.round(qi/80*100)+'%';
+  document.getElementById('prog-text').textContent='Question '+(qi+1)+' of 80';
+  document.getElementById('prog-pct').textContent=Math.round(qi/80*100)+'%';
+}
+
+const BADGE_BY_TYPE={'identify':'<span class="q-badge badge-framework">Identify</span>','scenario':'<span class="q-badge badge-scenario">Scenario</span>'};
+
+function renderQ(){
+  if(qi>=80){showResults();return;}
+  const q=questions[qi];
+  const letters=['A','B','C','D'];
+  const catBadge=BADGE_MAP[q.cat]||'badge-compliance';
+  const scenHTML=q.type==='scenario'&&q.scenario?'<div class="scenario-box"><div class="scenario-lbl">Scenario</div><div class="scenario-text">'+q.scenario+'</div></div>':'';
+  document.getElementById('q-area').innerHTML=
+    '<div class="q-card">'+
+      '<div class="q-meta">'+
+        '<span class="q-num">Q'+(qi+1)+' of 80</span>'+
+        (BADGE_BY_TYPE[q.type]||'')+
+        '<span class="q-badge '+catBadge+'">'+q.cat+'</span>'+
+      '</div>'+
+      scenHTML+
+      '<div class="q-stem">'+q.q+'</div>'+
+      '<div class="opts" id="opts">'+
+        q.o.map((o,i)=>'<button class="opt" id="opt-'+i+'" onclick="answer('+i+')"><span class="opt-letter">'+letters[i]+'</span><span class="opt-text">'+o+'</span></button>').join('')+
+      '</div>'+
+      '<div class="explanation" id="explanation"><div class="exp-lbl">Explanation</div><div class="exp-text" id="exp-text"></div></div>'+
+      '<button class="btn-next" id="btn-next" onclick="nextQ()">'+(qi===79?'See results →':'Next →')+'</button>'+
+    '</div>';
+}
+
+function answer(idx){
+  const q=questions[qi];
+  const isCorrect=idx===q.a;
+  if(isCorrect){correct++;catStats[q.cat].c++;}else wrong++;
+  catStats[q.cat].t++;qi++;updateStats();
+  q.o.forEach((_,i)=>document.getElementById('opt-'+i).disabled=true);
+  const cb=document.getElementById('opt-'+idx);
+  const rb=document.getElementById('opt-'+q.a);
+  if(isCorrect){cb.classList.add('correct');}else{cb.classList.add('wrong');if(rb)rb.classList.add('reveal');}
+  document.getElementById('exp-text').innerHTML=q.e;
+  document.getElementById('explanation').classList.add('show');
+  document.getElementById('btn-next').style.display='block';
+  if(qi>0&&qi%20===0) logToDashboard(1,'Frameworks & Standards Trainer',Math.round(correct/qi*100));
+}
+
+function nextQ(){renderQ();}
+
+function showResults(){
+  clearInterval(timerInterval);
+  document.getElementById('q-area').style.display='none';
+  const res=document.getElementById('results-area');
+  res.style.display='block';
+  const pct=Math.round(correct/80*100);
+  logToDashboard(1,'Frameworks & Standards Trainer',pct);
+  const passed=pct>=80;
+  const msg=pct>=90?'Outstanding — exam-ready!':pct>=80?'Solid — above pass threshold.':pct>=65?'Getting there — keep reviewing.':'More study needed.';
+  const ringColor=passed?'#68d391':'#fc8181';
+  const circ=376.99,offset=circ-(pct/100)*circ;
+  const topCats=CATS.filter(c=>catStats[c].t>0).sort((a,b)=>(catStats[b].c/catStats[b].t)-(catStats[a].c/catStats[a].t));
+  const bdHTML=topCats.slice(0,6).map(c=>{
+    const s=catStats[c];const p=s.t?Math.round(s.c/s.t*100):0;
+    const col=CAT_COLORS[c]||'var(--teal)';
+    return '<div class="bd-card"><div class="bd-title" style="color:'+col+'">'+c+'</div><div class="bd-bar-bg"><div class="bd-bar-fill" style="width:0%;background:'+col+'" data-pct="'+p+'"></div></div><div class="bd-score" style="color:'+col+'">'+p+'%</div><div class="bd-detail">'+s.c+'/'+s.t+' correct</div></div>';
+  }).join('');
+  res.innerHTML='<div class="results-wrap">'+
+    '<div class="results-ring"><svg width="150" height="150" viewBox="0 0 150 150"><circle cx="75" cy="75" r="60" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="10"/><circle cx="75" cy="75" r="60" fill="none" stroke="'+ringColor+'" stroke-width="10" stroke-linecap="round" stroke-dasharray="'+circ+'" stroke-dashoffset="'+circ+'" id="ring-arc" style="transition:stroke-dashoffset 1.5s ease"/></svg>'+
+    '<div class="ring-inner"><div class="ring-pct">'+pct+'%</div><div class="ring-lbl">score</div></div></div>'+
+    '<div class="results-verdict" style="color:'+ringColor+'">'+(passed?'Passed ✓':'Keep Studying')+'</div>'+
+    '<div class="results-sub">'+correct+'/80 correct — '+msg+'</div>'+
+    '<div class="breakdown">'+bdHTML+'</div>'+
+    '<button class="btn-retake" onclick="retake()">Retake Quiz</button>'+
+    '<button class="btn-retake" onclick="showRef()" style="border-color:var(--teal);color:var(--teal)">View Reference</button>'+
+  '</div>';
+  setTimeout(()=>{
+    const arc=document.getElementById('ring-arc');if(arc)arc.style.strokeDashoffset=offset;
+    document.querySelectorAll('.bd-bar-fill').forEach(el=>{el.style.transition='width 1s ease';el.style.width=el.dataset.pct+'%';});
+  },100);
+}
+
+function retake(){
+  clearInterval(timerInterval);
+  document.getElementById('q-area').style.display='block';
+  document.getElementById('results-area').style.display='none';
+  startQuiz();
+}
+
+function showRef(){
+  document.getElementById('quiz-view').style.display='none';
+  document.getElementById('ref-view').style.display='block';
+  document.getElementById('tab-quiz').classList.remove('active');
+  document.getElementById('tab-ref').classList.add('active');
+  buildRef();
+}
+
+function setTab(t){
+  if(t==='ref'){
+    document.getElementById('quiz-view').style.display='none';
+    document.getElementById('ref-view').style.display='block';
+    document.getElementById('tab-quiz').classList.remove('active');
+    document.getElementById('tab-ref').classList.add('active');
+    buildRef();
+  } else {
+    document.getElementById('ref-view').style.display='none';
+    document.getElementById('quiz-view').style.display='block';
+    document.getElementById('tab-quiz').classList.add('active');
+    document.getElementById('tab-ref').classList.remove('active');
+  }
+}
+
+function buildRef(){
+  const chart=document.getElementById('acc-chart');chart.innerHTML='';
+  CATS.forEach(c=>{
+    const s=catStats[c];const pct=s.t?Math.round(s.c/s.t*100):0;
+    const col=CAT_COLORS[c]||'var(--teal)';
+    chart.innerHTML+='<div class="acc-row"><div class="acc-lbl">'+c+'</div><div class="acc-bg"><div class="acc-fill" style="width:'+(s.t?pct:0)+'%;background:'+col+'"></div></div><div class="acc-pct">'+(s.t?pct+'%':'—')+'</div></div>';
+  });
+  const cards=document.getElementById('ref-cards');cards.innerHTML='';
+  TERMS.forEach(t=>{
+    cards.innerHTML+='<div class="ref-card"><div class="ref-name">'+t.name+'</div><div class="ref-def">'+t.def+'</div><span class="ref-tag '+t.tag+'">'+t.tagLabel+'</span><div class="ref-key">'+t.key+'</div></div>';
+  });
+}
+</script>
+</body>
+</html>

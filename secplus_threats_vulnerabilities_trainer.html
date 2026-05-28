@@ -3,218 +3,173 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Threats & Vulnerabilities Trainer — Security+</title>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Fira+Code:wght@300;400;500&display=swap" rel="stylesheet">
+<title>Threats &amp; Vulnerabilities Trainer — Security+</title>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#080c14;--s1:#0d1220;--s2:#121929;--s3:#19223a;
-  --border:rgba(99,179,237,0.08);--border2:rgba(99,179,237,0.16);--border3:rgba(99,179,237,0.28);
-  --text:#e2eaf8;--text2:#7a90b8;--text3:#3d4f70;
-  --blue:#63b3ed;--blue-dim:rgba(99,179,237,0.1);--blue-glow:rgba(99,179,237,0.2);
-  --amber:#f6ad55;--amber-dim:rgba(246,173,85,0.1);
-  --green:#68d391;--green-dim:rgba(104,211,145,0.1);
-  --red:#fc8181;--red-dim:rgba(252,129,129,0.1);
-  --purple:#b794f4;--purple-dim:rgba(183,148,244,0.1);
-  --teal:#4fd1c5;--teal-dim:rgba(79,209,197,0.1);
-  --orange:#f6ad55;
-  --mono:'Fira Code',monospace;--sans:'Space Grotesk',sans-serif;
-  --r:12px;
+  --bg:#07080c;--panel:#0e1018;--panel2:#141720;--panel3:#1a1e29;
+  --border:rgba(255,255,255,0.06);--border2:rgba(255,255,255,0.1);--border3:rgba(255,255,255,0.18);
+  --text:#e4e8f5;--text2:#6b7494;--text3:#3a4060;
+  --accent:#00e5ff;--green:#00ff88;--red:#ff3d5a;--amber:#ffcc00;--purple:#bf87ff;
+  --mono:'Courier New',monospace;
 }
-html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:100vh;overflow-x:hidden}
-body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 60% 40% at 15% 20%,rgba(99,179,237,0.04) 0%,transparent 60%),radial-gradient(ellipse 50% 30% at 85% 80%,rgba(183,148,244,0.04) 0%,transparent 60%),radial-gradient(ellipse 40% 50% at 55% 10%,rgba(79,209,197,0.03) 0%,transparent 50%);pointer-events:none;z-index:0}
-body::after{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(99,179,237,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(99,179,237,0.02) 1px,transparent 1px);background-size:48px 48px;pointer-events:none;z-index:0}
-.wrap{position:relative;z-index:1;max-width:800px;margin:0 auto;padding:40px 20px 80px}
+*{font-family:'Segoe UI',sans-serif}
+body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 60% 50% at 20% 0%,rgba(0,229,255,0.03) 0%,transparent 60%),radial-gradient(ellipse 50% 40% at 80% 100%,rgba(191,135,255,0.03) 0%,transparent 60%);pointer-events:none}
+body::after{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(0,229,255,0.015) 1px,transparent 1px),linear-gradient(90deg,rgba(0,229,255,0.015) 1px,transparent 1px);background-size:40px 40px;pointer-events:none}
+.wrap{position:relative;z-index:1;max-width:760px;margin:0 auto;padding:32px 20px 80px}
 
-/* SPLASH */
-#splash{text-align:center;padding:60px 0 40px}
-.splash-icon{width:64px;height:64px;margin:0 auto 24px;background:var(--red-dim);border:1px solid rgba(252,129,129,0.25);border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:28px}
-.splash-eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--red);margin-bottom:16px}
-.splash-title{font-size:clamp(28px,5vw,44px);font-weight:700;line-height:1.1;letter-spacing:-.02em;margin-bottom:16px}
-.splash-title span{color:var(--red)}
-.splash-sub{font-size:14px;color:var(--text2);line-height:1.7;max-width:500px;margin:0 auto 40px}
-.splash-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:40px;text-align:left}
-.splash-stat{background:var(--s1);border:1px solid var(--border);border-radius:var(--r);padding:16px}
-.splash-stat-val{font-family:var(--mono);font-size:24px;font-weight:500;color:var(--red)}
-.splash-stat-lbl{font-size:12px;color:var(--text2);margin-top:4px}
-.btn-start{padding:14px 48px;background:var(--red);color:var(--bg);font-family:var(--sans);font-size:15px;font-weight:600;border:none;border-radius:var(--r);cursor:pointer;transition:all .2s;letter-spacing:-.01em}
-.btn-start:hover{filter:brightness(1.15);transform:translateY(-1px)}
-
-/* EXAM HEADER */
-.exam-hdr{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:24px;flex-wrap:wrap}
-.exam-title{font-family:var(--mono);font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--text2)}
-.timer{font-family:var(--mono);font-size:20px;font-weight:500;color:var(--text);background:var(--s1);border:1px solid var(--border2);padding:8px 18px;border-radius:8px;letter-spacing:.05em}
-.timer.warn{color:var(--amber)}
-.timer.danger{color:var(--red);animation:pulse 1s infinite}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.55}}
-
-/* Progress */
-.prog-wrap{margin-bottom:20px}
-.prog-bar{height:3px;background:var(--border);border-radius:99px;overflow:hidden}
-.prog-fill{height:100%;background:linear-gradient(90deg,var(--red),var(--amber));border-radius:99px;transition:width .4s ease}
-.prog-row{display:flex;justify-content:space-between;margin-top:8px;font-family:var(--mono);font-size:11px;color:var(--text3)}
-
-/* Stats */
-.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px}
-.stat-box{background:var(--s1);border:1px solid var(--border);border-radius:10px;padding:10px;text-align:center;position:relative;overflow:hidden}
-.stat-box::before{content:'';position:absolute;top:0;left:0;right:0;height:2px}
-.stat-box.s-prog::before{background:var(--red)}
-.stat-box.s-correct::before{background:var(--green)}
-.stat-box.s-wrong::before{background:var(--red)}
-.stat-box.s-acc::before{background:var(--amber)}
-.stat-val{font-family:var(--mono);font-size:20px;font-weight:500}
-.stat-box.s-correct .stat-val{color:var(--green)}
-.stat-box.s-wrong .stat-val{color:var(--red)}
-.stat-box.s-acc .stat-val{color:var(--amber)}
-.stat-lbl{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);margin-top:3px}
-
-/* QUESTION CARD */
-.q-card{background:var(--s1);border:1px solid var(--border2);border-radius:16px;padding:28px 26px;margin-bottom:14px;position:relative;overflow:hidden}
-.q-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(252,129,129,0.3),transparent)}
-.q-meta{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:16px}
-.q-num{font-family:var(--mono);font-size:10px;color:var(--text3)}
-.q-badge{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;padding:3px 10px;border-radius:6px}
-.badge-vuln{background:var(--red-dim);color:var(--red);border:1px solid rgba(252,129,129,.2)}
-.badge-threat{background:var(--amber-dim);color:var(--amber);border:1px solid rgba(246,173,85,.2)}
-.badge-attack{background:var(--purple-dim);color:var(--purple);border:1px solid rgba(183,148,244,.2)}
-.badge-ioc{background:var(--teal-dim);color:var(--teal);border:1px solid rgba(79,209,197,.2)}
-.badge-mitigation{background:var(--green-dim);color:var(--green);border:1px solid rgba(104,211,145,.2)}
-.badge-scenario{background:var(--amber-dim);color:var(--amber);border:1px solid rgba(246,173,85,.2)}
-.q-stem{font-size:16px;font-weight:500;line-height:1.65;color:var(--text);margin-bottom:20px}
-.scenario-box{background:var(--s2);border:1px solid var(--border2);border-left:3px solid var(--amber);border-radius:10px;padding:14px 18px;margin-bottom:20px}
-.scenario-lbl{font-family:var(--mono);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--amber);margin-bottom:8px}
-.scenario-text{font-size:13px;color:var(--text2);line-height:1.75}
-
-/* Options */
-.opts{display:flex;flex-direction:column;gap:9px}
-.opt{display:flex;align-items:flex-start;gap:14px;padding:13px 16px;border-radius:10px;border:1px solid var(--border2);background:var(--s2);cursor:pointer;text-align:left;width:100%;transition:all .15s}
-.opt:hover:not(:disabled){border-color:var(--border3);background:var(--s3)}
-.opt-letter{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--text2);min-width:18px;margin-top:1px;flex-shrink:0}
-.opt-text{font-size:14px;color:var(--text);line-height:1.5}
-.opt.correct{border-color:var(--green)!important;background:var(--green-dim)!important}
-.opt.correct .opt-letter,.opt.correct .opt-text{color:var(--green)!important}
-.opt.wrong{border-color:var(--red)!important;background:var(--red-dim)!important}
-.opt.wrong .opt-letter,.opt.wrong .opt-text{color:var(--red)!important}
-.opt.reveal{border-color:rgba(104,211,145,.35)!important;background:rgba(104,211,145,.05)!important}
-.opt.reveal .opt-letter,.opt.reveal .opt-text{color:var(--green)!important;opacity:.65}
-.opt:disabled{cursor:default}
-
-/* Explanation */
-.explanation{display:none;background:var(--s2);border:1px solid var(--border2);border-left:3px solid var(--blue);border-radius:10px;padding:14px 18px;margin-top:14px}
-.explanation.show{display:block}
-.exp-lbl{font-family:var(--mono);font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--blue);margin-bottom:8px}
-.exp-text{font-size:13px;color:var(--text2);line-height:1.7}
-.exp-text strong{color:var(--text);font-weight:500}
-
-/* Next */
-.btn-next{width:100%;margin-top:12px;padding:13px;border-radius:10px;border:1px solid var(--border2);background:transparent;color:var(--text2);font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;display:none;transition:all .15s}
-.btn-next:hover{border-color:var(--red);color:var(--red)}
-
-/* RESULTS */
-.results-wrap{padding:32px 0 20px;text-align:center}
-.results-ring{width:150px;height:150px;margin:0 auto 24px;position:relative}
-.results-ring svg{transform:rotate(-90deg)}
-.ring-inner{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center}
-.ring-pct{font-family:var(--mono);font-size:36px;font-weight:600;color:var(--text)}
-.ring-lbl{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--text3)}
-.results-verdict{font-size:24px;font-weight:700;margin-bottom:6px}
-.results-sub{font-family:var(--mono);font-size:12px;color:var(--text2);margin-bottom:32px}
-.breakdown{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:32px;text-align:left}
-.bd-card{background:var(--s1);border:1px solid var(--border);border-radius:12px;padding:16px}
-.bd-title{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px}
-.bd-bar-bg{height:5px;background:var(--border);border-radius:99px;overflow:hidden;margin-bottom:6px}
-.bd-bar-fill{height:100%;border-radius:99px;transition:width 1s ease}
-.bd-score{font-family:var(--mono);font-size:22px;font-weight:500}
-.bd-detail{font-family:var(--mono);font-size:10px;color:var(--text3);margin-top:4px}
-.btn-retake{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;padding:13px 40px;background:transparent;border:1px solid var(--border2);color:var(--text2);border-radius:10px;cursor:pointer;transition:all .2s;margin-right:12px}
-.btn-retake:hover{border-color:var(--red);color:var(--red)}
+/* HEADER */
+.eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:var(--accent);margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'';width:20px;height:1px;background:var(--accent)}
+h1{font-size:clamp(26px,5vw,40px);font-weight:700;line-height:1.1;letter-spacing:-.02em;margin-bottom:8px}
+h1 em{font-style:normal;color:var(--accent)}
+.subtitle{font-family:var(--mono);font-size:11px;color:var(--text2);margin-bottom:28px}
 
 /* TABS */
-.tabs{display:flex;gap:4px;background:var(--s1);border:1px solid var(--border);border-radius:var(--r);padding:4px;margin-bottom:24px}
-.tab{flex:1;padding:9px 8px;font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;border:none;background:transparent;color:var(--text3);cursor:pointer;border-radius:8px;transition:all .2s}
-.tab.active{background:var(--red);color:#fff;font-weight:500}
+.tabs{display:flex;gap:5px;margin-bottom:20px;background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:5px}
+.tab{flex:1;padding:10px 4px;font-family:var(--mono);font-size:10px;letter-spacing:.05em;text-transform:uppercase;border:none;background:transparent;color:var(--text3);cursor:pointer;border-radius:8px;transition:all .2s}
+.tab.active{background:var(--panel3);color:var(--accent);border:1px solid rgba(0,229,255,0.2)}
 .tab:not(.active):hover{color:var(--text2)}
 
+/* STATS */
+.stats-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px}
+.sb{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:13px;position:relative;overflow:hidden}
+.sb::before{content:'';position:absolute;top:0;left:0;right:0;height:2px}
+.sb.s-prog::before{background:var(--accent)}
+.sb.s-correct::before{background:var(--green)}
+.sb.s-wrong::before{background:var(--red)}
+.sb.s-acc::before{background:var(--amber)}
+.sb-val{font-family:var(--mono);font-size:22px;font-weight:500;line-height:1}
+.sb.s-correct .sb-val{color:var(--green)}
+.sb.s-wrong .sb-val{color:var(--red)}
+.sb.s-acc .sb-val{color:var(--amber)}
+.sb-lbl{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--text2);margin-top:4px}
+
+/* PROGRESS */
+.prog-wrap{height:3px;background:rgba(255,255,255,0.06);border-radius:99px;margin-bottom:20px;overflow:hidden}
+.prog-fill{height:100%;background:var(--accent);border-radius:99px;transition:width .4s ease}
+
+/* QUESTION CARD */
+.q-card{background:var(--panel);border:1px solid var(--border2);border-radius:20px;padding:28px 28px;margin-bottom:14px;position:relative;overflow:hidden}
+.q-card::after{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--accent),transparent);opacity:.3}
+.q-meta{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.q-badge{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;padding:3px 10px;border-radius:5px}
+.badge-vuln{background:rgba(255,61,90,0.1);color:var(--red);border:1px solid rgba(255,61,90,0.2)}
+.badge-threat{background:rgba(255,204,0,0.1);color:var(--amber);border:1px solid rgba(255,204,0,0.2)}
+.badge-attack{background:rgba(191,135,255,0.1);color:var(--purple);border:1px solid rgba(191,135,255,0.2)}
+.badge-ioc{background:rgba(0,229,255,0.1);color:var(--accent);border:1px solid rgba(0,229,255,0.2)}
+.badge-mitigation{background:rgba(0,255,136,0.1);color:var(--green);border:1px solid rgba(0,255,136,0.2)}
+.badge-scenario{background:rgba(255,204,0,0.1);color:var(--amber);border:1px solid rgba(255,204,0,0.2)}
+.q-num{font-family:var(--mono);font-size:10px;color:var(--text3)}
+.scenario-box{background:var(--panel2);border:1px solid var(--border2);border-left:3px solid var(--amber);border-radius:10px;padding:13px 16px;margin-bottom:16px}
+.scenario-lbl{font-family:var(--mono);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--amber);margin-bottom:6px}
+.scenario-text{font-size:13px;color:var(--text2);line-height:1.7;font-family:var(--mono)}
+.q-text{font-size:15px;font-weight:500;line-height:1.65;color:var(--text);margin-bottom:18px}
+
+/* OPTIONS */
+.opts{display:flex;flex-direction:column;gap:9px;margin-bottom:14px}
+.opt{display:flex;align-items:flex-start;gap:14px;padding:13px 16px;border-radius:10px;border:1px solid var(--border2);background:var(--panel2);cursor:pointer;text-align:left;width:100%;transition:all .15s}
+.opt:hover:not(:disabled){border-color:var(--border3);background:var(--panel3)}
+.opt-letter{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--text2);min-width:18px;margin-top:1px;flex-shrink:0}
+.opt-text{font-size:14px;color:var(--text);line-height:1.5}
+.opt.correct{border-color:var(--green)!important;background:rgba(0,255,136,0.07)!important}
+.opt.correct .opt-letter,.opt.correct .opt-text{color:var(--green)!important}
+.opt.wrong{border-color:var(--red)!important;background:rgba(255,61,90,0.07)!important}
+.opt.wrong .opt-letter,.opt.wrong .opt-text{color:var(--red)!important}
+.opt.reveal{border-color:rgba(0,255,136,0.3)!important;background:rgba(0,255,136,0.04)!important}
+.opt.reveal .opt-letter,.opt.reveal .opt-text{color:var(--green)!important;opacity:.6}
+.opt:disabled{cursor:default}
+
+/* EXPLANATION */
+.explanation{display:none;background:var(--panel2);border:1px solid var(--border2);border-left:3px solid var(--accent);border-radius:10px;padding:13px 16px;margin-bottom:12px}
+.explanation.show{display:block}
+.exp-lbl{font-family:var(--mono);font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);margin-bottom:7px}
+.exp-text{font-size:13px;color:var(--text2);line-height:1.7}
+.exp-text strong{color:var(--text);font-weight:600}
+
+/* NEXT */
+.btn-next{width:100%;padding:12px;border-radius:10px;border:1px solid var(--border2);background:transparent;color:var(--text2);font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;display:none;transition:all .15s}
+.btn-next:hover{border-color:var(--accent);color:var(--accent)}
+
+/* RESULTS */
+.results-wrap{text-align:center;padding:32px 0 20px}
+.results-ring{width:140px;height:140px;margin:0 auto 20px;position:relative}
+.results-ring svg{transform:rotate(-90deg)}
+.ring-score{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center}
+.ring-pct{font-family:var(--mono);font-size:32px;font-weight:600;color:var(--text)}
+.ring-lbl{font-family:var(--mono);font-size:9px;color:var(--text3);letter-spacing:.1em;text-transform:uppercase}
+.results-verdict{font-size:22px;font-weight:700;margin-bottom:6px}
+.results-sub{font-family:var(--mono);font-size:11px;color:var(--text2);margin-bottom:28px}
+.breakdown{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:28px;text-align:left}
+.bd-card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:16px}
+.bd-title{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px}
+.bd-bar-bg{height:5px;background:rgba(255,255,255,0.06);border-radius:99px;overflow:hidden;margin-bottom:6px}
+.bd-bar-fill{height:100%;border-radius:99px;transition:width 1s ease}
+.bd-score{font-family:var(--mono);font-size:22px;font-weight:600}
+.bd-detail{font-family:var(--mono);font-size:10px;color:var(--text3);margin-top:4px}
+.btn-retake{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:12px 36px;background:transparent;border:1px solid var(--border2);color:var(--text2);border-radius:10px;cursor:pointer;transition:all .2s;margin-right:10px}
+.btn-retake:hover{border-color:var(--accent);color:var(--accent)}
+
 /* REFERENCE */
-.ref-section{margin-bottom:28px}
-.ref-section-title{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--red);margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--border)}
-.ref-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(215px,1fr));gap:10px}
-.ref-card{background:var(--s1);border:1px solid var(--border);border-radius:12px;padding:14px;transition:border-color .15s}
+.ref-section-title{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.ref-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px}
+.ref-card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:14px;transition:border-color .15s}
 .ref-card:hover{border-color:var(--border3)}
 .ref-name{font-size:14px;font-weight:600;color:var(--text);margin-bottom:6px}
 .ref-def{font-size:12px;color:var(--text2);line-height:1.6}
 .ref-tag{display:inline-block;font-family:var(--mono);font-size:10px;padding:2px 8px;border-radius:4px;margin-top:8px}
-.tag-red{background:var(--red-dim);color:var(--red)}
-.tag-amber{background:var(--amber-dim);color:var(--amber)}
-.tag-purple{background:var(--purple-dim);color:var(--purple)}
-.tag-teal{background:var(--teal-dim);color:var(--teal)}
-.tag-green{background:var(--green-dim);color:var(--green)}
+.tag-red{background:rgba(255,61,90,0.1);color:var(--red)}
+.tag-amber{background:rgba(255,204,0,0.1);color:var(--amber)}
+.tag-purple{background:rgba(191,135,255,0.1);color:var(--purple)}
+.tag-teal{background:rgba(0,229,255,0.1);color:var(--accent)}
+.tag-green{background:rgba(0,255,136,0.1);color:var(--green)}
 .ref-key{font-family:var(--mono);font-size:10px;color:var(--text3);margin-top:8px;border-top:1px solid var(--border);padding-top:6px}
-.acc-row{display:grid;grid-template-columns:160px 1fr 42px;gap:12px;align-items:center;margin-bottom:10px}
+.acc-row{display:grid;grid-template-columns:185px 1fr 42px;gap:10px;align-items:center;margin-bottom:10px}
 .acc-lbl{font-size:13px;color:var(--text2);text-align:right}
-.acc-bg{height:18px;background:var(--s2);border-radius:8px;overflow:hidden}
+.acc-bg{height:18px;background:var(--panel2);border-radius:8px;overflow:hidden}
 .acc-fill{height:100%;border-radius:8px;transition:width .8s ease}
 .acc-pct{font-family:var(--mono);font-size:11px;color:var(--text2);font-weight:500}
 
-@media(max-width:520px){
-  .stats-row{grid-template-columns:repeat(2,1fr)}
+@media(max-width:500px){
+  .stats-bar{grid-template-columns:repeat(2,1fr)}
   .breakdown{grid-template-columns:1fr}
-  .splash-grid{grid-template-columns:repeat(2,1fr)}
 }
 </style>
 </head>
 <body>
 <div class="wrap">
+  <div class="eyebrow">CompTIA Security+ · SY0-701 · Domain 2</div>
+  <h1>Threats &amp; <em>Vulnerabilities</em></h1>
+  <p class="subtitle">80 questions · injection attacks · network attacks · credential attacks · threat actors · scenarios</p>
 
-<!-- SPLASH -->
-<div id="splash">
-  <div class="splash-icon">🎯</div>
-  <div class="splash-eyebrow">CompTIA Security+ · SY0-701 · Domain 2</div>
-  <h1 class="splash-title">Threats &amp; <span>Vulnerabilities</span></h1>
-  <p class="splash-sub">Master attack types, vulnerability categories, threat actors, indicators of compromise, and mitigation techniques — the broadest domain on the Security+ exam.</p>
-  <div class="splash-grid">
-    <div class="splash-stat"><div class="splash-stat-val">80</div><div class="splash-stat-lbl">Questions</div></div>
-    <div class="splash-stat"><div class="splash-stat-val">6</div><div class="splash-stat-lbl">Categories</div></div>
-    <div class="splash-stat"><div class="splash-stat-val">∞</div><div class="splash-stat-lbl">Randomised</div></div>
-  </div>
-  <button class="btn-start" onclick="startQuiz()">Start Training</button>
-</div>
-
-<!-- QUIZ -->
-<div id="quiz-view" style="display:none">
-  <div class="exam-hdr">
-    <div class="exam-title">Threats &amp; Vulnerabilities Trainer</div>
-    <div class="timer" id="timer">90:00</div>
-  </div>
-  <div class="stats-row">
-    <div class="stat-box s-prog"><div class="stat-val" id="s-prog">0/80</div><div class="stat-lbl">Progress</div></div>
-    <div class="stat-box s-correct"><div class="stat-val" id="s-correct">0</div><div class="stat-lbl">Correct</div></div>
-    <div class="stat-box s-wrong"><div class="stat-val" id="s-wrong">0</div><div class="stat-lbl">Wrong</div></div>
-    <div class="stat-box s-acc"><div class="stat-val" id="s-acc">—</div><div class="stat-lbl">Accuracy</div></div>
-  </div>
-  <div class="prog-wrap">
-    <div class="prog-bar"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
-    <div class="prog-row"><span id="prog-text">Question 1 of 80</span><span id="prog-pct">0%</span></div>
-  </div>
-  <div id="q-area"></div>
-  <div id="results-area" style="display:none"></div>
-</div>
-
-<!-- REFERENCE -->
-<div id="ref-view" style="display:none">
   <div class="tabs">
     <button class="tab active" onclick="setTab('quiz')" id="tab-quiz">Quiz</button>
     <button class="tab" onclick="setTab('ref')" id="tab-ref">Reference</button>
   </div>
-  <div style="margin-bottom:24px">
-    <div class="ref-section-title" style="margin-bottom:12px">Accuracy by Category</div>
-    <div id="acc-chart"></div>
-  </div>
-  <div class="ref-section-title">Key Terms &amp; Concepts</div>
-  <div class="ref-grid" id="ref-cards"></div>
-</div>
 
+  <!-- QUIZ VIEW -->
+  <div id="view-quiz">
+    <div class="stats-bar">
+      <div class="sb s-prog"><div class="sb-val" id="s-prog">0/80</div><div class="sb-lbl">Progress</div></div>
+      <div class="sb s-correct"><div class="sb-val" id="s-correct">0</div><div class="sb-lbl">Correct</div></div>
+      <div class="sb s-wrong"><div class="sb-val" id="s-wrong">0</div><div class="sb-lbl">Wrong</div></div>
+      <div class="sb s-acc"><div class="sb-val" id="s-acc">—</div><div class="sb-lbl">Accuracy</div></div>
+    </div>
+    <div class="prog-wrap"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
+    <div id="q-area"></div>
+    <div id="results-area" style="display:none"></div>
+  </div>
+
+  <!-- REFERENCE VIEW -->
+  <div id="view-ref" style="display:none">
+    <div style="margin-bottom:24px">
+      <div class="ref-section-title" style="margin-bottom:12px">Accuracy by Category</div>
+      <div id="acc-chart"></div>
+    </div>
+    <div class="ref-section-title">Key Terms &amp; Concepts</div>
+    <div class="ref-grid" id="ref-cards"></div>
+  </div>
 </div>
 
 <script>
@@ -272,13 +227,15 @@ const TERMS=[
 ];
 
 const CATS=['Injection Attacks','Network Attacks','Credential Attacks','Vulnerability Types','Threat Actors','Post-Exploitation','Indicators and Frameworks','Wireless Attacks','Scenario'];
+
 const CAT_COLORS={'Injection Attacks':'var(--red)','Network Attacks':'var(--red)','Credential Attacks':'var(--amber)','Vulnerability Types':'var(--purple)','Threat Actors':'var(--amber)','Post-Exploitation':'var(--purple)','Indicators and Frameworks':'var(--teal)','Wireless Attacks':'var(--blue)','Scenario':'var(--amber)'};
+
 const BADGE_MAP={'Injection Attacks':'badge-attack','Network Attacks':'badge-threat','Credential Attacks':'badge-threat','Vulnerability Types':'badge-vuln','Threat Actors':'badge-threat','Post-Exploitation':'badge-attack','Indicators and Frameworks':'badge-ioc','Wireless Attacks':'badge-vuln','Scenario':'badge-scenario'};
 
 const Q_BANK=[
-// ── VULNERABILITY TYPES ─────────────────────────────────────────
+// VULNERABILITY TYPES ----------------------------------------─
 {type:'identify',cat:'Vulnerability Types',q:"Which vulnerability allows an attacker to write past the end of a buffer and overwrite adjacent memory?",o:["Integer overflow","Buffer overflow","Use-after-free","Null pointer dereference"],a:1,e:"<strong>Buffer overflow</strong> — writing beyond a buffer's boundary can overwrite return addresses, enabling code execution. ASLR randomises memory layout; DEP marks regions non-executable."},
-{type:'identify',cat:'Vulnerability Types',q:"Which vulnerability arises from a timing gap between checking and using a resource?",o:["Buffer overflow","Integer overflow","Race condition (TOCTOU)","Null pointer dereference"],a:2,e:"<strong>TOCTOU</strong> (Time-of-Check Time-of-Use) — an attacker modifies a resource in the window between checking it and using it. Atomic operations prevent this."},
+{type:'identify',cat:'Vulnerability Types',q:"Which vulnerability occurs when a program attempts to use memory after it has already been freed?",o:["Buffer overflow","Use-after-free","Integer overflow","Null pointer dereference"],a:1,e:"<strong>Use-after-free</strong> — accessing freed memory can corrupt data or allow arbitrary code execution. Memory-safe languages like Rust prevent this at compile time; ASLR and heap isolation reduce exploitability."},
 {type:'identify',cat:'Vulnerability Types',q:"Which term describes a vulnerability with no available patch because the vendor is unaware of it?",o:["Legacy vulnerability","Known exploited vulnerability","Zero-day","Common vulnerability"],a:2,e:"<strong>Zero-day</strong> — the vendor has zero days to fix it. Mitigated through virtual patching (WAF/IPS rules), network segmentation, and defence in depth until an official patch is released."},
 {type:'identify',cat:'Vulnerability Types',q:"What does a CVSS score of 9.5 indicate?",o:["Medium severity — monitor and schedule patching","High severity — patch within 30 days","Critical severity — immediate action required","Low severity — patch in next maintenance window"],a:2,e:"<strong>Critical</strong> — CVSS 9.0+ is critical. These require immediate action: virtual patching or network isolation while waiting for a vendor patch. The scale is 0-10: Critical 9+, High 7-8.9, Medium 4-6.9, Low 0.1-3.9."},
 {type:'identify',cat:'Vulnerability Types',q:"Which of the following BEST describes a misconfiguration vulnerability?",o:["A flaw in the application source code","Insecure default settings or improper configuration of software or systems","An unpatched software vulnerability","A vulnerability requiring physical access"],a:1,e:"<strong>Misconfiguration</strong> is the most common vulnerability category — default credentials, open ports, excessive permissions, debug mode left on, unnecessary services running."},
@@ -286,7 +243,7 @@ const Q_BANK=[
 {type:'identify',cat:'Vulnerability Types',q:"What is the PRIMARY purpose of the CVE system?",o:["Rate vulnerability severity on a 0-10 scale","Provide standardised unique identifiers for publicly known vulnerabilities","Track the patch status of known vulnerabilities","Automate vulnerability scanning"],a:1,e:"<strong>CVE</strong> (Common Vulnerabilities and Exposures) assigns unique IDs like CVE-2024-1234, creating a shared reference across vendors, researchers, and defenders."},
 {type:'identify',cat:'Vulnerability Types',q:"Which tool is used to standardise how vulnerability severity is communicated?",o:["CVE","CVSS","MITRE ATT&CK","STIX"],a:1,e:"<strong>CVSS</strong> (Common Vulnerability Scoring System) rates severity 0-10 based on exploitability, scope, and impact. It provides a common language for prioritising remediation."},
 
-// ── INJECTION ATTACKS ──────────────────────────────────────────
+// INJECTION ATTACKS ------------------------------------------
 {type:'identify',cat:'Injection Attacks',q:"Which attack injects malicious SQL code through an input field to manipulate a database?",o:["Command injection","LDAP injection","SQL injection","XML injection"],a:2,e:"<strong>SQL injection</strong> — parameterised queries (prepared statements) are the primary defence. Input validation and WAFs provide additional protection."},
 {type:'identify',cat:'Injection Attacks',q:"Which attack type injects malicious scripts into web pages viewed by other users to steal cookies?",o:["CSRF","SQL injection","Cross-site scripting (XSS)","Directory traversal"],a:2,e:"<strong>XSS</strong> — reflected XSS injects via URL parameters; stored XSS persists in the database. Defences: output encoding, Content Security Policy, HttpOnly cookies."},
 {type:'identify',cat:'Injection Attacks',q:"Which attack tricks an authenticated user's browser into sending an unwanted request to a trusted site?",o:["XSS","SQL injection","CSRF","Session hijacking"],a:2,e:"<strong>CSRF</strong> (Cross-Site Request Forgery) — the attacker uses the victim's existing session. Anti-CSRF tokens and SameSite cookie attribute are the primary defences."},
@@ -295,7 +252,7 @@ const Q_BANK=[
 {type:'identify',cat:'Injection Attacks',q:"Which defence BEST prevents SQL injection attacks?",o:["Output encoding","Parameterised queries and prepared statements","Content Security Policy","SameSite cookie attribute"],a:1,e:"<strong>Parameterised queries</strong> separate SQL code from data — user input is treated as a literal value, never as executable SQL. Output encoding prevents XSS; CSP is an XSS mitigation."},
 {type:'identify',cat:'Injection Attacks',q:"Which defence BEST prevents cross-site scripting (XSS)?",o:["Parameterised queries","Anti-CSRF tokens","Output encoding and Content Security Policy","Input length validation only"],a:2,e:"<strong>Output encoding</strong> converts special characters to safe HTML entities. <strong>CSP</strong> restricts which scripts can execute. Both together provide strong XSS protection."},
 
-// ── NETWORK ATTACKS ────────────────────────────────────────────
+// NETWORK ATTACKS --------------------------------------------
 {type:'identify',cat:'Network Attacks',q:"Which type of attack overwhelms a target with traffic from many compromised systems?",o:["Man-in-the-middle","DDoS attack","Replay attack","ARP poisoning"],a:1,e:"<strong>DDoS</strong> (Distributed Denial of Service) — traffic from thousands of bots overwhelms the target. CDNs, rate limiting, and DDoS scrubbing centres absorb the traffic."},
 {type:'identify',cat:'Network Attacks',q:"Which attack sends many TCP SYN packets without completing the three-way handshake?",o:["Ping of Death","Smurf attack","SYN flood","Fragmentation attack"],a:2,e:"<strong>SYN flood</strong> — exhausts the target's connection table by leaving many half-open connections. SYN cookies allow the server to handle requests without maintaining state."},
 {type:'identify',cat:'Network Attacks',q:"Which attack spoofs the victim's IP in ICMP broadcast requests so all subnet hosts reply to the victim?",o:["Ping of Death","SYN flood","Smurf attack","Fragmentation attack"],a:2,e:"<strong>Smurf attack</strong> — amplifies traffic by using broadcast addresses. Disabled by turning off directed broadcasts on routers and filtering spoofed source IPs at the perimeter."},
@@ -306,7 +263,7 @@ const Q_BANK=[
 {type:'identify',cat:'Network Attacks',q:"Which attack secretly intercepts and potentially alters traffic between two communicating parties?",o:["DDoS","Replay attack","Man-in-the-middle","DNS hijacking"],a:2,e:"<strong>MITM</strong> — the attacker positions between two parties. TLS with certificate validation prevents eavesdropping; certificate pinning prevents rogue CA attacks."},
 {type:'identify',cat:'Network Attacks',q:"Which of the following BEST describes BGP hijacking?",o:["Poisoning a DNS resolver's cache","Manipulating border gateway routing announcements to redirect internet traffic","Spoofing ARP replies on a local network","Intercepting wireless traffic via a rogue access point"],a:1,e:"<strong>BGP hijacking</strong> — manipulates routing protocol announcements to redirect internet traffic through the attacker's network, enabling interception at massive scale."},
 
-// ── CREDENTIAL ATTACKS ─────────────────────────────────────────
+// CREDENTIAL ATTACKS ----------------------------------------─
 {type:'identify',cat:'Credential Attacks',q:"Which attack uses precomputed hash values to rapidly reverse hashed passwords?",o:["Brute force","Dictionary attack","Rainbow table attack","Pass-the-hash"],a:2,e:"<strong>Rainbow table attack</strong> — defeated entirely by salting passwords. A unique salt per password means identical passwords produce different hashes, invalidating precomputed tables."},
 {type:'identify',cat:'Credential Attacks',q:"Which attack tries a small number of common passwords against many accounts to avoid lockout?",o:["Brute force","Password spraying","Dictionary attack","Credential stuffing"],a:1,e:"<strong>Password spraying</strong> — stays under per-account lockout thresholds by trying one password against thousands of accounts. MFA defeats it even when the password is correct."},
 {type:'identify',cat:'Credential Attacks',q:"Which attack uses a captured NTLM hash to authenticate without knowing the plaintext password?",o:["Pass-the-ticket","Kerberoasting","Pass-the-hash","Golden ticket"],a:2,e:"<strong>Pass-the-hash</strong> — NTLM authentication accepts the hash itself, so the attacker never needs to crack it. Credential Guard isolates hashes; migrating to Kerberos eliminates NTLM exposure."},
@@ -315,7 +272,7 @@ const Q_BANK=[
 {type:'identify',cat:'Credential Attacks',q:"Which attack systematically tries every possible character combination until the correct password is found?",o:["Dictionary attack","Rainbow table","Password spraying","Brute force"],a:3,e:"<strong>Brute force</strong> — time depends on password length and complexity. Account lockout, MFA, and CAPTCHA mitigate online brute force. Salting and strong hashing mitigate offline attacks."},
 {type:'identify',cat:'Credential Attacks',q:"Which defence MOST effectively defeats password spraying attacks?",o:["Strong password policy","Account lockout after 3 attempts","Multi-factor authentication","Password history enforcement"],a:2,e:"<strong>MFA</strong> defeats password spraying because even if the password is guessed, the attacker cannot satisfy the second factor. A strong policy reduces success rate but MFA eliminates it."},
 
-// ── THREAT ACTORS ──────────────────────────────────────────────
+// THREAT ACTORS ----------------------------------------------
 {type:'identify',cat:'Threat Actors',q:"Which threat actor type is characterised by long dwell times, sophisticated TTPs, and government backing?",o:["Hacktivist","Script kiddie","Nation-state / APT","Insider threat"],a:2,e:"<strong>Nation-state/APT</strong> — Advanced Persistent Threats operate for months or years, prioritising stealth over speed. Average dwell time is 200+ days before detection."},
 {type:'identify',cat:'Threat Actors',q:"Which threat actor is motivated by ideology and typically uses DDoS and website defacement?",o:["Nation-state","APT","Hacktivist","Script kiddie"],a:2,e:"<strong>Hacktivist</strong> — motivated by politics or social causes. Anonymous is the most well-known example. Tactics focus on disruption and visibility rather than data theft."},
 {type:'identify',cat:'Threat Actors',q:"Which threat actor uses pre-built tools without deep technical knowledge, targeting easy vulnerabilities?",o:["APT","Insider threat","Nation-state","Script kiddie"],a:3,e:"<strong>Script kiddie</strong> — low skill, opportunistic. Targets unpatched, easy-to-exploit systems using existing exploit kits. Basic patching and hardening defeats most script kiddie attacks."},
@@ -323,7 +280,7 @@ const Q_BANK=[
 {type:'identify',cat:'Threat Actors',q:"Which of the following BEST describes an opportunistic threat actor?",o:["Nation-state targeting a specific government agency","A hacktivist group targeting a specific company","A script kiddie scanning for any unpatched system","An insider exfiltrating intellectual property"],a:2,e:"<strong>Opportunistic attackers</strong> — like script kiddies — do not target specific organisations. They scan broadly for easy vulnerabilities. Basic security hygiene eliminates most of their attack paths."},
 {type:'identify',cat:'Threat Actors',q:"Which threat actor characteristic describes the level of technical skill and resources available?",o:["Motivation","Sophistication","Attribution","Dwell time"],a:1,e:"<strong>Sophistication</strong> refers to technical capability and resources. Nation-states have high sophistication; script kiddies have low. Sophistication determines which defences are effective."},
 
-// ── POST-EXPLOITATION ──────────────────────────────────────────
+// POST-EXPLOITATION ------------------------------------------
 {type:'identify',cat:'Post-Exploitation',q:"Which technique involves using built-in OS tools like PowerShell to perform malicious actions?",o:["Zero-day exploitation","Living off the land","Fileless malware delivery","Watering hole attack"],a:1,e:"<strong>Living off the land (LotL)</strong> — using legitimate tools (PowerShell, WMI, certutil, PsExec) avoids signature-based detection. Behavioural analytics and application whitelisting detect abnormal use."},
 {type:'identify',cat:'Post-Exploitation',q:"Which activity describes an attacker moving from one compromised system to others on the internal network?",o:["Privilege escalation","Lateral movement","Persistence establishment","Data exfiltration"],a:1,e:"<strong>Lateral movement</strong> — using stolen credentials, exploits, or admin tools to access additional systems. Network segmentation and zero trust limit how far an attacker can move."},
 {type:'identify',cat:'Post-Exploitation',q:"Which technique involves gaining higher access than originally granted by exploiting a vulnerability?",o:["Lateral movement","Pivoting","Privilege escalation","Persistence"],a:2,e:"<strong>Privilege escalation</strong> — vertical escalation moves from user to admin; horizontal escalation moves to another account at the same level. Least privilege limits the impact."},
@@ -331,7 +288,7 @@ const Q_BANK=[
 {type:'identify',cat:'Post-Exploitation',q:"Which type of malware technique avoids writing files to disk to evade signature-based antivirus?",o:["Polymorphic malware","Fileless malware","Rootkit","Backdoor"],a:1,e:"<strong>Fileless malware</strong> runs entirely in memory, leaving no disk artifacts. Detected through behaviour-based EDR and memory scanning rather than file signatures."},
 {type:'identify',cat:'Post-Exploitation',q:"Which of the following BEST describes the purpose of command and control (C2) infrastructure?",o:["To distribute malware via phishing emails","To allow attackers to remotely control compromised systems and exfiltrate data","To perform initial reconnaissance before an attack","To amplify DDoS attack traffic"],a:1,e:"<strong>C2 (Command and Control)</strong> — attackers communicate with compromised systems to issue commands, receive data, and update malware. HTTP/S-based C2 blends with legitimate traffic."},
 
-// ── INDICATORS AND FRAMEWORKS ──────────────────────────────────
+// INDICATORS AND FRAMEWORKS ----------------------------------
 {type:'identify',cat:'Indicators and Frameworks',q:"Which of the following BEST describes Indicators of Compromise (IOCs)?",o:["Evidence that an attack is currently in progress","Forensic artifacts indicating a system has already been breached","Proactive intelligence about future threats","A list of known threat actor groups"],a:1,e:"<strong>IOCs</strong> are evidence of past or completed compromise — unusual logins, known malware hashes, suspicious IPs. IOAs (Indicators of Attack) show an attack in progress. IOCs look backward."},
 {type:'identify',cat:'Indicators and Frameworks',q:"Which framework catalogues adversary tactics and techniques based on real-world observations?",o:["NIST CSF","MITRE ATT&CK","ISO 27001","OWASP Top 10"],a:1,e:"<strong>MITRE ATT&CK</strong> — 14 tactic categories from Reconnaissance to Impact, with hundreds of specific techniques. Used for threat hunting, detection engineering, and red team planning."},
 {type:'identify',cat:'Indicators and Frameworks',q:"Which of the following is an example of a behavioural indicator of compromise?",o:["A known malware file hash found on disk","A system making regular outbound connections to a foreign IP on port 4444","An expired SSL certificate on a server","A failed login attempt from a user's usual workstation"],a:1,e:"<strong>Behavioural IOC</strong> — regular outbound C2 beaconing is a behavioural indicator. File hashes are artifact IOCs. Behavioural detection catches fileless malware that leaves no hash."},
@@ -340,14 +297,14 @@ const Q_BANK=[
 {type:'identify',cat:'Indicators and Frameworks',q:"What does threat hunting assume that differentiates it from passive monitoring?",o:["That all threats are detected by automated tools","That the environment may already be compromised — proactively searching for hidden threats","That known IOCs are sufficient for detection","That all indicators of compromise are known in advance"],a:1,e:"<strong>Threat hunting</strong> assumes compromise and proactively searches for threats that evaded automated detection. It complements SIEM and EDR by finding low-and-slow attacks."},
 {type:'identify',cat:'Indicators and Frameworks',q:"Which of the following BEST describes the OWASP Top 10?",o:["A vulnerability scoring system","A list of the 10 most critical web application security risks","A framework for threat intelligence sharing","A standard for penetration testing methodology"],a:1,e:"<strong>OWASP Top 10</strong> — the most critical web application risks (injection, broken access control, XSS, etc.). Updated periodically based on real-world vulnerability data."},
 
-// ── WIRELESS ATTACKS ───────────────────────────────────────────
+// WIRELESS ATTACKS ------------------------------------------─
 {type:'identify',cat:'Wireless Attacks',q:"Which wireless attack creates a rogue access point with the same SSID as a legitimate one?",o:["Deauthentication attack","Evil twin","IV attack","War driving"],a:1,e:"<strong>Evil twin</strong> — users connect to the attacker's AP thinking it is legitimate. Certificate warnings and VPN use can detect and mitigate this attack."},
 {type:'identify',cat:'Wireless Attacks',q:"Which wireless attack sends forged frames to disconnect clients from their access point?",o:["Evil twin","IV attack","Deauthentication attack","Disassociation attack"],a:2,e:"<strong>Deauthentication attack</strong> — exploits that 802.11 management frames are unauthenticated in WPA2. WPA3 with Protected Management Frames (PMF) cryptographically authenticates these frames."},
 {type:'identify',cat:'Wireless Attacks',q:"Which wireless encryption protocol is considered completely broken and should never be used?",o:["WPA2-Enterprise","WPA3-Personal","WEP","WPA2-Personal"],a:2,e:"<strong>WEP</strong> — Wired Equivalent Privacy is cryptographically broken. Its RC4 implementation reuses initialisation vectors, allowing key recovery with enough captured packets. Always use WPA3."},
 {type:'identify',cat:'Wireless Attacks',q:"What is the PRIMARY security improvement WPA3 provides over WPA2?",o:["Faster encryption speeds","Simultaneous Authentication of Equals (SAE) preventing offline dictionary attacks","Longer encryption key lengths","Mandatory use of RADIUS authentication"],a:1,e:"<strong>SAE</strong> (Dragonfly handshake) — replaces PSK authentication in WPA3-Personal. Even if a password is captured, SAE prevents offline cracking because no information is reusable between sessions."},
 {type:'identify',cat:'Wireless Attacks',q:"Which wireless attack method drives around scanning for open or weakly secured wireless networks?",o:["Evil twin","Deauthentication attack","War driving","Bluejacking"],a:2,e:"<strong>War driving</strong> — scanning for wireless networks from a vehicle. War chalking marks found networks. Tools like Kismet and WiFi Pineapple are commonly used."},
 
-// ── SCENARIOS ──────────────────────────────────────────────────
+// SCENARIOS --------------------------------------------------
 {type:'scenario',cat:'Scenario',scenario:"A web application accepts user input for a product search. The security team discovers that entering ' OR '1'='1 in the search field returns all records in the database.",q:"Which vulnerability and primary defence does this describe?",o:["XSS — use output encoding","SQL injection — use parameterised queries","CSRF — use anti-CSRF tokens","Command injection — use input sanitisation"],a:1,e:"<strong>SQL injection</strong> — the classic OR 1=1 bypass. Parameterised queries (prepared statements) are the definitive fix. The input is passed as a literal value, never interpreted as SQL."},
 {type:'scenario',cat:'Scenario',scenario:"A security analyst notices a workstation is making outbound TCP connections to 185.220.101.45 on port 4444 every 60 seconds, even when the user is not logged in.",q:"Which attack technique does this BEST indicate?",o:["DDoS participation","Command and control (C2) beaconing","DNS tunnelling","Port scanning"],a:1,e:"<strong>C2 beaconing</strong> — regular, timed outbound connections to an external IP at an unusual port are a classic C2 indicator. The 60-second interval suggests an automated beacon, not user activity."},
 {type:'scenario',cat:'Scenario',scenario:"A user reports that after visiting a news website, their browser was redirected to a fake Microsoft support page. No links were clicked — just visiting the site triggered it.",q:"Which attack technique BEST describes this?",o:["Phishing","Watering hole attack","Evil twin","DNS poisoning"],a:1,e:"<strong>Watering hole attack</strong> — the attacker compromised the news site knowing the target would visit it. No interaction required — visiting the page triggers the redirect or malicious script."},
@@ -361,11 +318,13 @@ const Q_BANK=[
 {type:'scenario',cat:'Scenario',scenario:"A vulnerability scanner returns a finding: CVE-2024-12345, CVSS 9.8, affecting the VPN gateway. The patch is available but requires a 4-hour maintenance window. Production traffic cannot stop.",q:"Which is the BEST immediate interim response?",o:["Accept the risk and patch at next scheduled window in 6 weeks","Deploy a WAF or IPS rule to block known exploit patterns as a compensating control","Ignore the finding — the perimeter firewall provides sufficient protection","Disable the VPN gateway immediately until patched"],a:1,e:"A <strong>virtual patch</strong> via IPS/WAF rule blocks known exploit patterns while the permanent patch is prepared. CVSS 9.8 is critical — a 6-week delay with no interim control is unacceptable. Disabling VPN may not be proportionate."},
 ];
 
+// STATE ------------------------------------------------------
 let questions=[],qi=0,correct=0,wrong=0;
-let timerSecs=90*60,timerInterval=null;
+let timerInterval=null;
 let catStats={};
 CATS.forEach(c=>catStats[c]={c:0,t:0});
 
+// HELPERS ----------------------------------------------------
 function shuffle(a){return[...a].sort(()=>Math.random()-.5)}
 
 function buildQuestions(){
@@ -377,29 +336,7 @@ function buildQuestions(){
   });
 }
 
-function startQuiz(){
-  document.getElementById('splash').style.display='none';
-  document.getElementById('quiz-view').style.display='block';
-  questions=buildQuestions();
-  qi=0;correct=0;wrong=0;
-  CATS.forEach(c=>catStats[c]={c:0,t:0});
-  startTimer();updateStats();renderQ();
-}
-
-function startTimer(){
-  timerSecs=90*60;clearInterval(timerInterval);
-  timerInterval=setInterval(()=>{
-    timerSecs--;
-    const m=Math.floor(timerSecs/60),s=timerSecs%60;
-    const el=document.getElementById('timer');
-    if(el){
-      el.textContent=String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
-      el.className='timer'+(timerSecs<=300?' danger':timerSecs<=600?' warn':'');
-    }
-    if(timerSecs<=0){clearInterval(timerInterval);showResults();}
-  },1000);
-}
-
+// STATS ------------------------------------------------------
 function updateStats(){
   const total=correct+wrong;
   document.getElementById('s-prog').textContent=qi+'/80';
@@ -407,35 +344,25 @@ function updateStats(){
   document.getElementById('s-wrong').textContent=wrong;
   document.getElementById('s-acc').textContent=total?Math.round(correct/total*100)+'%':'—';
   document.getElementById('prog-fill').style.width=Math.round(qi/80*100)+'%';
-  document.getElementById('prog-text').textContent='Question '+(qi+1)+' of 80';
-  document.getElementById('prog-pct').textContent=Math.round(qi/80*100)+'%';
 }
 
-const TYPE_BADGE={
-  'identify':'<span class="q-badge badge-vuln">Identify</span>',
-  'scenario':'<span class="q-badge badge-scenario">Scenario</span>',
-};
-
+// RENDER QUESTION --------------------------------------------
 function renderQ(){
   if(qi>=80){showResults();return;}
   const q=questions[qi];
   const letters=['A','B','C','D'];
   const catBadge=BADGE_MAP[q.cat]||'badge-vuln';
-
-  let scenarioHTML='';
-  if(q.type==='scenario'&&q.scenario){
-    scenarioHTML='<div class="scenario-box"><div class="scenario-lbl">Scenario</div><div class="scenario-text">'+q.scenario.replace(/\n/g,'<br>')+'</div></div>';
-  }
-
+  const scenHTML=q.type==='scenario'&&q.scenario
+    ?'<div class="scenario-box"><div class="scenario-lbl">Scenario</div><div class="scenario-text">'+q.scenario.replace(/\n/g,'<br>')+'</div></div>'
+    :'';
   document.getElementById('q-area').innerHTML=
     '<div class="q-card">'+
       '<div class="q-meta">'+
-        '<span class="q-num">Q'+(qi+1)+' of 80</span>'+
-        (TYPE_BADGE[q.type]||'')+
         '<span class="q-badge '+catBadge+'">'+q.cat+'</span>'+
+        '<span class="q-num">Q'+(qi+1)+' of 80</span>'+
       '</div>'+
-      scenarioHTML+
-      '<div class="q-stem">'+q.q+'</div>'+
+      scenHTML+
+      '<div class="q-text">'+q.q+'</div>'+
       '<div class="opts" id="opts">'+
         q.o.map((o,i)=>
           '<button class="opt" id="opt-'+i+'" onclick="answer('+i+')">'+
@@ -452,13 +379,14 @@ function renderQ(){
     '</div>';
 }
 
+// ANSWER ----------------------------------------------------─
 function answer(idx){
   const q=questions[qi];
   const isCorrect=idx===q.a;
-  if(isCorrect){correct++;catStats[q.cat].c++;}
-  else wrong++;
+  if(isCorrect){correct++;catStats[q.cat].c++;}else wrong++;
   catStats[q.cat].t++;
-  qi++;updateStats();
+  qi++;
+  updateStats();
   q.o.forEach((_,i)=>document.getElementById('opt-'+i).disabled=true);
   const chosenBtn=document.getElementById('opt-'+idx);
   const correctBtn=document.getElementById('opt-'+q.a);
@@ -472,6 +400,7 @@ function answer(idx){
 
 function nextQ(){renderQ();}
 
+// RESULTS ----------------------------------------------------
 function showResults(){
   clearInterval(timerInterval);
   document.getElementById('q-area').style.display='none';
@@ -481,48 +410,54 @@ function showResults(){
   logToDashboard(2,'Threats & Vulnerabilities Trainer',pct);
   const passed=pct>=80;
   const msg=pct>=90?'Outstanding — exam-ready!':pct>=80?'Solid — above pass threshold.':pct>=65?'Getting there — keep reviewing.':'More study needed.';
-  const ringColor=passed?'#68d391':'#fc8181';
-  const circ=376.99,offset=circ-(pct/100)*circ;
-
+  const ringColor=passed?'#00ff88':'#ff3d5a';
+  const circ=339.3,offset=circ-(pct/100)*circ;
   const topCats=CATS.filter(c=>catStats[c].t>0).sort((a,b)=>(catStats[b].c/catStats[b].t)-(catStats[a].c/catStats[a].t));
   const bdHTML=topCats.slice(0,6).map(c=>{
     const s=catStats[c];const p=s.t?Math.round(s.c/s.t*100):0;
-    const col=CAT_COLORS[c]||'var(--blue)';
-    return '<div class="bd-card"><div class="bd-title" style="color:'+col+'">'+c+'</div><div class="bd-bar-bg"><div class="bd-bar-fill" style="width:0%;background:'+col+'" data-pct="'+p+'"></div></div><div class="bd-score" style="color:'+col+'">'+p+'%</div><div class="bd-detail">'+s.c+'/'+s.t+' correct</div></div>';
+    const col=CAT_COLORS[c]||'var(--accent)';
+    return '<div class="bd-card"><div class="bd-title" style="color:'+col+'">'+c+'</div>'+
+           '<div class="bd-bar-bg"><div class="bd-bar-fill" style="width:0%;background:'+col+'" data-pct="'+p+'"></div></div>'+
+           '<div class="bd-score" style="color:'+col+'">'+p+'%</div>'+
+           '<div class="bd-detail">'+s.c+'/'+s.t+' correct</div></div>';
   }).join('');
-
-  res.innerHTML='<div class="results-wrap">'+
-    '<div class="results-ring">'+
-      '<svg width="150" height="150" viewBox="0 0 150 150">'+
-        '<circle cx="75" cy="75" r="60" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="10"/>'+
-        '<circle cx="75" cy="75" r="60" fill="none" stroke="'+ringColor+'" stroke-width="10" stroke-linecap="round" stroke-dasharray="'+circ+'" stroke-dashoffset="'+circ+'" id="ring-arc" style="transition:stroke-dashoffset 1.5s ease"/>'+
-      '</svg>'+
-      '<div class="ring-inner"><div class="ring-pct">'+pct+'%</div><div class="ring-lbl">score</div></div>'+
-    '</div>'+
-    '<div class="results-verdict" style="color:'+ringColor+'">'+(passed?'Passed ✓':'Keep Studying')+'</div>'+
-    '<div class="results-sub">'+correct+'/80 correct — '+msg+'</div>'+
-    '<div class="breakdown">'+bdHTML+'</div>'+
-    '<button class="btn-retake" onclick="retake()">Retake Quiz</button>'+
-    '<button class="btn-retake" onclick="showRef()" style="border-color:var(--teal);color:var(--teal)">View Reference</button>'+
-  '</div>';
-
+  res.innerHTML=
+    '<div class="results-wrap">'+
+      '<div class="results-ring">'+
+        '<svg width="140" height="140" viewBox="0 0 140 140">'+
+          '<circle cx="70" cy="70" r="54" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="10"/>'+
+          '<circle cx="70" cy="70" r="54" fill="none" stroke="'+ringColor+'" stroke-width="10" stroke-linecap="round" stroke-dasharray="'+circ+'" stroke-dashoffset="'+circ+'" id="ring-anim"/>'+
+        '</svg>'+
+        '<div class="ring-score"><div class="ring-pct">'+pct+'%</div><div class="ring-lbl">score</div></div>'+
+      '</div>'+
+      '<div class="results-verdict" style="color:'+ringColor+'">'+(passed?'Passed ✓':'Keep Studying')+'</div>'+
+      '<div class="results-sub">'+correct+'/80 correct — '+msg+'</div>'+
+      '<div class="breakdown">'+bdHTML+'</div>'+
+      '<button class="btn-retake" onclick="retake()">Retake Quiz</button>'+
+      '<button class="btn-retake" onclick="showRef()" style="border-color:var(--accent);color:var(--accent)">View Reference</button>'+
+    '</div>';
   setTimeout(()=>{
-    const arc=document.getElementById('ring-arc');
-    if(arc) arc.style.strokeDashoffset=offset;
-    document.querySelectorAll('.bd-bar-fill').forEach(el=>{el.style.transition='width 1s ease';el.style.width=el.dataset.pct+'%';});
+    const ring=document.getElementById('ring-anim');
+    if(ring){ring.style.transition='stroke-dashoffset 1.5s ease';ring.style.strokeDashoffset=offset;}
+    document.querySelectorAll('.bd-bar-fill').forEach(el=>{
+      el.style.transition='width 1s ease';el.style.width=el.dataset.pct+'%';
+    });
   },100);
 }
 
+// RETAKE / TABS / REF ----------------------------------------
 function retake(){
-  clearInterval(timerInterval);
   document.getElementById('q-area').style.display='block';
   document.getElementById('results-area').style.display='none';
-  startQuiz();
+  questions=buildQuestions();
+  qi=0;correct=0;wrong=0;
+  CATS.forEach(c=>catStats[c]={c:0,t:0});
+  updateStats();renderQ();
 }
 
 function showRef(){
-  document.getElementById('quiz-view').style.display='none';
-  document.getElementById('ref-view').style.display='block';
+  document.getElementById('view-quiz').style.display='none';
+  document.getElementById('view-ref').style.display='block';
   document.getElementById('tab-quiz').classList.remove('active');
   document.getElementById('tab-ref').classList.add('active');
   buildRef();
@@ -530,14 +465,14 @@ function showRef(){
 
 function setTab(t){
   if(t==='ref'){
-    document.getElementById('quiz-view').style.display='none';
-    document.getElementById('ref-view').style.display='block';
+    document.getElementById('view-quiz').style.display='none';
+    document.getElementById('view-ref').style.display='block';
     document.getElementById('tab-quiz').classList.remove('active');
     document.getElementById('tab-ref').classList.add('active');
     buildRef();
   } else {
-    document.getElementById('ref-view').style.display='none';
-    document.getElementById('quiz-view').style.display='block';
+    document.getElementById('view-ref').style.display='none';
+    document.getElementById('view-quiz').style.display='block';
     document.getElementById('tab-quiz').classList.add('active');
     document.getElementById('tab-ref').classList.remove('active');
   }
@@ -548,7 +483,7 @@ function buildRef(){
   chart.innerHTML='';
   CATS.forEach(c=>{
     const s=catStats[c];const pct=s.t?Math.round(s.c/s.t*100):0;
-    const col=CAT_COLORS[c]||'var(--blue)';
+    const col=CAT_COLORS[c]||'var(--accent)';
     chart.innerHTML+='<div class="acc-row"><div class="acc-lbl">'+c+'</div><div class="acc-bg"><div class="acc-fill" style="width:'+(s.t?pct:0)+'%;background:'+col+'"></div></div><div class="acc-pct">'+(s.t?pct+'%':'—')+'</div></div>';
   });
   const cards=document.getElementById('ref-cards');
@@ -557,6 +492,13 @@ function buildRef(){
     cards.innerHTML+='<div class="ref-card"><div class="ref-name">'+t.name+'</div><div class="ref-def">'+t.def+'</div><span class="ref-tag '+t.tag+'">'+t.tagLabel+'</span><div class="ref-key">'+t.key+'</div></div>';
   });
 }
+
+// BOOT ------------------------------------------------------─
+questions=buildQuestions();
+updateStats();
+renderQ();
+
 </script>
+
 </body>
 </html>
