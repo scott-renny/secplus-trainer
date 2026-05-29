@@ -17,7 +17,7 @@
 body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
 body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 70% 50% at 10% 0%,rgba(0,229,255,0.04) 0%,transparent 60%),radial-gradient(ellipse 60% 40% at 90% 100%,rgba(191,135,255,0.04) 0%,transparent 60%);pointer-events:none;z-index:0}
 body::after{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(0,229,255,0.015) 1px,transparent 1px),linear-gradient(90deg,rgba(0,229,255,0.015) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;z-index:0}
-.wrap{position:relative;z-index:1;max-width:940px;margin:0 auto;padding:60px 24px 80px}
+.wrap{position:relative;z-index:1;max-width:960px;margin:0 auto;padding:60px 24px 80px}
 
 /* HERO */
 .hero{text-align:center;margin-bottom:64px}
@@ -26,8 +26,8 @@ body::after{content:'';position:fixed;inset:0;background-image:linear-gradient(r
 h1{font-size:clamp(32px,6vw,58px);font-weight:700;line-height:1.1;letter-spacing:-.03em;margin-bottom:16px}
 h1 span{color:var(--accent)}
 .hero-sub{font-size:15px;color:var(--text2);line-height:1.8;max-width:580px;margin:0 auto 40px}
-.hero-stats{display:flex;gap:0;justify-content:center;flex-wrap:wrap;margin-bottom:44px;background:var(--panel);border:1px solid var(--border);border-radius:16px;overflow:hidden;max-width:600px;margin-left:auto;margin-right:auto}
-.hero-stat{flex:1;padding:20px 16px;text-align:center;position:relative;min-width:100px}
+.hero-stats{display:flex;gap:0;justify-content:center;flex-wrap:wrap;margin-bottom:44px;background:var(--panel);border:1px solid var(--border);border-radius:16px;overflow:hidden;max-width:640px;margin-left:auto;margin-right:auto}
+.hero-stat{flex:1;padding:20px 16px;text-align:center;position:relative;min-width:110px}
 .hero-stat+.hero-stat::before{content:'';position:absolute;left:0;top:20%;height:60%;width:1px;background:var(--border2)}
 .hero-stat-val{font-family:var(--mono);font-size:26px;font-weight:600;color:var(--accent)}
 .hero-stat-lbl{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--text3);margin-top:5px}
@@ -39,29 +39,28 @@ h1 span{color:var(--accent)}
 .section-label{font-family:var(--mono);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--text3);margin-bottom:20px;display:flex;align-items:center;gap:12px}
 .section-label::after{content:'';flex:1;height:1px;background:var(--border)}
 
-/* CARD GRIDS */
-.grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:48px}
+/* GRIDS */
 .grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:48px}
 .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:48px}
+.grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:48px}
 
 /* CARD */
-.card{background:var(--panel);border:1px solid var(--border2);border-radius:16px;padding:22px 20px 52px;text-decoration:none;color:inherit;display:block;transition:all .2s;position:relative;overflow:hidden}
+.card{background:var(--panel);border:1px solid var(--border2);border-radius:16px;padding:22px 20px 20px;text-decoration:none;color:inherit;display:flex;flex-direction:column;transition:all .2s;position:relative;overflow:hidden}
 .card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--card-accent,var(--accent));opacity:.7;transition:opacity .2s}
 .card:hover{border-color:var(--border3);background:var(--panel2);transform:translateY(-2px)}
 .card:hover::before{opacity:1}
-.card-icon{font-size:26px;margin-bottom:12px;display:block}
-.card-title{font-size:15px;font-weight:600;color:var(--text);margin-bottom:8px}
-.card-desc{font-size:12px;color:var(--text2);line-height:1.65;margin-bottom:14px}
-.card-chips{display:flex;gap:6px;flex-wrap:wrap;position:absolute;bottom:18px;left:20px;right:40px}
-.chip{font-family:var(--mono);font-size:9px;letter-spacing:.07em;text-transform:uppercase;padding:3px 8px;border-radius:4px;border:1px solid var(--border2);color:var(--text3);white-space:nowrap}
+.card-icon{font-size:24px;margin-bottom:10px;display:block}
+.card-title{font-size:14px;font-weight:600;color:var(--text);margin-bottom:7px;line-height:1.35}
+.card-desc{font-size:12px;color:var(--text2);line-height:1.6;margin-bottom:14px;flex:1}
+.card-chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:auto}
+.chip{font-family:var(--mono);font-size:9px;letter-spacing:.06em;text-transform:uppercase;padding:2px 7px;border-radius:4px;border:1px solid var(--border2);color:var(--text3);white-space:nowrap}
 .chip.c-accent{border-color:rgba(0,229,255,.22);color:var(--accent);background:rgba(0,229,255,.05)}
 .chip.c-green{border-color:rgba(0,255,136,.22);color:var(--green);background:rgba(0,255,136,.05)}
 .chip.c-amber{border-color:rgba(255,204,0,.22);color:var(--amber);background:rgba(255,204,0,.05)}
 .chip.c-red{border-color:rgba(255,61,90,.22);color:var(--red);background:rgba(255,61,90,.05)}
 .chip.c-purple{border-color:rgba(191,135,255,.22);color:var(--purple);background:rgba(191,135,255,.05)}
 .chip.c-teal{border-color:rgba(79,209,197,.22);color:var(--teal);background:rgba(79,209,197,.05)}
-.launch-arrow{position:absolute;bottom:20px;right:18px;font-family:var(--mono);font-size:14px;color:var(--text3);transition:all .2s}
-.card:hover .launch-arrow{color:var(--card-accent,var(--accent));transform:translateX(3px)}
+.launch-arrow{display:none}
 
 /* ABOUT */
 .about{background:var(--panel);border:1px solid var(--border2);border-radius:16px;padding:28px;margin-bottom:48px}
@@ -74,15 +73,21 @@ h1 span{color:var(--accent)}
 .footer{text-align:center;font-family:var(--mono);font-size:11px;color:var(--text3);padding-top:24px;border-top:1px solid var(--border)}
 .footer span{color:var(--accent)}
 
-@media(max-width:700px){
+/* DASHBOARD CALLOUT */
+.dash-explain{background:var(--panel);border:1px solid var(--border2);border-radius:16px;padding:22px}
+.dash-explain-title{font-family:var(--mono);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--text3);margin-bottom:14px}
+.dash-explain-item{display:flex;align-items:flex-start;gap:12px;margin-bottom:10px}
+.dash-dot{width:6px;height:6px;border-radius:50%;margin-top:7px;flex-shrink:0}
+.dash-explain-text{font-size:13px;color:var(--text2);line-height:1.6}
+
+@media(max-width:720px){
   .grid-4{grid-template-columns:repeat(2,1fr)}
-  .grid-3{grid-template-columns:1fr 1fr}
+  .grid-3{grid-template-columns:repeat(2,1fr)}
   .grid-2{grid-template-columns:1fr}
   .about-body{grid-template-columns:1fr}
-  .hero-stat-val{font-size:20px}
 }
 @media(max-width:480px){
-  .grid-3,.grid-4{grid-template-columns:1fr}
+  .grid-4,.grid-3{grid-template-columns:1fr}
   .hero-stats{flex-direction:column}
   .hero-stat+.hero-stat::before{display:none}
 }
@@ -93,26 +98,14 @@ h1 span{color:var(--accent)}
 
   <!-- HERO -->
   <div class="hero">
-    <div class="eyebrow">CompTIA Security+ &nbsp;·&nbsp; SY0-701 &nbsp;·&nbsp; Full Study Suite</div>
+    <div class="eyebrow">CompTIA Security+ &nbsp;&middot;&nbsp; SY0-701 &nbsp;&middot;&nbsp; Full Study Suite</div>
     <h1>Everything You Need to<br><span>Pass Security+</span></h1>
-    <p class="hero-sub">A self-built collection of 12 interactive study tools covering all 5 Security+ domains — from targeted trainers to full timed mock exams with performance-based questions. No logins, no subscriptions, no internet required.</p>
+    <p class="hero-sub">A self-built collection of 15 interactive study tools covering all 5 Security+ domains — from targeted domain trainers to full timed mock exams with performance-based questions. No logins, no subscriptions, no internet required.</p>
     <div class="hero-stats">
-      <div class="hero-stat">
-        <div class="hero-stat-val">360</div>
-        <div class="hero-stat-lbl">Unique exam questions</div>
-      </div>
-      <div class="hero-stat">
-        <div class="hero-stat-val">12</div>
-        <div class="hero-stat-lbl">Study tools</div>
-      </div>
-      <div class="hero-stat">
-        <div class="hero-stat-val">5</div>
-        <div class="hero-stat-lbl">Domains covered</div>
-      </div>
-      <div class="hero-stat">
-        <div class="hero-stat-val">∞</div>
-        <div class="hero-stat-lbl">Randomised</div>
-      </div>
+      <div class="hero-stat"><div class="hero-stat-val">360</div><div class="hero-stat-lbl">Unique exam questions</div></div>
+      <div class="hero-stat"><div class="hero-stat-val">15</div><div class="hero-stat-lbl">Study tools</div></div>
+      <div class="hero-stat"><div class="hero-stat-val">5</div><div class="hero-stat-lbl">Domains covered</div></div>
+      <div class="hero-stat"><div class="hero-stat-val">&infin;</div><div class="hero-stat-lbl">Randomised</div></div>
     </div>
     <a href="secplus_dashboard.html" class="btn-dashboard">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -126,169 +119,151 @@ h1 span{color:var(--accent)}
   <!-- MOCK EXAMS -->
   <div class="section-label">Mock Exams &mdash; 90 questions &middot; 90 minutes &middot; fully randomised</div>
   <div class="grid-4">
+
     <a href="secplus_mock_exam_A.html" class="card" style="--card-accent:var(--accent)">
       <span class="card-icon">📋</span>
       <div class="card-title">Mock Exam A</div>
-      <div class="card-desc">Full timed exam across all 5 domains. Includes drag and drop, firewall config, incident response ordering, PKI certificate review, and definition matching.</div>
-      <div class="card-chips">
-        <span class="chip c-accent">90 Questions</span>
-        <span class="chip">90 min</span>
-        <span class="chip">All Domains</span>
-      </div>
-      <div class="launch-arrow">→</div>
+      <div class="card-desc">Full timed exam across all 5 domains including drag and drop, firewall config, incident response, PKI review, and definition matching.</div>
+      <div class="card-chips"><span class="chip c-accent">90 Questions</span><span class="chip">90 min</span><span class="chip">All Domains</span></div>
+      <div class="launch-arrow">&rarr;</div>
     </a>
+
     <a href="secplus_mock_exam_B.html" class="card" style="--card-accent:var(--purple)">
       <span class="card-icon">📋</span>
       <div class="card-title">Mock Exam B</div>
-      <div class="card-desc">Second full exam with a completely unique question set. Focuses on PKI, cloud shared responsibility, BEC and phishing variants, and firewall configuration PBQs.</div>
-      <div class="card-chips">
-        <span class="chip c-purple">90 Questions</span>
-        <span class="chip">90 min</span>
-        <span class="chip">All Domains</span>
-      </div>
-      <div class="launch-arrow">→</div>
+      <div class="card-desc">Unique question set — PKI deep dive, cloud shared responsibility, BEC variants, and firewall configuration performance questions.</div>
+      <div class="card-chips"><span class="chip c-purple">90 Questions</span><span class="chip">90 min</span><span class="chip">All Domains</span></div>
+      <div class="launch-arrow">&rarr;</div>
     </a>
+
     <a href="secplus_mock_exam_C.html" class="card" style="--card-accent:var(--green)">
       <span class="card-icon">📋</span>
       <div class="card-title">Mock Exam C</div>
-      <div class="card-desc">Third exam covering LDAPS, OCSP, TOCTOU, VM escape, SASE, CASB, UEBA, sandboxing, and a web application log analysis performance question.</div>
-      <div class="card-chips">
-        <span class="chip c-green">90 Questions</span>
-        <span class="chip">90 min</span>
-        <span class="chip">All Domains</span>
-      </div>
-      <div class="launch-arrow">→</div>
+      <div class="card-desc">LDAPS, OCSP, TOCTOU, VM escape, SASE, CASB, UEBA, sandboxing, and a web application log analysis performance question.</div>
+      <div class="card-chips"><span class="chip c-green">90 Questions</span><span class="chip">90 min</span><span class="chip">All Domains</span></div>
+      <div class="launch-arrow">&rarr;</div>
     </a>
+
     <a href="secplus_mock_exam_D.html" class="card" style="--card-accent:var(--amber)">
       <span class="card-icon">📋</span>
       <div class="card-title">Mock Exam D</div>
-      <div class="card-desc">Fourth exam covering Diffie-Hellman, blockchain, SDN, Cyber Kill Chain, STIX and TAXII, purple team exercises, and privacy by design.</div>
-      <div class="card-chips">
-        <span class="chip c-amber">90 Questions</span>
-        <span class="chip">90 min</span>
-        <span class="chip">All Domains</span>
-      </div>
-      <div class="launch-arrow">→</div>
+      <div class="card-desc">Diffie-Hellman, blockchain, SDN, Cyber Kill Chain, STIX and TAXII, purple team exercises, and privacy by design.</div>
+      <div class="card-chips"><span class="chip c-amber">90 Questions</span><span class="chip">90 min</span><span class="chip">All Domains</span></div>
+      <div class="launch-arrow">&rarr;</div>
     </a>
+
   </div>
 
   <!-- DOMAIN TRAINERS -->
-  <div class="section-label">Domain Trainers &mdash; randomised &middot; unlimited practice &middot; progress tracked</div>
+  <div class="section-label">Domain Trainers &mdash; randomised &middot; unlimited practice &middot; all 5 domains</div>
   <div class="grid-3">
+
+    <a href="secplus_general_security_trainer.html" class="card" style="--card-accent:var(--purple)">
+      <span class="card-icon">&#128274;</span>
+      <div class="card-title">General Security Concepts</div>
+      <div class="card-desc">80 questions on the CIA triad, security control types, authentication factors, security principles, and cryptography fundamentals.</div>
+      <div class="card-chips"><span class="chip c-purple">80 Questions</span><span class="chip">Domain 1</span><span class="chip">Scenarios</span></div>
+      <div class="launch-arrow">&rarr;</div>
+    </a>
+
     <a href="secplus_acronym_trainer.html" class="card" style="--card-accent:var(--accent)">
       <span class="card-icon">🔤</span>
       <div class="card-title">Acronym Trainer</div>
-      <div class="card-desc">Every SY0-701 acronym in flashcard format. Filter by domain and difficulty. Tracks weak spots and delivers AI-powered explanations on incorrect answers.</div>
-      <div class="card-chips">
-        <span class="chip c-accent">All Acronyms</span>
-        <span class="chip">Flashcards</span>
-        <span class="chip c-green">AI Explanations</span>
-      </div>
-      <div class="launch-arrow">→</div>
+      <div class="card-desc">Every SY0-701 acronym in flashcard format. Filter by domain, track weak spots, and get AI-powered explanations.</div>
+      <div class="card-chips"><span class="chip c-accent">All Acronyms</span><span class="chip">Flashcards</span><span class="chip c-green">AI Explain</span></div>
+      <div class="launch-arrow">&rarr;</div>
     </a>
+
     <a href="secplus_definitions_trainer.html" class="card" style="--card-accent:var(--purple)">
       <span class="card-icon">📖</span>
       <div class="card-title">Definitions Trainer</div>
-      <div class="card-desc">180 Security+ terms across all 5 domains. Given a definition, identify the correct term from four options. Tracks accuracy per domain over time.</div>
-      <div class="card-chips">
-        <span class="chip c-purple">180 Terms</span>
-        <span class="chip">5 Domains</span>
-        <span class="chip">Randomised</span>
-      </div>
-      <div class="launch-arrow">→</div>
+      <div class="card-desc">180 Security+ terms across all 5 domains. Given a definition, identify the correct term from four options.</div>
+      <div class="card-chips"><span class="chip c-purple">180 Terms</span><span class="chip">5 Domains</span><span class="chip">Randomised</span></div>
+      <div class="launch-arrow">&rarr;</div>
     </a>
+
     <a href="secplus_ports_trainer.html" class="card" style="--card-accent:var(--green)">
       <span class="card-icon">🔌</span>
-      <div class="card-title">Ports and Protocols Trainer</div>
-      <div class="card-desc">80-question quiz covering all SY0-701 port numbers and protocols. Multiple question types including identify the port, name the protocol, and match the use case.</div>
-      <div class="card-chips">
-        <span class="chip c-green">80 Questions</span>
-        <span class="chip">41 Ports</span>
-        <span class="chip">Multiple Modes</span>
-      </div>
-      <div class="launch-arrow">→</div>
+      <div class="card-title">Ports and Protocols</div>
+      <div class="card-desc">80-question quiz covering all SY0-701 port numbers and protocols with multiple question types and modes.</div>
+      <div class="card-chips"><span class="chip c-green">80 Questions</span><span class="chip">41 Ports</span><span class="chip">Multi-mode</span></div>
+      <div class="launch-arrow">&rarr;</div>
     </a>
+
     <a href="malware_phishing_trainer.html" class="card" style="--card-accent:var(--red)">
-      <span class="card-icon">🦠</span>
-      <div class="card-title">Malware and Phishing Trainer</div>
-      <div class="card-desc">60-question trainer covering 30 malware and social engineering attack types across three question formats including real-world scenario identification.</div>
-      <div class="card-chips">
-        <span class="chip c-red">60 Questions</span>
-        <span class="chip">30 Attack Types</span>
-        <span class="chip">Scenarios</span>
-      </div>
-      <div class="launch-arrow">→</div>
+      <span class="card-icon">&#129440;</span>
+      <div class="card-title">Malware and Phishing</div>
+      <div class="card-desc">60 questions covering 30 malware and social engineering attack types with scenario identification.</div>
+      <div class="card-chips"><span class="chip c-red">60 Questions</span><span class="chip">30 Attack Types</span><span class="chip">Scenarios</span></div>
+      <div class="launch-arrow">&rarr;</div>
     </a>
+
     <a href="secplus_threats_vulnerabilities_trainer.html" class="card" style="--card-accent:var(--red)">
-      <span class="card-icon">🎯</span>
-      <div class="card-title">Threats and Vulnerabilities Trainer</div>
-      <div class="card-desc">80-question trainer covering injection attacks, network attacks, credential attacks, vulnerability types, threat actors, post-exploitation techniques, and wireless attacks.</div>
-      <div class="card-chips">
-        <span class="chip c-red">80 Questions</span>
-        <span class="chip">8 Categories</span>
-        <span class="chip">Scenarios</span>
-      </div>
-      <div class="launch-arrow">→</div>
+      <span class="card-icon">&#127919;</span>
+      <div class="card-title">Threats and Vulnerabilities</div>
+      <div class="card-desc">80 questions covering injection attacks, network attacks, credential attacks, threat actors, and post-exploitation.</div>
+      <div class="card-chips"><span class="chip c-red">80 Questions</span><span class="chip">8 Categories</span><span class="chip">Scenarios</span></div>
+      <div class="launch-arrow">&rarr;</div>
     </a>
+
+    <a href="secplus_network_architecture_trainer.html" class="card" style="--card-accent:var(--accent)">
+      <span class="card-icon">&#127760;</span>
+      <div class="card-title">Network Architecture</div>
+      <div class="card-desc">80 questions covering network segmentation, cloud and virtualisation, wireless security, VPN, and infrastructure hardening.</div>
+      <div class="card-chips"><span class="chip c-accent">80 Questions</span><span class="chip">6 Categories</span><span class="chip">Scenarios</span></div>
+      <div class="launch-arrow">&rarr;</div>
+    </a>
+
+    <a href="secplus_defense_strategies_trainer.html" class="card" style="--card-accent:var(--green)">
+      <span class="card-icon">&#128737;</span>
+      <div class="card-title">Defense Strategies</div>
+      <div class="card-desc">80 questions covering IAM, endpoint security, data protection, cryptography and PKI, and monitoring and detection.</div>
+      <div class="card-chips"><span class="chip c-green">80 Questions</span><span class="chip">5 Categories</span><span class="chip">Scenarios</span></div>
+      <div class="launch-arrow">&rarr;</div>
+    </a>
+
     <a href="secplus_frameworks_standards_trainer.html" class="card" style="--card-accent:var(--teal)">
-      <span class="card-icon">📐</span>
-      <div class="card-title">Frameworks and Standards Trainer</div>
-      <div class="card-desc">80-question trainer covering compliance frameworks, security models, governance documents, privacy regulations, audit types, and real-world scenario questions across Domains 1, 3, and 5.</div>
-      <div class="card-chips">
-        <span class="chip c-teal">80 Questions</span>
-        <span class="chip">6 Categories</span>
-        <span class="chip">Scenarios</span>
-      </div>
-      <div class="launch-arrow">→</div>
+      <span class="card-icon">&#128208;</span>
+      <div class="card-title">Frameworks and Standards</div>
+      <div class="card-desc">80 questions covering NIST, ISO, PCI-DSS, HIPAA, GDPR, security models, governance docs, and audit types.</div>
+      <div class="card-chips"><span class="chip c-teal">80 Questions</span><span class="chip">6 Categories</span><span class="chip">Scenarios</span></div>
+      <div class="launch-arrow">&rarr;</div>
     </a>
+
     <a href="secplus_risk_management_trainer.html" class="card" style="--card-accent:var(--amber)">
-      <span class="card-icon">⚖️</span>
-      <div class="card-title">Risk Management Trainer</div>
-      <div class="card-desc">80-question trainer for Domain 5. Covers risk formulas including SLE, ALE, and ARO, risk response strategies, BIA, RTO and RPO, and calculation-heavy scenario questions.</div>
-      <div class="card-chips">
-        <span class="chip c-amber">80 Questions</span>
-        <span class="chip">5 Question Types</span>
-        <span class="chip">Calculations</span>
-      </div>
-      <div class="launch-arrow">→</div>
+      <span class="card-icon">&#9878;&#65039;</span>
+      <div class="card-title">Risk Management</div>
+      <div class="card-desc">80 questions on risk formulas (SLE, ALE, ARO), response strategies, BIA, RTO and RPO, and calculation scenarios.</div>
+      <div class="card-chips"><span class="chip c-amber">80 Questions</span><span class="chip">5 Types</span><span class="chip">Calculations</span></div>
+      <div class="launch-arrow">&rarr;</div>
     </a>
+
   </div>
 
-  <!-- DASHBOARD CALLOUT -->
-  <div class="section-label">Readiness Dashboard &mdash; tracks all tools in one place</div>
+  <!-- DASHBOARD -->
+  <div class="section-label">Readiness Dashboard &mdash; tracks all tools automatically</div>
   <div class="grid-2" style="margin-bottom:48px">
-    <a href="secplus_dashboard.html" class="card" style="--card-accent:var(--accent);padding-bottom:22px">
-      <span class="card-icon">📊</span>
+
+    <a href="secplus_dashboard.html" class="card" style="--card-accent:var(--accent)">
+      <span class="card-icon">&#128202;</span>
       <div class="card-title">Readiness Dashboard</div>
-      <div class="card-desc">Central hub that reads session results from all 10 trainers and exams. Shows domain accuracy, study streaks, recent sessions, and overall exam readiness score — all powered by the same localStorage data every tool writes to automatically.</div>
-      <div class="card-chips" style="position:relative;bottom:auto;left:auto;margin-top:14px">
+      <div class="card-desc">Central hub reading session results from all trainers and exams. Shows domain accuracy, study streaks, recent sessions, and overall exam readiness score — all powered by the same localStorage data every tool writes to automatically.</div>
+      <div class="card-chips">
         <span class="chip c-accent">All Tools</span>
         <span class="chip c-green">Auto Logged</span>
         <span class="chip">Domain Breakdown</span>
         <span class="chip">Progress Tracking</span>
       </div>
     </a>
-    <div style="background:var(--panel);border:1px solid var(--border2);border-radius:16px;padding:22px">
-      <div style="font-family:var(--mono);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--text3);margin-bottom:14px">How tracking works</div>
-      <div style="display:flex;flex-direction:column;gap:10px">
-        <div style="display:flex;align-items:flex-start;gap:12px">
-          <div style="width:6px;height:6px;border-radius:50%;background:var(--accent);margin-top:6px;flex-shrink:0"></div>
-          <div style="font-size:13px;color:var(--text2);line-height:1.6">Every trainer and exam automatically logs your score to the browser's localStorage when you finish</div>
-        </div>
-        <div style="display:flex;align-items:flex-start;gap:12px">
-          <div style="width:6px;height-6px;border-radius:50%;background:var(--green);margin-top:6px;flex-shrink:0;height:6px"></div>
-          <div style="font-size:13px;color:var(--text2);line-height:1.6">The dashboard reads all sessions and breaks down your accuracy by domain across every tool</div>
-        </div>
-        <div style="display:flex;align-items:flex-start;gap:12px">
-          <div style="width:6px;height:6px;border-radius:50%;background:var(--amber);margin-top:6px;flex-shrink:0"></div>
-          <div style="font-size:13px;color:var(--text2);line-height:1.6">No login, no server, no account — all data stays in your browser and only you can see it</div>
-        </div>
-        <div style="display:flex;align-items:flex-start;gap:12px">
-          <div style="width:6px;height:6px;border-radius:50%;background:var(--purple);margin-top:6px;flex-shrink:0"></div>
-          <div style="font-size:13px;color:var(--text2);line-height:1.6">You can also log manual sessions for flashcards, videos, and reading directly in the dashboard</div>
-        </div>
-      </div>
+
+    <div class="dash-explain">
+      <div class="dash-explain-title">How tracking works</div>
+      <div class="dash-explain-item"><div class="dash-dot" style="background:var(--accent)"></div><div class="dash-explain-text">Every trainer and exam automatically logs your score to the browser's localStorage when you finish a session</div></div>
+      <div class="dash-explain-item"><div class="dash-dot" style="background:var(--green)"></div><div class="dash-explain-text">The dashboard reads all sessions and breaks down your accuracy by domain across every tool you have used</div></div>
+      <div class="dash-explain-item"><div class="dash-dot" style="background:var(--amber)"></div><div class="dash-explain-text">No login, no server, no account required — all data stays in your browser and only you can see it</div></div>
+      <div class="dash-explain-item"><div class="dash-dot" style="background:var(--purple)"></div><div class="dash-explain-text">You can also manually log flashcard, video, and reading sessions directly in the dashboard</div></div>
     </div>
+
   </div>
 
   <!-- ABOUT -->
@@ -296,8 +271,8 @@ h1 span{color:var(--accent)}
   <div class="about">
     <div class="about-title">Built from scratch to support Security+ SY0-701 exam preparation</div>
     <div class="about-body">
-      <div class="about-text">This suite was designed and built entirely in HTML, CSS, and vanilla JavaScript with no frameworks, no build tools, and no dependencies. Every tool runs as a single self-contained HTML file that works completely offline once downloaded. All 11 files can be placed in the same folder and opened directly in any browser.</div>
-      <div class="about-text">The four mock exams contain 360 unique questions with zero overlap across any pair. Each exam includes multiple choice, drag and drop matching, performance-based questions covering firewall configuration, network zone placement, log analysis, ACL permissions, wireless setup, PKI certificate review, and incident response sequencing, plus definition identification questions. Every answer option is randomised on each attempt.</div>
+      <div class="about-text">This suite was designed and built entirely in HTML, CSS, and vanilla JavaScript with no frameworks, no build tools, and no dependencies. Every tool runs as a single self-contained HTML file that works completely offline once downloaded. All files can be placed in the same folder and opened directly in any modern browser.</div>
+      <div class="about-text">The four mock exams contain 360 unique questions with zero overlap across any pair. Each exam includes multiple choice, drag and drop matching, performance-based questions covering firewall configuration, network zone placement, log analysis, ACL permissions, wireless setup, PKI certificate review, and incident response sequencing. Every answer is randomised on each attempt.</div>
     </div>
     <div class="tech-row">
       <span class="chip c-accent">HTML5</span>
@@ -307,7 +282,7 @@ h1 span{color:var(--accent)}
       <span class="chip">No dependencies</span>
       <span class="chip c-green">Works offline</span>
       <span class="chip">localStorage</span>
-      <span class="chip">12 tools</span>
+      <span class="chip">15 tools</span>
       <span class="chip">360 unique questions</span>
     </div>
   </div>
