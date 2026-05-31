@@ -194,9 +194,9 @@ body{font-family:var(--sans);background:var(--bg);color:var(--text);min-height:1
 
 <!-- SPLASH -->
 <div id="splash" class="screen active">
-  <div class="splash-badge">CompTIA Security+ · SY0-701</div>
+  <div class="splash-badge">CompTIA Security+ &middot; SY0-701</div>
   <h1 class="splash-title">Full <span>Mock Exam</span></h1>
-  <p class="splash-sub">90 questions across all 5 domains — including Multiple Choice, Drag & Drop, Performance-Based, and Definition questions. Timed at 90 minutes.</p>
+  <p class="splash-sub">90 questions across all 5 domains -- including Multiple Choice, Drag & Drop, Performance-Based, and Definition questions. Timed at 90 minutes.</p>
   <div class="exam-meta">
     <div class="meta-card"><div class="meta-num">90</div><div class="meta-label">Questions</div></div>
     <div class="meta-card"><div class="meta-num">90</div><div class="meta-label">Minutes</div></div>
@@ -211,7 +211,7 @@ body{font-family:var(--sans);background:var(--bg);color:var(--text);min-height:1
   </div>
   <div style="display:flex;gap:12px;margin-bottom:0;flex-wrap:wrap;justify-content:center">
     <button class="btn-start" onclick="startExam(false)">Begin Full Exam</button>
-    <button class="btn-start" id="weak-mode-btn" onclick="startExam(true)" style="background:var(--amber);display:none">⚠ Weak Domains Only</button>
+    <button class="btn-start" id="weak-mode-btn" onclick="startExam(true)" style="background:var(--amber);display:none">&excl; Weak Domains Only</button>
   </div>
   <div id="weak-mode-info" style="display:none;font-family:var(--mono);font-size:11px;color:var(--amber);margin-top:16px;text-align:center;max-width:400px"></div>
 </div>
@@ -221,7 +221,7 @@ body{font-family:var(--sans);background:var(--bg);color:var(--text);min-height:1
   <div class="exam-header">
     <span class="exam-progress-text" id="prog-text">1 / 90</span>
     <div class="exam-progress-bar"><div class="exam-progress-fill" id="prog-fill" style="width:1%"></div></div>
-    <span id="weak-mode-badge" style="display:none;font-family:var(--mono);font-size:10px;color:var(--amber);border:1px solid var(--amber);border-radius:4px;padding:2px 8px;white-space:nowrap">⚠ Weak Mode</span>
+    <span id="weak-mode-badge" style="display:none;font-family:var(--mono);font-size:10px;color:var(--amber);border:1px solid var(--amber);border-radius:4px;padding:2px 8px;white-space:nowrap">&excl; Weak Mode</span>
     <span class="timer" id="timer">90:00</span>
   </div>
   <div class="exam-body">
@@ -237,9 +237,9 @@ body{font-family:var(--sans);background:var(--bg);color:var(--text);min-height:1
     <div class="q-text" id="q-text"></div>
     <div id="q-body"></div>
     <div class="exam-nav">
-      <button class="btn-nav" id="btn-prev" onclick="goTo(currentQ-1)" disabled>← Prev</button>
+      <button class="btn-nav" id="btn-prev" onclick="goTo(currentQ-1)" disabled>&larr; Prev</button>
       <button class="btn-nav" id="btn-flag" onclick="flagQ()">Flag</button>
-      <button class="btn-nav primary" id="btn-next-q" onclick="nextOrSubmit()">Next →</button>
+      <button class="btn-nav primary" id="btn-next-q" onclick="nextOrSubmit()">Next &rarr;</button>
     </div>
   </div>
 </div>
@@ -261,7 +261,7 @@ body{font-family:var(--sans);background:var(--bg);color:var(--text);min-height:1
     <div class="r-stat"><div class="r-stat-val" style="color:var(--green)" id="r-correct">0</div><div class="r-stat-lbl">Correct</div></div>
     <div class="r-stat"><div class="r-stat-val" style="color:var(--red)" id="r-wrong">0</div><div class="r-stat-lbl">Wrong</div></div>
     <div class="r-stat"><div class="r-stat-val" style="color:var(--amber)" id="r-skipped">0</div><div class="r-stat-lbl">Skipped</div></div>
-    <div class="r-stat"><div class="r-stat-val" style="color:var(--text2)" id="r-time">—</div><div class="r-stat-lbl">Time used</div></div>
+    <div class="r-stat"><div class="r-stat-val" style="color:var(--text2)" id="r-time">--</div><div class="r-stat-lbl">Time used</div></div>
   </div>
   <div class="domain-bars">
     <div class="section-title">Domain Breakdown & Focus Areas</div>
@@ -321,29 +321,29 @@ const QUESTIONS = [
 {t:'mc',d:2,q:"Which of the following BEST describes cross-site scripting (XSS)?",o:["Injecting SQL into a database","Injecting malicious scripts into web pages viewed by other users","Intercepting HTTPS traffic","Brute-forcing a login page"],a:1,e:"XSS injects malicious client-side scripts (usually JavaScript) into web pages. When other users view the page, the script executes in their browser, potentially stealing cookies."},
 {t:'mc',d:2,q:"Which of the following is the BEST defense against phishing?",o:["Firewall rules","Security awareness training","Antivirus software","Intrusion detection system"],a:1,e:"Security awareness training is the most effective defense against phishing since the attack targets humans. Users who recognize phishing won't click malicious links."},
 {t:'mc',d:3,q:"Which network zone typically contains publicly accessible servers?",o:["Intranet","DMZ","LAN","VLAN"],a:1,e:"The DMZ (Demilitarized Zone) sits between the internet and the internal network, hosting public-facing services while limiting exposure to internal systems."},
-{t:'mc',d:3,q:"Which of the following BEST describes Zero Trust architecture?",o:["Trusting all internal network traffic","Never trust, always verify — even internal traffic","Blocking all external traffic","Only trusting VPN users"],a:1,e:"Zero Trust assumes no user, device, or network segment is inherently trusted, even inside the perimeter. Every access request must be continuously validated."},
+{t:'mc',d:3,q:"Which of the following BEST describes Zero Trust architecture?",o:["Trusting all internal network traffic","Never trust, always verify  --  even internal traffic","Blocking all external traffic","Only trusting VPN users"],a:1,e:"Zero Trust assumes no user, device, or network segment is inherently trusted, even inside the perimeter. Every access request must be continuously validated."},
 {t:'mc',d:3,q:"A company wants to separate IoT devices from corporate systems. Which technology BEST achieves this?",o:["VPN","VLAN","DMZ","Firewall rules only"],a:1,e:"VLANs logically segment a network, isolating IoT devices from corporate systems without physical separation. Combined with firewall rules, they limit lateral movement."},
-{t:'mc',d:3,q:"Which cloud model provides the most control to the customer?",o:["SaaS","PaaS","IaaS","FaaS"],a:2,e:"IaaS gives customers the most control — they manage the OS, applications, and data. PaaS manages the OS; SaaS manages everything."},
+{t:'mc',d:3,q:"Which cloud model provides the most control to the customer?",o:["SaaS","PaaS","IaaS","FaaS"],a:2,e:"IaaS gives customers the most control  --  they manage the OS, applications, and data. PaaS manages the OS; SaaS manages everything."},
 {t:'mc',d:3,q:"Which of the following BEST describes a stateful firewall?",o:["A firewall that only examines packet headers","A firewall that tracks the state of active connections","A firewall that uses AI to detect threats","A firewall installed on endpoints"],a:1,e:"A stateful firewall tracks the state of network connections and only allows packets that match a legitimate session, providing better security than stateless packet filtering."},
 {t:'mc',d:3,q:"Which of the following BEST describes a honeypot?",o:["A password cracking tool","A decoy system designed to attract and study attackers","A type of firewall","An encrypted channel"],a:1,e:"A honeypot is a deliberately vulnerable decoy system that attracts attackers, allowing security teams to study attack techniques and divert attackers from real systems."},
 {t:'mc',d:3,q:"Which backup type only backs up data changed since the last FULL backup?",o:["Full backup","Differential backup","Incremental backup","Snapshot"],a:1,e:"Differential backup copies all data changed since the last full backup. Incremental only copies changes since the last backup of any type."},
 {t:'mc',d:3,q:"A company needs systems to automatically failover if the primary fails. This is an example of:",o:["Load balancing","High availability","Disaster recovery","Business continuity"],a:1,e:"High availability (HA) designs systems with automatic failover so services continue with minimal interruption. DR is about recovering after a disaster."},
 {t:'mc',d:3,q:"Which protocol is used to securely transfer files as a replacement for FTP?",o:["FTPS only","SFTP","SCP only","HTTP"],a:1,e:"SFTP (SSH File Transfer Protocol) uses SSH to provide encrypted file transfer. FTP transmits in plaintext. SFTP uses a single port (22) and is generally preferred."},
-{t:'mc',d:3,q:"In a SaaS model, who is responsible for patching the application?",o:["The company's IT team","The SaaS vendor","Shared between both","The end users"],a:1,e:"In SaaS, the vendor manages and patches the application. The customer is responsible for data, user access, and configuration — the shared responsibility model."},
+{t:'mc',d:3,q:"In a SaaS model, who is responsible for patching the application?",o:["The company's IT team","The SaaS vendor","Shared between both","The end users"],a:1,e:"In SaaS, the vendor manages and patches the application. The customer is responsible for data, user access, and configuration  --  the shared responsibility model."},
 {t:'mc',d:3,q:"Which of the following BEST describes microsegmentation?",o:["Dividing the network into large zones","Creating granular security zones down to individual workloads","Using multiple firewalls","Splitting bandwidth between departments"],a:1,e:"Microsegmentation creates fine-grained security zones around individual workloads, limiting lateral movement. It's a key component of Zero Trust architecture."},
-{t:'mc',d:3,q:"What does RAID 1 provide?",o:["Striping for performance","Mirroring for redundancy","Striping with parity","No redundancy"],a:1,e:"RAID 1 mirrors data across two drives, providing redundancy — if one drive fails, the other has an identical copy."},
-{t:'mc',d:4,q:"Which of the following is the FIRST step in incident response?",o:["Containment","Eradication","Identification/Detection","Recovery"],a:2,e:"Incident response phases: Preparation → Identification → Containment → Eradication → Recovery → Lessons Learned. You must identify the incident before containing it."},
+{t:'mc',d:3,q:"What does RAID 1 provide?",o:["Striping for performance","Mirroring for redundancy","Striping with parity","No redundancy"],a:1,e:"RAID 1 mirrors data across two drives, providing redundancy  --  if one drive fails, the other has an identical copy."},
+{t:'mc',d:4,q:"Which of the following is the FIRST step in incident response?",o:["Containment","Eradication","Identification/Detection","Recovery"],a:2,e:"Incident response phases: Preparation &rarr; Identification &rarr; Containment &rarr; Eradication &rarr; Recovery &rarr; Lessons Learned. You must identify the incident before containing it."},
 {t:'mc',d:4,q:"Which tool is used to capture and analyze network packets?",o:["Nmap","Wireshark","Metasploit","Nessus"],a:1,e:"Wireshark is a packet sniffer that captures and displays packets in real time. Nmap scans for open ports; Nessus is a vulnerability scanner; Metasploit is a pen testing framework."},
 {t:'mc',d:4,q:"During a forensic investigation, what should an analyst capture FIRST?",o:["Hard drive contents","RAM/memory contents","Log files","Network configuration"],a:1,e:"RAM contains volatile data (running processes, active connections, encryption keys) that is lost when the system powers off. Capture RAM first before anything else."},
 {t:'mc',d:4,q:"Which concept is MOST important for evidence to be admissible in court?",o:["Encryption","Chain of custody","Log rotation","Data deduplication"],a:1,e:"Chain of custody documents who handled evidence, when, and how, ensuring its integrity and admissibility. Breaking the chain can invalidate evidence in court."},
 {t:'mc',d:4,q:"An analyst notices unusual outbound traffic to an unfamiliar IP at 3 AM daily. This MOST likely indicates:",o:["Normal automated updates","Command and control (C2) communication","A misconfigured backup job","DNS lookups"],a:1,e:"Regular beaconing to an external IP at odd hours is a strong indicator of malware communicating with a Command and Control (C2) server."},
-{t:'mc',d:4,q:"Which of the following BEST describes threat hunting?",o:["Waiting for SIEM alerts","Proactively searching for hidden threats not yet detected","Scanning for vulnerabilities","Running penetration tests"],a:1,e:"Threat hunting is proactive — analysts actively search for advanced threats that evaded automated detection, assuming the environment may already be compromised."},
+{t:'mc',d:4,q:"Which of the following BEST describes threat hunting?",o:["Waiting for SIEM alerts","Proactively searching for hidden threats not yet detected","Scanning for vulnerabilities","Running penetration tests"],a:1,e:"Threat hunting is proactive  --  analysts actively search for advanced threats that evaded automated detection, assuming the environment may already be compromised."},
 {t:'mc',d:4,q:"Which of the following BEST describes the purpose of patch management?",o:["To improve system performance","To remediate known vulnerabilities by applying vendor-supplied fixes","To monitor network traffic","To back up system configurations"],a:1,e:"Patch management systematically applies software updates that fix known vulnerabilities. Unpatched systems are a leading cause of successful attacks."},
-{t:'mc',d:4,q:"A company discovers malware on a workstation. What should be done FIRST?",o:["Reimage the system immediately","Isolate/contain the system from the network","Run antivirus","Notify all users"],a:1,e:"Containment is the immediate priority — isolating the infected system prevents malware from spreading. Reimaging comes later after investigation and evidence collection."},
+{t:'mc',d:4,q:"A company discovers malware on a workstation. What should be done FIRST?",o:["Reimage the system immediately","Isolate/contain the system from the network","Run antivirus","Notify all users"],a:1,e:"Containment is the immediate priority  --  isolating the infected system prevents malware from spreading. Reimaging comes later after investigation and evidence collection."},
 {t:'mc',d:4,q:"What is the MAIN purpose of UEBA?",o:["To manage user passwords","To detect anomalous behavior indicating insider threats or compromise","To provision user accounts","To enforce password policies"],a:1,e:"UEBA establishes baselines of normal behavior for users and systems, then alerts on deviations. It's particularly effective at detecting compromised accounts using legitimate credentials."},
 {t:'mc',d:4,q:"Which of the following is a detective control?",o:["Firewall","Security awareness training","CCTV / video surveillance","Encryption"],a:2,e:"Detective controls identify and record security events (CCTV, IDS, audit logs). Preventive controls stop events; corrective controls fix damage after events."},
 {t:'mc',d:4,q:"What is the purpose of network access control (NAC)?",o:["To manage DNS records","To ensure devices meet security requirements before granting access","To encrypt traffic","To manage IP addresses"],a:1,e:"NAC enforces security policy on devices before they connect, checking for OS patches, antivirus status, and configuration compliance. Non-compliant devices are quarantined."},
-{t:'mc',d:4,q:"Which of the following BEST describes the order of volatility in forensics?",o:["Start with most permanent data","Start with most volatile data (RAM first, then disk)","Order doesn't matter","Start with log files"],a:1,e:"The order of volatility dictates collecting ephemeral data first: RAM → running processes → network connections → disk → logs. Missing volatile data first means it's gone forever."},
+{t:'mc',d:4,q:"Which of the following BEST describes the order of volatility in forensics?",o:["Start with most permanent data","Start with most volatile data (RAM first, then disk)","Order doesn't matter","Start with log files"],a:1,e:"The order of volatility dictates collecting ephemeral data first: RAM &rarr; running processes &rarr; network connections &rarr; disk &rarr; logs. Missing volatile data first means it's gone forever."},
 {t:'mc',d:4,q:"Which type of analysis executes malware in a safe isolated environment?",o:["Static analysis","Dynamic analysis in a sandbox","Log analysis","Network forensics"],a:1,e:"Dynamic analysis (sandboxing) executes malware in an isolated environment to observe behavior. A sandbox prevents the malware from affecting real systems."},
 {t:'mc',d:4,q:"What is the purpose of a security baseline?",o:["To provide maximum security","To define the minimum acceptable security configuration","To document all vulnerabilities","To set bandwidth limits"],a:1,e:"A security baseline defines the minimum security requirements all systems must meet, ensuring consistent, acceptable security across the organization."},
 {t:'mc',d:4,q:"An employee's account is locked after multiple failed login attempts. This is an example of:",o:["MFA","Account lockout policy","Password complexity","Intrusion detection"],a:1,e:"Account lockout policies automatically disable accounts after a set number of failed attempts, protecting against brute force and password-guessing attacks."},
@@ -361,17 +361,17 @@ const QUESTIONS = [
 {t:'dd',d:1,q:"Match each cryptographic term to its correct category.",zones:["Symmetric Encryption","Asymmetric Encryption","Hashing"],items:["AES","RSA","SHA-256","3DES","ECC","MD5"],correct:{"AES":"Symmetric Encryption","3DES":"Symmetric Encryption","RSA":"Asymmetric Encryption","ECC":"Asymmetric Encryption","SHA-256":"Hashing","MD5":"Hashing"},e:"AES and 3DES are symmetric (same key). RSA and ECC are asymmetric (key pair). SHA-256 and MD5 are hashing algorithms that produce fixed-length digests."},
 {t:'dd',d:2,q:"Categorize each attack type into the correct attack category.",zones:["Social Engineering","Network Attacks","Malware"],items:["Phishing","DDoS","Ransomware","Vishing","ARP Poisoning","Trojan"],correct:{"Phishing":"Social Engineering","Vishing":"Social Engineering","DDoS":"Network Attacks","ARP Poisoning":"Network Attacks","Ransomware":"Malware","Trojan":"Malware"},e:"Social engineering manipulates people (phishing, vishing). Network attacks exploit protocols (DDoS, ARP poisoning). Malware is malicious software (ransomware, trojans)."},
 {t:'dd',d:3,q:"Match each cloud service model to what the customer is responsible for managing.",zones:["IaaS","PaaS","SaaS"],items:["OS & Runtime","Applications & Data","Only Data & Users","Network & Storage","Middleware","Everything above hardware"],correct:{"OS & Runtime":"IaaS","Network & Storage":"IaaS","Middleware":"PaaS","Applications & Data":"PaaS","Only Data & Users":"SaaS","Everything above hardware":"SaaS"},e:"IaaS: customer manages OS, network, storage. PaaS: customer manages middleware, apps, and data. SaaS: customer only manages data and user access."},
-{t:'dd',d:4,q:"Place each incident response step in the correct order by matching it to its phase number.",zones:["Phase 1","Phase 2","Phase 3","Phase 4","Phase 5","Phase 6"],items:["Preparation","Identification","Containment","Eradication","Recovery","Lessons Learned"],correct:{"Preparation":"Phase 1","Identification":"Phase 2","Containment":"Phase 3","Eradication":"Phase 4","Recovery":"Phase 5","Lessons Learned":"Phase 6"},e:"The NIST incident response lifecycle: Preparation → Identification → Containment → Eradication → Recovery → Lessons Learned. Memorize this order for the exam."},
+{t:'dd',d:4,q:"Place each incident response step in the correct order by matching it to its phase number.",zones:["Phase 1","Phase 2","Phase 3","Phase 4","Phase 5","Phase 6"],items:["Preparation","Identification","Containment","Eradication","Recovery","Lessons Learned"],correct:{"Preparation":"Phase 1","Identification":"Phase 2","Containment":"Phase 3","Eradication":"Phase 4","Recovery":"Phase 5","Lessons Learned":"Phase 6"},e:"The NIST incident response lifecycle: Preparation &rarr; Identification &rarr; Containment &rarr; Eradication &rarr; Recovery &rarr; Lessons Learned. Memorize this order for the exam."},
 {t:'dd',d:1,q:"Match each authentication factor to its correct category.",zones:["Something You Know","Something You Have","Something You Are"],items:["Password","Smart Card","Fingerprint","PIN","Hardware Token","Retina Scan"],correct:{"Password":"Something You Know","PIN":"Something You Know","Smart Card":"Something You Have","Hardware Token":"Something You Have","Fingerprint":"Something You Are","Retina Scan":"Something You Are"},e:"Authentication factors: Know (password, PIN), Have (smart card, hardware token), Are (fingerprint, retina scan). MFA requires two or more different factor types."},
 {t:'dd',d:5,q:"Match each risk response strategy to the correct scenario.",zones:["Risk Mitigation","Risk Transfer","Risk Avoidance","Risk Acceptance"],items:["Installing a firewall","Buying cyber insurance","Cancelling a risky project","Documenting a low-impact risk"],correct:{"Installing a firewall":"Risk Mitigation","Buying cyber insurance":"Risk Transfer","Cancelling a risky project":"Risk Avoidance","Documenting a low-impact risk":"Risk Acceptance"},e:"Mitigation: reduce the risk. Transfer: shift financial burden (insurance). Avoidance: stop the risky activity. Acceptance: acknowledge and document the risk."},
 {t:'dd',d:3,q:"Match each network security device to its primary function.",zones:["Monitors & Alerts Only","Monitors & Blocks","Filters Web Traffic","Decoy System"],items:["IDS","IPS","WAF","Honeypot"],correct:{"IDS":"Monitors & Alerts Only","IPS":"Monitors & Blocks","WAF":"Filters Web Traffic","Honeypot":"Decoy System"},e:"IDS detects and alerts only. IPS actively blocks threats inline. WAF filters HTTP/S traffic to web apps. A honeypot is a decoy that lures and studies attackers."},
 {t:'dd',d:2,q:"Match each type of malware to its defining characteristic.",zones:["Self-replicating via network","Requires user execution","Hides in the OS","Locks files for ransom"],items:["Worm","Trojan","Rootkit","Ransomware"],correct:{"Worm":"Self-replicating via network","Trojan":"Requires user execution","Rootkit":"Hides in the OS","Ransomware":"Locks files for ransom"},e:"Worms self-replicate across networks. Trojans disguise themselves and need user execution. Rootkits hide in the OS to maintain access. Ransomware encrypts files and demands payment."},
 
 // ── PERFORMANCE-BASED QUESTIONS (7 questions) ─────────────────────
-// PBQ 1 — Firewall Rule Configuration (Domain 3)
+// PBQ 1  --  Firewall Rule Configuration (Domain 3)
 {t:'pbq',d:3,sim:'firewall',
 q:"Configure the firewall rules to meet the following security policy. Set the Action, Protocol, and Port for each rule.",
-policy:"Policy requirements:\n• Allow HTTPS traffic from any source to the web server (10.0.1.10)\n• Allow SSH only from the admin subnet (192.168.1.0/24) to any internal host\n• Block all Telnet traffic from any source\n• Allow DNS queries from internal hosts to the DNS server (10.0.1.53)\n• Deny all other traffic by default",
+policy:"Policy requirements:\n* Allow HTTPS traffic from any source to the web server (10.0.1.10)\n* Allow SSH only from the admin subnet (192.168.1.0/24) to any internal host\n* Block all Telnet traffic from any source\n* Allow DNS queries from internal hosts to the DNS server (10.0.1.53)\n* Deny all other traffic by default",
 rules:[
   {id:0, src:'ANY',          dst:'10.0.1.10',       action:'',      proto:'',    port:'',   correctAction:'Allow', correctProto:'TCP', correctPort:'443',  hint:'HTTPS web traffic'},
   {id:1, src:'192.168.1.0/24',dst:'ANY',            action:'',      proto:'',    port:'',   correctAction:'Allow', correctProto:'TCP', correctPort:'22',   hint:'SSH admin access'},
@@ -379,9 +379,9 @@ rules:[
   {id:3, src:'INTERNAL',     dst:'10.0.1.53',       action:'',      proto:'',    port:'',   correctAction:'Allow', correctProto:'UDP', correctPort:'53',   hint:'DNS queries'},
   {id:4, src:'ANY',          dst:'ANY',             action:'',      proto:'',    port:'',   correctAction:'Deny',  correctProto:'ANY', correctPort:'ANY',  hint:'Default deny'},
 ],
-e:"HTTPS=TCP/443. SSH=TCP/22. Telnet=TCP/23 (always block — sends plaintext). DNS=UDP/53. The implicit deny-all rule at the bottom is a firewall best practice — block everything not explicitly permitted."},
+e:"HTTPS=TCP/443. SSH=TCP/22. Telnet=TCP/23 (always block  --  sends plaintext). DNS=UDP/53. The implicit deny-all rule at the bottom is a firewall best practice  --  block everything not explicitly permitted."},
 
-// PBQ 2 — Log Analysis (Domain 4)
+// PBQ 2  --  Log Analysis (Domain 4)
 {t:'pbq',d:4,sim:'logs',
 q:"Analyze the security log below. For each log entry, select the correct event classification.",
 logEntries:[
@@ -391,9 +391,9 @@ logEntries:[
   {id:3, time:'02:19:22', src:'10.0.0.15',    event:'7.2 GB outbound transfer to 198.51.100.44 via port 443', options:['Software update','Normal backup','Data exfiltration','Load balancing'], correct:2},
   {id:4, time:'02:21:10', src:'10.0.0.15',    event:'System log files deleted: /var/log/auth.log, /var/log/syslog', options:['Disk cleanup','Anti-forensics / evidence destruction','Log rotation','System update'], correct:1},
 ],
-e:"Brute force: hundreds of failed logins in minutes. Account compromise: successful login after brute force. Persistence: attacker creates new account to maintain access. Data exfiltration: large outbound transfer to unknown IP. Anti-forensics: deleting logs to cover tracks — a key indicator of an advanced attacker."},
+e:"Brute force: hundreds of failed logins in minutes. Account compromise: successful login after brute force. Persistence: attacker creates new account to maintain access. Data exfiltration: large outbound transfer to unknown IP. Anti-forensics: deleting logs to cover tracks  --  a key indicator of an advanced attacker."},
 
-// PBQ 3 — Network Zone Placement (Domain 3)
+// PBQ 3  --  Network Zone Placement (Domain 3)
 {t:'pbq',d:3,sim:'network',
 q:"Drag each device into the correct network security zone based on the security requirements.",
 instruction:"Security policy: Public-facing servers must be in the DMZ. Internal systems must be on the LAN. Security monitoring devices belong in the Management zone. Untrusted external connections go in the Perimeter.",
@@ -401,16 +401,16 @@ zones:['Internet / Perimeter','DMZ','Internal LAN','Management Zone'],
 devices:[
   {name:'Public Web Server',   correct:'DMZ',              icon:'🌐'},
   {name:'Email Gateway',       correct:'DMZ',              icon:'📧'},
-  {name:'HR Database',         correct:'Internal LAN',     icon:'🗄️'},
+  {name:'HR Database',         correct:'Internal LAN',     icon:'🗄'},
   {name:'Employee Workstation',correct:'Internal LAN',     icon:'💻'},
   {name:'SIEM Server',         correct:'Management Zone',  icon:'📊'},
   {name:'Firewall Admin Console',correct:'Management Zone',icon:'🔧'},
   {name:'External VPN Client', correct:'Internet / Perimeter', icon:'🔒'},
   {name:'Attacker System',     correct:'Internet / Perimeter', icon:'💀'},
 ],
-e:"DMZ hosts public-facing services (web, email) — exposed but isolated. Internal LAN holds sensitive systems inaccessible from the internet. Management zone isolates admin/monitoring tools to limit attack surface. External/untrusted connections stay in the perimeter, never touching internal resources directly."},
+e:"DMZ hosts public-facing services (web, email)  --  exposed but isolated. Internal LAN holds sensitive systems inaccessible from the internet. Management zone isolates admin/monitoring tools to limit attack surface. External/untrusted connections stay in the perimeter, never touching internal resources directly."},
 
-// PBQ 4 — Access Control List Configuration (Domain 1)
+// PBQ 4  --  Access Control List Configuration (Domain 1)
 {t:'pbq',d:1,sim:'acl',
 q:"Configure user permissions on the file server to meet the least privilege policy. Select the correct permission level for each user/group on each resource.",
 instruction:"Least privilege policy: Users get only the minimum access required for their role. HR files are restricted to HR staff. Finance data is restricted to Finance staff. Admins have full access. Guests have no access to sensitive data.",
@@ -422,12 +422,12 @@ users:[
   {name:'Guest User',    role:'Guest',    correctPerms:['No Access','No Access','Read',    'No Access']},
 ],
 permOptions:['No Access','Read','Read/Write','Full Control'],
-e:"Least privilege gives users only what they need. HR Manager reads/writes HR files only. Finance Analyst reads/writes Finance data only. IT Admin has full control for system management. Guests can only read the public wiki — no access to sensitive or system resources."},
+e:"Least privilege gives users only what they need. HR Manager reads/writes HR files only. Finance Analyst reads/writes Finance data only. IT Admin has full control for system management. Guests can only read the public wiki  --  no access to sensitive or system resources."},
 
-// PBQ 5 — Incident Response Order (Domain 4)
+// PBQ 5  --  Incident Response Order (Domain 4)
 {t:'pbq',d:4,sim:'order',
 q:"A ransomware attack has been detected on the corporate network. Place the incident response actions in the correct order by dragging them into sequence.",
-instruction:"Order the actions 1–6 from first to last based on NIST incident response procedures.",
+instruction:"Order the actions 1-6 from first to last based on NIST incident response procedures.",
 items:[
   {id:'a', text:'Isolate infected systems from the network',          correct:2},
   {id:'b', text:'Identify and confirm the ransomware infection',      correct:1},
@@ -436,22 +436,22 @@ items:[
   {id:'e', text:'Remove malware and patch the exploited vulnerability',correct:4},
   {id:'f', text:'Preserve evidence and image affected systems',       correct:3},
 ],
-e:"NIST IR order: 1-Identify (confirm incident), 2-Contain (isolate), 3-Evidence preservation (forensics), 4-Eradicate (remove malware + patch), 5-Recover (restore from backups), 6-Lessons Learned (improve process). Never skip containment — spreading ransomware makes recovery far harder."},
+e:"NIST IR order: 1-Identify (confirm incident), 2-Contain (isolate), 3-Evidence preservation (forensics), 4-Eradicate (remove malware + patch), 5-Recover (restore from backups), 6-Lessons Learned (improve process). Never skip containment  --  spreading ransomware makes recovery far harder."},
 
-// PBQ 6 — Wireless Security Configuration (Domain 3)
+// PBQ 6  --  Wireless Security Configuration (Domain 3)
 {t:'pbq',d:3,sim:'wireless',
 q:"Configure the wireless network settings for the corporate office. Select the correct value for each setting to meet the security policy.",
 instruction:"Security policy: Use the strongest available encryption. Disable insecure legacy protocols. Require enterprise authentication. Hide the network from casual scanning. Isolate guest traffic from corporate.",
 settings:[
-  {id:0, label:'Encryption Standard',   options:['WEP','WPA','WPA2-Personal','WPA3-Enterprise'], correct:3, hint:'Use the strongest — enterprise-grade'},
+  {id:0, label:'Encryption Standard',   options:['WEP','WPA','WPA2-Personal','WPA3-Enterprise'], correct:3, hint:'Use the strongest  --  enterprise-grade'},
   {id:1, label:'Authentication Method', options:['Open (no auth)','PSK (shared password)','802.1X / RADIUS','MAC filtering only'], correct:2, hint:'Enterprise auth with per-user credentials'},
   {id:2, label:'SSID Broadcast',        options:['Enabled','Disabled','Random rotation','Hidden SSID only'], correct:1, hint:'Reduce visibility to casual scanners'},
   {id:3, label:'Guest Network',         options:['Same VLAN as corporate','Isolated VLAN','Disabled','WEP encrypted'], correct:1, hint:'Segment guest from corporate traffic'},
   {id:4, label:'Legacy Protocol',       options:['Enable WEP for compatibility','Enable TKIP','Disable WEP and TKIP','Enable WPA1'], correct:2, hint:'Disable weak legacy encryption'},
 ],
-e:"WPA3-Enterprise provides the strongest wireless security. 802.1X/RADIUS enforces per-user authentication via a RADIUS server. Disabling SSID broadcast reduces visibility. Guest VLAN isolation prevents guests from reaching corporate systems. WEP and TKIP are broken — always disable them."},
+e:"WPA3-Enterprise provides the strongest wireless security. 802.1X/RADIUS enforces per-user authentication via a RADIUS server. Disabling SSID broadcast reduces visibility. Guest VLAN isolation prevents guests from reaching corporate systems. WEP and TKIP are broken  --  always disable them."},
 
-// PBQ 7 — PKI Certificate Troubleshooting (Domain 1)
+// PBQ 7  --  PKI Certificate Troubleshooting (Domain 1)
 {t:'pbq',d:1,sim:'pki',
 q:"A user reports they cannot access the company intranet and sees a browser certificate error. Review the certificate details and identify the issues.",
 certDetails:{
@@ -473,11 +473,11 @@ issues:[
   {id:4, statement:'SHA-1 signature algorithm is considered weak and deprecated',    correct:true},
   {id:5, statement:'The key usage extension is missing required values',             correct:false},
 ],
-e:"Four real issues: (1) Certificate expired Dec 2024, today is June 2025. (2) It was revoked in March 2025. (3) The SAN lists acme.com domains but the user is visiting intranet.company.com — hostname mismatch. (4) SHA-1 is deprecated and browsers warn on it. The CA and key usage are fine."},
+e:"Four real issues: (1) Certificate expired Dec 2024, today is June 2025. (2) It was revoked in March 2025. (3) The SAN lists acme.com domains but the user is visiting intranet.company.com  --  hostname mismatch. (4) SHA-1 is deprecated and browsers warn on it. The CA and key usage are fine."},
 
 // ── DEFINITION QUESTIONS (10 questions) ──────────────────────────
 {t:'def',d:1,mode:'term2def',term:'CIA Triad',hint:'The three core principles of information security',q:'What does the CIA Triad stand for?',o:['Confidentiality, Integrity, Availability','Control, Identity, Access','Cryptography, Integrity, Authentication','Confidentiality, Identification, Authorization'],a:0,e:'The CIA Triad is the foundation of information security: Confidentiality (only authorized access), Integrity (data not altered), Availability (systems accessible when needed).'},
-{t:'def',d:1,mode:'def2term',term:'Non-repudiation',definition:'A security principle ensuring that a party cannot deny the authenticity of their signature on a document or the sending of a message.',q:'Which term matches this definition?',o:['Authentication','Non-repudiation','Authorization','Integrity'],a:1,e:'Non-repudiation prevents someone from denying they performed an action. Digital signatures are the primary mechanism — only you have your private key.'},
+{t:'def',d:1,mode:'def2term',term:'Non-repudiation',definition:'A security principle ensuring that a party cannot deny the authenticity of their signature on a document or the sending of a message.',q:'Which term matches this definition?',o:['Authentication','Non-repudiation','Authorization','Integrity'],a:1,e:'Non-repudiation prevents someone from denying they performed an action. Digital signatures are the primary mechanism  --  only you have your private key.'},
 {t:'def',d:1,mode:'term2def',term:'TPM',hint:'A hardware chip used for cryptographic operations',q:'What does TPM stand for?',o:['Trusted Platform Module','Transfer Protocol Management','Terminal Policy Module','Trusted Packet Monitor'],a:0,e:'TPM (Trusted Platform Module) is a hardware chip that securely stores cryptographic keys and performs cryptographic operations. It enables features like BitLocker encryption.'},
 {t:'def',d:2,mode:'term2def',term:'APT',hint:'A long-term targeted attack often attributed to nation-states',q:'What does APT stand for?',o:['Advanced Persistent Threat','Automated Penetration Test','Active Protocol Threat','Application Proxy Tunneling'],a:0,e:'An APT (Advanced Persistent Threat) is a prolonged, stealthy attack where the threat actor maintains long-term access, often to exfiltrate data. Nation-state actors are common perpetrators.'},
 {t:'def',d:2,mode:'def2term',term:'Typosquatting',definition:'Registering domain names that are deliberate misspellings or look-alike versions of legitimate domains to trick users who make typographical errors.',q:'Which term matches this definition?',o:['Domain hijacking','DNS poisoning','Typosquatting','Watering hole'],a:2,e:'Typosquatting (URL hijacking) registers lookalike domains like "g00gle.com" to capture traffic from users who mistype URLs, often used in phishing campaigns.'},
@@ -516,7 +516,7 @@ window.addEventListener('DOMContentLoaded',()=>{
     document.getElementById('weak-mode-btn').style.display='inline-block';
     const info=document.getElementById('weak-mode-info');
     info.style.display='block';
-    info.textContent='⚠ Dashboard shows weak domains: D'+wd.join(', D')+' — Weak Mode focuses only on these.';
+    info.textContent='[!] Dashboard shows weak domains: D'+wd.join(', D')+'  --  Weak Mode focuses only on these.';
   }
 });
 
@@ -581,7 +581,7 @@ function renderQ(idx){
   const so=shuffledOptions[idx];
   document.getElementById('q-num').textContent='Question '+(idx+1);
   const dt=document.getElementById('q-domain');
-  dt.textContent='Domain '+q.d+' — '+DOMAINS[q.d].name;
+  dt.textContent='Domain '+q.d+'  --  '+DOMAINS[q.d].name;
   dt.className='q-domain-tag domain-'+q.d;
   const tt=document.getElementById('q-type-tag');
   if(q.t==='mc'){tt.textContent='Multiple Choice';tt.className='q-type-tag type-mc';}
@@ -592,7 +592,7 @@ function renderQ(idx){
   document.getElementById('prog-text').textContent=(idx+1)+' / '+examOrder.length;
   document.getElementById('prog-fill').style.width=((idx+1)/examOrder.length*100)+'%';
   document.getElementById('btn-prev').disabled=idx===0;
-  document.getElementById('btn-next-q').textContent=idx===examOrder.length-1?'Submit Exam':'Next →';
+  document.getElementById('btn-next-q').textContent=idx===examOrder.length-1?'Submit Exam':'Next ->';
   // Update dots
   document.querySelectorAll('.q-dot').forEach((d,i)=>{
     d.classList.toggle('current',i===idx);
@@ -705,7 +705,7 @@ function renderDD(q,so,idx,body){
       } else {
         placedHere.forEach(item=>{
           const el=document.createElement('div');el.className='dd-placed-item';
-          el.innerHTML=`${item} <span class="remove">×</span>`;
+          el.innerHTML=`${item} <span class="remove">&times;</span>`;
           el.onclick=()=>{
             // Return to bank
             placed[zone]=(placed[zone]||[]).filter(i=>i!==item);
@@ -785,7 +785,7 @@ function simBox(title,color='var(--amber)'){
 function simSelect(options,saved,onChange){
   const sel=document.createElement('select');
   sel.style.cssText='background:var(--surface3);border:1px solid var(--border2);border-radius:6px;color:var(--text);padding:5px 8px;font-family:var(--mono);font-size:12px;width:100%';
-  const blank=document.createElement('option');blank.value='';blank.textContent='— select —';sel.appendChild(blank);
+  const blank=document.createElement('option');blank.value='';blank.textContent=' --  select  -- ';sel.appendChild(blank);
   options.forEach(o=>{const opt=document.createElement('option');opt.value=o;opt.textContent=o;if(saved===o)opt.selected=true;sel.appendChild(opt);});
   sel.onchange=()=>onChange(sel.value);
   return sel;
@@ -857,7 +857,7 @@ function renderLogs(q,idx,body){
   if(!saved.selections) saved.selections={};
   const wrap=document.createElement('div');
 
-  const logBox=simBox('Security Event Log — Analyze each entry','var(--green)');
+  const logBox=simBox('Security Event Log  --  Analyze each entry','var(--green)');
   logBox.style.marginBottom='18px';
   wrap.appendChild(logBox);
 
@@ -902,7 +902,7 @@ function renderNetwork(q,idx,body){
 
   // Device bank
   const bankLabel=document.createElement('div');bankLabel.style.cssText='font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);margin-bottom:8px';
-  bankLabel.textContent='Devices — click to place';wrap.appendChild(bankLabel);
+  bankLabel.textContent='Devices  --  click to place';wrap.appendChild(bankLabel);
 
   const bankWrap=document.createElement('div');bankWrap.id='nw-bank-'+idx;bankWrap.style.cssText='display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px;min-height:48px;padding:10px;background:var(--surface);border:1px solid var(--border);border-radius:10px';
 
@@ -975,7 +975,7 @@ function renderNetwork(q,idx,body){
 
   rebuild();
   wrap.appendChild(bankWrap);
-  const zonesLabel=document.createElement('div');zonesLabel.style.cssText='font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);margin-bottom:8px';zonesLabel.textContent='Network Zones — click a zone after selecting a device';
+  const zonesLabel=document.createElement('div');zonesLabel.style.cssText='font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);margin-bottom:8px';zonesLabel.textContent='Network Zones  --  click a zone after selecting a device';
   wrap.appendChild(zonesLabel);
   wrap.appendChild(zonesWrap);
   body.appendChild(wrap);
@@ -1036,7 +1036,7 @@ function renderOrder(q,idx,body){
   instBox.appendChild(instTxt);wrap.appendChild(instBox);
 
   const hint=document.createElement('div');hint.style.cssText='font-family:var(--mono);font-size:11px;color:var(--text3);margin-bottom:14px';
-  hint.textContent='Use the ↑ ↓ arrows to reorder the steps into the correct sequence.';wrap.appendChild(hint);
+  hint.textContent='Use the ^ v arrows to reorder the steps into the correct sequence.';wrap.appendChild(hint);
 
   const list=document.createElement('div');list.style.cssText='display:flex;flex-direction:column;gap:8px;margin-bottom:32px';
 
@@ -1051,8 +1051,8 @@ function renderOrder(q,idx,body){
       const txt=document.createElement('div');txt.style.cssText='flex:1;font-size:14px';txt.textContent=item.text;
 
       const btns=document.createElement('div');btns.style.cssText='display:flex;flex-direction:column;gap:4px';
-      const up=document.createElement('button');up.textContent='↑';up.style.cssText='background:transparent;border:1px solid var(--border2);border-radius:4px;color:var(--text2);cursor:pointer;padding:2px 8px;font-size:12px';
-      const dn=document.createElement('button');dn.textContent='↓';dn.style.cssText=up.style.cssText;
+      const up=document.createElement('button');up.textContent='^';up.style.cssText='background:transparent;border:1px solid var(--border2);border-radius:4px;color:var(--text2);cursor:pointer;padding:2px 8px;font-size:12px';
+      const dn=document.createElement('button');dn.textContent='v';dn.style.cssText=up.style.cssText;
 
       up.disabled=pos===0;dn.disabled=pos===saved.order.length-1;
       up.onclick=()=>{if(pos>0){[saved.order[pos-1],saved.order[pos]]=[saved.order[pos],saved.order[pos-1]];answers[idx]=saved;updateDot(idx,'pbq');rebuild();}};
@@ -1080,7 +1080,7 @@ function renderWireless(q,idx,body){
   instBox.appendChild(instTxt);wrap.appendChild(instBox);
 
   const panel=document.createElement('div');panel.style.cssText='background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:32px';
-  const panelTitle=document.createElement('div');panelTitle.style.cssText='font-family:var(--mono);font-size:11px;color:var(--text3);margin-bottom:16px;letter-spacing:.1em;text-transform:uppercase';panelTitle.textContent='Wireless Access Point — Configuration Panel';
+  const panelTitle=document.createElement('div');panelTitle.style.cssText='font-family:var(--mono);font-size:11px;color:var(--text3);margin-bottom:16px;letter-spacing:.1em;text-transform:uppercase';panelTitle.textContent='Wireless Access Point  --  Configuration Panel';
   panel.appendChild(panelTitle);
 
   q.settings.forEach(setting=>{
@@ -1113,7 +1113,7 @@ function renderPKI(q,idx,body){
   if(!saved.checked) saved.checked={};
   const wrap=document.createElement('div');
 
-  const certBox=simBox('Certificate Details — Browser Certificate Viewer','var(--red)');
+  const certBox=simBox('Certificate Details  --  Browser Certificate Viewer','var(--red)');
   const cd=q.certDetails;
   const fields=[
     ['Subject',        cd.subject],
@@ -1249,9 +1249,9 @@ function getYourAnswer(qi,ans){
     if(!ans||ans==='done') return '(incomplete)';
     if(sim==='firewall') return q.rules.map(r=>ans.rules&&ans.rules[r.id]?`${r.hint}: ${ans.rules[r.id].action}/${ans.rules[r.id].proto}/${ans.rules[r.id].port}`:'(blank)').join(' | ');
     if(sim==='logs') return q.logEntries.map(e=>`${e.time}: ${ans.selections&&ans.selections[e.id]||'(blank)'}`).join(' | ');
-    if(sim==='network') return q.devices.map(d=>`${d.name}→${ans.placed&&ans.placed[d.name]||'(unplaced)'}`).join(' | ');
+    if(sim==='network') return q.devices.map(d=>`${d.name}&rarr;${ans.placed&&ans.placed[d.name]||'(unplaced)'}`).join(' | ');
     if(sim==='acl') return q.users.map(u=>`${u.name}: ${q.resources.map((r,ri)=>ans.perms&&ans.perms[u.name]&&ans.perms[u.name][r]||'?').join('/')}`).join(' | ');
-    if(sim==='order') return ans.order?ans.order.map((id,i)=>`${i+1}.${q.items.find(x=>x.id===id)?.text.slice(0,25)}`).join(' → '):'(unordered)';
+    if(sim==='order') return ans.order?ans.order.map((id,i)=>`${i+1}.${q.items.find(x=>x.id===id)?.text.slice(0,25)}`).join(' &rarr; '):'(unordered)';
     if(sim==='wireless') return q.settings.map(s=>`${s.label}: ${ans.settings&&ans.settings[s.id]||'(blank)'}`).join(' | ');
     if(sim==='pki') return q.issues.filter(i=>ans.checked&&ans.checked[i.id]).map(i=>i.statement.slice(0,40)).join(' | ')||'(none selected)';
     return '(see simulation)';
@@ -1263,14 +1263,14 @@ function getCorrectAnswer(qi){
   const q=QUESTIONS[examOrder[qi]];
   const so=shuffledOptions[qi];
   if(q.t==='mc'||q.t==='def') return so.opts[so.correct];
-  if(q.t==='dd') return Object.entries(q.correct).map(([item,zone])=>`${item} → ${zone}`).join(' | ');
+  if(q.t==='dd') return Object.entries(q.correct).map(([item,zone])=>`${item} &rarr; ${zone}`).join(' | ');
   if(q.t==='pbq'){
     const sim=q.sim;
     if(sim==='firewall') return q.rules.map(r=>`${r.hint}: ${r.correctAction}/${r.correctProto}/${r.correctPort}`).join(' | ');
     if(sim==='logs') return q.logEntries.map(e=>`${e.time}: ${e.options[e.correct]}`).join(' | ');
-    if(sim==='network') return q.devices.map(d=>`${d.name}→${d.correct}`).join(' | ');
+    if(sim==='network') return q.devices.map(d=>`${d.name}&rarr;${d.correct}`).join(' | ');
     if(sim==='acl') return q.users.map(u=>`${u.name}: ${u.correctPerms.join('/')}`).join(' | ');
-    if(sim==='order') return [...q.items].sort((a,b)=>a.correct-b.correct).map(i=>`${i.correct}.${i.text.slice(0,30)}`).join(' → ');
+    if(sim==='order') return [...q.items].sort((a,b)=>a.correct-b.correct).map(i=>`${i.correct}.${i.text.slice(0,30)}`).join(' &rarr; ');
     if(sim==='wireless') return q.settings.map(s=>`${s.label}: ${s.options[s.correct]}`).join(' | ');
     if(sim==='pki') return q.issues.filter(i=>i.correct).map(i=>i.statement.slice(0,40)).join(' | ');
     return '';
@@ -1299,9 +1299,9 @@ function buildResults(){
   const ring=document.getElementById('score-ring');
   ring.style.stroke=passed?'#3dd68c':'#ff5f6d';
   setTimeout(()=>{ring.style.strokeDashoffset=offset;ring.style.transition='stroke-dashoffset 1.5s ease';},100);
-  document.getElementById('verdict').textContent=passed?'You passed! 🎯':'Not quite — keep studying';
+  document.getElementById('verdict').textContent=passed?'You passed! 🎯':'Not quite  --  keep studying';
   document.getElementById('verdict').style.color=passed?'#3dd68c':'#ff5f6d';
-  document.getElementById('verdict-sub').textContent=passed?`You scored ${pct}% — above the 80% passing threshold.`:`You scored ${pct}% — you need 80% to pass. Focus on the domains below.`;
+  document.getElementById('verdict-sub').textContent=passed?`You scored ${pct}%  --  above the 80% passing threshold.`:`You scored ${pct}%  --  you need 80% to pass. Focus on the domains below.`;
   document.getElementById('r-correct').textContent=correct;
   document.getElementById('r-wrong').textContent=wrong;
   document.getElementById('r-skipped').textContent=skipped;
@@ -1316,9 +1316,9 @@ function buildResults(){
     const dpct=s.total>0?Math.round(s.correct/s.total*100):0;
     logToDashboard(parseInt(d),'Mock Exam A',dpct);
     const focusClass=dpct<60?'focus-high':dpct<80?'focus-mid':'focus-low';
-    const focusMsg=dpct<60?'⚠ High priority — study this domain intensively':dpct<80?'↑ Moderate — review weak areas':'✓ Strong — maintain with occasional review';
+    const focusMsg=dpct<60?'&#9888; High priority  --  study this domain intensively':dpct<80?'&uarr; Moderate  --  review weak areas':'&#10003; Strong  --  maintain with occasional review';
     const row=document.createElement('div');row.className='domain-row';
-    row.innerHTML=`<div class="domain-row-header"><span class="domain-name">${dom.name}</span><span class="domain-score">${s.correct}/${s.total} &nbsp; ${dpct}%</span></div><div class="domain-bar-bg"><div class="domain-bar-fill" style="width:0%;background:${dom.color}" data-w="${dpct}"></div></div><div class="domain-focus ${focusClass}" style="margin-top:4px;font-size:12px">${focusMsg} · Exam weight: ${dom.weight}%</div>`;
+    row.innerHTML=`<div class="domain-row-header"><span class="domain-name">${dom.name}</span><span class="domain-score">${s.correct}/${s.total} &nbsp; ${dpct}%</span></div><div class="domain-bar-bg"><div class="domain-bar-fill" style="width:0%;background:${dom.color}" data-w="${dpct}"></div></div><div class="domain-focus ${focusClass}" style="margin-top:4px;font-size:12px">${focusMsg} &middot; Exam weight: ${dom.weight}%</div>`;
     barsEl.appendChild(row);
   });
   setTimeout(()=>{document.querySelectorAll('.domain-bar-fill').forEach(b=>{b.style.transition='width 1s ease';b.style.width=b.getAttribute('data-w')+'%';});},200);

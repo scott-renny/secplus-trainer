@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ports & Protocols Trainer · Security+</title>
+<title>Ports & Protocols Trainer &middot; Security+</title>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -111,7 +111,7 @@ h1 em{font-style:normal;color:var(--accent)}
 .btn-qo.alt{border-color:var(--purple);color:var(--purple);background:rgba(191,135,255,0.06)}
 .btn-qo.alt:hover{background:rgba(191,135,255,0.14)}
 
-/* ── DRAG AND DROP ── */
+/* -- DRAG AND DROP -- */
 .dnd-round-info{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
 .dnd-round-lbl{font-family:var(--mono);font-size:10px;color:var(--text3);letter-spacing:.1em;text-transform:uppercase}
 .dnd-score-lbl{font-family:var(--mono);font-size:12px;color:var(--accent)}
@@ -202,32 +202,32 @@ h1 em{font-style:normal;color:var(--accent)}
 
 <div class="header">
   <div>
-    <div class="eyebrow">CompTIA Security+ · SY0-701</div>
+    <div class="eyebrow">CompTIA Security+ &middot; SY0-701</div>
     <h1>Ports &amp; <em>Protocols</em> Trainer</h1>
     <div class="header-meta">
       <span id="today-lbl"></span>
-      <span style="color:var(--text3)">·</span>
-      <span><span class="dot" style="background:var(--green)"></span>Domain 1 · 3 · 4</span>
+      <span style="color:var(--text3)">&middot;</span>
+      <span><span class="dot" style="background:var(--green)"></span>Domain 1 &middot; 3 &middot; 4</span>
     </div>
   </div>
-  <a href="secplus_dashboard_3.html" class="btn-back">← Dashboard</a>
+  <a href="secplus_dashboard_3.html" class="btn-back">&larr; Dashboard</a>
 </div>
 
 <div class="stat-bar">
   <div class="sb"><div class="sb-line" style="background:var(--accent)"></div><div class="sb-lbl">Ports in DB</div><div class="sb-val" id="stat-total" style="color:var(--accent)">40</div></div>
-  <div class="sb"><div class="sb-line" style="background:var(--green)"></div><div class="sb-lbl">Quiz Score</div><div class="sb-val" id="stat-score" style="color:var(--green)">—</div></div>
-  <div class="sb"><div class="sb-line" style="background:var(--amber)"></div><div class="sb-lbl">DnD Score</div><div class="sb-val" id="stat-dnd" style="color:var(--amber)">—</div></div>
+  <div class="sb"><div class="sb-line" style="background:var(--green)"></div><div class="sb-lbl">Quiz Score</div><div class="sb-val" id="stat-score" style="color:var(--green)">--</div></div>
+  <div class="sb"><div class="sb-line" style="background:var(--amber)"></div><div class="sb-lbl">DnD Score</div><div class="sb-val" id="stat-dnd" style="color:var(--amber)">--</div></div>
   <div class="sb"><div class="sb-line" style="background:var(--purple)"></div><div class="sb-lbl">Mastered</div><div class="sb-val" id="stat-mastered" style="color:var(--purple)">0</div></div>
 </div>
 
 <div class="tabs">
   <button class="tab active" onclick="switchTab('quiz')">🎯 Quiz</button>
   <button class="tab" onclick="switchTab('dnd')">🔀 Drag &amp; Drop</button>
-  <button class="tab" onclick="switchTab('flash')">⚡ Flashcards</button>
+  <button class="tab" onclick="switchTab('flash')">! Flashcards</button>
   <button class="tab" onclick="switchTab('ref')">📋 Reference</button>
 </div>
 
-<!-- ═══ QUIZ ═══ -->
+<!-- === QUIZ === -->
 <div class="mode-wrap active" id="tab-quiz">
   <div class="filter-strip">
     <span class="filter-label">Difficulty:</span>
@@ -253,7 +253,7 @@ h1 em{font-style:normal;color:var(--accent)}
 
     <div class="q-card">
       <div class="q-badges" id="q-badges"></div>
-      <div class="q-stem" id="q-stem">—</div>
+      <div class="q-stem" id="q-stem">--</div>
       <div class="q-hint" id="q-hint"></div>
     </div>
 
@@ -264,7 +264,7 @@ h1 em{font-style:normal;color:var(--accent)}
       <div class="fb-msg" id="fb-msg"></div>
     </div>
 
-    <button class="btn-next" id="btn-next" onclick="nextQuestion()" disabled>Next →</button>
+    <button class="btn-next" id="btn-next" onclick="nextQuestion()" disabled>Next &rarr;</button>
   </div>
 
   <div class="quiz-over" id="quiz-over">
@@ -283,19 +283,19 @@ h1 em{font-style:normal;color:var(--accent)}
     <div class="qo-title" id="qo-title">Quiz Complete</div>
     <div class="qo-sub" id="qo-sub"></div>
     <div class="qo-btns">
-      <button class="btn-qo" onclick="startQuiz()">↺ Retry</button>
+      <button class="btn-qo" onclick="startQuiz()">reset Retry</button>
       <button class="btn-qo alt" onclick="switchTab('dnd')">🔀 Drag &amp; Drop</button>
     </div>
   </div>
 </div>
 
-<!-- ═══ DRAG & DROP ═══ -->
+<!-- === DRAG & DROP === -->
 <div class="mode-wrap" id="tab-dnd">
   <div class="filter-strip">
     <span class="filter-label">Round type:</span>
-    <button class="chip active" onclick="setDndMode('port-to-name',this)">Port → Protocol</button>
-    <button class="chip" onclick="setDndMode('name-to-port',this)">Protocol → Port</button>
-    <button class="chip" onclick="setDndMode('port-to-transport',this)">Port → Transport</button>
+    <button class="chip active" onclick="setDndMode('port-to-name',this)">Port &rarr; Protocol</button>
+    <button class="chip" onclick="setDndMode('name-to-port',this)">Protocol &rarr; Port</button>
+    <button class="chip" onclick="setDndMode('port-to-transport',this)">Port &rarr; Transport</button>
     <button class="chip" onclick="setDndMode('mixed',this)">Mixed</button>
   </div>
 
@@ -314,7 +314,7 @@ h1 em{font-style:normal;color:var(--accent)}
 
     <div class="dnd-feedback" id="dnd-feedback"></div>
     <button class="btn-check" id="btn-check" onclick="checkDnd()">Check Answers</button>
-    <button class="btn-next" id="btn-dnd-next" onclick="nextDndRound()" style="display:none">Next Round →</button>
+    <button class="btn-next" id="btn-dnd-next" onclick="nextDndRound()" style="display:none">Next Round &rarr;</button>
   </div>
 
   <div class="dnd-over" id="dnd-over">
@@ -333,13 +333,13 @@ h1 em{font-style:normal;color:var(--accent)}
     <div class="qo-title" id="dnd-final-title">Matching Complete</div>
     <div class="qo-sub" id="dnd-final-sub"></div>
     <div class="qo-btns">
-      <button class="btn-qo" onclick="startDnd()">↺ New Game</button>
+      <button class="btn-qo" onclick="startDnd()">reset New Game</button>
       <button class="btn-qo alt" onclick="switchTab('quiz')">🎯 Back to Quiz</button>
     </div>
   </div>
 </div>
 
-<!-- ═══ FLASHCARDS ═══ -->
+<!-- === FLASHCARDS === -->
 <div class="mode-wrap" id="tab-flash">
   <div class="filter-strip">
     <span class="filter-label">Filter:</span>
@@ -351,9 +351,9 @@ h1 em{font-style:normal;color:var(--accent)}
     <button class="chip" onclick="setFlashFilter('network',this)">Network</button>
   </div>
   <div class="flash-nav">
-    <button class="flash-nav-btn" onclick="flashNav(-1)">‹</button>
+    <button class="flash-nav-btn" onclick="flashNav(-1)"><</button>
     <span class="flash-counter" id="flash-counter">1 / 1</span>
-    <button class="flash-nav-btn" onclick="flashNav(1)">›</button>
+    <button class="flash-nav-btn" onclick="flashNav(1)">></button>
   </div>
   <div class="flashcard-container" onclick="flipCard()">
     <div class="flashcard" id="flashcard">
@@ -363,16 +363,16 @@ h1 em{font-style:normal;color:var(--accent)}
   </div>
   <div style="font-family:var(--mono);font-size:10px;color:var(--text3);text-align:center;margin-bottom:14px">tap card to flip</div>
   <div class="flash-controls">
-    <button class="btn-fc missed" onclick="flashMark(false)">✗ Missed</button>
+    <button class="btn-fc missed" onclick="flashMark(false)">X Missed</button>
     <button class="btn-fc" onclick="flashNav(1)">Skip</button>
-    <button class="btn-fc knew" onclick="flashMark(true)">✓ Knew It</button>
+    <button class="btn-fc knew" onclick="flashMark(true)">OK Knew It</button>
   </div>
 </div>
 
-<!-- ═══ REFERENCE ═══ -->
+<!-- === REFERENCE === -->
 <div class="mode-wrap" id="tab-ref">
   <div class="search-row">
-    <input class="search-box" type="text" id="ref-search" placeholder="Search port, name, keyword…" oninput="renderRef()">
+    <input class="search-box" type="text" id="ref-search" placeholder="Search port, name, keyword..." oninput="renderRef()">
     <div class="filter-strip" style="margin:0;gap:6px">
       <button class="chip active" onclick="setRefT('all',this)">All</button>
       <button class="chip" onclick="setRefT('TCP',this)">TCP</button>
@@ -407,7 +407,7 @@ const PORTS = [
   {port:20,  name:'FTP Data',      desc:'FTP active-mode data transfer channel',              transport:'TCP',  cat:'common',  diff:'easy'},
   {port:21,  name:'FTP Control',   desc:'FTP command and control channel',                    transport:'TCP',  cat:'common',  diff:'easy'},
   {port:22,  name:'SSH',           desc:'Encrypted remote shell and secure tunneling',         transport:'TCP',  cat:'secure',  diff:'easy'},
-  {port:23,  name:'Telnet',        desc:'Plaintext remote terminal — legacy and insecure',    transport:'TCP',  cat:'remote',  diff:'easy'},
+  {port:23,  name:'Telnet',        desc:'Plaintext remote terminal  --  legacy and insecure',    transport:'TCP',  cat:'remote',  diff:'easy'},
   {port:25,  name:'SMTP',          desc:'Send outbound email between mail servers',            transport:'TCP',  cat:'email',   diff:'easy'},
   {port:53,  name:'DNS',           desc:'Resolve domain names to IP addresses',               transport:'Both', cat:'network', diff:'easy'},
   {port:80,  name:'HTTP',          desc:'Unencrypted web traffic',                             transport:'TCP',  cat:'common',  diff:'easy'},
@@ -418,14 +418,14 @@ const PORTS = [
   // MEDIUM
   {port:67,  name:'DHCP Server',   desc:'Server dynamically assigns IP addresses to clients', transport:'UDP',  cat:'network', diff:'medium'},
   {port:68,  name:'DHCP Client',   desc:'Client broadcasts to discover DHCP servers',         transport:'UDP',  cat:'network', diff:'medium'},
-  {port:69,  name:'TFTP',          desc:'Trivial FTP — no auth, used for PXE boot and firmware',transport:'UDP',cat:'common',  diff:'medium'},
+  {port:69,  name:'TFTP',          desc:'Trivial FTP  --  no auth, used for PXE boot and firmware',transport:'UDP',cat:'common',  diff:'medium'},
   {port:88,  name:'Kerberos',      desc:'Ticket-based network authentication for Active Directory',transport:'Both',cat:'secure',diff:'medium'},
   {port:123, name:'NTP',           desc:'Synchronize system clocks across network devices',   transport:'UDP',  cat:'network', diff:'medium'},
   {port:161, name:'SNMP',          desc:'Query and monitor network device status and stats',   transport:'UDP',  cat:'network', diff:'medium'},
   {port:162, name:'SNMP Trap',     desc:'Unsolicited alert sent from managed device to NMS',  transport:'UDP',  cat:'network', diff:'medium'},
   {port:389, name:'LDAP',          desc:'Query and modify directory services like Active Directory',transport:'TCP',cat:'network',diff:'medium'},
   {port:445, name:'SMB',           desc:'Windows file and printer sharing; exploited by WannaCry',transport:'TCP',cat:'common',diff:'medium'},
-  {port:465, name:'SMTPS',         desc:'SMTP over implicit SSL — legacy secure email sending', transport:'TCP', cat:'email',   diff:'medium'},
+  {port:465, name:'SMTPS',         desc:'SMTP over implicit SSL  --  legacy secure email sending', transport:'TCP', cat:'email',   diff:'medium'},
   {port:514, name:'Syslog',        desc:'Forward system events and audit logs to a collector', transport:'UDP',  cat:'network', diff:'medium'},
   {port:587, name:'SMTP Submit',   desc:'Client-to-server email submission using STARTTLS',    transport:'TCP',  cat:'email',   diff:'medium'},
   {port:636, name:'LDAPS',         desc:'LDAP wrapped in TLS/SSL encryption',                  transport:'TCP',  cat:'secure',  diff:'medium'},
@@ -440,7 +440,7 @@ const PORTS = [
   {port:500, name:'IKE/ISAKMP',    desc:'IPSec Internet Key Exchange for VPN tunnel setup',    transport:'UDP',  cat:'secure',  diff:'hard'},
   {port:1433,name:'MSSQL',         desc:'Microsoft SQL Server default database listener',       transport:'TCP',  cat:'common',  diff:'hard'},
   {port:1701,name:'L2TP',          desc:'Layer 2 Tunneling Protocol often paired with IPSec',  transport:'UDP',  cat:'secure',  diff:'hard'},
-  {port:1723,name:'PPTP',          desc:'Point-to-Point Tunneling Protocol — weak legacy VPN', transport:'TCP',  cat:'secure',  diff:'hard'},
+  {port:1723,name:'PPTP',          desc:'Point-to-Point Tunneling Protocol  --  weak legacy VPN', transport:'TCP',  cat:'secure',  diff:'hard'},
   {port:3306,name:'MySQL',         desc:'MySQL and MariaDB database default listener port',     transport:'TCP',  cat:'common',  diff:'hard'},
   {port:5061,name:'SIPS',          desc:'SIP over TLS for encrypted VoIP signaling',            transport:'TCP',  cat:'secure',  diff:'hard'},
   {port:6514,name:'Syslog TLS',    desc:'Syslog over TLS for tamper-evident audit logging',    transport:'TCP',  cat:'secure',  diff:'hard'},
@@ -483,13 +483,13 @@ let quizDiff='all', quizCat='all';
 let quizPool=[], qIdx=0, qCorrect=0, qAnswered=false;
 
 const Q_TYPES=[
-  {id:'port-to-name',      label:'Port → Protocol',      diff:'easy'},
-  {id:'name-to-port',      label:'Protocol → Port',      diff:'easy'},
-  {id:'port-to-desc',      label:'Port → Description',   diff:'medium'},
-  {id:'desc-to-name',      label:'Description → Protocol',diff:'medium'},
-  {id:'name-to-desc',      label:'Protocol → Description',diff:'medium'},
-  {id:'port-to-transport', label:'Port → Transport',      diff:'medium'},
-  {id:'port-to-cat',       label:'Port → Category',       diff:'hard'},
+  {id:'port-to-name',      label:'Port -> Protocol',      diff:'easy'},
+  {id:'name-to-port',      label:'Protocol -> Port',      diff:'easy'},
+  {id:'port-to-desc',      label:'Port -> Description',   diff:'medium'},
+  {id:'desc-to-name',      label:'Description -> Protocol',diff:'medium'},
+  {id:'name-to-desc',      label:'Protocol -> Description',diff:'medium'},
+  {id:'port-to-transport', label:'Port -> Transport',      diff:'medium'},
+  {id:'port-to-cat',       label:'Port -> Category',       diff:'hard'},
   {id:'spot-the-secure',   label:'Spot the Secure Port',  diff:'hard'},
   {id:'odd-one-out',       label:'Odd One Out',           diff:'hard'},
   {id:'same-transport',    label:'Same Transport?',        diff:'hard'},
@@ -571,7 +571,7 @@ function renderQ(){
     hint='Which protocol uses this port number?';
     correct=p.name;
     opts=shuffle4([correct,...distractors(p,x=>x.name,correct,bigPool)]);
-    fb=`Port ${p.port} = ${p.name} (${p.transport}) — ${p.desc}`;
+    fb=`Port ${p.port} = ${p.name} (${p.transport})  --  ${p.desc}`;
     renderMCQ(opts,correct,x=>x,x=>bigPool.find(q=>q.name===x)?.desc||'',fb);
   }
   else if(qt.id==='name-to-port'){
@@ -623,7 +623,7 @@ function renderQ(){
     correct=p.cat;
     const cats=[...new Set(PORTS.map(x=>x.cat))];
     opts=shuffle4([correct,...cats.filter(c=>c!==correct)]);
-    fb=`Port ${p.port} (${p.name}) is a ${p.cat} protocol — ${p.desc}`;
+    fb=`Port ${p.port} (${p.name}) is a ${p.cat} protocol  --  ${p.desc}`;
     renderMCQ(opts,correct,x=>x,x=>{const eg=PORTS.filter(q=>q.cat===x).slice(0,2).map(q=>q.name).join(', ');return eg?`e.g. ${eg}`:'';},fb);
   }
   else if(qt.id==='spot-the-secure'){
@@ -635,7 +635,7 @@ function renderQ(){
     document.getElementById('q-stem').innerHTML='Which protocol provides <em style="color:var(--green);font-style:normal">encrypted</em> communication?';
     document.getElementById('q-hint').textContent='Only one of these is inherently encrypted/secure';
     renderRawMCQ(candidates.map(x=>({text:`${x.name} (${x.port})`,sub:x.desc,isCorrect:x===sp})),
-      `${sp.name} (port ${sp.port}) is a secure/encrypted protocol — ${sp.desc}`);
+      `${sp.name} (port ${sp.port}) is a secure/encrypted protocol  --  ${sp.desc}`);
     return;
   }
   else if(qt.id==='odd-one-out'){
@@ -647,7 +647,7 @@ function renderQ(){
     const group=[...majority,odd].sort(()=>Math.random()-.5);
     document.getElementById('q-stem').innerHTML='Which port is the <em style="color:var(--red);font-style:normal">odd one out</em> by transport protocol?';
     document.getElementById('q-hint').textContent='Three share the same transport layer; one is different';
-    renderRawMCQ(group.map(x=>({text:`${x.name} (${x.port})`,sub:x.transport+' · '+x.desc,isCorrect:x===odd})),
+    renderRawMCQ(group.map(x=>({text:`${x.name} (${x.port})`,sub:x.transport+' . '+x.desc,isCorrect:x===odd})),
       `${odd.name} (port ${odd.port}) uses ${odd.transport} while the others use TCP`);
     return;
   }
@@ -656,12 +656,12 @@ function renderQ(){
     const a=pool2[Math.floor(Math.random()*pool2.length)];
     let b; do{b=pool2[Math.floor(Math.random()*pool2.length)];}while(b===a);
     const same=a.transport===b.transport||a.transport==='Both'||b.transport==='Both';
-    correct=same?'Yes — Same Transport':'No — Different Transport';
-    const wrong=same?'No — Different Transport':'Yes — Same Transport';
+    correct=same?'Yes  --  Same Transport':'No  --  Different Transport';
+    const wrong=same?'No  --  Different Transport':'Yes  --  Same Transport';
     stem=`Does <em style="color:var(--accent);font-style:normal">${a.name} (${a.port})</em> use the same transport as <em style="color:var(--purple);font-style:normal">${b.name} (${b.port})</em>?`;
     hint=`Think: ${a.name} = ${a.transport} | ${b.name} = ${b.transport}`;
     opts=[correct,wrong,'Cannot be determined','They share no ports'].slice(0,4);
-    fb=`${a.name} uses ${a.transport}, ${b.name} uses ${b.transport} — they are ${same?'the same':'different'}`;
+    fb=`${a.name} uses ${a.transport}, ${b.name} uses ${b.transport}  --  they are ${same?'the same':'different'}`;
     document.getElementById('q-stem').innerHTML=stem;
     document.getElementById('q-hint').textContent=hint;
     renderMCQ(opts.sort(()=>Math.random()-.5),correct,x=>x,()=>'',fb);
@@ -755,7 +755,7 @@ function selectMCQ(btn, isCorrect, correct, labelFn, fb){
 function showFB(ok, text){
   const fb=document.getElementById('q-feedback');
   fb.className='feedback-row '+(ok?'correct':'wrong');
-  document.getElementById('fb-icon').textContent=ok?'✓':'✗';
+  document.getElementById('fb-icon').textContent=ok?'[OK]':'[X]';
   document.getElementById('fb-msg').innerHTML=ok
     ?`<strong>Correct!</strong> ${text}`
     :`<strong>Not quite.</strong> ${text}`;
@@ -773,7 +773,7 @@ function showQuizOver(){
   document.getElementById('qo-arc').style.stroke=color;
   setTimeout(()=>{document.getElementById('qo-arc').style.strokeDashoffset=376.99-(pct/100)*376.99;},60);
   document.getElementById('qo-title').textContent=pct>=80?'Port Specialist 🔒':pct>=60?'Almost There':'Keep Drilling';
-  document.getElementById('qo-sub').textContent=`${qCorrect} of ${quizPool.length} correct · ${pct}%`;
+  document.getElementById('qo-sub').textContent=`${qCorrect} of ${quizPool.length} correct . ${pct}%`;
   const el=document.getElementById('stat-score');
   el.textContent=pct+'%'; el.style.color=color;
   logToDashboard(3,'Ports & Protocols Trainer',pct);
@@ -843,7 +843,7 @@ function buildDndUI(ports, mode){
     if(!tokenValues.includes('UDP')) tokenValues.push('UDP');
     if(!tokenValues.includes('Both')) tokenValues.push('Both');
     tokenValues=tokenValues.sort(()=>Math.random()-.5);
-    targets=ports.map(p=>({id:String(p.port), label:`${p.port} · ${p.name}`, sub:p.desc, correct:p.transport}));
+    targets=ports.map(p=>({id:String(p.port), label:`${p.port} . ${p.name}`, sub:p.desc, correct:p.transport}));
   }
 
   // Render tokens
@@ -955,14 +955,14 @@ function checkDnd(){
     row.classList.add(ok?'correct-drop':'wrong-drop');
     const dz=document.getElementById('dz-'+CSS.escape(id));
     if(dz&&!ok){
-      dz.innerHTML+=`<div style="font-family:var(--mono);font-size:9px;color:var(--red);margin-top:2px">✗ was: ${placed}</div><div style="font-family:var(--mono);font-size:9px;color:var(--green)">✓ ans: ${expected}</div>`;
+      dz.innerHTML+=`<div style="font-family:var(--mono);font-size:9px;color:var(--red);margin-top:2px">[X] was: ${placed}</div><div style="font-family:var(--mono);font-size:9px;color:var(--green)">[OK] ans: ${expected}</div>`;
     }
   });
   dndTotalCorrect+=correct; dndTotalItems+=rows.length;
   document.getElementById('dnd-score-lbl').textContent=`${dndTotalCorrect} / ${dndTotalItems} correct`;
   const fb=document.getElementById('dnd-feedback');
   fb.className='dnd-feedback show '+(correct===rows.length?'good':'bad');
-  fb.textContent=correct===rows.length?`Perfect round! ${correct}/${rows.length} ✓`:`${correct}/${rows.length} correct — review highlighted rows`;
+  fb.textContent=correct===rows.length?`Perfect round! ${correct}/${rows.length} [OK]`:`${correct}/${rows.length} correct  --  review highlighted rows`;
   const el=document.getElementById('stat-dnd');
   const pct=Math.round((dndTotalCorrect/dndTotalItems)*100);
   el.textContent=pct+'%'; el.style.color=pct>=80?'var(--green)':pct>=60?'var(--amber)':'var(--red)';
@@ -1001,7 +1001,7 @@ function renderFlash(){
   document.getElementById('card-front').innerHTML=`
     <div class="card-eyebrow">What protocol uses this port?</div>
     <div class="card-main">${p.port}</div>
-    <div class="card-sub">${p.transport} · <span style="color:${CAT_COLOR[p.cat]}">${p.cat}</span> · <span style="color:${DIFF_COLOR[p.diff]}">${p.diff}</span>${mastered.has(p.port)?' · <span style="color:var(--green)">✓ mastered</span>':''}</div>`;
+    <div class="card-sub">${p.transport} . <span style="color:${CAT_COLOR[p.cat]}">${p.cat}</span> . <span style="color:${DIFF_COLOR[p.diff]}">${p.diff}</span>${mastered.has(p.port)?' . <span style="color:var(--green)">[OK] mastered</span>':''}</div>`;
   document.getElementById('card-back').innerHTML=`
     <div class="card-eyebrow">Port ${p.port}</div>
     <div class="card-name">${p.name}</div>

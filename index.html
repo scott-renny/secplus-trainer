@@ -45,8 +45,8 @@ h1 span{color:var(--accent)}
 .grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:48px}
 
 /* CARD */
-.card{background:var(--panel);border:1px solid var(--border2);border-radius:16px;padding:22px 20px 20px;text-decoration:none;color:inherit;display:flex;flex-direction:column;transition:all .2s;position:relative;overflow:hidden}
-.card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--card-accent,var(--accent));opacity:.7;transition:opacity .2s}
+.card{background:var(--panel);border:1px solid var(--border2);border-radius:16px;padding:22px 20px 20px;text-decoration:none;color:inherit;display:flex;flex-direction:column;transition:all .2s;position:relative;overflow:hidden;cursor:pointer;-webkit-tap-highlight-color:rgba(0,229,255,0.1);touch-action:manipulation}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--card-accent,var(--accent));opacity:.7;transition:opacity .2s;pointer-events:none}
 .card:hover{border-color:var(--border3);background:var(--panel2);transform:translateY(-2px)}
 .card:hover::before{opacity:1}
 .card-icon{font-size:24px;margin-bottom:10px;display:block}
@@ -100,7 +100,7 @@ h1 span{color:var(--accent)}
   <div class="hero">
     <div class="eyebrow">CompTIA Security+ &nbsp;&middot;&nbsp; SY0-701 &nbsp;&middot;&nbsp; Full Study Suite</div>
     <h1>Everything You Need to<br><span>Pass Security+</span></h1>
-    <p class="hero-sub">A self-built collection of 15 interactive study tools covering all 5 Security+ domains — from targeted domain trainers to full timed mock exams with performance-based questions. No logins, no subscriptions, no internet required.</p>
+    <p class="hero-sub">A self-built collection of 15 interactive study tools covering all 5 Security+ domains -- from targeted domain trainers to full timed mock exams with performance-based questions. No logins, no subscriptions, no internet required.</p>
     <div class="hero-stats">
       <div class="hero-stat"><div class="hero-stat-val">360</div><div class="hero-stat-lbl">Unique exam questions</div></div>
       <div class="hero-stat"><div class="hero-stat-val">15</div><div class="hero-stat-lbl">Study tools</div></div>
@@ -131,7 +131,7 @@ h1 span{color:var(--accent)}
     <a href="secplus_mock_exam_B.html" class="card" style="--card-accent:var(--purple)">
       <span class="card-icon">📋</span>
       <div class="card-title">Mock Exam B</div>
-      <div class="card-desc">Unique question set — PKI deep dive, cloud shared responsibility, BEC variants, and firewall configuration performance questions.</div>
+      <div class="card-desc">Unique question set -- PKI deep dive, cloud shared responsibility, BEC variants, and firewall configuration performance questions.</div>
       <div class="card-chips"><span class="chip c-purple">90 Questions</span><span class="chip">90 min</span><span class="chip">All Domains</span></div>
       <div class="launch-arrow">&rarr;</div>
     </a>
@@ -247,7 +247,7 @@ h1 span{color:var(--accent)}
     <a href="secplus_dashboard.html" class="card" style="--card-accent:var(--accent)">
       <span class="card-icon">&#128202;</span>
       <div class="card-title">Readiness Dashboard</div>
-      <div class="card-desc">Central hub reading session results from all trainers and exams. Shows domain accuracy, study streaks, recent sessions, and overall exam readiness score — all powered by the same localStorage data every tool writes to automatically.</div>
+      <div class="card-desc">Central hub reading session results from all trainers and exams. Shows domain accuracy, study streaks, recent sessions, and overall exam readiness score -- all powered by the same localStorage data every tool writes to automatically.</div>
       <div class="card-chips">
         <span class="chip c-accent">All Tools</span>
         <span class="chip c-green">Auto Logged</span>
@@ -260,7 +260,7 @@ h1 span{color:var(--accent)}
       <div class="dash-explain-title">How tracking works</div>
       <div class="dash-explain-item"><div class="dash-dot" style="background:var(--accent)"></div><div class="dash-explain-text">Every trainer and exam automatically logs your score to the browser's localStorage when you finish a session</div></div>
       <div class="dash-explain-item"><div class="dash-dot" style="background:var(--green)"></div><div class="dash-explain-text">The dashboard reads all sessions and breaks down your accuracy by domain across every tool you have used</div></div>
-      <div class="dash-explain-item"><div class="dash-dot" style="background:var(--amber)"></div><div class="dash-explain-text">No login, no server, no account required — all data stays in your browser and only you can see it</div></div>
+      <div class="dash-explain-item"><div class="dash-dot" style="background:var(--amber)"></div><div class="dash-explain-text">No login, no server, no account required -- all data stays in your browser and only you can see it</div></div>
       <div class="dash-explain-item"><div class="dash-dot" style="background:var(--purple)"></div><div class="dash-explain-text">You can also manually log flashcard, video, and reading sessions directly in the dashboard</div></div>
     </div>
 

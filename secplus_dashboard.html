@@ -125,13 +125,13 @@ input[type=range]{flex:1;accent-color:var(--accent)}
 
   <div class="header">
     <div>
-      <div class="eyebrow">CompTIA Security+ · SY0-701</div>
+      <div class="eyebrow">CompTIA Security+ &middot; SY0-701</div>
       <h1>Exam <em>Readiness</em> Dashboard</h1>
       <div class="header-meta">
         <span id="today"></span>
-        <span style="color:var(--text3)">·</span>
+        <span style="color:var(--text3)">&middot;</span>
         <span id="sync-lbl"><span class="dot" style="background:var(--green)"></span>ready</span>
-        <button class="btn-sm" onclick="manualRefresh()">↻ refresh</button>
+        <button class="btn-sm" onclick="manualRefresh()">refresh refresh</button>
       </div>
     </div>
 
@@ -153,7 +153,7 @@ input[type=range]{flex:1;accent-color:var(--accent)}
       <div class="edit-row" id="edit-row">
         <input type="date" id="date-input">
         <button class="btn-accent" onclick="saveDate()">Save</button>
-        <button class="btn-ghost" onclick="cancelEdit()">✕</button>
+        <button class="btn-ghost" onclick="cancelEdit()">x</button>
       </div>
     </div>
   </div>
@@ -179,10 +179,10 @@ input[type=range]{flex:1;accent-color:var(--accent)}
   </div>
 
   <div class="stats">
-    <div class="sc"><div class="sc-line" style="background:var(--accent)"></div><div class="sc-lbl">Overall Score</div><div class="sc-val" id="s-overall" style="color:var(--accent)">—</div></div>
+    <div class="sc"><div class="sc-line" style="background:var(--accent)"></div><div class="sc-lbl">Overall Score</div><div class="sc-val" id="s-overall" style="color:var(--accent)">--</div></div>
     <div class="sc"><div class="sc-line" style="background:var(--green)"></div><div class="sc-lbl">Sessions Logged</div><div class="sc-val" id="s-sess" style="color:var(--green)">0</div></div>
-    <div class="sc"><div class="sc-line" style="background:var(--red)"></div><div class="sc-lbl">Weakest Domain</div><div class="sc-val sm" id="s-weak" style="color:var(--red)">—</div></div>
-    <div class="sc"><div class="sc-line" style="background:var(--amber)"></div><div class="sc-lbl">Strongest Domain</div><div class="sc-val sm" id="s-strong" style="color:var(--amber)">—</div></div>
+    <div class="sc"><div class="sc-line" style="background:var(--red)"></div><div class="sc-lbl">Weakest Domain</div><div class="sc-val sm" id="s-weak" style="color:var(--red)">--</div></div>
+    <div class="sc"><div class="sc-line" style="background:var(--amber)"></div><div class="sc-lbl">Strongest Domain</div><div class="sc-val sm" id="s-strong" style="color:var(--amber)">--</div></div>
   </div>
 
   <div class="sec-lbl">Domain Readiness</div>
@@ -190,17 +190,17 @@ input[type=range]{flex:1;accent-color:var(--accent)}
 
   <div class="log-card">
     <div class="log-title">Log a Study Session</div>
-    <div class="log-sub">Track any tool — updates domain scores and readiness instantly</div>
+    <div class="log-sub">Track any tool -- updates domain scores and readiness instantly</div>
     <div class="log-grid">
       <div>
         <div class="f-lbl">Domain</div>
         <select id="log-domain">
           <option value="0">All Domains (Mock Exam)</option>
-          <option value="1">Domain 1 — General Security Concepts</option>
-          <option value="2">Domain 2 — Threats, Vulnerabilities & Mitigations</option>
-          <option value="3">Domain 3 — Security Architecture</option>
-          <option value="4">Domain 4 — Security Operations</option>
-          <option value="5">Domain 5 — Security Program Management</option>
+          <option value="1">Domain 1 -- General Security Concepts</option>
+          <option value="2">Domain 2 -- Threats, Vulnerabilities & Mitigations</option>
+          <option value="3">Domain 3 -- Security Architecture</option>
+          <option value="4">Domain 4 -- Security Operations</option>
+          <option value="5">Domain 5 -- Security Program Management</option>
         </select>
       </div>
       <div>
@@ -213,8 +213,11 @@ input[type=range]{flex:1;accent-color:var(--accent)}
           <option>Acronym Trainer</option>
           <option>Definitions Trainer</option>
           <option>Ports &amp; Protocols Trainer</option>
+          <option>General Security Concepts Trainer</option>
           <option>Malware &amp; Phishing Trainer</option>
           <option>Threats &amp; Vulnerabilities Trainer</option>
+          <option>Network Architecture Trainer</option>
+          <option>Defense Strategies Trainer</option>
           <option>Frameworks &amp; Standards Trainer</option>
           <option>Risk Management Trainer</option>
           <option>Flashcards</option>
@@ -239,7 +242,7 @@ input[type=range]{flex:1;accent-color:var(--accent)}
       <button class="btn-clr" onclick="clearHistory()">Clear All</button>
     </div>
     <div class="hist-list" id="hist-list">
-      <div class="empty">No sessions logged yet — add your first one above</div>
+      <div class="empty">No sessions logged yet -- add your first one above</div>
     </div>
   </div>
 
@@ -249,19 +252,19 @@ input[type=range]{flex:1;accent-color:var(--accent)}
       <div style="background:var(--panel2);border:1px solid var(--border2);border-radius:10px;padding:14px;text-align:center">
         <div style="font-size:22px;margin-bottom:8px">🎯</div>
         <div style="font-size:13px;font-weight:600;margin-bottom:4px">Mock Exam</div>
-        <div style="font-family:var(--mono);font-size:10px;color:var(--text3);margin-bottom:10px">90 questions · 4 types</div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--text3);margin-bottom:10px">90 questions &middot; 4 types</div>
         <div style="font-family:var(--mono);font-size:10px;color:var(--text2)">Open secplus_mock_exam.html</div>
       </div>
       <div style="background:var(--panel2);border:1px solid var(--border2);border-radius:10px;padding:14px;text-align:center">
-        <div style="font-size:22px;margin-bottom:8px">⚡</div>
+        <div style="font-size:22px;margin-bottom:8px">!</div>
         <div style="font-size:13px;font-weight:600;margin-bottom:4px">Acronym Trainer</div>
-        <div style="font-family:var(--mono);font-size:10px;color:var(--text3);margin-bottom:10px">160+ acronyms · SY0-701</div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--text3);margin-bottom:10px">160+ acronyms &middot; SY0-701</div>
         <div style="font-family:var(--mono);font-size:10px;color:var(--text2)">Open secplus_acronym_trainer_full.html</div>
       </div>
       <div style="background:var(--panel2);border:1px solid var(--border2);border-radius:10px;padding:14px;text-align:center">
         <div style="font-size:22px;margin-bottom:8px">📖</div>
         <div style="font-size:13px;font-weight:600;margin-bottom:4px">Definitions Trainer</div>
-        <div style="font-family:var(--mono);font-size:10px;color:var(--text3);margin-bottom:10px">180 terms · 2 modes</div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--text3);margin-bottom:10px">180 terms &middot; 2 modes</div>
         <div style="font-family:var(--mono);font-size:10px;color:var(--text2)">Open secplus_definitions_trainer.html</div>
       </div>
     </div>
@@ -314,12 +317,12 @@ function scoreColor(p){if(p===null||p===undefined)return'#3a4060';if(p>=80)retur
 function statusFor(p){if(p===null)return{cls:'none',label:'No data'};if(p>=80)return{cls:'strong',label:'Strong'};if(p>=65)return{cls:'mid',label:'Review'};return{cls:'low',label:'Focus'};}
 function readinessLabel(o){
   if(o===0)return{title:'Getting Started',verdict:'Log your first study session to begin tracking.',color:'#6b7494'};
-  if(o<40)return{title:'Early Stage',verdict:'Solid start — keep building across all domains.',color:'#00e5ff'};
-  if(o<55)return{title:'Building Momentum',verdict:'Making progress — focus on your weakest domains.',color:'#00e5ff'};
-  if(o<65)return{title:'Developing',verdict:'Over halfway — tighten up your weak spots.',color:'#ffcc00'};
-  if(o<80)return{title:'Getting Close',verdict:'Almost at the 80% passing threshold — push weak domains over 80%.',color:'#ffcc00'};
-  if(o<85)return{title:'Exam Ready ✓',verdict:'Tracking above the 80% pass threshold — stay consistent.',color:'#00ff88'};
-  return{title:'High Confidence',verdict:'Excellent readiness — review and sit confidently.',color:'#00ff88'};
+  if(o<40)return{title:'Early Stage',verdict:'Solid start  --  keep building across all domains.',color:'#00e5ff'};
+  if(o<55)return{title:'Building Momentum',verdict:'Making progress  --  focus on your weakest domains.',color:'#00e5ff'};
+  if(o<65)return{title:'Developing',verdict:'Over halfway  --  tighten up your weak spots.',color:'#ffcc00'};
+  if(o<80)return{title:'Getting Close',verdict:'Almost at the 80% passing threshold  --  push weak domains over 80%.',color:'#ffcc00'};
+  if(o<85)return{title:'Exam Ready [OK]',verdict:'Tracking above the 80% pass threshold  --  stay consistent.',color:'#00ff88'};
+  return{title:'High Confidence',verdict:'Excellent readiness  --  review and sit confidently.',color:'#00ff88'};
 }
 
 function renderAll(){
@@ -343,10 +346,10 @@ function renderAll(){
   const scored=Object.entries(ds).filter(([,v])=>v!==null);
   const weak=scored.length?scored.reduce((a,b)=>a[1]<b[1]?a:b):null;
   const strong=scored.length?scored.reduce((a,b)=>a[1]>b[1]?a:b):null;
-  document.getElementById('s-overall').textContent=overall>0?overall+'%':'—';
+  document.getElementById('s-overall').textContent=overall>0?overall+'%':' -- ';
   document.getElementById('s-sess').textContent=sessions.length;
-  document.getElementById('s-weak').textContent=weak?`D${weak[0]} · ${DOMAINS[weak[0]].short}`:'—';
-  document.getElementById('s-strong').textContent=strong?`D${strong[0]} · ${DOMAINS[strong[0]].short}`:'—';
+  document.getElementById('s-weak').textContent=weak?`D${weak[0]} . ${DOMAINS[weak[0]].short}`:' -- ';
+  document.getElementById('s-strong').textContent=strong?`D${strong[0]} . ${DOMAINS[strong[0]].short}`:' -- ';
 
   // Domains
   const grid=document.getElementById('dom-grid');grid.innerHTML='';
@@ -356,30 +359,30 @@ function renderAll(){
     const stC={strong:{bg:'rgba(0,255,136,0.08)',c:'#00ff88'},mid:{bg:'rgba(255,204,0,0.08)',c:'#ffcc00'},low:{bg:'rgba(255,61,90,0.08)',c:'#ff3d5a'},none:{bg:'#1a1e29',c:'#3a4060'}};
     const s2=stC[st.cls];
     const card=document.createElement('div');card.className='dom-card';
-    card.innerHTML=`<div class="dom-head"><div class="dom-name">${info.name}</div><div class="dom-pct" style="color:${c}">${sc!==null?sc+'%':'—'}</div></div><div class="dom-wt">Exam weight: ${info.weight}% · D${d}</div><div class="dom-bar-bg"><div class="dom-bar" style="width:${sc??0}%;background:${c}"></div></div><div class="dom-foot"><div class="dom-sess">${sessCount} session${sessCount!==1?'s':''}</div><div class="badge" style="background:${s2.bg};color:${s2.c}">${st.label}</div></div>`;
+    card.innerHTML=`<div class="dom-head"><div class="dom-name">${info.name}</div><div class="dom-pct" style="color:${c}">${sc!==null?sc+'%':' -- '}</div></div><div class="dom-wt">Exam weight: ${info.weight}% . D${d}</div><div class="dom-bar-bg"><div class="dom-bar" style="width:${sc??0}%;background:${c}"></div></div><div class="dom-foot"><div class="dom-sess">${sessCount} session${sessCount!==1?'s':''}</div><div class="badge" style="background:${s2.bg};color:${s2.c}">${st.label}</div></div>`;
     grid.appendChild(card);
   });
 
   // History
   document.getElementById('sess-ct').textContent=`(${sessions.length})`;
   const list=document.getElementById('hist-list');list.innerHTML='';
-  if(!sessions.length){list.innerHTML='<div class="empty">No sessions logged yet — add your first one above</div>';}
+  if(!sessions.length){list.innerHTML='<div class="empty">No sessions logged yet  --  add your first one above</div>';}
   else{[...sessions].reverse().forEach(sess=>{
     const di=sess.domain===0?{name:'All Domains',color:'#00e5ff'}:DOMAINS[sess.domain];
     const sc=scoreColor(sess.score);
     const item=document.createElement('div');item.className='h-item';
-    item.innerHTML=`<div class="h-dot" style="background:${di?.color||'#00e5ff'}"></div><div class="h-name">${di?.name||'Unknown'}</div><div class="h-sc" style="color:${sc}">${sess.score}%</div><div class="h-type">${sess.type}</div><div class="h-date">${sess.date}</div><button class="btn-del" onclick="delSession(${sess.ts})" title="Remove">×</button>`;
+    item.innerHTML=`<div class="h-dot" style="background:${di?.color||'#00e5ff'}"></div><div class="h-name">${di?.name||'Unknown'}</div><div class="h-sc" style="color:${sc}">${sess.score}%</div><div class="h-type">${sess.type}</div><div class="h-date">${sess.date}</div><button class="btn-del" onclick="delSession(${sess.ts})" title="Remove">x</button>`;
     list.appendChild(item);
   });}
 
   // Plan
   const planItems=[];
-  if(daysLeft>0&&daysLeft<=14&&sessions.length>0)planItems.push({cls:'high',p:'urgent',t:`${daysLeft} days left — focus on highest-weight weak domains`,a:'time critical'});
-  Object.entries(DOMAINS).forEach(([d,info])=>{if(ds[d]===null)planItems.push({cls:'high',p:'high',t:`Domain ${d} (${info.name}) — no data yet`,a:`${info.weight}% of exam`});});
-  scored.filter(([,v])=>v<65).sort((a,b)=>a[1]-b[1]).forEach(([d,v])=>planItems.push({cls:'high',p:'high',t:`D${d} · ${DOMAINS[d].short} — ${v}% needs intensive work (target: 80%)`,a:`${DOMAINS[d].weight}% of exam`}));
-  scored.filter(([,v])=>v>=65&&v<80).forEach(([d,v])=>planItems.push({cls:'mid',p:'review',t:`D${d} · ${DOMAINS[d].short} — ${v}% — push this above 80%`,a:`${DOMAINS[d].weight}% of exam`}));
-  scored.filter(([,v])=>v>=80).forEach(([d,v])=>planItems.push({cls:'low',p:'maintain',t:`D${d} · ${DOMAINS[d].short} — ${v}% above 80% target ✓`,a:'keep reviewing'}));
-  if(!planItems.length)planItems.push({cls:'mid',p:'start',t:'Log study sessions to get personalized recommendations',a:'↑ log below'});
+  if(daysLeft>0&&daysLeft<=14&&sessions.length>0)planItems.push({cls:'high',p:'urgent',t:`${daysLeft} days left  --  focus on highest-weight weak domains`,a:'time critical'});
+  Object.entries(DOMAINS).forEach(([d,info])=>{if(ds[d]===null)planItems.push({cls:'high',p:'high',t:`Domain ${d} (${info.name})  --  no data yet`,a:`${info.weight}% of exam`});});
+  scored.filter(([,v])=>v<65).sort((a,b)=>a[1]-b[1]).forEach(([d,v])=>planItems.push({cls:'high',p:'high',t:`D${d} . ${DOMAINS[d].short}  --  ${v}% needs intensive work (target: 80%)`,a:`${DOMAINS[d].weight}% of exam`}));
+  scored.filter(([,v])=>v>=65&&v<80).forEach(([d,v])=>planItems.push({cls:'mid',p:'review',t:`D${d} . ${DOMAINS[d].short}  --  ${v}%  --  push this above 80%`,a:`${DOMAINS[d].weight}% of exam`}));
+  scored.filter(([,v])=>v>=80).forEach(([d,v])=>planItems.push({cls:'low',p:'maintain',t:`D${d} . ${DOMAINS[d].short}  --  ${v}% above 80% target [OK]`,a:'keep reviewing'}));
+  if(!planItems.length)planItems.push({cls:'mid',p:'start',t:'Log study sessions to get personalized recommendations',a:'^ log below'});
   const pc={high:{bg:'rgba(255,61,90,0.08)',b:'rgba(255,61,90,0.2)',c:'#ff3d5a'},mid:{bg:'rgba(255,204,0,0.08)',b:'rgba(255,204,0,0.2)',c:'#ffcc00'},low:{bg:'rgba(0,255,136,0.08)',b:'rgba(0,255,136,0.15)',c:'#00ff88'}};
   const pl=document.getElementById('plan-list');pl.innerHTML='';
   planItems.slice(0,6).forEach(item=>{const c=pc[item.cls]||pc.mid;const el=document.createElement('div');el.className='plan-item';el.style.cssText=`background:${c.bg};border:1px solid ${c.b}`;el.innerHTML=`<span class="p-pri" style="color:${c.c}">${item.p}</span><span class="p-txt">${item.t}</span><span class="p-act">${item.a}</span>`;pl.appendChild(el);});
@@ -395,7 +398,7 @@ function logSession(){
   document.getElementById('log-score').value=75;
   document.getElementById('score-lbl').textContent='75%';
   document.getElementById('score-disp').textContent='75%';
-  const btn=document.getElementById('btn-log');btn.textContent='✓ Saved!';btn.classList.add('saved');
+  const btn=document.getElementById('btn-log');btn.textContent='[OK] Saved!';btn.classList.add('saved');
   setTimeout(()=>{btn.textContent='+ Log Session';btn.classList.remove('saved');},2000);
   setSynced();
 }

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Security+ Acronym Trainer — Full SY0-701</title>
+<title>Security+ Acronym Trainer -- Full SY0-701</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -83,16 +83,16 @@
 <div class="container">
 
   <header>
-    <div class="logo">CompTIA Security+ · SY0-701</div>
+    <div class="logo">CompTIA Security+ &middot; SY0-701</div>
     <h1>Acronym <span>Trainer</span></h1>
-    <p class="subtitle">Full exam acronym bank — 160+ terms across all domains</p>
+    <p class="subtitle">Full exam acronym bank -- 160+ terms across all domains</p>
   </header>
 
   <div class="stats">
     <div class="stat"><div class="stat-label">Correct</div><div class="stat-value green" id="s-correct">0</div></div>
     <div class="stat"><div class="stat-label">Wrong</div><div class="stat-value red" id="s-wrong">0</div></div>
     <div class="stat"><div class="stat-label">Streak</div><div class="stat-value amber" id="s-streak">0</div></div>
-    <div class="stat"><div class="stat-label">Accuracy</div><div class="stat-value purple" id="s-acc">—</div></div>
+    <div class="stat"><div class="stat-label">Accuracy</div><div class="stat-value purple" id="s-acc">--</div></div>
   </div>
 
   <div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
@@ -109,7 +109,7 @@
       <button class="cat-btn" onclick="setCategory('cloud',this)">Cloud & Virt</button>
       <button class="cat-btn" onclick="setCategory('gov',this)">Governance & Risk</button>
       <button class="cat-btn" onclick="setCategory('ops',this)">SecOps & IR</button>
-      <button class="cat-btn" onclick="setCategory('weak',this)" id="weak-cat-btn">⚠ My Weak Spots</button>
+      <button class="cat-btn" onclick="setCategory('weak',this)" id="weak-cat-btn">&excl; My Weak Spots</button>
     </div>
   </div>
 
@@ -119,8 +119,8 @@
   </div>
 
   <div class="card">
-    <div class="q-domain" id="q-domain">—</div>
-    <div class="q-acronym" id="q-acronym">—</div>
+    <div class="q-domain" id="q-domain">--</div>
+    <div class="q-acronym" id="q-acronym">--</div>
     <div class="q-hint" id="q-hint"></div>
   </div>
 
@@ -132,11 +132,11 @@
   </div>
 
   <div class="actions">
-    <button class="btn-next" id="btn-next" onclick="nextQuestion()">Next →</button>
-    <button class="btn-ask" id="btn-ask" onclick="askClaude()">Ask Claude ↗</button>
+    <button class="btn-next" id="btn-next" onclick="nextQuestion()">Next &rarr;</button>
+    <button class="btn-ask" id="btn-ask" onclick="askClaude()">Ask Claude &nearr;</button>
   </div>
 
-  <footer>built for your security+ journey · exam june 23</footer>
+  <footer>built for your security+ journey &middot; exam june 23</footer>
 
 </div>
 <script>
@@ -159,35 +159,35 @@ const ACRONYMS = [
   { a:'OAuth', f:'Open Authorization', c:'auth', h:'Lets apps act on your behalf without sharing passwords', w:['Open Authentication','Object-based Auth Framework','Offline Authorization Handler'] },
   { a:'OIDC', f:'OpenID Connect', c:'auth', h:'Identity layer built on top of OAuth 2.0', w:['Open Identity Data Connector','Offline Identity & Device Control','Origin-based Identity Credential'] },
   { a:'TOTP', f:'Time-based One-Time Password', c:'auth', h:'Generates a short-lived code that refreshes every 30 seconds', w:['Token-based One-Time Protocol','Timed Output Token Provider','Trusted One-Time PIN'] },
-  { a:'HOTP', f:'HMAC-based One-Time Password', c:'auth', h:'Counter-based OTP — does not expire until used', w:['Hash-based One-Time Protocol','Hybrid OTP System','Host-based One-Time PIN'] },
+  { a:'HOTP', f:'HMAC-based One-Time Password', c:'auth', h:'Counter-based OTP  --  does not expire until used', w:['Hash-based One-Time Protocol','Hybrid OTP System','Host-based One-Time PIN'] },
   { a:'PAM', f:'Privileged Access Management', c:'auth', h:'Controls and audits access for admin-level accounts', w:['Password & Auth Module','Protocol Access Manager','Perimeter Access Monitoring'] },
   { a:'IAM', f:'Identity and Access Management', c:'auth', h:'Framework for managing digital identities and permissions', w:['Integrated Auth Mechanism','Identity Assurance Model','Internal Access Monitor'] },
   { a:'RBAC', f:'Role-Based Access Control', c:'auth', h:'Permissions assigned to roles; users inherit role permissions', w:['Resource-Based Auth Control','Risk-Based Access Control','Registry-Based Auth Control'] },
   { a:'DAC', f:'Discretionary Access Control', c:'auth', h:'Resource owner decides who has access', w:['Dynamic Auth Control','Data Access Controller','Domain Auth Configuration'] },
-  { a:'MAC', f:'Mandatory Access Control', c:'auth', h:'OS enforces access based on security labels — user cannot override', w:['Managed Auth Control','Multi-layer Access Configuration','Modular Auth Control'] },
+  { a:'MAC', f:'Mandatory Access Control', c:'auth', h:'OS enforces access based on security labels  --  user cannot override', w:['Managed Auth Control','Multi-layer Access Configuration','Modular Auth Control'] },
   { a:'ABAC', f:'Attribute-Based Access Control', c:'auth', h:'Access based on user, resource, and environment attributes', w:['Auth-Based Access Control','Adaptive Boundary Access Control','Application-Based Auth Control'] },
-  { a:'PAP', f:'Password Authentication Protocol', c:'auth', h:'Sends passwords in plaintext — considered insecure', w:['Privileged Auth Protocol','Port Auth Procedure','Packet Auth Process'] },
+  { a:'PAP', f:'Password Authentication Protocol', c:'auth', h:'Sends passwords in plaintext  --  considered insecure', w:['Privileged Auth Protocol','Port Auth Procedure','Packet Auth Process'] },
   { a:'CHAP', f:'Challenge Handshake Authentication Protocol', c:'auth', h:'Uses a three-way handshake with hashed challenges', w:['Certificate Hash Auth Protocol','Client-Host Auth Procedure','Common Hash Auth Process'] },
   { a:'EAP', f:'Extensible Authentication Protocol', c:'auth', h:'Authentication framework used in wireless and PPP networks', w:['Extended Auth Procedure','Endpoint Auth Protocol','Encrypted Auth Package'] },
   { a:'PEAP', f:'Protected Extensible Authentication Protocol', c:'auth', h:'Wraps EAP in a TLS tunnel for added security', w:['Pre-shared EAP','Proxied EAP','Parallel Encrypted Auth Protocol'] },
 
   // CRYPTOGRAPHY
   { a:'AES', f:'Advanced Encryption Standard', c:'crypto', h:'Symmetric block cipher; 128, 192, or 256-bit keys', w:['Asymmetric Encryption Standard','Applied Encryption System','Automated Encryption Service'] },
-  { a:'DES', f:'Data Encryption Standard', c:'crypto', h:'Old 56-bit symmetric cipher — now insecure', w:['Digital Encryption Service','Data Exchange Standard','Distributed Encryption System'] },
+  { a:'DES', f:'Data Encryption Standard', c:'crypto', h:'Old 56-bit symmetric cipher  --  now insecure', w:['Digital Encryption Service','Data Exchange Standard','Distributed Encryption System'] },
   { a:'3DES', f:'Triple Data Encryption Standard', c:'crypto', h:'Applies DES three times; stronger than DES but slow', w:['Third-gen Data Encryption Standard','Triple Distributed Encryption System','Tiered Data Exchange Standard'] },
   { a:'RSA', f:'Rivest-Shamir-Adleman', c:'crypto', h:'Asymmetric algorithm; public encrypts, private decrypts', w:['Randomized Security Algorithm','Remote Secured Access','Recursive Symmetric Algorithm'] },
-  { a:'ECC', f:'Elliptic Curve Cryptography', c:'crypto', h:'Efficient asymmetric crypto — smaller keys, preferred for mobile', w:['Enhanced Certificate Control','Encrypted Channel Communication','Extended Cipher Construction'] },
+  { a:'ECC', f:'Elliptic Curve Cryptography', c:'crypto', h:'Efficient asymmetric crypto  --  smaller keys, preferred for mobile', w:['Enhanced Certificate Control','Encrypted Channel Communication','Extended Cipher Construction'] },
   { a:'DHE', f:'Diffie-Hellman Ephemeral', c:'crypto', h:'Key exchange providing perfect forward secrecy', w:['Dynamic Hash Exchange','Distributed Hash Encryption','Direct Host Exchange'] },
   { a:'ECDHE', f:'Elliptic Curve Diffie-Hellman Ephemeral', c:'crypto', h:'ECC-based key exchange with perfect forward secrecy', w:['Extended Curve DH Exchange','Encrypted Channel DH Ephemeral','Elliptic Code Data Hash Exchange'] },
   { a:'PKI', f:'Public Key Infrastructure', c:'crypto', h:'Framework for issuing and managing digital certificates', w:['Private Key Integration','Protocol Key Interface','Public Key Interchange'] },
   { a:'CA', f:'Certificate Authority', c:'crypto', h:'Trusted entity that issues and signs digital certificates', w:['Cipher Algorithm','Certificate Authenticator','Controlled Access'] },
   { a:'CRL', f:'Certificate Revocation List', c:'crypto', h:'List of certificates that have been revoked before expiry', w:['Certificate Renewal Log','Cryptographic Resource Ledger','Cipher Revocation Log'] },
-  { a:'OCSP', f:'Online Certificate Status Protocol', c:'crypto', h:'Real-time certificate revocation check — faster than CRL', w:['Online Cipher Status Protocol','Open Certificate Security Process','Outbound Cert Status Protocol'] },
+  { a:'OCSP', f:'Online Certificate Status Protocol', c:'crypto', h:'Real-time certificate revocation check  --  faster than CRL', w:['Online Cipher Status Protocol','Open Certificate Security Process','Outbound Cert Status Protocol'] },
   { a:'CSR', f:'Certificate Signing Request', c:'crypto', h:'Request sent to a CA to obtain a digital certificate', w:['Certificate Security Record','Cipher Signing Registry','Certificate Status Request'] },
   { a:'TLS', f:'Transport Layer Security', c:'crypto', h:'Encrypts data in transit; successor to SSL', w:['Token Layer Service','Trusted Link System','Transmission Lock Standard'] },
-  { a:'SSL', f:'Secure Sockets Layer', c:'crypto', h:'Predecessor to TLS — deprecated and insecure', w:['Secure Session Layer','System Security Link','Structured Socket Layer'] },
+  { a:'SSL', f:'Secure Sockets Layer', c:'crypto', h:'Predecessor to TLS  --  deprecated and insecure', w:['Secure Session Layer','System Security Link','Structured Socket Layer'] },
   { a:'SHA', f:'Secure Hash Algorithm', c:'crypto', h:'Creates a fixed-length digest to verify data integrity', w:['Symmetric Hashing Architecture','Secure Host Authentication','Structured Hash Application'] },
-  { a:'MD5', f:'Message Digest 5', c:'crypto', h:'128-bit hash — broken and not collision-resistant', w:['Modular Data 5','Master Digest System','Multi-Directional 5'] },
+  { a:'MD5', f:'Message Digest 5', c:'crypto', h:'128-bit hash  --  broken and not collision-resistant', w:['Modular Data 5','Master Digest System','Multi-Directional 5'] },
   { a:'HMAC', f:'Hash-based Message Authentication Code', c:'crypto', h:'Uses a hash + secret key to verify integrity and authenticity', w:['Hybrid Message Auth Code','Hashed MAC Algorithm','Host-based Message Auth Control'] },
   { a:'PGP', f:'Pretty Good Privacy', c:'crypto', h:'Encryption standard for email and files using asymmetric crypto', w:['Protected Group Policy','Proxy Gateway Protocol','Parallel Gateway Process'] },
   { a:'GPG', f:'GNU Privacy Guard', c:'crypto', h:'Open-source implementation of PGP', w:['Global Privacy Gateway','General Purpose Guard','Generic Protocol Gateway'] },
@@ -201,7 +201,7 @@ const ACRONYMS = [
   { a:'DMZ', f:'Demilitarized Zone', c:'network', h:'Buffer network segment hosting public-facing servers', w:['Data Management Zone','Dynamic Monitoring Zone','Directed Multi-Zone'] },
   { a:'NAT', f:'Network Address Translation', c:'network', h:'Maps private IPs to a public IP at the router', w:['Network Auth Token','Node Access Table','Numbered Address Tracker'] },
   { a:'VLAN', f:'Virtual Local Area Network', c:'network', h:'Logically segments a network without physical separation', w:['Virtual Layered Access Node','Variable LAN Architecture','Verified Local Area Network'] },
-  { a:'IDS', f:'Intrusion Detection System', c:'network', h:'Monitors and alerts on suspicious activity — no blocking', w:['Identity Defense System','Internal Data Scanner','Integrated Discovery Service'] },
+  { a:'IDS', f:'Intrusion Detection System', c:'network', h:'Monitors and alerts on suspicious activity  --  no blocking', w:['Identity Defense System','Internal Data Scanner','Integrated Discovery Service'] },
   { a:'IPS', f:'Intrusion Prevention System', c:'network', h:'Like IDS but actively blocks detected threats inline', w:['Identity Protection Service','Internal Packet Scanner','Integrated Policy System'] },
   { a:'NIDS', f:'Network-based Intrusion Detection System', c:'network', h:'IDS that monitors network traffic, not individual hosts', w:['Node Identity Detection System','Network Integrity Data Service','Node Inspection & Detection System'] },
   { a:'HIDS', f:'Host-based Intrusion Detection System', c:'network', h:'IDS installed on individual machines', w:['Hybrid Identity Detection Service','Hardware Intrusion Defense System','High-level Intrusion Data Scanner'] },
@@ -211,22 +211,22 @@ const ACRONYMS = [
   { a:'DNS', f:'Domain Name System', c:'network', h:'Resolves domain names to IP addresses', w:['Data Node Service','Domain Network Security','Dynamic Name Scanning'] },
   { a:'DNSSEC', f:'Domain Name System Security Extensions', c:'network', h:'Adds digital signatures to DNS to prevent cache poisoning', w:['DNS Secure Encryption Configuration','Dynamic Name Scanning Extensions','DNS Standard Encryption'] },
   { a:'DHCP', f:'Dynamic Host Configuration Protocol', c:'network', h:'Automatically assigns IP addresses to devices', w:['Dynamic Host Control Process','Direct Host Config Protocol','Distributed Host Cipher Protocol'] },
-  { a:'HTTPS', f:'Hypertext Transfer Protocol Secure', c:'network', h:'HTTP over TLS — encrypts web traffic', w:['Hybrid Transfer Protocol Secure','High-Trust Protocol Secure','Host Transfer Protocol System'] },
-  { a:'SSH', f:'Secure Shell', c:'network', h:'Encrypted remote access to network devices — port 22', w:['System Security Handler','Secure Socket Host','Standard Shell Handler'] },
-  { a:'SFTP', f:'SSH File Transfer Protocol', c:'network', h:'Encrypted file transfer using SSH — replaces FTP', w:['Secure FTP Protocol','Structured File Transfer Process','Standard File Transport Protocol'] },
+  { a:'HTTPS', f:'Hypertext Transfer Protocol Secure', c:'network', h:'HTTP over TLS  --  encrypts web traffic', w:['Hybrid Transfer Protocol Secure','High-Trust Protocol Secure','Host Transfer Protocol System'] },
+  { a:'SSH', f:'Secure Shell', c:'network', h:'Encrypted remote access to network devices  --  port 22', w:['System Security Handler','Secure Socket Host','Standard Shell Handler'] },
+  { a:'SFTP', f:'SSH File Transfer Protocol', c:'network', h:'Encrypted file transfer using SSH  --  replaces FTP', w:['Secure FTP Protocol','Structured File Transfer Process','Standard File Transport Protocol'] },
   { a:'FTPS', f:'File Transfer Protocol Secure', c:'network', h:'FTP with TLS/SSL encryption added', w:['Fast Transfer Protocol Secure','Filtered Transfer Protocol System','Forwarded Transfer Protocol Secure'] },
   { a:'SNMP', f:'Simple Network Management Protocol', c:'network', h:'Monitors and manages network devices', w:['Secure Node Management Protocol','System Network Monitor Protocol','Structured Network Mapping Process'] },
   { a:'NTP', f:'Network Time Protocol', c:'network', h:'Synchronizes clocks across networked devices', w:['Node Transfer Protocol','Network Tracking Protocol','Networked Trust Protocol'] },
   { a:'ICMP', f:'Internet Control Message Protocol', c:'network', h:'Used for diagnostics like ping; can be abused in attacks', w:['Internal Control Message Protocol','Internet Connection Monitor Protocol','Integrated Control Message Process'] },
-  { a:'BGP', f:'Border Gateway Protocol', c:'network', h:'Routing protocol for the internet — can be hijacked', w:['Basic Gateway Process','Boundary Group Protocol','Broadcast Gateway Protocol'] },
+  { a:'BGP', f:'Border Gateway Protocol', c:'network', h:'Routing protocol for the internet  --  can be hijacked', w:['Basic Gateway Process','Boundary Group Protocol','Broadcast Gateway Protocol'] },
   { a:'IPSec', f:'Internet Protocol Security', c:'network', h:'Encrypts and authenticates IP packets at the network layer', w:['Internet Packet Securing','IP Session Control','Internal Protocol Security'] },
   { a:'AH', f:'Authentication Header', c:'network', h:'IPSec component providing integrity and authentication, no encryption', w:['Access Handler','Auth Hub','Audit Header'] },
   { a:'ESP', f:'Encapsulating Security Payload', c:'network', h:'IPSec component providing encryption plus integrity', w:['Encrypted Session Protocol','Extended Security Packet','Endpoint Security Process'] },
   { a:'GRE', f:'Generic Routing Encapsulation', c:'network', h:'Tunneling protocol that encapsulates packets', w:['General Routing Extension','Global Routing Environment','Gateway Route Encapsulation'] },
   { a:'MPLS', f:'Multiprotocol Label Switching', c:'network', h:'High-speed data-forwarding technique using labels', w:['Multi-Protocol Layered Security','Managed Protocol Link System','Multi-Point Label Switching'] },
   { a:'WPA2', f:'Wi-Fi Protected Access 2', c:'network', h:'Wi-Fi security using AES-CCMP encryption', w:['Wireless Protocol Authentication 2','Wide-band Protection Access 2','Wireless Privacy Algorithm 2'] },
-  { a:'WPA3', f:'Wi-Fi Protected Access 3', c:'network', h:'Latest Wi-Fi security — SAE replaces PSK handshake', w:['Wireless Protocol Authentication 3','Wide-band Protection Access 3','Wireless Privacy Algorithm 3'] },
-  { a:'TKIP', f:'Temporal Key Integrity Protocol', c:'network', h:'WPA1 encryption — deprecated; replaced by AES-CCMP', w:['Timed Key Integration Process','Transfer Key Integrity Protocol','Trusted Key Infrastructure Protocol'] },
+  { a:'WPA3', f:'Wi-Fi Protected Access 3', c:'network', h:'Latest Wi-Fi security  --  SAE replaces PSK handshake', w:['Wireless Protocol Authentication 3','Wide-band Protection Access 3','Wireless Privacy Algorithm 3'] },
+  { a:'TKIP', f:'Temporal Key Integrity Protocol', c:'network', h:'WPA1 encryption  --  deprecated; replaced by AES-CCMP', w:['Timed Key Integration Process','Transfer Key Integrity Protocol','Trusted Key Infrastructure Protocol'] },
 
   // ATTACKS & THREATS
   { a:'MITM', f:'Man-in-the-Middle', c:'attacks', h:'Attacker secretly intercepts communication between two parties', w:['Malware Interception Traffic Manipulation','Machine Intrusion Threat Model','Multi-Interface Transfer Method'] },
@@ -234,18 +234,18 @@ const ACRONYMS = [
   { a:'SQLi', f:'SQL Injection', c:'attacks', h:'Inserts malicious SQL to manipulate a database', w:['Secure Query Language Intrusion','Structured Query Logic Infection','System Query Level Interception'] },
   { a:'DDoS', f:'Distributed Denial of Service', c:'attacks', h:'Floods a target from many sources to knock it offline', w:['Direct Data Override System','Dynamic Denial of Streams','Distributed Data Override System'] },
   { a:'DoS', f:'Denial of Service', c:'attacks', h:'Overwhelms a system from a single source to disrupt access', w:['Data Override System','Dynamic Override System','Domain Override Service'] },
-  { a:'APT', f:'Advanced Persistent Threat', c:'attacks', h:'Long-term stealthy attack — often nation-state actors', w:['Automated Penetration Test','Active Protocol Threat','Application Proxy Tunneling'] },
+  { a:'APT', f:'Advanced Persistent Threat', c:'attacks', h:'Long-term stealthy attack  --  often nation-state actors', w:['Automated Penetration Test','Active Protocol Threat','Application Proxy Tunneling'] },
   { a:'CSRF', f:'Cross-Site Request Forgery', c:'attacks', h:'Tricks an authenticated user into submitting unwanted requests', w:['Client-Side Request Filter','Cross-Server Resource Fetch','Controlled Session Request Framework'] },
   { a:'SSRF', f:'Server-Side Request Forgery', c:'attacks', h:'Forces the server to make requests to internal resources', w:['Session-Side Request Forgery','Secure Server Resource Fetch','Server-Side Route Forgery'] },
   { a:'RCE', f:'Remote Code Execution', c:'attacks', h:'Attacker executes arbitrary code on a remote system', w:['Remote Connection Extension','Remote Cache Exploitation','Routed Command Execution'] },
   { a:'LFI', f:'Local File Inclusion', c:'attacks', h:'Tricks an app into including local files in its output', w:['Logical File Injection','Layer File Integration','Linked File Inclusion'] },
-  { a:'RFI', f:'Remote File Inclusion', c:'attacks', h:'Tricks an app into including remote files — enables code execution', w:['Routed File Injection','Redirected File Integration','Random File Inclusion'] },
+  { a:'RFI', f:'Remote File Inclusion', c:'attacks', h:'Tricks an app into including remote files  --  enables code execution', w:['Routed File Injection','Redirected File Integration','Random File Inclusion'] },
   { a:'IDOR', f:'Insecure Direct Object Reference', c:'attacks', h:'Accessing another user\'s data by manipulating object identifiers', w:['Invalid Data Object Registry','Internal Direct Object Routing','Indexed Data Object Reference'] },
-  { a:'ARP', f:'Address Resolution Protocol', c:'attacks', h:'Resolves IPs to MAC addresses — can be poisoned in attacks', w:['Access Resolution Protocol','Auth Request Protocol','Application Routing Protocol'] },
+  { a:'ARP', f:'Address Resolution Protocol', c:'attacks', h:'Resolves IPs to MAC addresses  --  can be poisoned in attacks', w:['Access Resolution Protocol','Auth Request Protocol','Application Routing Protocol'] },
   { a:'OSINT', f:'Open Source Intelligence', c:'attacks', h:'Gathering information from publicly available sources for recon', w:['Online Security Intelligence','Open System Intrusion Test','Operational Security Information'] },
   { a:'C2', f:'Command and Control', c:'attacks', h:'Infrastructure attackers use to communicate with compromised systems', w:['Configuration Control','Cyber Command','Central Control'] },
   { a:'RAT', f:'Remote Access Trojan', c:'attacks', h:'Malware that gives attackers hidden remote control of a system', w:['Remote Auth Tool','Routed Access Terminal','Registry Access Trojan'] },
-  { a:'PII', f:'Personally Identifiable Information', c:'attacks', h:'Data that can identify a specific person — a common attack target', w:['Personal Identity Index','Protected Identity Information','Private Individual Information'] },
+  { a:'PII', f:'Personally Identifiable Information', c:'attacks', h:'Data that can identify a specific person  --  a common attack target', w:['Personal Identity Index','Protected Identity Information','Private Individual Information'] },
 
   // TOOLS & TECH
   { a:'SIEM', f:'Security Information and Event Management', c:'tools', h:'Centralized log collection and threat correlation platform', w:['Secure Identity Encryption Management','System Intrusion Event Monitor','Structured Infrastructure Event Mapping'] },
@@ -263,18 +263,18 @@ const ACRONYMS = [
   { a:'FIM', f:'File Integrity Monitoring', c:'tools', h:'Detects unauthorized changes to files using hash comparisons', w:['File Identity Management','Forensic Integrity Monitor','File Index Mapping'] },
   { a:'SCAP', f:'Security Content Automation Protocol', c:'tools', h:'Standard for automating vulnerability management and compliance', w:['Secure Config Automation Protocol','System Control Audit Procedure','Security Compliance Audit Process'] },
   { a:'CVE', f:'Common Vulnerabilities and Exposures', c:'tools', h:'Standard identifier system for publicly known vulnerabilities', w:['Common Vulnerability Enumeration','Critical Vulnerability Exposure','Cyber Vulnerability Exchange'] },
-  { a:'CVSS', f:'Common Vulnerability Scoring System', c:'tools', h:'Rates vulnerability severity from 0–10 based on impact and exploitability', w:['Common Vulnerability Security Standard','Critical Vulnerability Scoring Scale','Cyber Vulnerability Status System'] },
+  { a:'CVSS', f:'Common Vulnerability Scoring System', c:'tools', h:'Rates vulnerability severity from 0-10 based on impact and exploitability', w:['Common Vulnerability Security Standard','Critical Vulnerability Scoring Scale','Cyber Vulnerability Status System'] },
   { a:'NVD', f:'National Vulnerability Database', c:'tools', h:'NIST-maintained database of CVEs with severity scores', w:['Network Vulnerability Directory','National Verification Database','Node Vulnerability Detection'] },
   { a:'STIX', f:'Structured Threat Information eXpression', c:'tools', h:'Language for sharing cyber threat intelligence', w:['Standard Threat Index Exchange','Structured Threat Interchange Exchange','System Threat Info Exchange'] },
   { a:'TAXII', f:'Trusted Automated eXchange of Intelligence Information', c:'tools', h:'Protocol for sharing STIX threat intelligence', w:['Threat Automated XML Intelligence Interface','Transfer Auth eXchange Information','Trusted Auth XML Index Interface'] },
   { a:'IoC', f:'Indicator of Compromise', c:'tools', h:'Evidence that a system may have been breached', w:['Index of Configuration','Instance of Control','Integrity of Command'] },
-  { a:'TTPs', f:'Tactics, Techniques, and Procedures', c:'tools', h:'Describes how threat actors operate — used in threat intel', w:['Tools, Tracking & Processes','Threat Testing Procedures','Technical Training Practices'] },
+  { a:'TTPs', f:'Tactics, Techniques, and Procedures', c:'tools', h:'Describes how threat actors operate  --  used in threat intel', w:['Tools, Tracking & Processes','Threat Testing Procedures','Technical Training Practices'] },
 
   // CLOUD & VIRTUALIZATION
   { a:'IaaS', f:'Infrastructure as a Service', c:'cloud', h:'Vendor provides hardware; customer manages OS and up', w:['Identity as a Service','Integrated Auth as a Service','Internal Access as a Service'] },
   { a:'PaaS', f:'Platform as a Service', c:'cloud', h:'Vendor manages OS and runtime; customer manages apps and data', w:['Privacy as a Service','Protocol as a Service','Protected Auth as a Service'] },
   { a:'SaaS', f:'Software as a Service', c:'cloud', h:'Vendor manages everything; customer manages data and users', w:['Security as a Service','Shared Auth as a Service','Structured Access as a Service'] },
-  { a:'FaaS', f:'Function as a Service', c:'cloud', h:'Serverless compute — run code without managing infrastructure', w:['Firewall as a Service','File as a Service','Framework as a Service'] },
+  { a:'FaaS', f:'Function as a Service', c:'cloud', h:'Serverless compute  --  run code without managing infrastructure', w:['Firewall as a Service','File as a Service','Framework as a Service'] },
   { a:'SECaaS', f:'Security as a Service', c:'cloud', h:'Cloud-delivered security services (e.g. email filtering, SIEM)', w:['Secure Email Config as a Service','System Encryption as a Service','Software Endpoint Control as a Service'] },
   { a:'CSP', f:'Cloud Service Provider', c:'cloud', h:'Company providing cloud infrastructure (AWS, Azure, GCP)', w:['Cipher Security Protocol','Content Security Policy','Cloud Security Process'] },
   { a:'SLA', f:'Service Level Agreement', c:'cloud', h:'Contract defining uptime, performance, and support obligations', w:['Security Logging Agreement','System Level Auth','Service Layer Architecture'] },
@@ -368,7 +368,7 @@ function updatePoolCount() {
   if (clearBtn) clearBtn.style.display = weakCount > 0 ? 'inline-block' : 'none';
   // Update weak category button label
   const weakBtn = document.getElementById('weak-cat-btn');
-  if (weakBtn) weakBtn.textContent = '⚠ Weak Spots' + (weakCount > 0 ? ' (' + weakCount + ')' : '');
+  if (weakBtn) weakBtn.textContent = '[!] Weak Spots' + (weakCount > 0 ? ' (' + weakCount + ')' : '');
 }
 
 function shuffle(arr) { return [...arr].sort(() => Math.random() - 0.5); }
@@ -381,7 +381,7 @@ function nextQuestion() {
 
   const p = pool();
   if (!p.length) {
-    document.getElementById('q-acronym').textContent = '—';
+    document.getElementById('q-acronym').textContent = ' -- ';
     document.getElementById('q-hint').textContent = 'No acronyms in this category yet. Try another!';
     document.getElementById('answers').innerHTML = '';
     return;
@@ -432,7 +432,7 @@ function check(selected, btn) {
   document.getElementById('s-correct').textContent = stats.correct;
   document.getElementById('s-wrong').textContent = stats.wrong;
   document.getElementById('s-streak').textContent = stats.streak;
-  const acc = stats.total > 0 ? Math.round(stats.correct / stats.total * 100) + '%' : '—';
+  const acc = stats.total > 0 ? Math.round(stats.correct / stats.total * 100) + '%' : ' -- ';
   document.getElementById('s-acc').textContent = acc;
 
   const pct = stats.total > 0 ? Math.round(stats.correct / stats.total * 100) : 0;

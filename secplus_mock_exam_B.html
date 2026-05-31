@@ -194,9 +194,9 @@ body{font-family:var(--sans);background:var(--bg);color:var(--text);min-height:1
 
 <!-- SPLASH -->
 <div id="splash" class="screen active">
-  <div class="splash-badge">CompTIA Security+ · SY0-701</div>
+  <div class="splash-badge">CompTIA Security+ &middot; SY0-701</div>
   <h1 class="splash-title">Mock Exam <span>B</span></h1>
-  <p class="splash-sub">90 questions across all 5 domains — including Multiple Choice, Drag & Drop, Performance-Based, and Definition questions. Timed at 90 minutes.</p>
+  <p class="splash-sub">90 questions across all 5 domains -- including Multiple Choice, Drag & Drop, Performance-Based, and Definition questions. Timed at 90 minutes.</p>
   <div class="exam-meta">
     <div class="meta-card"><div class="meta-num">90</div><div class="meta-label">Questions</div></div>
     <div class="meta-card"><div class="meta-num">90</div><div class="meta-label">Minutes</div></div>
@@ -211,7 +211,7 @@ body{font-family:var(--sans);background:var(--bg);color:var(--text);min-height:1
   </div>
   <div style="display:flex;gap:12px;margin-bottom:0;flex-wrap:wrap;justify-content:center">
     <button class="btn-start" onclick="startExam(false)">Begin Full Exam</button>
-    <button class="btn-start" id="weak-mode-btn" onclick="startExam(true)" style="background:var(--amber);display:none">⚠ Weak Domains Only</button>
+    <button class="btn-start" id="weak-mode-btn" onclick="startExam(true)" style="background:var(--amber);display:none">&excl; Weak Domains Only</button>
   </div>
   <div id="weak-mode-info" style="display:none;font-family:var(--mono);font-size:11px;color:var(--amber);margin-top:16px;text-align:center;max-width:400px"></div>
 </div>
@@ -221,7 +221,7 @@ body{font-family:var(--sans);background:var(--bg);color:var(--text);min-height:1
   <div class="exam-header">
     <span class="exam-progress-text" id="prog-text">1 / 90</span>
     <div class="exam-progress-bar"><div class="exam-progress-fill" id="prog-fill" style="width:1%"></div></div>
-    <span id="weak-mode-badge" style="display:none;font-family:var(--mono);font-size:10px;color:var(--amber);border:1px solid var(--amber);border-radius:4px;padding:2px 8px;white-space:nowrap">⚠ Weak Mode</span>
+    <span id="weak-mode-badge" style="display:none;font-family:var(--mono);font-size:10px;color:var(--amber);border:1px solid var(--amber);border-radius:4px;padding:2px 8px;white-space:nowrap">&excl; Weak Mode</span>
     <span class="timer" id="timer">90:00</span>
   </div>
   <div class="exam-body">
@@ -237,9 +237,9 @@ body{font-family:var(--sans);background:var(--bg);color:var(--text);min-height:1
     <div class="q-text" id="q-text"></div>
     <div id="q-body"></div>
     <div class="exam-nav">
-      <button class="btn-nav" id="btn-prev" onclick="goTo(currentQ-1)" disabled>← Prev</button>
+      <button class="btn-nav" id="btn-prev" onclick="goTo(currentQ-1)" disabled>&larr; Prev</button>
       <button class="btn-nav" id="btn-flag" onclick="flagQ()">Flag</button>
-      <button class="btn-nav primary" id="btn-next-q" onclick="nextOrSubmit()">Next →</button>
+      <button class="btn-nav primary" id="btn-next-q" onclick="nextOrSubmit()">Next &rarr;</button>
     </div>
   </div>
 </div>
@@ -261,7 +261,7 @@ body{font-family:var(--sans);background:var(--bg);color:var(--text);min-height:1
     <div class="r-stat"><div class="r-stat-val" style="color:var(--green)" id="r-correct">0</div><div class="r-stat-lbl">Correct</div></div>
     <div class="r-stat"><div class="r-stat-val" style="color:var(--red)" id="r-wrong">0</div><div class="r-stat-lbl">Wrong</div></div>
     <div class="r-stat"><div class="r-stat-val" style="color:var(--amber)" id="r-skipped">0</div><div class="r-stat-lbl">Skipped</div></div>
-    <div class="r-stat"><div class="r-stat-val" style="color:var(--text2)" id="r-time">—</div><div class="r-stat-lbl">Time used</div></div>
+    <div class="r-stat"><div class="r-stat-val" style="color:var(--text2)" id="r-time">--</div><div class="r-stat-lbl">Time used</div></div>
   </div>
   <div class="domain-bars">
     <div class="section-title">Domain Breakdown & Focus Areas</div>
@@ -290,73 +290,73 @@ const DOMAINS={1:{name:'General Security Concepts',weight:12,color:'#4f9eff'},2:
 // type: 'mc' | 'dd' | 'pbq'
 // ─────────────────────────────────────────────
 // ─────────────────────────────────────────────
-// QUESTION BANK — EXAM B
+// QUESTION BANK  --  EXAM B
 // ─────────────────────────────────────────────
 const QUESTIONS = [
 // ── MULTIPLE CHOICE (65 questions) ──────────────────────────────
-{t:'mc',d:1,q:"Which of the following BEST describes the principle of separation of duties?",o:["Giving users only the minimum access they need","Dividing tasks so no single person controls an entire process","Requiring two forms of authentication","Rotating job roles to prevent fraud"],a:1,e:"Separation of duties ensures no single person can complete a sensitive process alone — preventing fraud and errors. It's commonly implemented for financial transactions and privileged system changes."},
-{t:'mc',d:1,q:"Which type of control is a security camera?",o:["Preventive","Corrective","Detective","Compensating"],a:2,e:"A security camera is a detective control — it records events after they happen. Preventive controls stop events; corrective controls fix damage; compensating controls are alternatives when primary controls can't be implemented."},
-{t:'mc',d:1,q:"Which of the following BEST describes non-repudiation?",o:["Ensuring data cannot be read by unauthorised parties","Preventing a user from denying they performed an action","Ensuring systems remain available","Verifying user identity before granting access"],a:1,e:"Non-repudiation ensures a party cannot deny sending a message or performing an action. Digital signatures are the primary mechanism — only you have your private key."},
-{t:'mc',d:1,q:"Which algorithm is considered asymmetric?",o:["AES","3DES","RSA","Blowfish"],a:2,e:"RSA is asymmetric — it uses a public/private key pair. AES, 3DES, and Blowfish are all symmetric algorithms using a shared secret key."},
+{t:'mc',d:1,q:"Which of the following BEST describes the principle of separation of duties?",o:["Giving users only the minimum access they need","Dividing tasks so no single person controls an entire process","Requiring two forms of authentication","Rotating job roles to prevent fraud"],a:1,e:"Separation of duties ensures no single person can complete a sensitive process alone  --  preventing fraud and errors. It's commonly implemented for financial transactions and privileged system changes."},
+{t:'mc',d:1,q:"Which type of control is a security camera?",o:["Preventive","Corrective","Detective","Compensating"],a:2,e:"A security camera is a detective control  --  it records events after they happen. Preventive controls stop events; corrective controls fix damage; compensating controls are alternatives when primary controls can't be implemented."},
+{t:'mc',d:1,q:"Which of the following BEST describes non-repudiation?",o:["Ensuring data cannot be read by unauthorised parties","Preventing a user from denying they performed an action","Ensuring systems remain available","Verifying user identity before granting access"],a:1,e:"Non-repudiation ensures a party cannot deny sending a message or performing an action. Digital signatures are the primary mechanism  --  only you have your private key."},
+{t:'mc',d:1,q:"Which algorithm is considered asymmetric?",o:["AES","3DES","RSA","Blowfish"],a:2,e:"RSA is asymmetric  --  it uses a public/private key pair. AES, 3DES, and Blowfish are all symmetric algorithms using a shared secret key."},
 {t:'mc',d:1,q:"What is the PRIMARY purpose of a digital certificate?",o:["Encrypt data at rest","Bind a public key to an identity","Store private keys securely","Hash passwords before storage"],a:1,e:"A digital certificate binds a public key to an identity, issued and signed by a Certificate Authority. It's the foundation of PKI trust."},
 {t:'mc',d:1,q:"Which of the following BEST describes salting in password storage?",o:["Encrypting passwords before hashing","Adding a random value before hashing to ensure unique outputs","Applying a hash multiple times for strength","Using asymmetric encryption for passwords"],a:1,e:"Salting adds a unique random value to each password before hashing, ensuring identical passwords produce different hashes. This defeats rainbow table and precomputed hash attacks."},
-{t:'mc',d:1,q:"Which access control model is enforced by the operating system using security labels?",o:["DAC","RBAC","MAC","ABAC"],a:2,e:"MAC (Mandatory Access Control) is enforced by the OS using security labels — users cannot override it. Common in government/military systems. DAC lets resource owners control access."},
+{t:'mc',d:1,q:"Which access control model is enforced by the operating system using security labels?",o:["DAC","RBAC","MAC","ABAC"],a:2,e:"MAC (Mandatory Access Control) is enforced by the OS using security labels  --  users cannot override it. Common in government/military systems. DAC lets resource owners control access."},
 {t:'mc',d:1,q:"What does PKI stand for?",o:["Public Key Infrastructure","Private Key Integration","Protocol Key Interface","Public Knowledge Index"],a:0,e:"PKI (Public Key Infrastructure) is the framework of roles, policies, and technology used to create, manage, distribute, and revoke digital certificates."},
 {t:'mc',d:1,q:"Which of the following is an example of 'something you have' in MFA?",o:["Password","Fingerprint","Smart card","PIN"],a:2,e:"'Something you have' includes smart cards, hardware tokens, and mobile authenticator apps. Passwords/PINs are 'something you know'; fingerprints are 'something you are'."},
 {t:'mc',d:1,q:"Which concept ensures users only access resources necessary for their role?",o:["Separation of duties","Defence in depth","Least privilege","Job rotation"],a:2,e:"Least privilege grants only the minimum access rights required. If credentials are compromised, the blast radius is limited to what that account can access."},
-{t:'mc',d:1,q:"What is the purpose of key escrow?",o:["To encrypt data with two keys simultaneously","To allow a trusted third party to recover encryption keys if lost","To distribute public keys to users","To rotate encryption keys on a schedule"],a:1,e:"Key escrow holds a copy of encryption keys with a trusted third party, allowing authorised recovery if the original key is lost — commonly required in regulated industries."},
+{t:'mc',d:1,q:"What is the purpose of key escrow?",o:["To encrypt data with two keys simultaneously","To allow a trusted third party to recover encryption keys if lost","To distribute public keys to users","To rotate encryption keys on a schedule"],a:1,e:"Key escrow holds a copy of encryption keys with a trusted third party, allowing authorised recovery if the original key is lost  --  commonly required in regulated industries."},
 {t:'mc',d:1,q:"Which of the following BEST describes defence in depth?",o:["Using one very strong security control","Multiple overlapping layers of security controls","Encrypting all data at rest","Patching all systems immediately"],a:1,e:"Defence in depth layers multiple security controls so that if one fails, others remain to protect assets. No single control is relied upon exclusively."},
-{t:'mc',d:1,q:"Which hashing algorithm is considered broken and should NOT be used for security?",o:["SHA-256","SHA-3","MD5","BLAKE2"],a:2,e:"MD5 is considered cryptographically broken — collisions can be generated. SHA-1 is also weak. SHA-256 and SHA-3 are currently acceptable for security purposes."},
-{t:'mc',d:1,q:"What does ABAC stand for?",o:["Attribute-Based Access Control","Automated Baseline Access Control","Authentication-Based Access Criteria","Audit-Based Access Control"],a:0,e:"ABAC (Attribute-Based Access Control) evaluates multiple attributes — user, resource, environment — at runtime to make access decisions. More flexible but complex than RBAC."},
+{t:'mc',d:1,q:"Which hashing algorithm is considered broken and should NOT be used for security?",o:["SHA-256","SHA-3","MD5","BLAKE2"],a:2,e:"MD5 is considered cryptographically broken  --  collisions can be generated. SHA-1 is also weak. SHA-256 and SHA-3 are currently acceptable for security purposes."},
+{t:'mc',d:1,q:"What does ABAC stand for?",o:["Attribute-Based Access Control","Automated Baseline Access Control","Authentication-Based Access Criteria","Audit-Based Access Control"],a:0,e:"ABAC (Attribute-Based Access Control) evaluates multiple attributes  --  user, resource, environment  --  at runtime to make access decisions. More flexible but complex than RBAC."},
 {t:'mc',d:2,q:"Which attack uses previously breached credentials to attempt logins on other services?",o:["Brute force","Password spraying","Credential stuffing","Dictionary attack"],a:2,e:"Credential stuffing uses username/password pairs from previous breaches, exploiting password reuse across sites. MFA is the most effective countermeasure."},
 {t:'mc',d:2,q:"What type of malware secretly records keystrokes?",o:["Ransomware","Keylogger","Spyware","Adware"],a:1,e:"A keylogger silently records keystrokes and sends them to an attacker, capturing passwords, credit card numbers, and other sensitive input."},
 {t:'mc',d:2,q:"Which attack specifically targets C-suite executives?",o:["Phishing","Spear phishing","Whaling","Smishing"],a:2,e:"Whaling is spear phishing that targets C-suite executives (CEO, CFO). The term reflects the attacker going after 'big fish' for higher-value payoffs."},
 {t:'mc',d:2,q:"An attacker creates a website that looks identical to a banking site. Users enter credentials which are captured. This is called:",o:["Pharming","Typosquatting","Credential harvesting","Clone phishing"],a:2,e:"Credential harvesting uses fake login pages to capture entered credentials. Pharming redirects users without a link click; typosquatting exploits mistyped URLs; clone phishing copies a real email."},
 {t:'mc',d:2,q:"Which type of malware self-replicates without needing a host file?",o:["Virus","Worm","Trojan","Rootkit"],a:1,e:"A worm self-replicates and spreads across networks without requiring user interaction or a host program. Viruses need a host file; Trojans require user execution."},
-{t:'mc',d:2,q:"What is a logic bomb?",o:["Malware that encrypts files for ransom","Code that triggers when a specific condition is met","Malware that hides in the OS","A self-replicating network worm"],a:1,e:"A logic bomb is dormant malicious code that executes when a specific trigger condition occurs — a date, login event, or file deletion. Often planted by malicious insiders."},
-{t:'mc',d:2,q:"Which attack forces a system to use a weaker, older protocol?",o:["Replay attack","Downgrade attack","Collision attack","Pass-the-hash attack"],a:1,e:"A downgrade attack forces negotiation to an older, weaker protocol or cipher — e.g., SSLv3 instead of TLS 1.3. POODLE is a famous example."},
+{t:'mc',d:2,q:"What is a logic bomb?",o:["Malware that encrypts files for ransom","Code that triggers when a specific condition is met","Malware that hides in the OS","A self-replicating network worm"],a:1,e:"A logic bomb is dormant malicious code that executes when a specific trigger condition occurs  --  a date, login event, or file deletion. Often planted by malicious insiders."},
+{t:'mc',d:2,q:"Which attack forces a system to use a weaker, older protocol?",o:["Replay attack","Downgrade attack","Collision attack","Pass-the-hash attack"],a:1,e:"A downgrade attack forces negotiation to an older, weaker protocol or cipher  --  e.g., SSLv3 instead of TLS 1.3. POODLE is a famous example."},
 {t:'mc',d:2,q:"An attacker sends a text message with a malicious link to steal banking credentials. This is:",o:["Vishing","Phishing","Smishing","Pretexting"],a:2,e:"Smishing (SMS phishing) delivers phishing attacks via text message. Vishing uses voice/phone calls; pretexting involves fabricating a scenario to manipulate the target."},
-{t:'mc',d:2,q:"Which type of malware operates only in RAM, leaving no trace on disk?",o:["Rootkit","Polymorphic malware","Fileless malware","Ransomware"],a:2,e:"Fileless malware runs entirely in memory — no files are written to disk. Traditional signature-based AV cannot detect it. PowerShell and WMI are commonly abused for delivery."},
+{t:'mc',d:2,q:"Which type of malware operates only in RAM, leaving no trace on disk?",o:["Rootkit","Polymorphic malware","Fileless malware","Ransomware"],a:2,e:"Fileless malware runs entirely in memory  --  no files are written to disk. Traditional signature-based AV cannot detect it. PowerShell and WMI are commonly abused for delivery."},
 {t:'mc',d:2,q:"Which attack registers domains like 'micros0ft.com' to trick users?",o:["Pharming","DNS poisoning","Typosquatting","Domain hijacking"],a:2,e:"Typosquatting (URL hijacking) registers lookalike domains exploiting common typing mistakes. Users who mistype a URL land on the attacker's site instead."},
 {t:'mc',d:2,q:"What technique does an APT commonly use to maintain long-term access?",o:["Ransomware deployment","Backdoors and persistent footholds","Immediate data destruction","Public exploit tools only"],a:1,e:"APTs (Advanced Persistent Threats) install backdoors and maintain persistent access over months or years, typically for intelligence gathering rather than immediate disruption."},
-{t:'mc',d:2,q:"Which attack uses a compromised legitimate website to infect visitors?",o:["Watering hole","Evil twin","Spear phishing","Session hijacking"],a:0,e:"A watering hole attack compromises websites frequented by the target group. All visitors may be infected — no email is needed to reach the target."},
+{t:'mc',d:2,q:"Which attack uses a compromised legitimate website to infect visitors?",o:["Watering hole","Evil twin","Spear phishing","Session hijacking"],a:0,e:"A watering hole attack compromises websites frequented by the target group. All visitors may be infected  --  no email is needed to reach the target."},
 {t:'mc',d:2,q:"What is the purpose of a honeypot in a network?",o:["Block known malicious traffic","Attract and study attackers safely","Monitor user behaviour analytics","Encrypt sensitive data"],a:1,e:"A honeypot is a decoy system designed to attract attackers, allowing security teams to observe attack techniques without risking real assets. Honnets are networks of honeypots."},
 {t:'mc',d:2,q:"Which of the following BEST describes a CSRF attack?",o:["Injecting scripts into web pages seen by other users","Forging requests that exploit an authenticated user's active session","Intercepting traffic between two parties","Flooding a target with requests"],a:1,e:"CSRF (Cross-Site Request Forgery) tricks an authenticated user's browser into sending an unwanted request. Anti-CSRF tokens and SameSite cookies are the primary defences."},
-{t:'mc',d:2,q:"Which of the following BEST describes an insider threat?",o:["An external attacker who gained VPN access","A risk from authorised users who misuse their access","Malware installed through a phishing email","A supply chain attack on software"],a:1,e:"Insider threats come from people with authorised access — employees, contractors, or partners. They may act maliciously or accidentally. Least privilege and monitoring are key controls."},
+{t:'mc',d:2,q:"Which of the following BEST describes an insider threat?",o:["An external attacker who gained VPN access","A risk from authorised users who misuse their access","Malware installed through a phishing email","A supply chain attack on software"],a:1,e:"Insider threats come from people with authorised access  --  employees, contractors, or partners. They may act maliciously or accidentally. Least privilege and monitoring are key controls."},
 {t:'mc',d:3,q:"Which cloud deployment model is owned and operated exclusively by one organisation?",o:["Public cloud","Community cloud","Hybrid cloud","Private cloud"],a:3,e:"A private cloud is dedicated to one organisation. Public cloud is shared; community cloud is shared by organisations with common concerns; hybrid combines public and private."},
 {t:'mc',d:3,q:"Which of the following is the PRIMARY security benefit of network segmentation?",o:["Faster network speeds","Limiting lateral movement after a breach","Reducing hardware costs","Simplifying firewall rules"],a:1,e:"Segmentation limits how far an attacker can move laterally after compromising one system. Even if they breach one segment, they can't easily reach others."},
 {t:'mc',d:3,q:"What is the purpose of a WAF?",o:["Filter network packets by IP address","Monitor and filter HTTP/HTTPS traffic to web applications","Manage wireless access point configurations","Detect and block network intrusions"],a:1,e:"A WAF (Web Application Firewall) sits in front of web apps and filters HTTP/HTTPS traffic, blocking attacks like SQL injection and XSS before they reach the application."},
-{t:'mc',d:3,q:"Which of the following BEST describes data sovereignty?",o:["The right of individuals to control their personal data","Data is subject to the laws of the country where it is stored","Encrypting data before it crosses national borders","Backing up data to multiple geographic regions"],a:1,e:"Data sovereignty means data is subject to the laws of the country where it is stored or processed — critical for cloud deployments where data may reside in multiple jurisdictions."},
-{t:'mc',d:3,q:"Which recovery site has equipment installed but no current data loaded?",o:["Hot site","Cold site","Warm site","Mobile site"],a:2,e:"A warm site has hardware ready but requires data restoration before going live — a middle ground between the costly hot site (fully operational) and cheap cold site (empty building)."},
+{t:'mc',d:3,q:"Which of the following BEST describes data sovereignty?",o:["The right of individuals to control their personal data","Data is subject to the laws of the country where it is stored","Encrypting data before it crosses national borders","Backing up data to multiple geographic regions"],a:1,e:"Data sovereignty means data is subject to the laws of the country where it is stored or processed  --  critical for cloud deployments where data may reside in multiple jurisdictions."},
+{t:'mc',d:3,q:"Which recovery site has equipment installed but no current data loaded?",o:["Hot site","Cold site","Warm site","Mobile site"],a:2,e:"A warm site has hardware ready but requires data restoration before going live  --  a middle ground between the costly hot site (fully operational) and cheap cold site (empty building)."},
 {t:'mc',d:3,q:"What is the purpose of containerisation in security?",o:["Encrypt application data at rest","Isolate applications and their dependencies from the host OS","Provide hardware-level virtualisation","Monitor container traffic for threats"],a:1,e:"Containers isolate applications and their dependencies, preventing one container's compromise from spreading to others. Docker is the most common implementation."},
 {t:'mc',d:3,q:"Which of the following BEST describes an air-gapped system?",o:["A system protected by a next-gen firewall","A system completely isolated with no network connections","A system using end-to-end encryption","A system with redundant network paths"],a:1,e:"An air-gapped system has no wired or wireless connections to other networks. Used for highly sensitive systems like nuclear controls and election equipment."},
 {t:'mc',d:3,q:"In the cloud shared responsibility model, what does the customer always manage regardless of service type?",o:["The underlying hardware","The operating system","Data and user access","Network infrastructure"],a:2,e:"Regardless of IaaS, PaaS, or SaaS model, the customer is always responsible for their data and who can access it. Everything else shifts to the provider as you move up the stack."},
-{t:'mc',d:3,q:"What is the PRIMARY advantage of a hot site over a warm site?",o:["Lower cost","Faster recovery — near-immediate failover","More storage capacity","Easier to maintain"],a:1,e:"A hot site is fully operational with up-to-date data, enabling near-immediate failover. The tradeoff is cost — maintaining a fully mirrored environment is expensive."},
+{t:'mc',d:3,q:"What is the PRIMARY advantage of a hot site over a warm site?",o:["Lower cost","Faster recovery  --  near-immediate failover","More storage capacity","Easier to maintain"],a:1,e:"A hot site is fully operational with up-to-date data, enabling near-immediate failover. The tradeoff is cost  --  maintaining a fully mirrored environment is expensive."},
 {t:'mc',d:3,q:"Which protocol encrypts DNS queries to prevent eavesdropping?",o:["DNSSEC","DNS over HTTPS (DoH)","LDAPS","STARTTLS"],a:1,e:"DNS over HTTPS (DoH) encrypts DNS queries within HTTPS traffic, preventing ISPs and attackers from seeing or manipulating DNS lookups. DNSSEC signs responses but doesn't encrypt them."},
-{t:'mc',d:3,q:"What does MDM stand for in mobile security?",o:["Mobile Data Management","Mobile Device Management","Managed Device Monitoring","Multi-Device Mode"],a:1,e:"MDM (Mobile Device Management) allows IT to remotely manage, monitor, enforce policies on, and wipe mobile devices — essential for BYOD environments."},
+{t:'mc',d:3,q:"What does MDM stand for in mobile security?",o:["Mobile Data Management","Mobile Device Management","Managed Device Monitoring","Multi-Device Mode"],a:1,e:"MDM (Mobile Device Management) allows IT to remotely manage, monitor, enforce policies on, and wipe mobile devices  --  essential for BYOD environments."},
 {t:'mc',d:3,q:"Which of the following BEST describes a jump server?",o:["A server that distributes traffic across multiple backends","A hardened host used as an intermediary to access secure network zones","A server that automatically fails over when primary fails","A proxy that anonymises outbound web traffic"],a:1,e:"A jump server (bastion host) is a hardened, monitored intermediary used to access high-security network zones, reducing direct exposure of sensitive systems to users."},
 {t:'mc',d:4,q:"Which phase of incident response involves identifying the root cause and implementing fixes?",o:["Containment","Identification","Eradication","Recovery"],a:2,e:"Eradication involves removing the threat, patching vulnerabilities, and eliminating persistence mechanisms. It comes after containment and before recovery."},
 {t:'mc',d:4,q:"What is the purpose of a SIEM?",o:["Block malicious network traffic in real time","Collect, correlate, and alert on security logs from across the environment","Automatically respond to and remediate incidents","Scan systems for known vulnerabilities"],a:1,e:"A SIEM (Security Information and Event Management) aggregates logs from across the environment, correlates events, and generates alerts. Splunk and Microsoft Sentinel are examples."},
 {t:'mc',d:4,q:"Which of the following BEST describes a penetration test?",o:["Scanning systems to identify known vulnerabilities","An authorised simulated attack that attempts real exploitation","Monitoring network traffic for anomalous behaviour","Reviewing code for security defects"],a:1,e:"Penetration testing goes beyond vulnerability scanning by actually attempting to exploit vulnerabilities, demonstrating real-world impact. It requires explicit authorisation."},
 {t:'mc',d:4,q:"What does SOAR stand for?",o:["Security Operations and Response","Security Orchestration, Automation, and Response","Structured Operations and Resilience","System Oversight and Automated Recovery"],a:1,e:"SOAR (Security Orchestration, Automation, and Response) automates repetitive SOC tasks and orchestrates incident response workflows, reducing analyst workload."},
 {t:'mc',d:4,q:"Which tool continuously monitors endpoints, records activity, and enables investigation?",o:["SIEM","IDS","EDR","WAF"],a:2,e:"EDR (Endpoint Detection and Response) continuously monitors endpoints, records all activity, and enables rapid investigation and response to threats."},
-{t:'mc',d:4,q:"What is the purpose of vulnerability scanning?",o:["Actively exploit vulnerabilities to prove risk","Identify known weaknesses and misconfigurations without exploitation","Monitor user behaviour for anomalies","Collect and correlate security logs"],a:1,e:"Vulnerability scanning identifies known vulnerabilities and misconfigurations without attempting exploitation. It's automated and non-destructive — unlike penetration testing."},
-{t:'mc',d:4,q:"Which of the following BEST describes DLP?",o:["A tool for encrypting data at rest","Monitoring and blocking unauthorised transfer of sensitive data","A system for managing digital certificates","A proxy for filtering web traffic"],a:1,e:"DLP (Data Loss Prevention) monitors, detects, and blocks the unauthorised transmission or exfiltration of sensitive data — both at the endpoint and network level."},
-{t:'mc',d:4,q:"A security analyst proactively searches for threats that evaded automated detection. This is called:",o:["Incident response","Threat hunting","Vulnerability scanning","Red teaming"],a:1,e:"Threat hunting is proactive — analysts actively search for hidden threats assuming the environment may already be compromised. It complements automated tools like SIEM and EDR."},
-{t:'mc',d:4,q:"Which of the following is the CORRECT order of evidence collection per order of volatility?",o:["Disk → RAM → Logs → Network","RAM → Running processes → Network connections → Disk","Logs → Disk → RAM → Network","Network → Disk → RAM → Logs"],a:1,e:"Order of volatility: most volatile first. RAM and running processes disappear when power is cut. Collect RAM → processes → network connections → disk → logs → archives."},
+{t:'mc',d:4,q:"What is the purpose of vulnerability scanning?",o:["Actively exploit vulnerabilities to prove risk","Identify known weaknesses and misconfigurations without exploitation","Monitor user behaviour for anomalies","Collect and correlate security logs"],a:1,e:"Vulnerability scanning identifies known vulnerabilities and misconfigurations without attempting exploitation. It's automated and non-destructive  --  unlike penetration testing."},
+{t:'mc',d:4,q:"Which of the following BEST describes DLP?",o:["A tool for encrypting data at rest","Monitoring and blocking unauthorised transfer of sensitive data","A system for managing digital certificates","A proxy for filtering web traffic"],a:1,e:"DLP (Data Loss Prevention) monitors, detects, and blocks the unauthorised transmission or exfiltration of sensitive data  --  both at the endpoint and network level."},
+{t:'mc',d:4,q:"A security analyst proactively searches for threats that evaded automated detection. This is called:",o:["Incident response","Threat hunting","Vulnerability scanning","Red teaming"],a:1,e:"Threat hunting is proactive  --  analysts actively search for hidden threats assuming the environment may already be compromised. It complements automated tools like SIEM and EDR."},
+{t:'mc',d:4,q:"Which of the following is the CORRECT order of evidence collection per order of volatility?",o:["Disk &rarr; RAM &rarr; Logs &rarr; Network","RAM &rarr; Running processes &rarr; Network connections &rarr; Disk","Logs &rarr; Disk &rarr; RAM &rarr; Network","Network &rarr; Disk &rarr; RAM &rarr; Logs"],a:1,e:"Order of volatility: most volatile first. RAM and running processes disappear when power is cut. Collect RAM &rarr; processes &rarr; network connections &rarr; disk &rarr; logs &rarr; archives."},
 {t:'mc',d:4,q:"What does CVE stand for?",o:["Common Vulnerability Exposure","Common Vulnerabilities and Exposures","Critical Vulnerability Entry","Cyber Vulnerability Enumeration"],a:1,e:"CVE (Common Vulnerabilities and Exposures) is a standardised list of publicly known security vulnerabilities, each assigned a unique ID like CVE-2024-1234."},
 {t:'mc',d:4,q:"Which of the following BEST describes input validation?",o:["Encrypting user input before storage","Verifying that input meets expected format before processing","Logging all user inputs for audit","Encoding output before displaying"],a:1,e:"Input validation checks that all user-supplied data meets expected type, format, and length before processing, preventing injection attacks like SQLi and XSS."},
-{t:'mc',d:4,q:"What is the PRIMARY purpose of a tabletop exercise?",o:["Test backup restoration procedures","Discuss and walk through an incident scenario without technical action","Perform a live red team simulation","Test whether failover systems work correctly"],a:1,e:"A tabletop exercise is discussion-based — teams walk through a hypothetical incident to identify gaps in plans and procedures. No systems are actually touched."},
+{t:'mc',d:4,q:"What is the PRIMARY purpose of a tabletop exercise?",o:["Test backup restoration procedures","Discuss and walk through an incident scenario without technical action","Perform a live red team simulation","Test whether failover systems work correctly"],a:1,e:"A tabletop exercise is discussion-based  --  teams walk through a hypothetical incident to identify gaps in plans and procedures. No systems are actually touched."},
 {t:'mc',d:4,q:"Which of the following BEST describes the purpose of a legal hold?",o:["Encrypting data awaiting court review","Preserving electronically stored information when litigation is anticipated","A warrant authorising law enforcement to access systems","A policy preventing log deletion after 90 days"],a:1,e:"A legal hold requires an organisation to preserve all relevant ESI (electronically stored information) when litigation is anticipated, suspending normal deletion schedules."},
 {t:'mc',d:5,q:"What does BIA stand for in business continuity?",o:["Business Impact Analysis","Backup and Infrastructure Assessment","Business Integrity Audit","Baseline Impact Assessment"],a:0,e:"A BIA (Business Impact Analysis) identifies critical business functions and determines the impact of their disruption, establishing RTO and RPO targets for the DR plan."},
-{t:'mc',d:5,q:"Which of the following BEST describes qualitative risk analysis?",o:["Calculating exact financial loss using ALE = SLE × ARO","Using descriptive ratings like High, Medium, Low to assess risk","Automating risk identification through software tools","Comparing insurance premiums to potential loss values"],a:1,e:"Qualitative risk analysis uses subjective ratings rather than financial calculations. It's faster and simpler than quantitative analysis but less precise for cost-benefit decisions."},
-{t:'mc',d:5,q:"Which formula calculates annualised loss expectancy?",o:["ALE = ARO + SLE","ALE = SLE × ARO","ALE = SLE / ARO","ALE = ARO × EF"],a:1,e:"ALE (Annualised Loss Expectancy) = SLE × ARO. SLE is the loss from one incident; ARO is how often it's expected per year. ALE gives the expected annual financial impact."},
+{t:'mc',d:5,q:"Which of the following BEST describes qualitative risk analysis?",o:["Calculating exact financial loss using ALE = SLE &times; ARO","Using descriptive ratings like High, Medium, Low to assess risk","Automating risk identification through software tools","Comparing insurance premiums to potential loss values"],a:1,e:"Qualitative risk analysis uses subjective ratings rather than financial calculations. It's faster and simpler than quantitative analysis but less precise for cost-benefit decisions."},
+{t:'mc',d:5,q:"Which formula calculates annualised loss expectancy?",o:["ALE = ARO + SLE","ALE = SLE &times; ARO","ALE = SLE / ARO","ALE = ARO &times; EF"],a:1,e:"ALE (Annualised Loss Expectancy) = SLE &times; ARO. SLE is the loss from one incident; ARO is how often it's expected per year. ALE gives the expected annual financial impact."},
 {t:'mc',d:5,q:"What is the PRIMARY purpose of a BCP?",o:["Restore IT systems after a disaster","Ensure critical business functions continue during disruption","Document all security incidents","Define acceptable use of IT resources"],a:1,e:"A BCP (Business Continuity Plan) ensures critical business functions can continue during disruptions. The DRP (Disaster Recovery Plan) is a subset focused specifically on IT recovery."},
-{t:'mc',d:5,q:"Which regulation applies to EU resident personal data regardless of where the organisation is located?",o:["HIPAA","PCI-DSS","SOX","GDPR"],a:3,e:"GDPR (General Data Protection Regulation) protects EU residents' personal data and applies to any organisation processing that data — regardless of location."},
-{t:'mc',d:5,q:"What does the exposure factor represent in quantitative risk analysis?",o:["The annual frequency of a threat occurring","The percentage of asset value lost in a single incident","The total annual financial loss from a risk","The cost of implementing a security control"],a:1,e:"The exposure factor (EF) is the percentage of an asset's value expected to be lost in a single risk event. It's used to calculate SLE: Asset Value × EF = SLE."},
+{t:'mc',d:5,q:"Which regulation applies to EU resident personal data regardless of where the organisation is located?",o:["HIPAA","PCI-DSS","SOX","GDPR"],a:3,e:"GDPR (General Data Protection Regulation) protects EU residents' personal data and applies to any organisation processing that data  --  regardless of location."},
+{t:'mc',d:5,q:"What does the exposure factor represent in quantitative risk analysis?",o:["The annual frequency of a threat occurring","The percentage of asset value lost in a single incident","The total annual financial loss from a risk","The cost of implementing a security control"],a:1,e:"The exposure factor (EF) is the percentage of an asset's value expected to be lost in a single risk event. It's used to calculate SLE: Asset Value &times; EF = SLE."},
 {t:'mc',d:5,q:"Which of the following BEST describes due care?",o:["Researching a vendor before signing a contract","Ongoing responsibility to properly maintain implemented security controls","Purchasing cyber insurance to transfer risk","Conducting a risk assessment before a project"],a:1,e:"Due care is the ongoing responsibility to maintain controls properly once implemented. Due diligence is the research done beforehand. Both are required to avoid negligence."},
-{t:'mc',d:5,q:"What is the PRIMARY purpose of security awareness training?",o:["Teaching administrators to configure firewalls","Helping employees recognise and respond to social engineering","Certifying staff in CompTIA Security+","Training developers to write secure code"],a:1,e:"Security awareness training educates employees about recognising threats — especially phishing and social engineering. Humans are the most targeted attack vector and the most effective defence when trained."},
-{t:'mc',d:5,q:"Which of the following BEST describes a risk register?",o:["A list of all security controls implemented","A documented record of identified risks, their likelihood, impact, and status","A database of known vulnerabilities","A log of all security incidents"],a:1,e:"A risk register is a living document tracking all identified risks — including likelihood, impact, owner, and mitigation status. It's updated as risks change."},
+{t:'mc',d:5,q:"What is the PRIMARY purpose of security awareness training?",o:["Teaching administrators to configure firewalls","Helping employees recognise and respond to social engineering","Certifying staff in CompTIA Security+","Training developers to write secure code"],a:1,e:"Security awareness training educates employees about recognising threats  --  especially phishing and social engineering. Humans are the most targeted attack vector and the most effective defence when trained."},
+{t:'mc',d:5,q:"Which of the following BEST describes a risk register?",o:["A list of all security controls implemented","A documented record of identified risks, their likelihood, impact, and status","A database of known vulnerabilities","A log of all security incidents"],a:1,e:"A risk register is a living document tracking all identified risks  --  including likelihood, impact, owner, and mitigation status. It's updated as risks change."},
 {t:'mc',d:5,q:"What is risk appetite?",o:["The maximum loss from a single incident","The total risk an organisation is willing to accept in pursuit of its objectives","The minimum security controls required by regulation","The annual budget allocated to risk management"],a:1,e:"Risk appetite is the overall level of risk an organisation's leadership is willing to accept. Risk tolerance is the acceptable variation around that level for specific risks."},
 {t:'mc',d:5,q:"Which of the following is an example of risk avoidance?",o:["Buying cyber insurance","Patching a vulnerable system","Deciding not to launch a risky new service","Accepting a low-impact risk without action"],a:2,e:"Risk avoidance eliminates the risk entirely by choosing not to engage in the risky activity. It's appropriate when the potential impact far outweighs any business benefit."},
 
@@ -388,10 +388,10 @@ e:"Least privilege: Marketing Manager gets Read/Write only to Marketing. Finance
 q:"Analyse the firewall and authentication log. Classify each event.",
 logEntries:[
   {id:0,time:'08:14:02',src:'198.51.100.22',event:'Port scan detected: 1,024 ports probed in 4 seconds from external IP',options:['Normal traffic','Reconnaissance / port scan','Failed login','DNS lookup'],correct:1},
-  {id:1,time:'08:16:55',src:'198.51.100.22',event:'SSH login attempt on port 22 — user: root — FAILED',options:['Successful login','Brute force attempt','Policy violation','Authorised access'],correct:1},
-  {id:2,time:'08:17:03',src:'198.51.100.22',event:'SSH login attempt on port 22 — user: admin — SUCCESS after 42 failures',options:['Normal login','Account compromise via brute force','Scheduled task','Password reset'],correct:1},
+  {id:1,time:'08:16:55',src:'198.51.100.22',event:'SSH login attempt on port 22  --  user: root  --  FAILED',options:['Successful login','Brute force attempt','Policy violation','Authorised access'],correct:1},
+  {id:2,time:'08:17:03',src:'198.51.100.22',event:'SSH login attempt on port 22  --  user: admin  --  SUCCESS after 42 failures',options:['Normal login','Account compromise via brute force','Scheduled task','Password reset'],correct:1},
   {id:3,time:'08:18:44',src:'10.0.0.33',event:'New scheduled task created: runs PowerShell encoded command every 5 min',options:['Routine maintenance','Persistence mechanism','Software installation','Backup job'],correct:1},
-  {id:4,time:'08:22:10',src:'10.0.0.33',event:'Outbound connection to 203.0.113.99:4444 — raw TCP — sustained for 14 minutes',options:['Software update','C2 / reverse shell communication','Video streaming','DNS query'],correct:2},
+  {id:4,time:'08:22:10',src:'10.0.0.33',event:'Outbound connection to 203.0.113.99:4444  --  raw TCP  --  sustained for 14 minutes',options:['Software update','C2 / reverse shell communication','Video streaming','DNS query'],correct:2},
 ],
 e:"Port scan = reconnaissance. Repeated SSH failures = brute force. Success after 42 failures = account compromise. Scheduled PowerShell = persistence mechanism. Sustained raw TCP to unusual port = C2/reverse shell communication."},
 
@@ -399,7 +399,7 @@ e:"Port scan = reconnaissance. Repeated SSH failures = brute force. Success afte
 q:"A hospital is deploying a new wireless network. Configure the settings to meet their security policy.",
 instruction:"Policy: Use strongest available encryption. Require per-user authentication via RADIUS. Disable insecure legacy standards. Create a separate isolated guest network. Hide the corporate SSID.",
 settings:[
-  {id:0,label:'Corporate Encryption',options:['WEP','WPA-Personal','WPA2-Personal','WPA3-Enterprise'],correct:3,hint:'Strongest — enterprise grade'},
+  {id:0,label:'Corporate Encryption',options:['WEP','WPA-Personal','WPA2-Personal','WPA3-Enterprise'],correct:3,hint:'Strongest  --  enterprise grade'},
   {id:1,label:'Authentication',options:['Open','Pre-Shared Key','802.1X / RADIUS','MAC filtering'],correct:2,hint:'Per-user credentials via RADIUS'},
   {id:2,label:'Corporate SSID Broadcast',options:['Enabled','Disabled'],correct:1,hint:'Reduces visibility'},
   {id:3,label:'Guest Network',options:['Same SSID as corporate','Isolated VLAN','Disabled','WEP only'],correct:1,hint:'Segregated from patient systems'},
@@ -418,11 +418,11 @@ items:[
   {id:'e',text:'Restore the server from a known-good backup',correct:5},
   {id:'f',text:'Document findings and update the incident response playbook',correct:6},
 ],
-e:"1-Identify (confirm scope). 2-Contain (disconnect). 3-Evidence preservation (forensic image — before changes). 4-Eradicate (remove threat + patch). 5-Recover (restore service). 6-Lessons learned (document and improve)."},
+e:"1-Identify (confirm scope). 2-Contain (disconnect). 3-Evidence preservation (forensic image  --  before changes). 4-Eradicate (remove threat + patch). 5-Recover (restore service). 6-Lessons learned (document and improve)."},
 
 {t:'pbq',d:2,sim:'firewall',
 q:"Configure firewall rules to implement the security policy below.",
-policy:"Policy requirements:\n• Allow HTTPS from the internet to the web server (10.0.2.10)\n• Allow DNS queries from internal hosts to the DNS server (10.0.2.53)\n• Block all Telnet from any source\n• Allow RDP only from the admin workstation (192.168.10.5) to any internal host\n• Deny all other traffic by default",
+policy:"Policy requirements:\n* Allow HTTPS from the internet to the web server (10.0.2.10)\n* Allow DNS queries from internal hosts to the DNS server (10.0.2.53)\n* Block all Telnet from any source\n* Allow RDP only from the admin workstation (192.168.10.5) to any internal host\n* Deny all other traffic by default",
 rules:[
   {id:0,src:'ANY',         dst:'10.0.2.10',       action:'',proto:'',port:'',correctAction:'Allow',correctProto:'TCP',correctPort:'443', hint:'HTTPS web traffic'},
   {id:1,src:'INTERNAL',   dst:'10.0.2.53',       action:'',proto:'',port:'',correctAction:'Allow',correctProto:'UDP',correctPort:'53',  hint:'DNS queries'},
@@ -430,7 +430,7 @@ rules:[
   {id:3,src:'192.168.10.5',dst:'ANY',             action:'',proto:'',port:'',correctAction:'Allow',correctProto:'TCP',correctPort:'3389',hint:'RDP admin only'},
   {id:4,src:'ANY',        dst:'ANY',              action:'',proto:'',port:'',correctAction:'Deny', correctProto:'ANY',correctPort:'ANY', hint:'Default deny-all'},
 ],
-e:"HTTPS=TCP/443. DNS=UDP/53. Telnet=TCP/23 (always block — plaintext). RDP=TCP/3389 (allow only from known admin IP). The final deny-all rule is a firewall best practice — block everything not explicitly permitted."},
+e:"HTTPS=TCP/443. DNS=UDP/53. Telnet=TCP/23 (always block  --  plaintext). RDP=TCP/3389 (allow only from known admin IP). The final deny-all rule is a firewall best practice  --  block everything not explicitly permitted."},
 
 {t:'pbq',d:3,sim:'network',
 q:"Place each system in the correct network security zone.",
@@ -439,9 +439,9 @@ zones:['Internet / Perimeter','DMZ','Internal LAN','Management Zone'],
 devices:[
   {name:'Public DNS Server',        correct:'DMZ',                 icon:'🌐'},
   {name:'Customer Portal Web App',  correct:'DMZ',                 icon:'💻'},
-  {name:'Payroll Database',         correct:'Internal LAN',        icon:'🗄️'},
-  {name:'Developer Workstation',    correct:'Internal LAN',        icon:'🖥️'},
-  {name:'SOAR Platform',            correct:'Management Zone',     icon:'⚙️'},
+  {name:'Payroll Database',         correct:'Internal LAN',        icon:'🗄'},
+  {name:'Developer Workstation',    correct:'Internal LAN',        icon:'🖥'},
+  {name:'SOAR Platform',            correct:'Management Zone',     icon:'[SOAR]'},
   {name:'Vulnerability Scanner',    correct:'Management Zone',     icon:'🔍'},
   {name:'Remote Vendor VPN Client', correct:'Internet / Perimeter',icon:'🔒'},
   {name:'Penetration Tester Laptop',correct:'Internet / Perimeter',icon:'🎯'},
@@ -469,11 +469,11 @@ issues:[
   {id:4,statement:'The SAN does not include the correct hostname',correct:false},
   {id:5,statement:'The issuing CA is untrusted',correct:false},
 ],
-e:"Two issues: (1) Certificate expired May 2024 — today is April 2025. (2) Key Usage shows only 'Digital Signature' — code signing certificates require the explicit 'Code Signing' extended key usage (EKU) extension. The CA, SHA-256, SAN, and revocation status are all fine."},
+e:"Two issues: (1) Certificate expired May 2024  --  today is April 2025. (2) Key Usage shows only 'Digital Signature'  --  code signing certificates require the explicit 'Code Signing' extended key usage (EKU) extension. The CA, SHA-256, SAN, and revocation status are all fine."},
 
 // ── DEFINITION QUESTIONS (10 questions) ──────────────────────────
-{t:'def',d:1,mode:'def2term',term:'Steganography',definition:'The practice of hiding secret data within an ordinary, non-secret file — such as embedding text inside an image — to avoid detection.',q:'Which term matches this definition?',o:['Obfuscation','Steganography','Tokenisation','Watermarking'],a:1,e:'Steganography hides the existence of data, not just its content. Obfuscation makes code hard to read; tokenisation replaces sensitive data with tokens; watermarking embeds ownership info.'},
-{t:'def',d:1,mode:'term2def',term:'Tokenisation',hint:'Replaces sensitive data with a non-sensitive placeholder',q:'Which definition BEST describes tokenisation?',o:['Encrypting data so it can only be read with the correct key','Replacing sensitive data with a non-sensitive placeholder that has no exploitable value','Hashing data to verify it has not been altered','Splitting data into multiple encrypted segments'],a:1,e:'Tokenisation replaces sensitive data (like credit card numbers) with tokens. The original data is stored in a secure vault — the token has no value outside that system. PCI-DSS commonly uses this.'},
+{t:'def',d:1,mode:'def2term',term:'Steganography',definition:'The practice of hiding secret data within an ordinary, non-secret file  --  such as embedding text inside an image  --  to avoid detection.',q:'Which term matches this definition?',o:['Obfuscation','Steganography','Tokenisation','Watermarking'],a:1,e:'Steganography hides the existence of data, not just its content. Obfuscation makes code hard to read; tokenisation replaces sensitive data with tokens; watermarking embeds ownership info.'},
+{t:'def',d:1,mode:'term2def',term:'Tokenisation',hint:'Replaces sensitive data with a non-sensitive placeholder',q:'Which definition BEST describes tokenisation?',o:['Encrypting data so it can only be read with the correct key','Replacing sensitive data with a non-sensitive placeholder that has no exploitable value','Hashing data to verify it has not been altered','Splitting data into multiple encrypted segments'],a:1,e:'Tokenisation replaces sensitive data (like credit card numbers) with tokens. The original data is stored in a secure vault  --  the token has no value outside that system. PCI-DSS commonly uses this.'},
 {t:'def',d:2,mode:'def2term',term:'Business Email Compromise',definition:'A sophisticated attack where criminals impersonate an executive or trusted partner via email to trick employees into transferring money or sensitive data.',q:'Which term matches this definition?',o:['Spear Phishing','Whaling','Business Email Compromise','Clone Phishing'],a:2,e:'BEC impersonates trusted parties (CFO, vendor) to authorise fraudulent transactions. Whaling targets executives as victims; BEC uses executives as impersonation tools to victimise others.'},
 {t:'def',d:2,mode:'term2def',term:'Password Spraying',hint:'Low-and-slow password attack that avoids lockouts',q:'Which definition BEST describes password spraying?',o:['Trying every possible password combination against one account','Using breached credentials from one site on another service','Trying a small number of common passwords against many accounts to avoid lockout','Computing password hashes in advance to crack them quickly'],a:2,e:'Password spraying tries one or two common passwords (Password1!, Summer2024!) against many accounts. It avoids per-account lockout thresholds while still achieving success through scale.'},
 {t:'def',d:3,mode:'def2term',term:'SASE',definition:'A cloud-delivered security framework combining network security functions including CASB, FWaaS, and ZTNA with wide area networking capabilities.',q:'Which term matches this definition?',o:['ZTNA','SASE','SD-WAN','CASB'],a:1,e:'SASE (Secure Access Service Edge) converges networking and security into a unified cloud-delivered service. It replaces traditional VPN and perimeter security for remote and branch access.'},
@@ -481,7 +481,7 @@ e:"Two issues: (1) Certificate expired May 2024 — today is April 2025. (2) Key
 {t:'def',d:4,mode:'def2term',term:'MTTR',definition:'The average time taken to restore a system or service after a failure or security incident has been detected and contained.',q:'Which term matches this definition?',o:['MTTD','RTO','MTTR','MTBF'],a:2,e:'MTTR (Mean Time to Repair/Respond) measures operational speed of recovery. MTTD is time to detect; MTBF is time between failures; RTO is the maximum acceptable downtime target.'},
 {t:'def',d:4,mode:'term2def',term:'Bug Bounty',hint:'Pay researchers to find your vulnerabilities before attackers do',q:'Which definition BEST describes a bug bounty programme?',o:['A penalty charged to vendors who ship vulnerable software','A government grant for improving cybersecurity posture','A programme offering financial rewards for responsible disclosure of security vulnerabilities','An insurance policy covering losses from software defects'],a:2,e:'Bug bounty programmes incentivise external security researchers to responsibly disclose vulnerabilities. Companies like Google, Microsoft, and HackerOne host major programmes.'},
 {t:'def',d:5,mode:'def2term',term:'Data Owner',definition:'The individual or business role responsible for determining the classification, acceptable use, and access policies for a specific set of organisational data.',q:'Which term matches this definition?',o:['Data Custodian','Data Owner','Data Steward','Privacy Officer'],a:1,e:'The data owner (typically a business leader) sets classification and access policy. The data custodian (typically IT) implements and maintains those controls. The privacy officer oversees compliance.'},
-{t:'def',d:5,mode:'term2def',term:'SLE',hint:'SLE = Asset Value × Exposure Factor',q:'Which definition BEST describes SLE?',o:['The expected annual financial loss from a specific risk','The frequency at which a threat is expected to occur annually','The expected monetary loss from a single occurrence of a risk event','The maximum acceptable financial loss before risk must be transferred'],a:2,e:'SLE (Single Loss Expectancy) = Asset Value × Exposure Factor. It represents the financial loss from one incident. Multiply by ARO to get ALE (annual expected loss).'},
+{t:'def',d:5,mode:'term2def',term:'SLE',hint:'SLE = Asset Value &times; Exposure Factor',q:'Which definition BEST describes SLE?',o:['The expected annual financial loss from a specific risk','The frequency at which a threat is expected to occur annually','The expected monetary loss from a single occurrence of a risk event','The maximum acceptable financial loss before risk must be transferred'],a:2,e:'SLE (Single Loss Expectancy) = Asset Value &times; Exposure Factor. It represents the financial loss from one incident. Multiply by ARO to get ALE (annual expected loss).'},
 ];
 
 let currentQ=0, answers=[], flagged=new Set(), timerInterval=null, timeLeft=90*60, timeUsed=0, examOrder=[], shuffledOptions=[];
@@ -512,7 +512,7 @@ window.addEventListener('DOMContentLoaded',()=>{
     document.getElementById('weak-mode-btn').style.display='inline-block';
     const info=document.getElementById('weak-mode-info');
     info.style.display='block';
-    info.textContent='⚠ Dashboard shows weak domains: D'+wd.join(', D')+' — Weak Mode focuses only on these.';
+    info.textContent='[!] Dashboard shows weak domains: D'+wd.join(', D')+'  --  Weak Mode focuses only on these.';
   }
 });
 
@@ -577,7 +577,7 @@ function renderQ(idx){
   const so=shuffledOptions[idx];
   document.getElementById('q-num').textContent='Question '+(idx+1);
   const dt=document.getElementById('q-domain');
-  dt.textContent='Domain '+q.d+' — '+DOMAINS[q.d].name;
+  dt.textContent='Domain '+q.d+'  --  '+DOMAINS[q.d].name;
   dt.className='q-domain-tag domain-'+q.d;
   const tt=document.getElementById('q-type-tag');
   if(q.t==='mc'){tt.textContent='Multiple Choice';tt.className='q-type-tag type-mc';}
@@ -588,7 +588,7 @@ function renderQ(idx){
   document.getElementById('prog-text').textContent=(idx+1)+' / '+examOrder.length;
   document.getElementById('prog-fill').style.width=((idx+1)/examOrder.length*100)+'%';
   document.getElementById('btn-prev').disabled=idx===0;
-  document.getElementById('btn-next-q').textContent=idx===examOrder.length-1?'Submit Exam':'Next →';
+  document.getElementById('btn-next-q').textContent=idx===examOrder.length-1?'Submit Exam':'Next ->';
   // Update dots
   document.querySelectorAll('.q-dot').forEach((d,i)=>{
     d.classList.toggle('current',i===idx);
@@ -701,7 +701,7 @@ function renderDD(q,so,idx,body){
       } else {
         placedHere.forEach(item=>{
           const el=document.createElement('div');el.className='dd-placed-item';
-          el.innerHTML=`${item} <span class="remove">×</span>`;
+          el.innerHTML=`${item} <span class="remove">&times;</span>`;
           el.onclick=()=>{
             // Return to bank
             placed[zone]=(placed[zone]||[]).filter(i=>i!==item);
@@ -781,7 +781,7 @@ function simBox(title,color='var(--amber)'){
 function simSelect(options,saved,onChange){
   const sel=document.createElement('select');
   sel.style.cssText='background:var(--surface3);border:1px solid var(--border2);border-radius:6px;color:var(--text);padding:5px 8px;font-family:var(--mono);font-size:12px;width:100%';
-  const blank=document.createElement('option');blank.value='';blank.textContent='— select —';sel.appendChild(blank);
+  const blank=document.createElement('option');blank.value='';blank.textContent=' --  select  -- ';sel.appendChild(blank);
   options.forEach(o=>{const opt=document.createElement('option');opt.value=o;opt.textContent=o;if(saved===o)opt.selected=true;sel.appendChild(opt);});
   sel.onchange=()=>onChange(sel.value);
   return sel;
@@ -853,7 +853,7 @@ function renderLogs(q,idx,body){
   if(!saved.selections) saved.selections={};
   const wrap=document.createElement('div');
 
-  const logBox=simBox('Security Event Log — Analyze each entry','var(--green)');
+  const logBox=simBox('Security Event Log  --  Analyze each entry','var(--green)');
   logBox.style.marginBottom='18px';
   wrap.appendChild(logBox);
 
@@ -898,7 +898,7 @@ function renderNetwork(q,idx,body){
 
   // Device bank
   const bankLabel=document.createElement('div');bankLabel.style.cssText='font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);margin-bottom:8px';
-  bankLabel.textContent='Devices — click to place';wrap.appendChild(bankLabel);
+  bankLabel.textContent='Devices  --  click to place';wrap.appendChild(bankLabel);
 
   const bankWrap=document.createElement('div');bankWrap.id='nw-bank-'+idx;bankWrap.style.cssText='display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px;min-height:48px;padding:10px;background:var(--surface);border:1px solid var(--border);border-radius:10px';
 
@@ -971,7 +971,7 @@ function renderNetwork(q,idx,body){
 
   rebuild();
   wrap.appendChild(bankWrap);
-  const zonesLabel=document.createElement('div');zonesLabel.style.cssText='font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);margin-bottom:8px';zonesLabel.textContent='Network Zones — click a zone after selecting a device';
+  const zonesLabel=document.createElement('div');zonesLabel.style.cssText='font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);margin-bottom:8px';zonesLabel.textContent='Network Zones  --  click a zone after selecting a device';
   wrap.appendChild(zonesLabel);
   wrap.appendChild(zonesWrap);
   body.appendChild(wrap);
@@ -1032,7 +1032,7 @@ function renderOrder(q,idx,body){
   instBox.appendChild(instTxt);wrap.appendChild(instBox);
 
   const hint=document.createElement('div');hint.style.cssText='font-family:var(--mono);font-size:11px;color:var(--text3);margin-bottom:14px';
-  hint.textContent='Use the ↑ ↓ arrows to reorder the steps into the correct sequence.';wrap.appendChild(hint);
+  hint.textContent='Use the ^ v arrows to reorder the steps into the correct sequence.';wrap.appendChild(hint);
 
   const list=document.createElement('div');list.style.cssText='display:flex;flex-direction:column;gap:8px;margin-bottom:32px';
 
@@ -1047,8 +1047,8 @@ function renderOrder(q,idx,body){
       const txt=document.createElement('div');txt.style.cssText='flex:1;font-size:14px';txt.textContent=item.text;
 
       const btns=document.createElement('div');btns.style.cssText='display:flex;flex-direction:column;gap:4px';
-      const up=document.createElement('button');up.textContent='↑';up.style.cssText='background:transparent;border:1px solid var(--border2);border-radius:4px;color:var(--text2);cursor:pointer;padding:2px 8px;font-size:12px';
-      const dn=document.createElement('button');dn.textContent='↓';dn.style.cssText=up.style.cssText;
+      const up=document.createElement('button');up.textContent='^';up.style.cssText='background:transparent;border:1px solid var(--border2);border-radius:4px;color:var(--text2);cursor:pointer;padding:2px 8px;font-size:12px';
+      const dn=document.createElement('button');dn.textContent='v';dn.style.cssText=up.style.cssText;
 
       up.disabled=pos===0;dn.disabled=pos===saved.order.length-1;
       up.onclick=()=>{if(pos>0){[saved.order[pos-1],saved.order[pos]]=[saved.order[pos],saved.order[pos-1]];answers[idx]=saved;updateDot(idx,'pbq');rebuild();}};
@@ -1076,7 +1076,7 @@ function renderWireless(q,idx,body){
   instBox.appendChild(instTxt);wrap.appendChild(instBox);
 
   const panel=document.createElement('div');panel.style.cssText='background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:32px';
-  const panelTitle=document.createElement('div');panelTitle.style.cssText='font-family:var(--mono);font-size:11px;color:var(--text3);margin-bottom:16px;letter-spacing:.1em;text-transform:uppercase';panelTitle.textContent='Wireless Access Point — Configuration Panel';
+  const panelTitle=document.createElement('div');panelTitle.style.cssText='font-family:var(--mono);font-size:11px;color:var(--text3);margin-bottom:16px;letter-spacing:.1em;text-transform:uppercase';panelTitle.textContent='Wireless Access Point  --  Configuration Panel';
   panel.appendChild(panelTitle);
 
   q.settings.forEach(setting=>{
@@ -1109,7 +1109,7 @@ function renderPKI(q,idx,body){
   if(!saved.checked) saved.checked={};
   const wrap=document.createElement('div');
 
-  const certBox=simBox('Certificate Details — Browser Certificate Viewer','var(--red)');
+  const certBox=simBox('Certificate Details  --  Browser Certificate Viewer','var(--red)');
   const cd=q.certDetails;
   const fields=[
     ['Subject',        cd.subject],
@@ -1245,9 +1245,9 @@ function getYourAnswer(qi,ans){
     if(!ans||ans==='done') return '(incomplete)';
     if(sim==='firewall') return q.rules.map(r=>ans.rules&&ans.rules[r.id]?`${r.hint}: ${ans.rules[r.id].action}/${ans.rules[r.id].proto}/${ans.rules[r.id].port}`:'(blank)').join(' | ');
     if(sim==='logs') return q.logEntries.map(e=>`${e.time}: ${ans.selections&&ans.selections[e.id]||'(blank)'}`).join(' | ');
-    if(sim==='network') return q.devices.map(d=>`${d.name}→${ans.placed&&ans.placed[d.name]||'(unplaced)'}`).join(' | ');
+    if(sim==='network') return q.devices.map(d=>`${d.name}&rarr;${ans.placed&&ans.placed[d.name]||'(unplaced)'}`).join(' | ');
     if(sim==='acl') return q.users.map(u=>`${u.name}: ${q.resources.map((r,ri)=>ans.perms&&ans.perms[u.name]&&ans.perms[u.name][r]||'?').join('/')}`).join(' | ');
-    if(sim==='order') return ans.order?ans.order.map((id,i)=>`${i+1}.${q.items.find(x=>x.id===id)?.text.slice(0,25)}`).join(' → '):'(unordered)';
+    if(sim==='order') return ans.order?ans.order.map((id,i)=>`${i+1}.${q.items.find(x=>x.id===id)?.text.slice(0,25)}`).join(' &rarr; '):'(unordered)';
     if(sim==='wireless') return q.settings.map(s=>`${s.label}: ${ans.settings&&ans.settings[s.id]||'(blank)'}`).join(' | ');
     if(sim==='pki') return q.issues.filter(i=>ans.checked&&ans.checked[i.id]).map(i=>i.statement.slice(0,40)).join(' | ')||'(none selected)';
     return '(see simulation)';
@@ -1259,14 +1259,14 @@ function getCorrectAnswer(qi){
   const q=QUESTIONS[examOrder[qi]];
   const so=shuffledOptions[qi];
   if(q.t==='mc'||q.t==='def') return so.opts[so.correct];
-  if(q.t==='dd') return Object.entries(q.correct).map(([item,zone])=>`${item} → ${zone}`).join(' | ');
+  if(q.t==='dd') return Object.entries(q.correct).map(([item,zone])=>`${item} &rarr; ${zone}`).join(' | ');
   if(q.t==='pbq'){
     const sim=q.sim;
     if(sim==='firewall') return q.rules.map(r=>`${r.hint}: ${r.correctAction}/${r.correctProto}/${r.correctPort}`).join(' | ');
     if(sim==='logs') return q.logEntries.map(e=>`${e.time}: ${e.options[e.correct]}`).join(' | ');
-    if(sim==='network') return q.devices.map(d=>`${d.name}→${d.correct}`).join(' | ');
+    if(sim==='network') return q.devices.map(d=>`${d.name}&rarr;${d.correct}`).join(' | ');
     if(sim==='acl') return q.users.map(u=>`${u.name}: ${u.correctPerms.join('/')}`).join(' | ');
-    if(sim==='order') return [...q.items].sort((a,b)=>a.correct-b.correct).map(i=>`${i.correct}.${i.text.slice(0,30)}`).join(' → ');
+    if(sim==='order') return [...q.items].sort((a,b)=>a.correct-b.correct).map(i=>`${i.correct}.${i.text.slice(0,30)}`).join(' &rarr; ');
     if(sim==='wireless') return q.settings.map(s=>`${s.label}: ${s.options[s.correct]}`).join(' | ');
     if(sim==='pki') return q.issues.filter(i=>i.correct).map(i=>i.statement.slice(0,40)).join(' | ');
     return '';
@@ -1295,9 +1295,9 @@ function buildResults(){
   const ring=document.getElementById('score-ring');
   ring.style.stroke=passed?'#3dd68c':'#ff5f6d';
   setTimeout(()=>{ring.style.strokeDashoffset=offset;ring.style.transition='stroke-dashoffset 1.5s ease';},100);
-  document.getElementById('verdict').textContent=passed?'You passed! 🎯':'Not quite — keep studying';
+  document.getElementById('verdict').textContent=passed?'You passed! 🎯':'Not quite  --  keep studying';
   document.getElementById('verdict').style.color=passed?'#3dd68c':'#ff5f6d';
-  document.getElementById('verdict-sub').textContent=passed?`You scored ${pct}% — above the 80% passing threshold.`:`You scored ${pct}% — you need 80% to pass. Focus on the domains below.`;
+  document.getElementById('verdict-sub').textContent=passed?`You scored ${pct}%  --  above the 80% passing threshold.`:`You scored ${pct}%  --  you need 80% to pass. Focus on the domains below.`;
   document.getElementById('r-correct').textContent=correct;
   document.getElementById('r-wrong').textContent=wrong;
   document.getElementById('r-skipped').textContent=skipped;
@@ -1312,9 +1312,9 @@ function buildResults(){
     const dpct=s.total>0?Math.round(s.correct/s.total*100):0;
     logToDashboard(parseInt(d),'Mock Exam B',dpct);
     const focusClass=dpct<60?'focus-high':dpct<80?'focus-mid':'focus-low';
-    const focusMsg=dpct<60?'⚠ High priority — study this domain intensively':dpct<80?'↑ Moderate — review weak areas':'✓ Strong — maintain with occasional review';
+    const focusMsg=dpct<60?'&#9888; High priority  --  study this domain intensively':dpct<80?'&uarr; Moderate  --  review weak areas':'&#10003; Strong  --  maintain with occasional review';
     const row=document.createElement('div');row.className='domain-row';
-    row.innerHTML=`<div class="domain-row-header"><span class="domain-name">${dom.name}</span><span class="domain-score">${s.correct}/${s.total} &nbsp; ${dpct}%</span></div><div class="domain-bar-bg"><div class="domain-bar-fill" style="width:0%;background:${dom.color}" data-w="${dpct}"></div></div><div class="domain-focus ${focusClass}" style="margin-top:4px;font-size:12px">${focusMsg} · Exam weight: ${dom.weight}%</div>`;
+    row.innerHTML=`<div class="domain-row-header"><span class="domain-name">${dom.name}</span><span class="domain-score">${s.correct}/${s.total} &nbsp; ${dpct}%</span></div><div class="domain-bar-bg"><div class="domain-bar-fill" style="width:0%;background:${dom.color}" data-w="${dpct}"></div></div><div class="domain-focus ${focusClass}" style="margin-top:4px;font-size:12px">${focusMsg} &middot; Exam weight: ${dom.weight}%</div>`;
     barsEl.appendChild(row);
   });
   setTimeout(()=>{document.querySelectorAll('.domain-bar-fill').forEach(b=>{b.style.transition='width 1s ease';b.style.width=b.getAttribute('data-w')+'%';});},200);
