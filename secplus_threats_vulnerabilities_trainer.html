@@ -394,7 +394,9 @@ function answer(idx){
   else{chosenBtn.classList.add('wrong');if(correctBtn)correctBtn.classList.add('reveal');}
   document.getElementById('exp-text').innerHTML=q.e;
   document.getElementById('explanation').classList.add('show');
-  document.getElementById('btn-next').style.display='block';
+  var nb=document.getElementById('btn-next');
+  nb.style.display='block';
+  nb.onclick=function(){nextQ();};
   if(qi>0&&qi%20===0) logToDashboard(2,'Threats & Vulnerabilities Trainer',Math.round(correct/qi*100));
 }
 

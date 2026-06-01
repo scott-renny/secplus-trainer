@@ -353,7 +353,9 @@ function answer(idx){
   if(isCorrect){cb.classList.add('correct');}else{cb.classList.add('wrong');if(rb)rb.classList.add('reveal');}
   document.getElementById('exp-text').innerHTML=q.e;
   document.getElementById('explanation').classList.add('show');
-  document.getElementById('btn-next').style.display='block';
+  var nb=document.getElementById('btn-next');
+  nb.style.display='block';
+  nb.onclick=function(){nextQ();};
   if(qi>0&&qi%20===0) logToDashboard(3,'Network Architecture Trainer',Math.round(correct/qi*100));
 }
 

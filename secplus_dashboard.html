@@ -307,9 +307,21 @@ function cancelEdit(){document.getElementById('date-row').style.display='flex';d
 function saveDate(){const v=document.getElementById('date-input').value;if(!v)return;examDate=v;save('examDate',v);updateDateDisplay();cancelEdit();renderAll();}
 
 function getDomainScores(){
+  // For each tool, keep only the most recent session (highest ts).
+  // This prevents partial mid-quiz logs and old retakes from skewing scores.
+  const latest={};
+  sessions.forEach(s=>{
+    if(!latest[s.type]||s.ts>latest[s.type].ts) latest[s.type]=s;
+  });
+  const latestArr=Object.values(latest);
+  // Now accumulate domain scores from latest-per-tool sessions only
   const acc={};Object.keys(DOMAINS).forEach(d=>{acc[d]={total:0,count:0};});
-  sessions.forEach(s=>{const t=s.domain===0?Object.keys(DOMAINS):[String(s.domain)];t.forEach(d=>{acc[d].total+=s.score;acc[d].count++;});});
-  const r={};Object.keys(DOMAINS).forEach(d=>{r[d]=acc[d].count>0?Math.round(acc[d].total/acc[d].count):null;});return r;
+  latestArr.forEach(s=>{
+    const t=s.domain===0?Object.keys(DOMAINS):[String(s.domain)];
+    t.forEach(d=>{acc[d].total+=s.score;acc[d].count++;});
+  });
+  const r={};Object.keys(DOMAINS).forEach(d=>{r[d]=acc[d].count>0?Math.round(acc[d].total/acc[d].count):null;});
+  return r;
 }
 
 function getOverall(ds){let ws=0,tw=0;Object.entries(DOMAINS).forEach(([d,i])=>{if(ds[d]!==null){ws+=ds[d]*i.weight;tw+=i.weight;}});return tw>0?Math.round(ws/tw):0;}
@@ -347,7 +359,8 @@ function renderAll(){
   const weak=scored.length?scored.reduce((a,b)=>a[1]<b[1]?a:b):null;
   const strong=scored.length?scored.reduce((a,b)=>a[1]>b[1]?a:b):null;
   document.getElementById('s-overall').textContent=overall>0?overall+'%':' -- ';
-  document.getElementById('s-sess').textContent=sessions.length;
+  const uniqueTools=new Set(sessions.map(s=>s.type)).size;
+  document.getElementById('s-sess').textContent=uniqueTools;
   document.getElementById('s-weak').textContent=weak?`D${weak[0]} . ${DOMAINS[weak[0]].short}`:' -- ';
   document.getElementById('s-strong').textContent=strong?`D${strong[0]} . ${DOMAINS[strong[0]].short}`:' -- ';
 
@@ -355,7 +368,7 @@ function renderAll(){
   const grid=document.getElementById('dom-grid');grid.innerHTML='';
   Object.entries(DOMAINS).forEach(([d,info])=>{
     const sc=ds[d],c=scoreColor(sc),st=statusFor(sc);
-    const sessCount=sessions.filter(s=>s.domain==d||s.domain===0).length;
+    const sessCount=new Set(sessions.filter(s=>s.domain==d||s.domain===0).map(s=>s.type)).size;
     const stC={strong:{bg:'rgba(0,255,136,0.08)',c:'#00ff88'},mid:{bg:'rgba(255,204,0,0.08)',c:'#ffcc00'},low:{bg:'rgba(255,61,90,0.08)',c:'#ff3d5a'},none:{bg:'#1a1e29',c:'#3a4060'}};
     const s2=stC[st.cls];
     const card=document.createElement('div');card.className='dom-card';
@@ -364,7 +377,7 @@ function renderAll(){
   });
 
   // History
-  document.getElementById('sess-ct').textContent=`(${sessions.length})`;
+  document.getElementById('sess-ct').textContent='('+sessions.length+' entries)';
   const list=document.getElementById('hist-list');list.innerHTML='';
   if(!sessions.length){list.innerHTML='<div class="empty">No sessions logged yet  --  add your first one above</div>';}
   else{[...sessions].reverse().forEach(sess=>{

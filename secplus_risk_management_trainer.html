@@ -498,7 +498,7 @@ function answer(idx){
   var nextBtn=document.getElementById('btn-next');
   if(expText) expText.innerHTML=q.e;
   if(expBox) expBox.classList.add('show');
-  if(nextBtn) nextBtn.style.display='block';
+  if(nextBtn){nextBtn.style.display='block';nextBtn.onclick=function(){nextQ();};}
   if(qi>0&&qi%20===0) logToDashboard(5,'Risk Management Trainer',Math.round(correct/qi*100));
 }
 
