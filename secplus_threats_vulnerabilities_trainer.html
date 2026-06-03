@@ -175,14 +175,14 @@ h1 em{font-style:normal;color:var(--accent)}
 <script>
 function logToDashboard(domain,type,score){
   try{
-    const s=JSON.parse(localStorage.getItem('sp_sessions')||'[]');
-    const now=new Date();
+    var s=JSON.parse(localStorage.getItem('sp_sessions')||'[]');
+    var now=new Date();
     s.push({domain,type,score,date:now.toLocaleDateString('en-CA',{month:'short',day:'numeric'}),ts:now.getTime()});
     localStorage.setItem('sp_sessions',JSON.stringify(s));
   }catch(e){}
 }
 
-const TERMS=[
+var TERMS=[
   {name:'SQL Injection',def:'Inserting malicious SQL code into an input field to manipulate a database  --  returning, modifying, or deleting data.',tag:'tag-red',tagLabel:'Injection Attack',key:'Use parameterised queries / prepared statements to prevent'},
   {name:'Cross-Site Scripting (XSS)',def:'Injecting malicious scripts into web pages viewed by other users, stealing cookies or redirecting victims.',tag:'tag-red',tagLabel:'Injection Attack',key:'Encode output; use Content Security Policy headers'},
   {name:'Cross-Site Request Forgery',def:'Tricks an authenticated user\'s browser into sending an unwanted request to a site they are logged into.',tag:'tag-red',tagLabel:'Web Attack',key:'Anti-CSRF tokens and SameSite cookie attribute'},
@@ -226,13 +226,13 @@ const TERMS=[
   {name:'IV Attack',def:'Exploiting weaknesses in WEP\'s initialisation vector reuse to recover the encryption key.',tag:'tag-red',tagLabel:'Wireless Attack',key:'WEP is broken  --  always use WPA2/WPA3'},
 ];
 
-const CATS=['Injection Attacks','Network Attacks','Credential Attacks','Vulnerability Types','Threat Actors','Post-Exploitation','Indicators and Frameworks','Wireless Attacks','Scenario'];
+var CATS=['Injection Attacks','Network Attacks','Credential Attacks','Vulnerability Types','Threat Actors','Post-Exploitation','Indicators and Frameworks','Wireless Attacks','Scenario'];
 
-const CAT_COLORS={'Injection Attacks':'var(--red)','Network Attacks':'var(--red)','Credential Attacks':'var(--amber)','Vulnerability Types':'var(--purple)','Threat Actors':'var(--amber)','Post-Exploitation':'var(--purple)','Indicators and Frameworks':'var(--teal)','Wireless Attacks':'var(--blue)','Scenario':'var(--amber)'};
+var CAT_COLORS={'Injection Attacks':'var(--red)','Network Attacks':'var(--red)','Credential Attacks':'var(--amber)','Vulnerability Types':'var(--purple)','Threat Actors':'var(--amber)','Post-Exploitation':'var(--purple)','Indicators and Frameworks':'var(--teal)','Wireless Attacks':'var(--blue)','Scenario':'var(--amber)'};
 
-const BADGE_MAP={'Injection Attacks':'badge-attack','Network Attacks':'badge-threat','Credential Attacks':'badge-threat','Vulnerability Types':'badge-vuln','Threat Actors':'badge-threat','Post-Exploitation':'badge-attack','Indicators and Frameworks':'badge-ioc','Wireless Attacks':'badge-vuln','Scenario':'badge-scenario'};
+var BADGE_MAP={'Injection Attacks':'badge-attack','Network Attacks':'badge-threat','Credential Attacks':'badge-threat','Vulnerability Types':'badge-vuln','Threat Actors':'badge-threat','Post-Exploitation':'badge-attack','Indicators and Frameworks':'badge-ioc','Wireless Attacks':'badge-vuln','Scenario':'badge-scenario'};
 
-const Q_BANK=[
+var Q_BANK=[
 // VULNERABILITY TYPES ----------------------------------------─
 {type:'identify',cat:'Vulnerability Types',q:"Which vulnerability allows an attacker to write past the end of a buffer and overwrite adjacent memory?",o:["Integer overflow","Buffer overflow","Use-after-free","Null pointer dereference"],a:1,e:"<strong>Buffer overflow</strong>  --  writing beyond a buffer's boundary can overwrite return addresses, enabling code execution. ASLR randomises memory layout; DEP marks regions non-executable."},
 {type:'identify',cat:'Vulnerability Types',q:"Which vulnerability occurs when a program attempts to use memory after it has already been freed?",o:["Buffer overflow","Use-after-free","Integer overflow","Null pointer dereference"],a:1,e:"<strong>Use-after-free</strong>  --  accessing freed memory can corrupt data or allow arbitrary code execution. Memory-safe languages like Rust prevent this at compile time; ASLR and heap isolation reduce exploitability."},
@@ -319,26 +319,36 @@ const Q_BANK=[
 ];
 
 // STATE ------------------------------------------------------
-let questions=[],qi=0,correct=0,wrong=0;
-let timerInterval=null;
-let catStats={};
+var questions=[],qi=0,correct=0,wrong=0;
+var timerInterval=null;
+var catStats={};
 CATS.forEach(c=>catStats[c]={c:0,t:0});
 
 // HELPERS ----------------------------------------------------
 function shuffle(a){return[...a].sort(()=>Math.random()-.5)}
 
 function buildQuestions(){
-  const pool=shuffle([...Q_BANK]).slice(0,80);
-  return pool.map(q=>{
-    const idxs=q.o.map((_,i)=>i);
-    const shuf=shuffle(idxs);
-    return{...q,o:shuf.map(i=>q.o[i]),a:shuf.indexOf(q.a)};
-  });
+  var pool=shuffle(Q_BANK.slice()).slice(0,80);
+  var result=[];
+  for(var k=0;k<pool.length;k++){
+    var q=pool[k];
+    var idxs=[];
+    for(var m=0;m<q.o.length;m++) idxs.push(m);
+    var shuf=shuffle(idxs);
+    var newO=[];
+    for(var n=0;n<shuf.length;n++) newO.push(q.o[shuf[n]]);
+    var nq={};
+    for(var p in q) nq[p]=q[p];
+    nq.o=newO;
+    nq.a=shuf.indexOf(q.a);
+    result.push(nq);
+  }
+  return result;
 }
 
 // STATS ------------------------------------------------------
 function updateStats(){
-  const total=correct+wrong;
+  var total=correct+wrong;
   document.getElementById('s-prog').textContent=qi+'/80';
   document.getElementById('s-correct').textContent=correct;
   document.getElementById('s-wrong').textContent=wrong;
@@ -349,10 +359,10 @@ function updateStats(){
 // RENDER QUESTION --------------------------------------------
 function renderQ(){
   if(qi>=80){showResults();return;}
-  const q=questions[qi];
-  const letters=['A','B','C','D'];
-  const catBadge=BADGE_MAP[q.cat]||'badge-vuln';
-  const scenHTML=q.type==='scenario'&&q.scenario
+  var q=questions[qi];
+  var letters=['A','B','C','D'];
+  var catBadge=BADGE_MAP[q.cat]||'badge-vuln';
+  var scenHTML=q.type==='scenario'&&q.scenario
     ?'<div class="scenario-box"><div class="scenario-lbl">Scenario</div><div class="scenario-text">'+q.scenario.replace(/\n/g,'<br>')+'</div></div>'
     :'';
   document.getElementById('q-area').innerHTML=
@@ -364,40 +374,41 @@ function renderQ(){
       scenHTML+
       '<div class="q-text">'+q.q+'</div>'+
       '<div class="opts" id="opts">'+
-        q.o.map((o,i)=>
-          '<button class="opt" id="opt-'+i+'" onclick="answer('+i+')">'+
-            '<span class="opt-letter">'+letters[i]+'</span>'+
-            '<span class="opt-text">'+o+'</span>'+
-          '</button>'
-        ).join('')+
+        (function(){var _h='';for(var _i=0;_i<q.o.length;_i++){_h+='<button class="opt" id="opt-'+_i+'">'+'<span class="opt-letter">'+['A','B','C','D'][_i]+'</span>'+'<span class="opt-text">'+q.o[_i]+'</span>'+'</button>';}return _h;})()+
       '</div>'+
       '<div class="explanation" id="explanation">'+
         '<div class="exp-lbl">Explanation</div>'+
         '<div class="exp-text" id="exp-text"></div>'+
       '</div>'+
-      '<button class="btn-next" id="btn-next" onclick="nextQ()">'+(qi===79?'See results ->':'Next ->')+'</button>'+
+      '<button class="btn-next" id="btn-next">'+(qi===79?'See results ->':'Next ->')+'</button>'+
     '</div>';
+  for(var _j=0;_j<q.o.length;_j++){(function(_idx){var _b=document.getElementById('opt-'+_idx);if(_b) _b.onclick=function(){answer(_idx);};}(_j));}
 }
 
 // ANSWER ----------------------------------------------------─
 function answer(idx){
-  const q=questions[qi];
-  const isCorrect=idx===q.a;
-  if(isCorrect){correct++;catStats[q.cat].c++;}else wrong++;
+  var q=questions[qi];
+  var isCorrect=idx===q.a;
+  if(isCorrect){correct++;if(catStats[q.cat])catStats[q.cat].c++;}else{wrong++;}
+  if(!catStats[q.cat]) catStats[q.cat]={c:0,t:0};
   catStats[q.cat].t++;
   qi++;
   updateStats();
-  q.o.forEach((_,i)=>document.getElementById('opt-'+i).disabled=true);
-  const chosenBtn=document.getElementById('opt-'+idx);
-  const correctBtn=document.getElementById('opt-'+q.a);
-  if(isCorrect){chosenBtn.classList.add('correct');}
-  else{chosenBtn.classList.add('wrong');if(correctBtn)correctBtn.classList.add('reveal');}
-  document.getElementById('exp-text').innerHTML=q.e;
-  document.getElementById('explanation').classList.add('show');
+  for(var i=0;i<q.o.length;i++){
+    var b=document.getElementById('opt-'+i);
+    if(b) b.disabled=true;
+  }
+  var cb=document.getElementById('opt-'+idx);
+  var rb=document.getElementById('opt-'+q.a);
+  if(isCorrect){if(cb)cb.classList.add('correct');}
+  else{if(cb)cb.classList.add('wrong');if(rb)rb.classList.add('reveal');}
+  var et=document.getElementById('exp-text');
+  var eb=document.getElementById('explanation');
   var nb=document.getElementById('btn-next');
-  nb.style.display='block';
-  nb.onclick=function(){nextQ();};
-  if(qi>0&&qi%20===0) logToDashboard(2,'Threats & Vulnerabilities Trainer',Math.round(correct/qi*100));
+  if(et) et.innerHTML=q.e;
+  if(eb) eb.classList.add('show');
+  if(nb){nb.style.display='block';nb.onclick=function(){nextQ();};}
+  logToDashboard(2,'Threats & Vulnerabilities Trainer',Math.round(correct/qi*100));
 }
 
 function nextQ(){renderQ();}
@@ -406,18 +417,18 @@ function nextQ(){renderQ();}
 function showResults(){
   clearInterval(timerInterval);
   document.getElementById('q-area').style.display='none';
-  const res=document.getElementById('results-area');
+  var res=document.getElementById('results-area');
   res.style.display='block';
-  const pct=Math.round(correct/80*100);
+  var pct=Math.round(correct/80*100);
   logToDashboard(2,'Threats & Vulnerabilities Trainer',pct);
-  const passed=pct>=80;
-  const msg=pct>=90?'Outstanding  --  exam-ready!':pct>=80?'Solid  --  above pass threshold.':pct>=65?'Getting there  --  keep reviewing.':'More study needed.';
-  const ringColor=passed?'#00ff88':'#ff3d5a';
-  const circ=339.3,offset=circ-(pct/100)*circ;
-  const topCats=CATS.filter(c=>catStats[c].t>0).sort((a,b)=>(catStats[b].c/catStats[b].t)-(catStats[a].c/catStats[a].t));
-  const bdHTML=topCats.slice(0,6).map(c=>{
-    const s=catStats[c];const p=s.t?Math.round(s.c/s.t*100):0;
-    const col=CAT_COLORS[c]||'var(--accent)';
+  var passed=pct>=80;
+  var msg=pct>=90?'Outstanding  --  exam-ready!':pct>=80?'Solid  --  above pass threshold.':pct>=65?'Getting there  --  keep reviewing.':'More study needed.';
+  var ringColor=passed?'#00ff88':'#ff3d5a';
+  var circ=339.3,offset=circ-(pct/100)*circ;
+  var topCats=CATS.filter(c=>catStats[c].t>0).sort((a,b)=>(catStats[b].c/catStats[b].t)-(catStats[a].c/catStats[a].t));
+  var bdHTML=topCats.slice(0,6).map(c=>{
+    var s=catStats[c];var p=s.t?Math.round(s.c/s.t*100):0;
+    var col=CAT_COLORS[c]||'var(--accent)';
     return '<div class="bd-card"><div class="bd-title" style="color:'+col+'">'+c+'</div>'+
            '<div class="bd-bar-bg"><div class="bd-bar-fill" style="width:0%;background:'+col+'" data-pct="'+p+'"></div></div>'+
            '<div class="bd-score" style="color:'+col+'">'+p+'%</div>'+
@@ -439,7 +450,7 @@ function showResults(){
       '<button class="btn-retake" onclick="showRef()" style="border-color:var(--accent);color:var(--accent)">View Reference</button>'+
     '</div>';
   setTimeout(()=>{
-    const ring=document.getElementById('ring-anim');
+    var ring=document.getElementById('ring-anim');
     if(ring){ring.style.transition='stroke-dashoffset 1.5s ease';ring.style.strokeDashoffset=offset;}
     document.querySelectorAll('.bd-bar-fill').forEach(el=>{
       el.style.transition='width 1s ease';el.style.width=el.dataset.pct+'%';
@@ -481,14 +492,14 @@ function setTab(t){
 }
 
 function buildRef(){
-  const chart=document.getElementById('acc-chart');
+  var chart=document.getElementById('acc-chart');
   chart.innerHTML='';
   CATS.forEach(c=>{
-    const s=catStats[c];const pct=s.t?Math.round(s.c/s.t*100):0;
-    const col=CAT_COLORS[c]||'var(--accent)';
+    var s=catStats[c];var pct=s.t?Math.round(s.c/s.t*100):0;
+    var col=CAT_COLORS[c]||'var(--accent)';
     chart.innerHTML+='<div class="acc-row"><div class="acc-lbl">'+c+'</div><div class="acc-bg"><div class="acc-fill" style="width:'+(s.t?pct:0)+'%;background:'+col+'"></div></div><div class="acc-pct">'+(s.t?pct+'%':' -- ')+'</div></div>';
   });
-  const cards=document.getElementById('ref-cards');
+  var cards=document.getElementById('ref-cards');
   cards.innerHTML='';
   TERMS.forEach(t=>{
     cards.innerHTML+='<div class="ref-card"><div class="ref-name">'+t.name+'</div><div class="ref-def">'+t.def+'</div><span class="ref-tag '+t.tag+'">'+t.tagLabel+'</span><div class="ref-key">'+t.key+'</div></div>';

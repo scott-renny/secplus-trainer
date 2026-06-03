@@ -469,8 +469,9 @@ function renderQ(){
       '<div class="q-stem">'+q.q+'</div>'+
       '<div class="opts" id="opts">'+optsHTML+'</div>'+
       '<div class="explanation" id="explanation"><div class="exp-lbl">Explanation</div><div class="exp-text" id="exp-text"></div></div>'+
-      '<button class="btn-next" id="btn-next" onclick="nextQ()">'+(qi===79?'See results':'Next')+'</button>'+
+      '<button class="btn-next" id="btn-next">'+(qi===79?'See results':'Next')+'</button>'+
     '</div>';
+  for(var _j=0;_j<q.o.length;_j++){(function(_idx){var _b=document.getElementById('opt-'+_idx);if(_b) _b.onclick=function(){answer(_idx);};}(_j));}
 }
 
 function answer(idx){

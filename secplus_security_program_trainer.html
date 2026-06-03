@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Security Program Management Trainer -- Security+</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#07080c;--panel:#0e1018;--panel2:#141720;--panel3:#1a1e29;
+  --border:rgba(255,255,255,0.06);--border2:rgba(255,255,255,0.1);--border3:rgba(255,255,255,0.18);
+  --text:#e4e8f5;--text2:#6b7494;--text3:#3a4060;
+  --accent:#00e5ff;--green:#00ff88;--red:#ff3d5a;--amber:#ffcc00;--purple:#bf87ff;--teal:#4fd1c5;--indigo:#818cf8;
+  --mono:'Courier New',monospace;
+}
+*{font-family:'Segoe UI',sans-serif}
+body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 60% 50% at 20% 0%,rgba(129,140,248,0.04) 0%,transparent 60%),radial-gradient(ellipse 50% 40% at 80% 100%,rgba(79,209,197,0.03) 0%,transparent 60%);pointer-events:none}
+body::after{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(129,140,248,0.012) 1px,transparent 1px),linear-gradient(90deg,rgba(129,140,248,0.012) 1px,transparent 1px);background-size:40px 40px;pointer-events:none}
+.wrap{position:relative;z-index:1;max-width:760px;margin:0 auto;padding:32px 20px 80px}
+.eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:var(--indigo);margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'';width:20px;height:1px;background:var(--indigo)}
+h1{font-size:clamp(26px,5vw,40px);font-weight:700;line-height:1.1;letter-spacing:-.02em;margin-bottom:8px}
+h1 em{font-style:normal;color:var(--indigo)}
+.subtitle{font-family:var(--mono);font-size:11px;color:var(--text2);margin-bottom:28px}
+.tabs{display:flex;gap:5px;margin-bottom:20px;background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:5px}
+.tab{flex:1;padding:10px 4px;font-family:var(--mono);font-size:10px;letter-spacing:.05em;text-transform:uppercase;border:none;background:transparent;color:var(--text3);cursor:pointer;border-radius:8px;transition:all .2s;touch-action:manipulation}
+.tab.active{background:var(--panel3);color:var(--indigo);border:1px solid rgba(129,140,248,0.2)}
+.tab:not(.active):hover{color:var(--text2)}
+.stats-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px}
+.sb{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:13px;position:relative;overflow:hidden}
+.sb::before{content:'';position:absolute;top:0;left:0;right:0;height:2px}
+.sb.s-prog::before{background:var(--indigo)}
+.sb.s-correct::before{background:var(--green)}
+.sb.s-wrong::before{background:var(--red)}
+.sb.s-acc::before{background:var(--amber)}
+.sb-val{font-family:var(--mono);font-size:22px;font-weight:500;line-height:1}
+.sb.s-correct .sb-val{color:var(--green)}
+.sb.s-wrong .sb-val{color:var(--red)}
+.sb.s-acc .sb-val{color:var(--amber)}
+.sb-lbl{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--text2);margin-top:4px}
+.prog-wrap{height:3px;background:rgba(255,255,255,0.06);border-radius:99px;margin-bottom:20px;overflow:hidden}
+.prog-fill{height:100%;background:var(--indigo);border-radius:99px;transition:width .4s ease}
+.q-card{background:var(--panel);border:1px solid var(--border2);border-radius:20px;padding:28px;margin-bottom:14px;position:relative;overflow:hidden}
+.q-card::after{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(129,140,248,0.4),transparent)}
+.q-meta{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.q-badge{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;padding:3px 10px;border-radius:5px}
+.badge-governance{background:rgba(129,140,248,0.1);color:var(--indigo);border:1px solid rgba(129,140,248,0.2)}
+.badge-policies{background:rgba(0,229,255,0.1);color:var(--accent);border:1px solid rgba(0,229,255,0.2)}
+.badge-vendor{background:rgba(255,204,0,0.1);color:var(--amber);border:1px solid rgba(255,204,0,0.2)}
+.badge-awareness{background:rgba(0,255,136,0.1);color:var(--green);border:1px solid rgba(0,255,136,0.2)}
+.badge-privacy{background:rgba(191,135,255,0.1);color:var(--purple);border:1px solid rgba(191,135,255,0.2)}
+.badge-data{background:rgba(79,209,197,0.1);color:var(--teal);border:1px solid rgba(79,209,197,0.2)}
+.badge-scenario{background:rgba(255,204,0,0.1);color:var(--amber);border:1px solid rgba(255,204,0,0.2)}
+.q-num{font-family:var(--mono);font-size:10px;color:var(--text3)}
+.scenario-box{background:var(--panel2);border:1px solid var(--border2);border-left:3px solid var(--indigo);border-radius:10px;padding:13px 16px;margin-bottom:16px}
+.scenario-lbl{font-family:var(--mono);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--indigo);margin-bottom:6px}
+.scenario-text{font-size:13px;color:var(--text2);line-height:1.7;font-family:var(--mono)}
+.q-text{font-size:15px;font-weight:500;line-height:1.65;color:var(--text);margin-bottom:18px}
+.opts{display:flex;flex-direction:column;gap:9px;margin-bottom:14px}
+.opt{display:flex;align-items:flex-start;gap:14px;padding:13px 16px;border-radius:10px;border:1px solid var(--border2);background:var(--panel2);cursor:pointer;text-align:left;width:100%;transition:all .15s;touch-action:manipulation}
+.opt:hover:not(:disabled){border-color:var(--border3);background:var(--panel3)}
+.opt-letter{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--text2);min-width:18px;margin-top:1px;flex-shrink:0}
+.opt-text{font-size:14px;color:var(--text);line-height:1.5}
+.opt.correct{border-color:var(--green)!important;background:rgba(0,255,136,0.07)!important}
+.opt.correct .opt-letter,.opt.correct .opt-text{color:var(--green)!important}
+.opt.wrong{border-color:var(--red)!important;background:rgba(255,61,90,0.07)!important}
+.opt.wrong .opt-letter,.opt.wrong .opt-text{color:var(--red)!important}
+.opt.reveal{border-color:rgba(0,255,136,0.3)!important;background:rgba(0,255,136,0.04)!important}
+.opt.reveal .opt-letter,.opt.reveal .opt-text{color:var(--green)!important;opacity:.6}
+.opt:disabled{cursor:default}
+.explanation{display:none;background:var(--panel2);border:1px solid var(--border2);border-left:3px solid var(--indigo);border-radius:10px;padding:13px 16px;margin-bottom:12px}
+.explanation.show{display:block}
+.exp-lbl{font-family:var(--mono);font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--indigo);margin-bottom:7px}
+.exp-text{font-size:13px;color:var(--text2);line-height:1.7}
+.exp-text strong{color:var(--text);font-weight:600}
+.btn-next{width:100%;padding:12px;border-radius:10px;border:1px solid var(--border2);background:transparent;color:var(--text2);font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;display:none;transition:all .15s;touch-action:manipulation}
+.btn-next:hover{border-color:var(--indigo);color:var(--indigo)}
+.results-wrap{text-align:center;padding:32px 0 20px}
+.results-ring{width:140px;height:140px;margin:0 auto 20px;position:relative}
+.results-ring svg{transform:rotate(-90deg)}
+.ring-score{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center}
+.ring-pct{font-family:var(--mono);font-size:32px;font-weight:600;color:var(--text)}
+.ring-lbl{font-family:var(--mono);font-size:9px;color:var(--text3);letter-spacing:.1em;text-transform:uppercase}
+.results-verdict{font-size:22px;font-weight:700;margin-bottom:6px}
+.results-sub{font-family:var(--mono);font-size:11px;color:var(--text2);margin-bottom:28px}
+.breakdown{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:28px;text-align:left}
+.bd-card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:16px}
+.bd-title{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px}
+.bd-bar-bg{height:5px;background:rgba(255,255,255,0.06);border-radius:99px;overflow:hidden;margin-bottom:6px}
+.bd-bar-fill{height:100%;border-radius:99px;transition:width 1s ease}
+.bd-score{font-family:var(--mono);font-size:22px;font-weight:600}
+.bd-detail{font-family:var(--mono);font-size:10px;color:var(--text3);margin-top:4px}
+.btn-retake{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:12px 36px;background:transparent;border:1px solid var(--border2);color:var(--text2);border-radius:10px;cursor:pointer;transition:all .2s;touch-action:manipulation}
+.btn-retake:hover{border-color:var(--indigo);color:var(--indigo)}
+.ref-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px;margin-bottom:24px}
+.ref-card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:14px;transition:border-color .15s}
+.ref-card:hover{border-color:var(--border3)}
+.ref-name{font-size:14px;font-weight:600;color:var(--text);margin-bottom:6px}
+.ref-def{font-size:12px;color:var(--text2);line-height:1.6}
+.ref-tag{display:inline-block;font-family:var(--mono);font-size:10px;padding:2px 8px;border-radius:4px;margin-top:8px;background:rgba(129,140,248,0.1);color:var(--indigo)}
+.ref-key{font-family:var(--mono);font-size:10px;color:var(--text3);margin-top:8px;border-top:1px solid var(--border);padding-top:6px}
+.ref-section{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--indigo);margin:20px 0 12px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+@media(max-width:500px){.stats-bar{grid-template-columns:repeat(2,1fr)}.breakdown{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">CompTIA Security+ &middot; SY0-701 &middot; Domain 5</div>
+  <h1>Security Program <em>Management</em></h1>
+  <p class="subtitle">80 questions &middot; governance &middot; policies &middot; vendor management &middot; data roles &middot; privacy &middot; awareness training &middot; scenarios</p>
+  <div class="tabs">
+    <button class="tab active" id="tab-quiz" onclick="setTab('quiz')">Quiz</button>
+    <button class="tab" id="tab-ref" onclick="setTab('ref')">Reference</button>
+  </div>
+  <div id="view-quiz">
+    <div class="stats-bar">
+      <div class="sb s-prog"><div class="sb-val" id="s-prog">0/80</div><div class="sb-lbl">Progress</div></div>
+      <div class="sb s-correct"><div class="sb-val" id="s-correct">0</div><div class="sb-lbl">Correct</div></div>
+      <div class="sb s-wrong"><div class="sb-val" id="s-wrong">0</div><div class="sb-lbl">Wrong</div></div>
+      <div class="sb s-acc"><div class="sb-val" id="s-acc">--</div><div class="sb-lbl">Accuracy</div></div>
+    </div>
+    <div class="prog-wrap"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
+    <div id="q-area"></div>
+    <div id="results-area" style="display:none"></div>
+  </div>
+  <div id="view-ref" style="display:none">
+    <div class="ref-section">Accuracy by Category</div>
+    <div id="acc-chart" style="margin-bottom:24px"></div>
+    <div class="ref-section">Key Terms</div>
+    <div class="ref-grid" id="ref-cards"></div>
+  </div>
+</div>
+<script>
+function logToDashboard(domain,type,score){
+  try{
+    var s=JSON.parse(localStorage.getItem('sp_sessions')||'[]');
+    var now=new Date();
+    s.push({domain:domain,type:type,score:score,date:now.toLocaleDateString('en-CA',{month:'short',day:'numeric'}),ts:now.getTime()});
+    localStorage.setItem('sp_sessions',JSON.stringify(s));
+  }catch(e){}
+}
+
+var CATS=['Governance','Security Policies','Vendor Management','Data Roles and Classification','Privacy Program','Security Awareness','Scenario'];
+var CAT_COLORS={'Governance':'var(--indigo)','Security Policies':'var(--accent)','Vendor Management':'var(--amber)','Data Roles and Classification':'var(--teal)','Privacy Program':'var(--purple)','Security Awareness':'var(--green)','Scenario':'var(--amber)'};
+var BADGE_MAP={'Governance':'badge-governance','Security Policies':'badge-policies','Vendor Management':'badge-vendor','Data Roles and Classification':'badge-data','Privacy Program':'badge-privacy','Security Awareness':'badge-awareness','Scenario':'badge-scenario'};
+
+var TERMS=[
+  {name:'Governance Framework',def:'The set of policies, standards, procedures, and guidelines that define how an organisation manages and controls its security program.',key:'Policies -> Standards -> Procedures -> Guidelines (high to low authority)'},
+  {name:'Security Policy',def:'A high-level document that states management\'s intent and direction for the organisation\'s security program. Sets what must be done, not how.',key:'WHAT to do -- not HOW. Signed by senior management. Violations = disciplinary action.'},
+  {name:'Standard',def:'Specific mandatory requirements derived from policy that define what must be implemented, such as minimum password length or approved cipher suites.',key:'Mandatory -- defines specifics. E.g. passwords must be 12+ chars with complexity.'},
+  {name:'Procedure',def:'A step-by-step instruction document that describes exactly how to perform a specific task in compliance with policy and standards.',key:'HOW to do it -- step by step. Operational level.'},
+  {name:'Guideline',def:'Non-mandatory recommendations and best practice suggestions that provide guidance on implementing security controls.',key:'Advisory only -- not enforceable. Recommendations, not requirements.'},
+  {name:'Acceptable Use Policy',def:'A policy defining permitted and prohibited uses of organisational IT assets, including internet, email, and devices.',key:'Users must sign on hire. Violations subject to discipline. Covers BYOD, social media, personal use.'},
+  {name:'Clean Desk Policy',def:'A policy requiring employees to secure sensitive materials and lock computers when away from their desks to prevent unauthorised access.',key:'Physical security control. Prevents shoulder surfing and document theft.'},
+  {name:'BYOD Policy',def:'A policy governing employee use of personal devices for work purposes, defining security requirements such as MDM enrollment and data separation.',key:'Requires MDM. Defines wipe rights. Separates personal/work data. Remote wipe authorisation.'},
+  {name:'Data Retention Policy',def:'A policy defining how long different categories of data must be kept, in what format, and how they must be disposed of at end of life.',key:'Retention periods set by regulation + business need. Secure disposal required at end.'},
+  {name:'Change Management',def:'A formal process for requesting, reviewing, approving, testing, and documenting changes to IT systems to prevent unauthorised or destabilising changes.',key:'CAB approval -> test -> implement -> review. Emergency change process also defined.'},
+  {name:'Data Owner',def:'The business executive or manager responsible for a data set. Accountable for classifying data, approving access, and ensuring appropriate controls.',key:'Accountable for data. Sets classification. Approves who can access. Usually a business role.'},
+  {name:'Data Custodian',def:'The IT staff member responsible for implementing the technical controls required to protect data as directed by the data owner.',key:'Implements controls set by owner. Backups, encryption, access controls. Technical role.'},
+  {name:'Data Steward',def:'A role responsible for the quality, governance, and compliance of data on a day-to-day basis, ensuring it meets business and regulatory requirements.',key:'Data quality and compliance day-to-day. Bridge between business and IT.'},
+  {name:'Data Controller',def:'Under GDPR, the organisation or person that determines the purposes and means of processing personal data. Bears primary legal responsibility.',key:'GDPR term. Determines WHY and HOW data is processed. Legally accountable.'},
+  {name:'Data Processor',def:'Under GDPR, a third party that processes personal data on behalf of the data controller under a data processing agreement.',key:'GDPR term. Processes data for controller. Bound by DPA. Must notify controller of breaches.'},
+  {name:'Data Classification',def:'The process of categorising data by sensitivity (e.g. Public, Internal, Confidential, Restricted/Top Secret) to apply appropriate controls.',key:'Public -> Internal -> Confidential -> Restricted. Controls scale with classification.'},
+  {name:'Privacy Impact Assessment',def:'A structured analysis of how a new system or process will collect, use, and protect personal data, identifying privacy risks before implementation.',key:'PIA/DPIA. Performed before deployment. Identifies privacy risks proactively.'},
+  {name:'Vendor Due Diligence',def:'The process of evaluating a third-party vendor\'s security posture, financial stability, and compliance before entering a business relationship.',key:'Questionnaires, audits, certifications review. Ongoing -- not just at onboarding.'},
+  {name:'Right to Audit Clause',def:'A contract provision giving an organisation the right to assess and verify a vendor\'s security practices and compliance.',key:'Must be in contract. Enables first-party or third-party audit of vendor controls.'},
+  {name:'SLA',def:'Service Level Agreement -- a contract defining the minimum performance standards a vendor must meet, with penalties for non-compliance.',key:'Defines uptime, response time, penalties. Enforceable. Different from MOU.'},
+  {name:'MOU',def:'Memorandum of Understanding -- a non-binding agreement between parties outlining mutual expectations and intentions before a formal contract.',key:'Non-binding. Intent only. Precedes formal contracts. No financial penalties.'},
+  {name:'MSA',def:'Master Service Agreement -- a contract establishing the general terms and conditions governing all future work between two parties.',key:'Umbrella contract. SOWs issued under it for specific projects. Defines liability.'},
+  {name:'BPA',def:'Business Partnership Agreement -- a formal contract governing a business partnership including security responsibilities and data handling.',key:'Defines security obligations for business partners sharing systems or data.'},
+  {name:'ISA',def:'Interconnection Security Agreement -- a technical and security agreement between two organisations connecting their networks, defining security controls for the connection.',key:'Required when two org networks interconnect. Defines encryption, protocols, monitoring.'},
+  {name:'NDA',def:'Non-Disclosure Agreement -- a legal contract preventing parties from disclosing confidential information shared during a business relationship.',key:'Signed before sharing sensitive info. Protects IP and trade secrets.'},
+  {name:'Supply Chain Risk',def:'The risk that hardware, software, or services provided by third parties may contain vulnerabilities, backdoors, or malicious code.',key:'Vendor risk extends to their vendors. SolarWinds = supply chain attack example.'},
+  {name:'Security Awareness Training',def:'Ongoing education programs that teach employees to recognise and respond to security threats such as phishing, social engineering, and data handling requirements.',key:'Ongoing -- not one-time. Role-based content. Measured by phishing simulation rates.'},
+  {name:'Phishing Simulation',def:'A controlled test in which security teams send fake phishing emails to employees to measure susceptibility and identify training needs.',key:'Metrics: click rate, report rate. Failed users get targeted training immediately.'},
+  {name:'Role-Based Training',def:'Security training customised to the specific threats and responsibilities of different job roles, such as developers, executives, or HR staff.',key:'Developers: secure coding. Execs: BEC/whaling. HR: social engineering. Not generic.'},
+  {name:'Security Champion',def:'An employee embedded in a business team who advocates for security best practices and acts as a liaison between the security team and their department.',key:'Not a security professional -- a trained advocate within each business unit.'},
+];
+
+var Q_BANK=[
+
+// ── GOVERNANCE ─────────────────────────────────────────────────────────────
+
+{type:'identify',cat:'Governance',q:'Which governance document has the HIGHEST authority and sets overall direction for the security program?',o:['Procedure','Standard','Security Policy','Guideline'],a:2,e:'<strong>Security Policy</strong> sits at the top of the governance hierarchy. It reflects senior management intent and is the authoritative source. Standards derive from policy, procedures implement standards, and guidelines are optional recommendations.'},
+{type:'identify',cat:'Governance',q:'Which document type provides optional, non-mandatory security recommendations?',o:['Policy','Standard','Procedure','Guideline'],a:3,e:'<strong>Guidelines</strong> are advisory -- they offer best practice recommendations but are not enforceable. Policies and standards are mandatory. Procedures are mandatory step-by-step instructions. Only guidelines are optional.'},
+{type:'identify',cat:'Governance',q:'An employee is onboarded and must sign a document agreeing to use IT assets only for business purposes. What type of document is this?',o:['Non-Disclosure Agreement','Acceptable Use Policy','Data Classification Policy','Code of Conduct'],a:1,e:'<strong>Acceptable Use Policy (AUP)</strong> -- defines permitted and prohibited use of organisational IT resources. All employees sign at hire. Violations are grounds for disciplinary action including termination.'},
+{type:'identify',cat:'Governance',q:'What is the correct hierarchy of governance documents from HIGHEST to LOWEST authority?',o:['Procedure -> Standard -> Policy -> Guideline','Guideline -> Procedure -> Standard -> Policy','Policy -> Standard -> Procedure -> Guideline','Standard -> Policy -> Guideline -> Procedure'],a:2,e:'<strong>Policy -> Standard -> Procedure -> Guideline</strong>. Policy: what must be done. Standard: specific mandatory requirements. Procedure: how to do it step by step. Guideline: optional recommendations. Each level derives authority from the one above.'},
+{type:'identify',cat:'Governance',q:'What is the PRIMARY difference between a security policy and a security standard?',o:['Policies are technical; standards are managerial','Policies state intent and direction; standards define specific mandatory requirements','Policies apply to IT staff only; standards apply to all employees','Standards are signed by executives; policies are drafted by analysts'],a:1,e:'<strong>Policy = intent, Standard = specifics</strong>. The password policy states "strong passwords are required." The password standard states "passwords must be 14+ characters with uppercase, lowercase, numbers, and symbols." Standards make policy measurable and auditable.'},
+{type:'identify',cat:'Governance',q:'A CISO wants to ensure all business units align their activities with the organisation\'s overall security objectives. Which governance structure BEST achieves this?',o:['Centralised IT helpdesk','Security Steering Committee with cross-functional representation','Annual security awareness training','SIEM deployment across all business units'],a:1,e:'<strong>Security Steering Committee</strong> -- a cross-functional governance body including representatives from IT, Legal, HR, Finance, and business units. Ensures security strategy aligns with business objectives. Makes decisions on risk acceptance, budgets, and policy exceptions.'},
+{type:'identify',cat:'Governance',q:'A security policy was last reviewed three years ago. Why is this a concern?',o:['Policies never need updating once written','The regulatory and threat landscape changes -- outdated policies may not address current risks or legal requirements','Policy reviews are a regulatory violation','Only procedures need regular updates, not policies'],a:1,e:'<strong>Policies must be reviewed regularly</strong> -- typically annually or after significant changes (new regulations, mergers, major incidents). An outdated policy may not reflect current legal obligations (GDPR, CCPA) or address current threat vectors such as cloud usage and remote work.'},
+{type:'identify',cat:'Governance',q:'Which of the following is the PRIMARY purpose of a clean desk policy?',o:['Reduce office clutter and improve morale','Prevent physical access to sensitive information left unattended','Enforce a paperless office initiative','Comply with fire safety regulations'],a:1,e:'<strong>Clean desk policy</strong> is a physical security control. Sensitive documents, credentials, and unlocked computers left unattended can be accessed, photographed, or stolen by visitors, cleaners, or other employees. Policy requires documents to be secured and screens locked when leaving a workstation.'},
+{type:'identify',cat:'Governance',q:'What does a change management process PRIMARILY protect against?',o:['Insider threats and data theft','Unauthorised, unplanned, or poorly tested changes that destabilise systems or introduce vulnerabilities','Zero-day exploits targeting production systems','Regulatory non-compliance with HIPAA'],a:1,e:'<strong>Change Management</strong> ensures changes go through a formal request, review, approval (CAB), testing, and rollback planning process before implementation. It prevents destabilising production environments and ensures security is considered in every change. Also provides an audit trail.'},
+{type:'identify',cat:'Governance',q:'What is the role of a Change Advisory Board (CAB)?',o:['Respond to security incidents as they occur','Review, assess risk, and approve or reject proposed changes to IT systems','Set security policy for the organisation','Perform penetration tests on production systems'],a:1,e:'<strong>CAB (Change Advisory Board)</strong> is a cross-functional group that reviews change requests for risk, business impact, and technical soundness before approving implementation. Emergency changes may bypass CAB but require post-implementation review. Standard changes with low risk may be pre-approved.'},
+{type:'scenario',cat:'Governance',scenario:'The board asks the CISO to present on the organisation\'s security posture. The CISO prepares metrics showing patching rates, phishing click rates, mean time to detect, and open critical vulnerabilities.',q:'What type of governance activity does this BEST represent?',o:['Compliance audit','Security program metrics reporting to executive leadership','Penetration test debrief','Change management review'],a:1,e:'<strong>Executive reporting</strong> is a key governance activity. The CISO translates technical security data into business risk language for the board. Metrics like MTTD, patch rates, and phishing results allow leadership to make informed risk decisions and resource allocation choices.'},
+
+// ── SECURITY POLICIES ──────────────────────────────────────────────────────
+
+{type:'identify',cat:'Security Policies',q:'What security concern does a BYOD policy PRIMARILY address?',o:['Preventing employees from using personal devices','Managing the security risks of personal devices accessing corporate data and systems','Reducing IT hardware costs','Preventing software piracy on company networks'],a:1,e:'<strong>BYOD security risk</strong> -- personal devices may lack corporate security controls, run outdated software, or be shared with family. BYOD policies require MDM enrollment, define acceptable apps, mandate encryption, authorise remote wipe, and separate personal from corporate data using containerisation.'},
+{type:'identify',cat:'Security Policies',q:'An employee leaves the company. Their personal phone was enrolled in the MDM under BYOD. The IT team performs a full remote wipe of the device. What policy issue has occurred?',o:['No issue -- the IT team acted correctly','The remote wipe may have deleted personal data -- BYOD policies should specify selective wipe of corporate data only','The employee should have been notified 30 days in advance','Remote wipe requires a court order'],a:1,e:'<strong>Selective wipe vs full wipe</strong> -- BYOD policies must distinguish between wiping corporate data (selective wipe) and wiping the entire device (full wipe). A full wipe of a personal device removes personal photos, contacts, and apps. Policy should specify selective/container-only wipe for BYOD, with full wipe only if the device is reported stolen.'},
+{type:'identify',cat:'Security Policies',q:'What is the PRIMARY security purpose of a data retention policy?',o:['Maximise storage capacity utilisation','Define how long data must be kept and ensure secure disposal to meet legal obligations and reduce risk','Prevent employees from creating personal backups','Ensure data is always available for business operations'],a:1,e:'<strong>Data retention</strong> balances two opposing requirements: keeping data long enough to meet regulatory obligations (HIPAA: 6 years, SOX: 7 years) and deleting it promptly to reduce breach exposure. Over-retention creates unnecessary liability. Secure disposal (shredding, degaussing, cryptographic erasure) must be documented.'},
+{type:'identify',cat:'Security Policies',q:'What is the purpose of a social media policy?',o:['Ban all social media use on company networks','Define acceptable use of social media to protect confidential information, prevent reputational damage, and manage legal risk','Prevent employees from creating personal social media accounts','Require employees to promote the company on personal social media'],a:1,e:'<strong>Social media policy</strong> prevents accidental disclosure of confidential information, protects corporate reputation, and manages legal liability. Key provisions: don\'t disclose internal projects, financial information, or customer data; identify yourself as an individual not a corporate spokesperson; respect NDA obligations.'},
+{type:'identify',cat:'Security Policies',q:'An organisation\'s security team works from home using personal routers. Which policy BEST addresses the security risks introduced?',o:['Acceptable Use Policy','Remote Work / Telework Security Policy','Clean Desk Policy','Social Media Policy'],a:1,e:'<strong>Remote work policy</strong> addresses: VPN requirements, home network security standards (WPA3, router firmware), approved devices, screen privacy, family member access restrictions, and physical security of work materials at home. Without this policy, remote workers create uncontrolled security perimeters.'},
+{type:'identify',cat:'Security Policies',q:'Which policy is MOST relevant when an employee accidentally sends an email containing PII to an external recipient?',o:['Acceptable Use Policy','Data Handling and Classification Policy','Clean Desk Policy','Password Policy'],a:1,e:'<strong>Data Handling and Classification Policy</strong> defines how different data types must be protected, transmitted, and disposed of. A properly implemented policy would require encryption for PII emails, use of secure file transfer for sensitive data, and prohibit sending PII to external parties without authorisation -- the violation would be covered under this policy.'},
+{type:'identify',cat:'Security Policies',q:'What distinguishes a mandatory vacation policy from a job rotation policy?',o:['They are identical controls with different names','Mandatory vacation forces absence to expose hidden fraud; job rotation moves employees between roles to prevent privilege accumulation','Job rotation is for IT staff only; mandatory vacation applies to all employees','Mandatory vacation is a compliance requirement; job rotation is optional'],a:1,e:'<strong>Mandatory vacation</strong>: forces employees to be absent so colleagues or auditors can detect fraud schemes that require the employee\'s ongoing involvement. <strong>Job rotation</strong>: moves employees between roles periodically to prevent exclusive knowledge, detect fraud over time, and limit privilege accumulation. Both are fraud-prevention controls.'},
+{type:'identify',cat:'Security Policies',q:'Which concept requires that no single employee has end-to-end control over a sensitive business process?',o:['Least privilege','Separation of duties','Job rotation','Need to know'],a:1,e:'<strong>Separation of duties (SoD)</strong> -- divides a sensitive process so no single person can both initiate and approve a transaction. Example: the person who submits a payment cannot also be the one who approves it. Prevents fraud and reduces insider threat risk. Also called dual control.'},
+{type:'scenario',cat:'Security Policies',scenario:'An organisation allows employees to install any software on company laptops. Within six months, three laptops are compromised by malware installed via free software bundles.',q:'Which policy MOST directly addresses this risk?',o:['Acceptable Use Policy restricting software installation','Remote Work Policy','Clean Desk Policy','Data Retention Policy'],a:0,e:'<strong>AUP with software restriction</strong> -- an AUP should define that only IT-approved software may be installed on company devices. This is often supported by technical controls (application allowlisting) but the policy provides the governance foundation and makes violations a disciplinary matter. Unlicensed or unapproved software is both a security and legal risk.'},
+
+// ── VENDOR MANAGEMENT ──────────────────────────────────────────────────────
+
+{type:'identify',cat:'Vendor Management',q:'What is the PRIMARY purpose of vendor due diligence?',o:['Negotiate lower prices from vendors','Assess a vendor\'s security posture and compliance before and during a business relationship to manage third-party risk','Verify that a vendor\'s products are compatible with company systems','Ensure the vendor has adequate customer support'],a:1,e:'<strong>Vendor due diligence</strong> -- third parties are an extension of your attack surface. Due diligence includes reviewing security questionnaires, certifications (SOC 2, ISO 27001), financial stability, breach history, and sub-processor relationships. It must be ongoing -- not just at onboarding.'},
+{type:'identify',cat:'Vendor Management',q:'What does a right to audit clause in a vendor contract allow?',o:['The vendor to audit the organisation\'s use of their software','The organisation to assess the vendor\'s security controls and compliance directly or through a third party','The organisation to terminate the contract without notice','The vendor to review the organisation\'s financial records'],a:1,e:'<strong>Right to audit</strong> -- without this clause, you cannot independently verify a vendor\'s security claims. The clause allows the organisation (or an appointed third party) to review vendor controls, configurations, and compliance documentation. Critical for high-risk vendors handling sensitive data.'},
+{type:'identify',cat:'Vendor Management',q:'What is the KEY difference between an SLA and an MOU?',o:['SLAs are for cloud services; MOUs are for on-premises vendors','An SLA is legally binding with financial penalties for non-performance; an MOU is a non-binding expression of intent','MOUs are more detailed than SLAs','SLAs are signed by IT; MOUs are signed by legal'],a:1,e:'<strong>SLA = legally enforceable contract</strong> with defined metrics (99.9% uptime) and financial remedies for non-performance. <strong>MOU = intent only</strong> -- establishes mutual understanding and expectations but is not legally binding and carries no financial penalties. MOUs often precede formal contracts.'},
+{type:'identify',cat:'Vendor Management',q:'Which agreement specifically governs the security requirements for two organisations interconnecting their networks?',o:['SLA','NDA','ISA','BPA'],a:2,e:'<strong>ISA (Interconnection Security Agreement)</strong> -- required when two organisation\'s networks are directly connected. Specifies encryption standards, protocols, authentication requirements, monitoring obligations, and incident response procedures for the connection. More technical than an MOU or BPA.'},
+{type:'identify',cat:'Vendor Management',q:'A company uses a cloud provider that subcontracts data storage to a fourth party. What supply chain risk does this represent?',o:['No risk -- cloud providers are always secure','Nth-party risk -- vulnerabilities in sub-processors the organisation has no visibility into','Only a financial risk','A risk only relevant to on-premises deployments'],a:1,e:'<strong>Nth-party/supply chain risk</strong> -- your vendor\'s security is only as strong as their vendor\'s security. The SolarWinds attack compromised the build pipeline of a trusted vendor, affecting thousands of organisations. Contracts should require vendors to flow down security requirements to their sub-processors and notify you of sub-processor changes.'},
+{type:'identify',cat:'Vendor Management',q:'What is the PRIMARY purpose of a data processing agreement (DPA) with a vendor?',o:['Define payment terms for data storage services','Legally bind a vendor (data processor) to process personal data only as instructed and implement appropriate safeguards','Allow the vendor to monetise data for advertising','Transfer all liability for data breaches to the vendor'],a:1,e:'<strong>DPA (Data Processing Agreement)</strong> -- required under GDPR when sharing personal data with a processor. The DPA binds the processor to: process data only on documented instructions, implement appropriate security measures, notify the controller of breaches, delete data on contract end, and submit to audits.'},
+{type:'identify',cat:'Vendor Management',q:'An organisation terminates a vendor relationship. What data-handling requirement must be addressed?',o:['No action needed -- the contract ending automatically deletes data','The vendor must securely return or destroy all organisational data per the contract terms','The organisation must archive all vendor correspondence for 7 years','The vendor automatically transfers data to the replacement vendor'],a:1,e:'<strong>Data return/destruction at contract end</strong> -- contracts must specify that at termination the vendor will either securely return all organisational data or certify its secure destruction within a defined timeframe. Without this clause, data may persist in vendor systems indefinitely, creating ongoing breach risk.'},
+{type:'identify',cat:'Vendor Management',q:'Which certification provides the BEST independent assurance of a SaaS vendor\'s security controls?',o:['The vendor\'s own security white paper','ISO 9001 quality management certification','SOC 2 Type II report covering a 6-12 month audit period','A completed security questionnaire provided by the vendor'],a:2,e:'<strong>SOC 2 Type II</strong> -- an independent auditor\'s assessment of a vendor\'s controls over a period of time (typically 6-12 months). Type I is point-in-time; Type II is over time. Covers security, availability, processing integrity, confidentiality, and privacy trust service criteria. Self-reported questionnaires and white papers lack independent verification.'},
+{type:'scenario',cat:'Vendor Management',scenario:'A vendor with access to customer PII announces they have suffered a data breach. Your contract does not include a breach notification clause.',q:'What is the PRIMARY risk of not having a breach notification clause?',o:['No risk -- you will be notified automatically under GDPR','The vendor may not inform you promptly, delaying your own breach notification obligations and incident response','The vendor can charge extra for breach notifications','You lose the right to audit the vendor'],a:1,e:'<strong>Breach notification clauses</strong> are critical. Without one, the vendor has no contractual obligation to tell you quickly. Under GDPR you have 72 hours to notify the supervisory authority once aware. If the vendor delays notification to you by weeks, you may miss your regulatory deadline and face penalties. Contracts must specify notification timelines (e.g. within 24-48 hours of discovering a breach).'},
+{type:'scenario',cat:'Vendor Management',scenario:'An organisation is assessing a new payroll vendor. The vendor claims SOC 2 compliance but refuses to share the full SOC 2 report, offering only a summary letter instead.',q:'Why is the summary letter insufficient?',o:['Summary letters are legally equivalent to full SOC 2 reports','The full SOC 2 report contains the auditor\'s opinion, scope, test procedures, and identified exceptions -- a summary letter hides these details','A summary letter is actually more valuable than the full report','The full report is only needed for government contracts'],a:1,e:'<strong>Full SOC 2 report required</strong> -- the summary letter is a marketing document. The full report contains: the auditor\'s opinion, the exact scope boundary, test results for each control, any exceptions or qualified opinions, and complementary user entity controls (things the customer must also do). Exceptions and qualifications are often buried and only visible in the full report.'},
+
+// ── DATA ROLES AND CLASSIFICATION ─────────────────────────────────────────
+
+{type:'identify',cat:'Data Roles and Classification',q:'Who is ULTIMATELY accountable for a data set and responsible for classifying it?',o:['Data Custodian','Data Steward','Data Owner','Data Processor'],a:2,e:'<strong>Data Owner</strong> -- typically a senior business manager or executive who is accountable for the data\'s appropriate use, classification, and protection. They approve access, set retention requirements, and accept residual risk. The data custodian implements the controls the owner specifies.'},
+{type:'identify',cat:'Data Roles and Classification',q:'An IT administrator applies encryption and access controls to a database as directed by the HR Director. What role is the IT administrator performing?',o:['Data Owner','Data Controller','Data Custodian','Data Steward'],a:2,e:'<strong>Data Custodian</strong> -- implements the technical and operational controls required to protect data as specified by the data owner. Day-to-day responsibilities include backups, access provisioning, encryption, and monitoring. The custodian does not decide what controls are needed -- that is the owner\'s role.'},
+{type:'identify',cat:'Data Roles and Classification',q:'What is the GDPR term for an organisation that determines why and how personal data is processed?',o:['Data Custodian','Data Processor','Data Controller','Data Steward'],a:2,e:'<strong>Data Controller</strong> (GDPR) -- determines the purpose and means of processing personal data. Bears primary accountability under GDPR, including breach notification, subject access requests, and ensuring processors are bound by DPAs. A company collecting customer data for marketing is the data controller.'},
+{type:'identify',cat:'Data Roles and Classification',q:'Under GDPR, a company hires a cloud email provider to send marketing emails using customer data. What role does the email provider occupy?',o:['Data Controller','Data Owner','Data Processor','Data Steward'],a:2,e:'<strong>Data Processor</strong> (GDPR) -- processes personal data on behalf of the controller, following the controller\'s instructions. Must be bound by a DPA. Must notify the controller of breaches. Cannot use the data for their own purposes. The controller remains accountable -- "outsourcing data processing does not outsource accountability."'},
+{type:'identify',cat:'Data Roles and Classification',q:'Which data classification level typically requires the STRONGEST access controls and encryption?',o:['Public','Internal Use','Confidential','Restricted / Top Secret'],a:3,e:'<strong>Restricted/Top Secret</strong> -- the highest classification level, applied to data whose unauthorised disclosure would cause catastrophic harm (national security data, merger plans, PHI, payment card data). Requires: need-to-know access, strong encryption at rest and in transit, audit logging, and special handling procedures.'},
+{type:'identify',cat:'Data Roles and Classification',q:'An organisation replaces real credit card numbers with random 16-digit strings that map back to the originals in a secure vault. What technique is this?',o:['Data masking','Encryption','Tokenisation','Hashing'],a:2,e:'<strong>Tokenisation</strong> -- replaces sensitive data (card numbers) with a random token. The real value is stored only in the token vault. Merchants handle tokens only, never real card numbers. PCI DSS encourages tokenisation to reduce scope. Unlike encryption, the token has no mathematical relationship to the original -- it cannot be reversed without vault access.'},
+{type:'identify',cat:'Data Roles and Classification',q:'What does data minimisation mean under GDPR?',o:['Storing data in the smallest file format possible','Collecting and retaining only the personal data that is necessary for the specified purpose','Deleting all personal data after 30 days','Encrypting data to reduce its effective size'],a:1,e:'<strong>Data minimisation</strong> -- one of GDPR\'s core principles. Only collect what you need, only keep it as long as necessary, only use it for the stated purpose. Organisations that collect excessive data create greater breach risk and legal exposure. If you don\'t need it, don\'t collect it.'},
+{type:'identify',cat:'Data Roles and Classification',q:'An organisation discovers it has been storing employee performance reviews on a public S3 bucket. Which data classification failure occurred?',o:['The data was correctly classified as public','The data was not classified or not handled in accordance with its classification level','Classification is only required for customer data','S3 buckets are secure by default'],a:1,e:'<strong>Classification and handling failure</strong> -- employee performance reviews are at minimum Confidential/Internal. A public S3 bucket has no access controls. This is a misconfiguration that violates data handling procedures derived from the classification policy. Classification is worthless without corresponding technical controls enforcing it.'},
+{type:'identify',cat:'Data Roles and Classification',q:'What is the PRIMARY purpose of a data inventory or data map?',o:['Track software licences across the organisation','Identify what personal and sensitive data exists, where it is stored, how it flows, and who has access -- enabling appropriate protection','Count the number of databases in use','Comply with software asset management requirements'],a:1,e:'<strong>Data inventory/data map</strong> -- you cannot protect data you don\'t know exists. A data map documents: data types, locations, flows between systems, retention periods, legal basis for processing, and data owners. Required for GDPR compliance. Essential input for DPIA, breach notification, and subject access requests.'},
+{type:'scenario',cat:'Data Roles and Classification',scenario:'A financial analyst creates a spreadsheet containing 50,000 customer account numbers and saves it to their personal Google Drive for easier access.',q:'Which data governance principle has been violated?',o:['Separation of duties','Data handling and storage policy -- confidential data stored on unapproved personal cloud storage','Change management','Mandatory vacation policy'],a:1,e:'<strong>Data handling policy violation</strong> -- customer account numbers are at minimum Confidential. Storing on personal Google Drive bypasses corporate security controls (DLP, access logging, encryption, backup). This violates both the classification policy and data handling procedures. Also creates regulatory exposure (PCI DSS, GDPR). Shadow IT like personal cloud storage is a major data governance risk.'},
+
+// ── PRIVACY PROGRAM ────────────────────────────────────────────────────────
+
+{type:'identify',cat:'Privacy Program',q:'What is the PRIMARY purpose of a Privacy Impact Assessment (PIA)?',o:['Assess the financial impact of a data breach','Identify and mitigate privacy risks in a new system or process before it is deployed','Respond to a data subject access request','Train employees on data handling requirements'],a:1,e:'<strong>PIA / DPIA</strong> (Data Protection Impact Assessment under GDPR) -- performed before deploying new systems that process personal data. Identifies: what data will be collected, the legal basis, who has access, risks to individuals, and mitigating controls. Required under GDPR for high-risk processing. Proactive vs reactive.'},
+{type:'identify',cat:'Privacy Program',q:'Under GDPR, what right allows an individual to request that their personal data be deleted?',o:['Right of access','Right to data portability','Right to erasure (right to be forgotten)','Right to restriction of processing'],a:2,e:'<strong>Right to erasure / right to be forgotten</strong> (Article 17 GDPR) -- individuals can request deletion of their personal data when: the purpose for collection has ended, consent is withdrawn, the data was unlawfully processed, or there is a legal obligation to erase. Not absolute -- legal obligations may override it.'},
+{type:'identify',cat:'Privacy Program',q:'What does purpose limitation mean under GDPR?',o:['Personal data must be kept for the shortest possible time','Personal data collected for one specified purpose cannot be used for a different incompatible purpose without new consent','All data must be stored within the EU','Data must be anonymised before analysis'],a:1,e:'<strong>Purpose limitation</strong> -- data collected for one specific purpose cannot be repurposed without legal basis or new consent. Example: email addresses collected for order fulfilment cannot be used for marketing without separate consent. One of GDPR\'s seven data protection principles.'},
+{type:'identify',cat:'Privacy Program',q:'What is the MAIN difference between anonymisation and pseudonymisation?',o:['They are interchangeable terms','Anonymisation irreversibly removes all identifying information; pseudonymisation replaces it with a reversible identifier -- pseudonymised data is still personal data under GDPR','Pseudonymisation deletes data; anonymisation encrypts it','Anonymisation is a technical control; pseudonymisation is a legal concept'],a:1,e:'<strong>Anonymisation</strong>: irreversible -- cannot be re-identified. Not personal data under GDPR. <strong>Pseudonymisation</strong>: replaces direct identifiers with a pseudonym, but re-identification is possible using the mapping key. Pseudonymised data IS still personal data under GDPR and must be protected. Anonymised data is not subject to GDPR.'},
+{type:'identify',cat:'Privacy Program',q:'An employee receives a request from a customer asking what personal data the company holds about them. What is this called?',o:['Freedom of Information request','Data Subject Access Request (DSAR)','Right to erasure request','Data breach notification'],a:1,e:'<strong>DSAR (Data Subject Access Request)</strong> -- under GDPR Article 15, individuals have the right to request a copy of their personal data, the purposes of processing, recipients, retention periods, and rights. Must be fulfilled within 30 days. No charge for the first request. Failure to comply is a regulatory violation.'},
+{type:'identify',cat:'Privacy Program',q:'What legal basis is commonly used under GDPR for processing employee personal data for payroll purposes?',o:['Consent','Legitimate interests','Legal obligation / performance of a contract','Vital interests'],a:2,e:'<strong>Legal obligation / contractual necessity</strong> -- GDPR requires a legal basis for all processing. Employee payroll data: legal obligation (tax law requires it) and contractual necessity (employment contract). Consent is a weak basis for employee data because consent is rarely freely given in an employment relationship (power imbalance).'},
+{type:'identify',cat:'Privacy Program',q:'What is the purpose of privacy by design?',o:['Adding privacy notices to all systems after deployment','Integrating privacy protections into systems and processes from the design stage, not as an afterthought','Encrypting all data at rest and in transit','Publishing a privacy policy on the company website'],a:1,e:'<strong>Privacy by design</strong> -- a principle (codified in GDPR Article 25) requiring privacy controls to be built into systems from the start of development rather than retrofitted. Includes: data minimisation by default, access controls from day one, encryption built in, and privacy settings defaulting to the most protective option.'},
+{type:'scenario',cat:'Privacy Program',scenario:'An organisation operating in the EU suffers a breach of 10,000 customer email addresses and hashed passwords. They become aware on a Monday morning.',q:'What is their GDPR notification obligation?',o:['No obligation -- email addresses are not sensitive data','Notify the supervisory authority within 72 hours of becoming aware, and notify affected individuals if there is high risk to them','Notify within 30 days','Only notify if the passwords were in plaintext'],a:1,e:'<strong>GDPR breach notification</strong> -- email addresses are personal data. A breach must be reported to the supervisory authority within 72 hours (by Thursday morning in this scenario). Hashed passwords reduce risk but do not eliminate the notification obligation. Individual notification is required if there is high risk to individuals (e.g. passwords were weakly hashed or reused).'},
+
+// ── SECURITY AWARENESS ─────────────────────────────────────────────────────
+
+{type:'identify',cat:'Security Awareness',q:'What is the PRIMARY goal of a security awareness training program?',o:['Teach employees to perform penetration tests','Change employee behaviour to reduce the organisation\'s human-factor risk surface','Satisfy annual compliance checkbox requirements','Train IT staff on security tools and configurations'],a:1,e:'<strong>Behaviour change</strong> is the goal -- not just knowledge transfer. Employees who know phishing exists but still click links have not changed behaviour. Effective programs: are ongoing (not annual checkbox), use realistic scenarios, provide immediate feedback, and measure behaviour change through phishing simulation click rates and report rates.'},
+{type:'identify',cat:'Security Awareness',q:'What metric BEST demonstrates the effectiveness of a phishing simulation program over time?',o:['The number of phishing emails sent to employees','A decreasing click rate and increasing report rate across repeated simulations','The cost of the phishing simulation platform','The number of employees who completed the awareness course'],a:1,e:'<strong>Click rate + report rate over time</strong> -- a declining click rate shows fewer employees are fooled. An increasing report rate shows employees are actively contributing to defence. Course completion rate only measures attendance, not behaviour change. Both metrics together demonstrate a maturing security culture.'},
+{type:'identify',cat:'Security Awareness',q:'Why is role-based security training more effective than generic security awareness training?',o:['It is cheaper to deliver','It targets the specific threats and responsibilities relevant to each job function -- developers face different risks than receptionists','It satisfies more regulatory requirements','It requires less management oversight'],a:1,e:'<strong>Role-based training</strong> -- a developer needs secure coding training; an executive needs BEC/whaling awareness; HR needs social engineering training; finance needs wire fraud awareness. Generic content fails because employees disengage from scenarios irrelevant to their role. High-risk roles (privileged users, executives) warrant more intensive training.'},
+{type:'identify',cat:'Security Awareness',q:'An employee receives a suspicious email and reports it to the security team instead of clicking any links. What does this demonstrate?',o:['The email filter failed to block the phishing email','A positive security culture -- the employee followed training and contributed to the organisation\'s defences','The employee was lucky','The security team should have blocked all external emails'],a:1,e:'<strong>Positive security culture</strong> -- the employee recognised a threat and reported it. This is the target behaviour from awareness training. It enables the security team to identify active campaigns, block IOCs, and warn other employees. A reporting culture converts every employee into a sensor on the human perimeter.'},
+{type:'identify',cat:'Security Awareness',q:'What is the purpose of a security champion program?',o:['Train all employees to become security professionals','Embed trained security advocates within each business unit to promote security practices without requiring a centralised security team in every department','Replace the security operations centre','Reduce the cost of security training'],a:1,e:'<strong>Security champions</strong> -- security professionals cannot be everywhere. Embedding a trained advocate in each team creates a distributed security culture. Champions: promote secure coding in dev teams, flag concerns to the security team, translate security requirements into business language, and participate in threat modelling. Highly effective at scaling security.'},
+{type:'identify',cat:'Security Awareness',q:'A company runs a single annual security awareness training session and considers compliance satisfied. What is the PRIMARY weakness of this approach?',o:['Annual training is more than adequate for most threat landscapes','Behaviour change requires ongoing reinforcement -- annual training is forgotten within weeks and does not address new threats or simulate realistic attacks','Annual training is too expensive','The sessions should be quarterly, not annual'],a:1,e:'<strong>One-time training is insufficient</strong> -- research shows knowledge retention drops sharply within weeks of a single training event. Effective programs: run continuous micro-learning, send simulated phishing monthly, issue threat advisories for topical attacks (new BEC technique), and follow up failed simulations with immediate targeted training.'},
+{type:'scenario',cat:'Security Awareness',scenario:'After a phishing simulation, 35% of employees clicked the link. The security team plans to send all clickers a generic "you failed" email.',q:'What is a MORE effective response to failed simulation participants?',o:['Disciplinary action for all 35%','Immediate targeted just-in-time training explaining exactly what the phishing indicators were and how to spot them in future','Send the generic failure email','Block all external email for one week'],a:1,e:'<strong>Just-in-time targeted training</strong> -- when an employee clicks a simulated phishing link, immediate training is most effective because the failure is fresh and emotionally salient. The training should show: the specific indicators in that email (urgency language, mismatched sender domain, suspicious link), how to report, and what to do if they clicked a real link. Generic failure notifications produce resentment, not learning.'},
+{type:'scenario',cat:'Security Awareness',scenario:'An executive refuses to attend mandatory security awareness training, citing their busy schedule. They have also been identified as a high-risk target for whaling attacks.',q:'What is the MOST appropriate response?',o:['Waive the training requirement for executives','Escalate to the board and ensure executive training is mandated in policy -- high-value targets require MORE security awareness, not less','Send the executive the training materials by email to read at their own pace','Accept the situation as executives are not subject to the same policies'],a:1,e:'<strong>Executives are HIGH-risk targets</strong> for whaling (spear phishing targeting C-suite) and BEC fraud. Policy must apply equally to all levels. Waiving executive training creates both a security and policy enforcement precedent. Board-level support for security culture must be demonstrated from the top. Executives who bypass security controls undermine the entire programme.'},
+
+// ── SCENARIOS (mixed) ─────────────────────────────────────────────────────
+
+{type:'scenario',cat:'Scenario',scenario:'A startup is growing rapidly and has no formal security policies. The CTO asks the security lead what should be created first.',q:'Which governance document should be developed FIRST?',o:['A detailed incident response procedure','A comprehensive security awareness training programme','An overarching Information Security Policy signed by the CEO','A full set of technical security standards for all systems'],a:2,e:'<strong>Information Security Policy first</strong> -- the policy is the foundation from which all other governance documents derive authority. Without a signed policy, there is no management mandate for any security initiative. The policy doesn\'t need to be detailed -- it states intent and commitment. Standards, procedures, and specific policies flow from it.'},
+{type:'scenario',cat:'Scenario',scenario:'An organisation is acquiring a smaller company. During due diligence, they discover the target company has never conducted security awareness training, has no data classification policy, and several critical vendor contracts have no security requirements.',q:'Which risk is MOST significant from a regulatory standpoint?',o:['The lack of security awareness training','The absence of data classification policy combined with no data processing agreements with vendors handling personal data','The age of the vendor contracts','The lack of an incident response plan'],a:1,e:'<strong>Regulatory exposure from vendor data processing</strong> -- if the acquired company handles personal data and their vendors process it without DPAs, the acquiring organisation inherits liability under GDPR/CCPA. Unclassified data means no controls are applied proportionally. Together these create significant regulatory risk that may affect the acquisition valuation and require immediate remediation post-acquisition.'},
+{type:'scenario',cat:'Scenario',scenario:'An employee in the finance department receives an email appearing to be from the CEO asking them to urgently wire $85,000 to a new supplier. The email was sent from "ceo@company-corp.net" not "ceo@company.com".',q:'What type of attack is this and which awareness training topic MOST directly addresses it?',o:['Ransomware -- malware awareness training','Business Email Compromise (BEC) / CEO fraud -- executive impersonation and wire transfer fraud awareness','Phishing -- general phishing awareness','Smishing -- mobile device security training'],a:1,e:'<strong>BEC / CEO Fraud</strong> -- attackers register lookalike domains and impersonate executives to trick finance employees into fraudulent wire transfers. Finance teams need specific training on: verifying payment requests via phone/in-person (never email alone), checking sender domain carefully, approving large transfers via dual authorisation, and treating urgency as a red flag. This is a multi-billion dollar annual fraud category.'},
+{type:'scenario',cat:'Scenario',scenario:'A CISO is preparing for an annual budget review. They want to demonstrate the value of the security awareness programme to the CFO.',q:'Which metrics are MOST persuasive to a financial executive?',o:['Number of training modules completed by employees','Phishing click rate reduction from 35% to 8% over 12 months and estimated avoided loss based on industry breach costs','Number of security incidents reported','Number of phishing simulations sent'],a:1,e:'<strong>Business-language metrics for executives</strong> -- CFOs think in financial risk. "Click rate dropped from 35% to 8%" translates to: 73% fewer credential compromise vectors. Combining with breach cost data (average BEC loss, average phishing incident cost) enables ROI calculation: "the programme cost $40K and avoided an estimated $500K in fraud risk." Technical metrics (incidents reported) don\'t resonate with financial decision-makers.'},
+{type:'scenario',cat:'Scenario',scenario:'A company wants to share customer data with a marketing partner for a campaign. The privacy policy states data is used "to improve customer experience." The marketing campaign is unrelated to customer experience.',q:'What GDPR principle does sharing this data violate?',o:['Data minimisation','Purpose limitation -- the data was collected for one purpose and is being used for an incompatible purpose without appropriate legal basis','Right to erasure','Data accuracy'],a:1,e:'<strong>Purpose limitation</strong> (GDPR Article 5(1)(b)) -- data collected for one specific purpose cannot be used for an incompatible purpose without a new legal basis (new consent or legitimate interests assessment). "Improve customer experience" does not cover third-party marketing campaigns. The organisation would need explicit consent for this use or face regulatory action.'},
+];
+
+// ── ENGINE ─────────────────────────────────────────────────────────────────
+
+var questions=[], qi=0, correct=0, wrong=0;
+var catStats={};
+CATS.forEach(function(c){catStats[c]={c:0,t:0};});
+
+function shuffle(a){return a.slice().sort(function(){return Math.random()-.5;});}
+
+function buildQuestions(){
+  var pool=shuffle(Q_BANK.slice()).slice(0,80);
+  var result=[];
+  for(var k=0;k<pool.length;k++){
+    var q=pool[k];
+    var idxs=[];
+    for(var m=0;m<q.o.length;m++) idxs.push(m);
+    var shuf=shuffle(idxs);
+    var newO=[];
+    for(var n=0;n<shuf.length;n++) newO.push(q.o[shuf[n]]);
+    var nq={};
+    for(var p in q) nq[p]=q[p];
+    nq.o=newO;
+    nq.a=shuf.indexOf(q.a);
+    result.push(nq);
+  }
+  return result;
+}
+
+function updateStats(){
+  var total=correct+wrong;
+  document.getElementById('s-prog').textContent=qi+'/80';
+  document.getElementById('s-correct').textContent=correct;
+  document.getElementById('s-wrong').textContent=wrong;
+  document.getElementById('s-acc').textContent=total?Math.round(correct/total*100)+'%':'--';
+  document.getElementById('prog-fill').style.width=Math.round(qi/80*100)+'%';
+}
+
+function renderQ(){
+  if(qi>=80){showResults();return;}
+  var q=questions[qi];
+  var letters=['A','B','C','D'];
+  var badgeCls=BADGE_MAP[q.cat]||'badge-governance';
+  var scenHTML='';
+  if(q.type==='scenario'&&q.scenario){
+    scenHTML='<div class="scenario-box"><div class="scenario-lbl">Scenario</div><div class="scenario-text">'+q.scenario+'</div></div>';
+  }
+  var optsHTML='';
+  for(var i=0;i<q.o.length;i++){
+    optsHTML+='<button class="opt" id="opt-'+i+'"><span class="opt-letter">'+letters[i]+'</span><span class="opt-text">'+q.o[i]+'</span></button>';
+  }
+  document.getElementById('q-area').innerHTML=
+    '<div class="q-card">'+
+      '<div class="q-meta">'+
+        '<span class="q-badge '+badgeCls+'">'+q.cat+'</span>'+
+        '<span class="q-num">Q'+(qi+1)+' of 80</span>'+
+      '</div>'+
+      scenHTML+
+      '<div class="q-text">'+q.q+'</div>'+
+      '<div class="opts" id="opts">'+optsHTML+'</div>'+
+      '<div class="explanation" id="explanation"><div class="exp-lbl">Explanation</div><div class="exp-text" id="exp-text"></div></div>'+
+      '<button class="btn-next" id="btn-next">'+(qi===79?'See results':'Next')+'</button>'+
+    '</div>';
+  for(var _j=0;_j<q.o.length;_j++){
+    (function(_idx){
+      var _b=document.getElementById('opt-'+_idx);
+      if(_b) _b.onclick=function(){answer(_idx);};
+    })(_j);
+  }
+  var nb=document.getElementById('btn-next');
+  if(nb) nb.onclick=function(){nextQ();};
+}
+
+function answer(idx){
+  var q=questions[qi];
+  var isCorrect=idx===q.a;
+  if(isCorrect){correct++;if(catStats[q.cat])catStats[q.cat].c++;}else{wrong++;}
+  if(!catStats[q.cat])catStats[q.cat]={c:0,t:0};
+  catStats[q.cat].t++;
+  qi++;
+  updateStats();
+  for(var i=0;i<q.o.length;i++){
+    var b=document.getElementById('opt-'+i);
+    if(b) b.disabled=true;
+  }
+  var cb=document.getElementById('opt-'+idx);
+  var rb=document.getElementById('opt-'+q.a);
+  if(isCorrect){if(cb)cb.classList.add('correct');}
+  else{if(cb)cb.classList.add('wrong');if(rb)rb.classList.add('reveal');}
+  var et=document.getElementById('exp-text');
+  var eb=document.getElementById('explanation');
+  var nb=document.getElementById('btn-next');
+  if(et) et.innerHTML=q.e;
+  if(eb) eb.classList.add('show');
+  if(nb){nb.style.display='block';nb.onclick=function(){nextQ();};}
+  if(qi>0&&qi%20===0) logToDashboard(5,'Security Program Management Trainer',Math.round(correct/qi*100));
+}
+
+function nextQ(){renderQ();}
+
+function showResults(){
+  document.getElementById('q-area').style.display='none';
+  var res=document.getElementById('results-area');
+  res.style.display='block';
+  var pct=Math.round(correct/80*100);
+  logToDashboard(5,'Security Program Management Trainer',pct);
+  var passed=pct>=80;
+  var msg=pct>=90?'Outstanding -- exam-ready!':pct>=80?'Solid -- above pass threshold.':pct>=65?'Getting there -- keep reviewing.':'More study needed.';
+  var ringColor=passed?'#00ff88':'#ff3d5a';
+  var circ=339.3,offset=circ-(pct/100)*circ;
+  var topCats=CATS.filter(function(c){return catStats[c]&&catStats[c].t>0;});
+  var bdHTML='';
+  for(var ci=0;ci<Math.min(6,topCats.length);ci++){
+    var c=topCats[ci];var s=catStats[c];var p=s.t?Math.round(s.c/s.t*100):0;
+    var col=CAT_COLORS[c]||'var(--indigo)';
+    bdHTML+='<div class="bd-card"><div class="bd-title" style="color:'+col+'">'+c+'</div><div class="bd-bar-bg"><div class="bd-bar-fill" style="width:0%;background:'+col+'" data-pct="'+p+'"></div></div><div class="bd-score" style="color:'+col+'">'+p+'%</div><div class="bd-detail">'+s.c+'/'+s.t+' correct</div></div>';
+  }
+  res.innerHTML=
+    '<div class="results-wrap">'+
+      '<div class="results-ring"><svg width="140" height="140" viewBox="0 0 140 140">'+
+        '<circle cx="70" cy="70" r="54" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="10"/>'+
+        '<circle cx="70" cy="70" r="54" fill="none" stroke="'+ringColor+'" stroke-width="10" stroke-linecap="round" stroke-dasharray="'+circ+'" stroke-dashoffset="'+circ+'" id="ring-anim"/>'+
+      '</svg><div class="ring-score"><div class="ring-pct">'+pct+'%</div><div class="ring-lbl">score</div></div></div>'+
+      '<div class="results-verdict" style="color:'+ringColor+'">'+(passed?'Passed':'Keep Studying')+'</div>'+
+      '<div class="results-sub">'+correct+'/80 correct -- '+msg+'</div>'+
+      '<div class="breakdown">'+bdHTML+'</div>'+
+      '<button class="btn-retake" onclick="retake()">Retake Quiz</button>'+
+    '</div>';
+  setTimeout(function(){
+    var ring=document.getElementById('ring-anim');
+    if(ring){ring.style.transition='stroke-dashoffset 1.5s ease';ring.style.strokeDashoffset=offset;}
+    var fills=document.querySelectorAll('.bd-bar-fill');
+    for(var i=0;i<fills.length;i++){fills[i].style.transition='width 1s ease';fills[i].style.width=fills[i].getAttribute('data-pct')+'%';}
+  },100);
+}
+
+function retake(){
+  document.getElementById('q-area').style.display='block';
+  document.getElementById('results-area').style.display='none';
+  questions=buildQuestions();
+  qi=0;correct=0;wrong=0;
+  CATS.forEach(function(c){catStats[c]={c:0,t:0};});
+  updateStats();renderQ();
+}
+
+function setTab(t){
+  if(t==='ref'){
+    document.getElementById('view-quiz').style.display='none';
+    document.getElementById('view-ref').style.display='block';
+    document.getElementById('tab-quiz').classList.remove('active');
+    document.getElementById('tab-ref').classList.add('active');
+    buildRef();
+  } else {
+    document.getElementById('view-ref').style.display='none';
+    document.getElementById('view-quiz').style.display='block';
+    document.getElementById('tab-quiz').classList.add('active');
+    document.getElementById('tab-ref').classList.remove('active');
+  }
+}
+
+function buildRef(){
+  var chart=document.getElementById('acc-chart');
+  chart.innerHTML='';
+  CATS.forEach(function(c){
+    var s=catStats[c]||{c:0,t:0};var pct=s.t?Math.round(s.c/s.t*100):0;
+    var col=CAT_COLORS[c]||'var(--indigo)';
+    chart.innerHTML+='<div style="display:grid;grid-template-columns:200px 1fr 42px;gap:10px;align-items:center;margin-bottom:10px">'+
+      '<div style="font-size:13px;color:var(--text2);text-align:right">'+c+'</div>'+
+      '<div style="height:18px;background:var(--panel2);border-radius:8px;overflow:hidden">'+
+        '<div style="height:100%;width:'+(s.t?pct:0)+'%;background:'+col+';border-radius:8px;transition:width .8s ease"></div>'+
+      '</div>'+
+      '<div style="font-family:var(--mono);font-size:11px;color:var(--text2)">'+(s.t?pct+'%':'--')+'</div>'+
+    '</div>';
+  });
+  var cards=document.getElementById('ref-cards');
+  cards.innerHTML='';
+  TERMS.forEach(function(t){
+    cards.innerHTML+='<div class="ref-card"><div class="ref-name">'+t.name+'</div><div class="ref-def">'+t.def+'</div><div class="ref-key">'+t.key+'</div></div>';
+  });
+}
+
+questions=buildQuestions();
+updateStats();
+renderQ();
+</script>
+</body>
+</html>

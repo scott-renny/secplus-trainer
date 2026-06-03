@@ -67,7 +67,19 @@
   .def-text { font-size: 16px; line-height: 1.75; color: var(--text); font-style: italic; border-left: 3px solid var(--green); padding-left: 16px; }
   .def-domain { display: inline-block; font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; padding: 3px 10px; border-radius: 4px; margin-top: 14px; }
 
-  .answers { margin-bottom: 14px; }
+  .answers { margin-bottom: 14px; display:flex; flex-direction:column; gap:9px; }
+  .answer-btn {
+    display:flex; align-items:center; gap:12px;
+    padding:13px 16px; border-radius:10px;
+    border:1px solid var(--border2); background:var(--panel2);
+    cursor:pointer; text-align:left; width:100%;
+    font-family:'Segoe UI',sans-serif; font-size:14px; color:var(--text);
+    line-height:1.5; transition:all .15s; touch-action:manipulation;
+  }
+  .answer-btn:hover:not(:disabled) { border-color:var(--border3); background:var(--panel3); }
+  .answer-btn:disabled { cursor:default; }
+  .answer-btn.correct { border-color:var(--green)!important; background:rgba(0,255,136,0.07)!important; color:var(--green)!important; }
+  .answer-btn.wrong   { border-color:var(--red)!important;   background:rgba(255,61,90,0.07)!important;  color:var(--red)!important; }
   .ans-btn { width: 100%; text-align: left; padding: 13px 16px; border-radius: 9px; border: 1px solid var(--border); background: var(--surface2); color: var(--text); cursor: pointer; font-size: 14px; font-family: var(--sans); transition: all 0.15s; margin-bottom: 8px; line-height: 1.5; }
   .ans-btn:hover:not(:disabled) { border-color: var(--border2); color: var(--text); background: #252b3a; }
   .ans-btn.correct { background: var(--green-dim); border-color: var(--green); color: var(--green); }
@@ -399,40 +411,35 @@ let stats = { correct: 0, wrong: 0, streak: 0, total: 0 };
 let weakList = [];
 
 function saveWeak() { try { localStorage.setItem('sp_weak_definitions', JSON.stringify(weakList)); } catch(e) {} }
-function loadWeak() { try { const v = localStorage.getItem('sp_weak_definitions'); return v ? JSON.parse(v) : []; } catch(e) { return []; } }
+function loadWeak() { try { var v = localStorage.getItem('sp_weak_definitions'); return v ? JSON.parse(v) : []; } catch(e) { return []; } }
 weakList = loadWeak();
 
 function setCategory(cat, btn) {
   category = cat;
   questionQueue = [];
-  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
+  var btns = document.querySelectorAll('.cat-btn');
+  for (var i = 0; i < btns.length; i++) btns[i].classList.remove('active');
+  if (btn) btn.classList.add('active');
   updatePoolCount();
   nextQuestion();
 }
 
 
 function pool() {
+  var base = TERMS.filter(function(t) {
+    if (category === 'all' || category === 'weak') return true;
+    return String(t.d) === String(category);
+  });
   if (category === 'weak') {
-    return weakList.length ? TERMS.filter(t => weakList.includes(t.term)) : TERMS;
-  }
-  const base = category === 'all' ? TERMS : TERMS.filter(t => t.d === category);
-  if (weakList.length && Math.random() < 0.4) {
-    const weak = base.filter(t => weakList.includes(t.term));
-    if (weak.length) return weak;
+    return base.filter(function(t) { return weakList.indexOf(t.term) !== -1; });
   }
   return base;
 }
 
 function updatePoolCount() {
-  const p = category === 'weak'
-    ? weakList.length
-    : category === 'all' ? TERMS.length : TERMS.filter(t => t.d === category).length;
-  document.getElementById('pool-count').textContent = p + ' term' + (p !== 1 ? 's' : '') + ' in pool';
-  const clearBtn = document.getElementById('clear-weak-btn');
-  if (clearBtn) clearBtn.style.display = weakList.length > 0 ? 'inline-block' : 'none';
-  const weakBtn = document.getElementById('weak-def-btn');
-  if (weakBtn) weakBtn.textContent = '[!] Weak Spots' + (weakList.length > 0 ? ' (' + weakList.length + ')' : '');
+  var p = pool();
+  var el = document.getElementById('pool-count');
+  if (el) el.textContent = p.length + ' term' + (p.length !== 1 ? 's' : '') + ' in pool';
 }
 
 function clearWeak() {
@@ -443,7 +450,7 @@ function clearWeak() {
   if (category === 'weak') nextQuestion();
 }
 
-function shuffle(arr) { return [...arr].sort(() => Math.random() - 0.5); }
+function shuffle(arr) { return arr.slice().sort(function() { return Math.random() - 0.5; }); }
 
 
 function nextQuestion() {
@@ -452,112 +459,104 @@ function nextQuestion() {
   document.getElementById('btn-next').style.display = 'none';
   document.getElementById('btn-ask').style.display = 'none';
 
-  const p = pool();
+  var p = pool();
   if (!p.length) {
     document.getElementById('question-area').innerHTML = '<div style="font-family:var(--mono);font-size:12px;color:var(--text3);text-align:center;padding:24px">No terms in this category. Try another!</div>';
     document.getElementById('answers').innerHTML = '';
     return;
   }
 
-  // Queue-based selection -- shuffle all terms then work through them
-  // so every term appears before any repeats
-  const poolKey = category + '_' + weakList.join(',');
+  // Queue-based selection - exhaust all terms before repeating
+  var poolKey = category + '_' + weakList.join(',');
   if (!questionQueue.length || questionQueue._key !== poolKey) {
-    questionQueue = shuffle([...p]);
+    questionQueue = shuffle(p.slice());
     questionQueue._key = poolKey;
   }
-  // Skip the term just shown to avoid back-to-back repeats
+  // Avoid showing same term back-to-back
   if (questionQueue.length > 1 && current && questionQueue[0].term === current.term) {
     questionQueue.push(questionQueue.shift());
   }
   current = questionQueue.shift();
   currentMode = pickMode();
 
-  const domClass = 'd' + current.d;
-  const domName = DOMAIN_NAMES[current.d];
-
-  const area = document.getElementById('question-area');
+  var domClass = 'd' + current.d;
+  var domName = DOMAIN_NAMES[current.d] || 'Domain ' + current.d;
+  var isWeak = weakList.indexOf(current.term) !== -1;
+  var area = document.getElementById('question-area');
   area.innerHTML = '';
 
   if (currentMode === 'term2def') {
-    // Show TERM — pick DEFINITION
-    const card = document.createElement('div');
+    var card = document.createElement('div');
     card.className = 'term-card';
-    const isWeak = weakList.includes(current.term);
-    card.innerHTML = `
-      <div class="term-prompt">What is the definition of this term?</div>
-      <div class="term-domain ${domClass}">${domName}</div>
-      <div class="term-word">${current.term}${isWeak ? '<span class="badge-review">review</span>' : ''}</div>
-      ${current.hint ? `<div class="term-hint">${current.hint}</div>` : ''}
-    `;
+    card.innerHTML = '<div class="term-prompt">What is the definition of this term?</div>' +
+      '<div class="term-domain ' + domClass + '">' + domName + '</div>' +
+      '<div class="term-word">' + current.term + (isWeak ? '<span class="badge-review">review</span>' : '') + '</div>' +
+      (current.hint ? '<div class="term-hint">' + current.hint + '</div>' : '');
     area.appendChild(card);
-
-    // Options: correct def + 3 wrong defs
-    const opts = shuffle([current.def, ...current.wrongDefs]);
+    var opts = shuffle([current.def].concat(current.wrongDefs));
     buildAnswers(opts, current.def);
-
   } else {
-    // Show DEFINITION — pick TERM
-    const card = document.createElement('div');
-    card.className = 'def-card';
-    const isWeak = weakList.includes(current.term);
-    card.innerHTML = `
-      <div class="def-prompt">Which term matches this definition?</div>
-      <div class="def-text">"${current.def}"</div>
-      <div class="def-domain ${domClass}">${domName}${isWeak ? ' <span class="badge-review">review</span>' : ''}</div>
-    `;
-    area.appendChild(card);
-
-    // Options: correct term + 3 wrong terms
-    const opts = shuffle([current.term, ...current.wrongTerms]);
-    buildAnswers(opts, current.term);
+    var card2 = document.createElement('div');
+    card2.className = 'def-card';
+    card2.innerHTML = '<div class="def-prompt">Which term matches this definition?</div>' +
+      '<div class="def-text">"' + current.def + '"</div>' +
+      '<div class="def-domain ' + domClass + '">' + domName + (isWeak ? ' <span class="badge-review">review</span>' : '') + '</div>';
+    area.appendChild(card2);
+    var opts2 = shuffle([current.term].concat(current.wrongTerms));
+    buildAnswers(opts2, current.term);
   }
 }
 
 function buildAnswers(opts, correct) {
-  const area = document.getElementById('answers');
-  area.innerHTML = '';
-  opts.forEach(opt => {
-    const btn = document.createElement('button');
-    btn.className = 'ans-btn';
-    btn.textContent = opt;
-    btn.onclick = () => check(opt, btn, correct);
-    area.appendChild(btn);
-  });
+  var container = document.getElementById('answers');
+  container.innerHTML = '';
+  for (var i = 0; i < opts.length; i++) {
+    (function(opt) {
+      var btn = document.createElement('button');
+      btn.className = 'answer-btn';
+      btn.textContent = opt;
+      btn.onclick = function() {
+        if (!answered) check(opt, btn, correct);
+      };
+      container.appendChild(btn);
+    })(opts[i]);
+  }
 }
 
 function check(selected, btn, correct) {
   if (answered) return;
   answered = true;
-  stats.total++;
+  var isCorrect = selected === correct;
 
-  const isCorrect = selected === correct;
+  stats.total++;
   if (isCorrect) {
-    btn.classList.add('correct');
     stats.correct++;
     stats.streak++;
-    weakList = weakList.filter(t => t !== current.term);
     saveWeak();
   } else {
-    btn.classList.add('wrong');
     stats.wrong++;
     stats.streak = 0;
-    if (!weakList.includes(current.term)) weakList.push(current.term);
+    if (current && weakList.indexOf(current.term) === -1) {
+      weakList.push(current.term);
+    }
     saveWeak();
-    document.querySelectorAll('.ans-btn').forEach(b => {
-      if (b.textContent === correct) b.classList.add('correct');
-    });
   }
 
-  document.querySelectorAll('.ans-btn').forEach(b => b.disabled = true);
   document.getElementById('s-correct').textContent = stats.correct;
   document.getElementById('s-wrong').textContent = stats.wrong;
   document.getElementById('s-streak').textContent = stats.streak;
-  const acc = stats.total > 0 ? Math.round(stats.correct / stats.total * 100) + '%' : ' -- ';
-  document.getElementById('s-acc').textContent = acc;
-  const pct = stats.total > 0 ? Math.round(stats.correct / stats.total * 100) : 0;
-  document.getElementById('progress').style.width = pct + '%';
-  if(stats.total > 0 && stats.total % 10 === 0) logToDashboard(parseInt(current.d)||0,'Definitions Trainer',pct);
+  var acc = stats.total > 0 ? Math.round(stats.correct / stats.total * 100) + '%' : ' -- ';
+  var pct = stats.total > 0 ? Math.round(stats.correct / stats.total * 100) : 0;
+  var accEl = document.getElementById('s-acc');
+  if (accEl) accEl.textContent = acc;
+
+  // Highlight answer buttons
+  var btns = document.getElementById('answers').querySelectorAll('.answer-btn');
+  for (var i = 0; i < btns.length; i++) {
+    btns[i].disabled = true;
+    if (btns[i].textContent === correct) btns[i].classList.add('correct');
+    else if (btns[i].textContent === selected && !isCorrect) btns[i].classList.add('wrong');
+  }
 
   if (!isCorrect) {
     document.getElementById('exp-text').innerHTML = '<span class="spinner"></span> Loading explanation...';
@@ -568,6 +567,7 @@ function check(selected, btn, correct) {
   document.getElementById('btn-next').style.display = 'block';
   document.getElementById('btn-ask').style.display = 'block';
   updatePoolCount();
+  if(stats.total > 0 && stats.total % 10 === 0) logToDashboard(parseInt(current.d)||0,'Definitions Trainer',pct);
 }
 
 async function fetchExplanation() {

@@ -1247,7 +1247,7 @@ function getYourAnswer(qi,ans){
     if(sim==='logs') return q.logEntries.map(e=>`${e.time}: ${ans.selections&&ans.selections[e.id]||'(blank)'}`).join(' | ');
     if(sim==='network') return q.devices.map(d=>`${d.name}&rarr;${ans.placed&&ans.placed[d.name]||'(unplaced)'}`).join(' | ');
     if(sim==='acl') return q.users.map(u=>`${u.name}: ${q.resources.map((r,ri)=>ans.perms&&ans.perms[u.name]&&ans.perms[u.name][r]||'?').join('/')}`).join(' | ');
-    if(sim==='order') return ans.order?ans.order.map((id,i)=>`${i+1}.${q.items.find(x=>x.id===id)?.text.slice(0,25)}`).join(' &rarr; '):'(unordered)';
+    if(sim==='order') return ans.order?ans.order.map((id,i)=>`${i+1}.${(function(){var _f=q.items.find(function(x){return x.id===id;});return _f?_f.text.slice(0,25):String(id);})()}`).join(' &rarr; '):'(unordered)';
     if(sim==='wireless') return q.settings.map(s=>`${s.label}: ${ans.settings&&ans.settings[s.id]||'(blank)'}`).join(' | ');
     if(sim==='pki') return q.issues.filter(i=>ans.checked&&ans.checked[i.id]).map(i=>i.statement.slice(0,40)).join(' | ')||'(none selected)';
     return '(see simulation)';

@@ -210,7 +210,7 @@ h1 em{font-style:normal;color:var(--accent)}
       <span><span class="dot" style="background:var(--green)"></span>Domain 1 &middot; 3 &middot; 4</span>
     </div>
   </div>
-  <a href="secplus_dashboard.html" class="btn-back">&larr; Dashboard</a>
+  <a href="secplus_dashboard.html" class="btn-back" onclick="window.location.href='secplus_dashboard.html';return false;">&larr; Dashboard</a>
 </div>
 
 <div class="stat-bar">
@@ -579,7 +579,7 @@ function renderQ(){
     correct=p.name;
     opts=shuffle4([correct,...distractors(p,x=>x.name,correct,bigPool)]);
     fb=`Port ${p.port} = ${p.name} (${p.transport})  --  ${p.desc}`;
-    renderMCQ(opts,correct,x=>x,x=>bigPool.find(q=>q.name===x)?.desc||'',fb);
+    renderMCQ(opts,correct,x=>x,function(x){var _r=bigPool.find(function(q){return q.name===x;});return _r?_r.desc:'';},fb);
   }
   else if(qt.id==='name-to-port'){
     stem=p.name;
@@ -909,7 +909,7 @@ function placeToken(targetId, value){
   const dz=document.getElementById('dz-'+CSS.escape(targetId));
   if(dz){
     dz.classList.add('filled'); dz.classList.remove('over');
-    dz.innerHTML=`<div class="placed-token" onclick="returnToken('${targetId.replace(/'/g,"\\'")}',event)">${value}</div>`;
+    (function(){var _tok=document.createElement('div');_tok.className='placed-token';_tok.textContent=value;(function(tid){_tok.onclick=function(ev){returnToken(tid,ev);};})(targetId);dz.appendChild(_tok);})();
   }
 }
 
@@ -952,7 +952,7 @@ function onTouchEnd(e){
   ghostEl.remove(); ghostEl=null;
   const t=e.changedTouches[0];
   const under=document.elementFromPoint(t.clientX,t.clientY);
-  const row=under?.closest('.target-row');
+  var row=under?under.closest('.target-row'):null;
   if(row) placeToken(row.dataset.id, touchEl.dataset.value);
   touchEl=null;
 }

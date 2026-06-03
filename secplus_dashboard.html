@@ -76,18 +76,18 @@ input[type=date]{background:var(--panel2);border:1px solid var(--accent);border-
 .dom-sess{font-family:var(--mono);font-size:10px;color:var(--text3)}
 .badge{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;padding:3px 8px;border-radius:4px}
 
-.log-card{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:22px;margin-bottom:16px}
-.log-title{font-size:16px;font-weight:700;margin-bottom:4px}
-.log-sub{font-family:var(--mono);font-size:11px;color:var(--text2);margin-bottom:18px}
-.log-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
-.f-lbl{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--text2);margin-bottom:6px}
+
+
+
+
+
 select{width:100%;background:var(--panel2);border:1px solid var(--border2);border-radius:8px;color:var(--text);padding:10px 12px;font-family:var(--mono);font-size:12px;cursor:pointer}
 select:focus{outline:none;border-color:var(--accent)}
-.score-row{display:flex;align-items:center;gap:12px}
+
 input[type=range]{flex:1;accent-color:var(--accent)}
-.score-disp{font-family:var(--mono);font-size:18px;font-weight:500;color:var(--accent);min-width:44px;text-align:right}
-.btn-log{width:100%;padding:13px;border-radius:10px;font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;font-weight:500;transition:all .3s;border:1px solid var(--accent);background:rgba(0,229,255,.08);color:var(--accent)}
-.btn-log.saved{border-color:var(--green);background:rgba(0,255,136,.1);color:var(--green)}
+
+
+
 
 .hist-card{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:22px;margin-bottom:16px}
 .hist-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
@@ -113,7 +113,7 @@ input[type=range]{flex:1;accent-color:var(--accent)}
 @media(max-width:600px){
   .stats{grid-template-columns:repeat(2,1fr)}
   .dom-grid{grid-template-columns:1fr}
-  .log-grid{grid-template-columns:1fr}
+  
   .r-row{grid-template-columns:1fr;justify-items:center;text-align:center}
   .header{flex-direction:column}
   .countdown{width:100%}
@@ -188,53 +188,6 @@ input[type=range]{flex:1;accent-color:var(--accent)}
   <div class="sec-lbl">Domain Readiness</div>
   <div class="dom-grid" id="dom-grid"></div>
 
-  <div class="log-card">
-    <div class="log-title">Log a Study Session</div>
-    <div class="log-sub">Track any tool -- updates domain scores and readiness instantly</div>
-    <div class="log-grid">
-      <div>
-        <div class="f-lbl">Domain</div>
-        <select id="log-domain">
-          <option value="0">All Domains (Mock Exam)</option>
-          <option value="1">Domain 1 -- General Security Concepts</option>
-          <option value="2">Domain 2 -- Threats, Vulnerabilities & Mitigations</option>
-          <option value="3">Domain 3 -- Security Architecture</option>
-          <option value="4">Domain 4 -- Security Operations</option>
-          <option value="5">Domain 5 -- Security Program Management</option>
-        </select>
-      </div>
-      <div>
-        <div class="f-lbl">Activity Type</div>
-        <select id="log-type">
-          <option>Mock Exam A</option>
-          <option>Mock Exam B</option>
-          <option>Mock Exam C</option>
-          <option>Mock Exam D</option>
-          <option>Acronym Trainer</option>
-          <option>Definitions Trainer</option>
-          <option>Ports &amp; Protocols Trainer</option>
-          <option>General Security Concepts Trainer</option>
-          <option>Malware &amp; Phishing Trainer</option>
-          <option>Threats &amp; Vulnerabilities Trainer</option>
-          <option>Network Architecture Trainer</option>
-          <option>Defense Strategies Trainer</option>
-          <option>Frameworks &amp; Standards Trainer</option>
-          <option>Risk Management Trainer</option>
-          <option>Flashcards</option>
-          <option>Video / Reading</option>
-        </select>
-      </div>
-    </div>
-    <div style="margin-bottom:16px">
-      <div class="f-lbl">Score / Confidence <span id="score-lbl" style="color:var(--accent)">75%</span></div>
-      <div class="score-row">
-        <input type="range" min="0" max="100" value="75" id="log-score"
-          oninput="document.getElementById('score-lbl').textContent=this.value+'%';document.getElementById('score-disp').textContent=this.value+'%'">
-        <span class="score-disp" id="score-disp">75%</span>
-      </div>
-    </div>
-    <button class="btn-log" id="btn-log" onclick="logSession()">+ Log Session</button>
-  </div>
 
   <div class="hist-card">
     <div class="hist-head">
@@ -277,157 +230,282 @@ input[type=range]{flex:1;accent-color:var(--accent)}
 
 </div>
 <script>
-const DOMAINS={1:{name:'General Security Concepts',short:'Gen. Security',weight:12,color:'#00e5ff'},2:{name:'Threats, Vulnerabilities & Mitigations',short:'Threats & Vuln',weight:22,color:'#ff3d5a'},3:{name:'Security Architecture',short:'Architecture',weight:18,color:'#bf87ff'},4:{name:'Security Operations',short:'SecOps',weight:28,color:'#00ff88'},5:{name:'Security Program Management',short:'Prog. Mgmt',weight:20,color:'#ffcc00'}};
+var DOMAINS={
+  1:{name:'General Security Concepts',short:'Gen. Security',weight:12,color:'#bf87ff'},
+  2:{name:'Threats, Vulnerabilities & Mitigations',short:'Threats & Vulns',weight:22,color:'#ff3d5a'},
+  3:{name:'Security Architecture',short:'Architecture',weight:18,color:'#00e5ff'},
+  4:{name:'Security Operations',short:'SecOps',weight:28,color:'#ffcc00'},
+  5:{name:'Program Management & Oversight',short:'Governance',weight:20,color:'#00ff88'}
+};
 
 function save(k,v){try{localStorage.setItem('sp_'+k,JSON.stringify(v));}catch(e){}}
-function load(k,d){try{const v=localStorage.getItem('sp_'+k);return v?JSON.parse(v):d;}catch(e){return d;}}
+function load(k,d){try{var v=localStorage.getItem('sp_'+k);return v?JSON.parse(v):d;}catch(e){return d;}}
 
-let sessions=load('sessions',[]);
-let examDate=load('examDate','2025-06-23');
+var sessions=load('sessions',[]);
+var examDate=load('examDate','2025-06-23');
 
-function pad(n){return String(n??0).padStart(2,'0');}
-
-function updateCountdown(){
-  const diff=new Date(examDate+'T09:00:00')-new Date();
-  if(diff<=0){document.getElementById('cd-lbl').textContent='Exam date passed';['d','h','m','s'].forEach(x=>document.getElementById('cd-'+x).textContent='00');return;}
-  document.getElementById('cd-d').textContent=pad(Math.floor(diff/86400000));
-  document.getElementById('cd-h').textContent=pad(Math.floor((diff%86400000)/3600000));
-  document.getElementById('cd-m').textContent=pad(Math.floor((diff%3600000)/60000));
-  document.getElementById('cd-s').textContent=pad(Math.floor((diff%60000)/1000));
+function startCountdown(){
+  function tick(){
+    var diff=new Date(examDate+'T09:00:00')-new Date();
+    if(diff<=0){
+      document.getElementById('cd-lbl').textContent='Exam date passed';
+      var ids=['cd-d','cd-h','cd-m','cd-s'];
+      for(var i=0;i<ids.length;i++) document.getElementById(ids[i]).textContent='00';
+      return;
+    }
+    var d=Math.floor(diff/86400000);
+    var h=Math.floor((diff%86400000)/3600000);
+    var m=Math.floor((diff%3600000)/60000);
+    var s=Math.floor((diff%60000)/1000);
+    function pad(n){return n<10?'0'+n:String(n);}
+    document.getElementById('cd-d').textContent=pad(d);
+    document.getElementById('cd-h').textContent=pad(h);
+    document.getElementById('cd-m').textContent=pad(m);
+    document.getElementById('cd-s').textContent=pad(s);
+    var lbl=document.getElementById('cd-lbl');
+    if(lbl) lbl.textContent=d===0?'Exam day!':d===1?'1 day to go':d+' days to go';
+  }
+  tick();
+  setInterval(tick,1000);
+  var fmt=new Date(examDate+'T12:00:00').toLocaleDateString('en-CA',{year:'numeric',month:'long',day:'numeric'});
+  var el=document.getElementById('date-txt');
+  if(el) el.textContent=fmt;
 }
 
-function updateDateDisplay(){
-  const fmt=new Date(examDate+'T12:00:00').toLocaleDateString('en-CA',{year:'numeric',month:'long',day:'numeric'});
-  document.getElementById('date-txt').textContent=fmt;
-  document.getElementById('date-input').value=examDate;
+function saveDate(){
+  var v=document.getElementById('date-input').value;
+  if(!v) return;
+  examDate=v;
+  save('examDate',examDate);
+  document.getElementById('edit-row').style.display='none';
+  startCountdown();
+  renderAll();
 }
-
-function startEdit(){document.getElementById('date-row').style.display='none';document.getElementById('edit-row').style.display='flex';}
-function cancelEdit(){document.getElementById('date-row').style.display='flex';document.getElementById('edit-row').style.display='none';}
-function saveDate(){const v=document.getElementById('date-input').value;if(!v)return;examDate=v;save('examDate',v);updateDateDisplay();cancelEdit();renderAll();}
 
 function getDomainScores(){
-  // For each tool, keep only the most recent session (highest ts).
-  // This prevents partial mid-quiz logs and old retakes from skewing scores.
-  const latest={};
-  sessions.forEach(s=>{
+  var latest={};
+  for(var i=0;i<sessions.length;i++){
+    var s=sessions[i];
     if(!latest[s.type]||s.ts>latest[s.type].ts) latest[s.type]=s;
-  });
-  const latestArr=Object.values(latest);
-  // Now accumulate domain scores from latest-per-tool sessions only
-  const acc={};Object.keys(DOMAINS).forEach(d=>{acc[d]={total:0,count:0};});
-  latestArr.forEach(s=>{
-    const t=s.domain===0?Object.keys(DOMAINS):[String(s.domain)];
-    t.forEach(d=>{acc[d].total+=s.score;acc[d].count++;});
-  });
-  const r={};Object.keys(DOMAINS).forEach(d=>{r[d]=acc[d].count>0?Math.round(acc[d].total/acc[d].count):null;});
+  }
+  var latestArr=[];
+  var keys=Object.keys(latest);
+  for(var k=0;k<keys.length;k++) latestArr.push(latest[keys[k]]);
+
+  var acc={};
+  var dk=Object.keys(DOMAINS);
+  for(var di=0;di<dk.length;di++) acc[dk[di]]={total:0,count:0};
+
+  for(var j=0;j<latestArr.length;j++){
+    var sess=latestArr[j];
+    var targets=sess.domain===0?dk:[String(sess.domain)];
+    for(var ti=0;ti<targets.length;ti++){
+      var d=targets[ti];
+      if(acc[d]){acc[d].total+=sess.score;acc[d].count++;}
+    }
+  }
+  var r={};
+  for(var di2=0;di2<dk.length;di2++){
+    var dd=dk[di2];
+    r[dd]=acc[dd].count>0?Math.round(acc[dd].total/acc[dd].count):null;
+  }
   return r;
 }
 
-function getOverall(ds){let ws=0,tw=0;Object.entries(DOMAINS).forEach(([d,i])=>{if(ds[d]!==null){ws+=ds[d]*i.weight;tw+=i.weight;}});return tw>0?Math.round(ws/tw):0;}
-function scoreColor(p){if(p===null||p===undefined)return'#3a4060';if(p>=80)return'#00ff88';if(p>=65)return'#ffcc00';return'#ff3d5a';}
-function statusFor(p){if(p===null)return{cls:'none',label:'No data'};if(p>=80)return{cls:'strong',label:'Strong'};if(p>=65)return{cls:'mid',label:'Review'};return{cls:'low',label:'Focus'};}
+function getOverall(ds){
+  var ws=0,tw=0;
+  var dk=Object.keys(DOMAINS);
+  for(var i=0;i<dk.length;i++){
+    var d=dk[i];
+    if(ds[d]!==null&&ds[d]!==undefined){
+      ws+=ds[d]*DOMAINS[d].weight;
+      tw+=DOMAINS[d].weight;
+    }
+  }
+  return tw>0?Math.round(ws/tw):0;
+}
+
+function scoreColor(s){
+  if(s===null||s===undefined) return '#3a4060';
+  if(s>=80) return '#00ff88';
+  if(s>=65) return '#ffcc00';
+  return '#ff3d5a';
+}
+
+function statusFor(s){
+  if(s===null||s===undefined) return {cls:'none',label:'Not started'};
+  if(s>=80) return {cls:'strong',label:s+'%'};
+  if(s>=65) return {cls:'mid',label:s+'%'};
+  return {cls:'low',label:s+'%'};
+}
+
 function readinessLabel(o){
-  if(o===0)return{title:'Getting Started',verdict:'Log your first study session to begin tracking.',color:'#6b7494'};
-  if(o<40)return{title:'Early Stage',verdict:'Solid start  --  keep building across all domains.',color:'#00e5ff'};
-  if(o<55)return{title:'Building Momentum',verdict:'Making progress  --  focus on your weakest domains.',color:'#00e5ff'};
-  if(o<65)return{title:'Developing',verdict:'Over halfway  --  tighten up your weak spots.',color:'#ffcc00'};
-  if(o<80)return{title:'Getting Close',verdict:'Almost at the 80% passing threshold  --  push weak domains over 80%.',color:'#ffcc00'};
-  if(o<85)return{title:'Exam Ready [OK]',verdict:'Tracking above the 80% pass threshold  --  stay consistent.',color:'#00ff88'};
-  return{title:'High Confidence',verdict:'Excellent readiness  --  review and sit confidently.',color:'#00ff88'};
+  if(o>=90) return {title:'Exam Ready',verdict:'Tracking well above pass threshold -- maintain momentum.',color:'#00ff88'};
+  if(o>=80) return {title:'High Confidence',verdict:'Above the 80% pass threshold. Keep reviewing weak domains.',color:'#00ff88'};
+  if(o>=65) return {title:'Getting There',verdict:'Below pass threshold. Focus on weak domains daily.',color:'#ffcc00'};
+  if(o>0)   return {title:'Needs Work',verdict:'Significant gaps remain. Prioritise low-scoring domains.',color:'#ff3d5a'};
+  return {title:'No Data Yet',verdict:'Complete some trainers or mock exams to see your readiness score.',color:'#3a4060'};
 }
 
 function renderAll(){
-  const ds=getDomainScores(),overall=getOverall(ds),rl=readinessLabel(overall);
-  const daysLeft=Math.max(0,Math.floor((new Date(examDate+'T09:00:00')-new Date())/86400000));
-  const color=scoreColor(overall>0?overall:null);
+  var ds=getDomainScores();
+  var overall=getOverall(ds);
+  var rl=readinessLabel(overall);
+  var daysLeft=Math.max(0,Math.floor((new Date(examDate+'T09:00:00')-new Date())/86400000));
+  var color=scoreColor(overall>0?overall:null);
 
   // Ring
-  const arc=document.getElementById('ring-arc');
-  arc.style.stroke=color;
-  setTimeout(()=>{arc.style.strokeDashoffset=326.7-(overall/100)*326.7;},50);
-  document.getElementById('ring-pct').textContent=overall+'%';
-  document.getElementById('ring-pct').style.color=color;
-  document.getElementById('r-title').textContent=rl.title;
-  document.getElementById('r-verdict').textContent=rl.verdict;
-  document.getElementById('r-verdict').style.color=rl.color;
-  const rb=document.getElementById('r-bar');rb.style.background=rl.color;
-  setTimeout(()=>{rb.style.width=overall+'%';},50);
+  var arc=document.getElementById('ring-arc');
+  if(arc){
+    setTimeout(function(){arc.style.strokeDashoffset=326.7-(overall/100)*326.7;},50);
+    arc.style.stroke=color;
+  }
+  var rp=document.getElementById('ring-pct'); if(rp){rp.textContent=overall+'%';rp.style.color=color;}
+  var rv=document.getElementById('r-title'); if(rv){rv.textContent=rl.title;rv.style.color=color;}
+  var rd=document.getElementById('r-verdict'); if(rd) rd.textContent=rl.verdict;
 
-  // Stats
-  const scored=Object.entries(ds).filter(([,v])=>v!==null);
-  const weak=scored.length?scored.reduce((a,b)=>a[1]<b[1]?a:b):null;
-  const strong=scored.length?scored.reduce((a,b)=>a[1]>b[1]?a:b):null;
-  document.getElementById('s-overall').textContent=overall>0?overall+'%':' -- ';
-  const uniqueTools=new Set(sessions.map(s=>s.type)).size;
-  document.getElementById('s-sess').textContent=uniqueTools;
-  document.getElementById('s-weak').textContent=weak?`D${weak[0]} . ${DOMAINS[weak[0]].short}`:' -- ';
-  document.getElementById('s-strong').textContent=strong?`D${strong[0]} . ${DOMAINS[strong[0]].short}`:' -- ';
+  // Readiness bar
+  var rb=document.getElementById('r-bar');
+  if(rb){rb.style.background=color;setTimeout(function(){rb.style.width=overall+'%';},50);}
 
-  // Domains
-  const grid=document.getElementById('dom-grid');grid.innerHTML='';
-  Object.entries(DOMAINS).forEach(([d,info])=>{
-    const sc=ds[d],c=scoreColor(sc),st=statusFor(sc);
-    const sessCount=new Set(sessions.filter(s=>s.domain==d||s.domain===0).map(s=>s.type)).size;
-    const stC={strong:{bg:'rgba(0,255,136,0.08)',c:'#00ff88'},mid:{bg:'rgba(255,204,0,0.08)',c:'#ffcc00'},low:{bg:'rgba(255,61,90,0.08)',c:'#ff3d5a'},none:{bg:'#1a1e29',c:'#3a4060'}};
-    const s2=stC[st.cls];
-    const card=document.createElement('div');card.className='dom-card';
-    card.innerHTML=`<div class="dom-head"><div class="dom-name">${info.name}</div><div class="dom-pct" style="color:${c}">${sc!==null?sc+'%':' -- '}</div></div><div class="dom-wt">Exam weight: ${info.weight}% . D${d}</div><div class="dom-bar-bg"><div class="dom-bar" style="width:${sc??0}%;background:${c}"></div></div><div class="dom-foot"><div class="dom-sess">${sessCount} session${sessCount!==1?'s':''}</div><div class="badge" style="background:${s2.bg};color:${s2.c}">${st.label}</div></div>`;
-    grid.appendChild(card);
-  });
+  // Weak / strong
+  var scored=[];
+  var dk=Object.keys(DOMAINS);
+  for(var i=0;i<dk.length;i++){if(ds[dk[i]]!==null&&ds[dk[i]]!==undefined) scored.push([dk[i],ds[dk[i]]]);}
+
+  var weak=null,strong=null;
+  for(var j=0;j<scored.length;j++){
+    if(!weak||scored[j][1]<weak[1]) weak=scored[j];
+    if(!strong||scored[j][1]>strong[1]) strong=scored[j];
+  }
+
+  var wk=document.getElementById('s-weak');
+  if(wk) wk.textContent=weak?DOMAINS[parseInt(weak[0])].short+' ('+weak[1]+'%)':'--';
+  var sk=document.getElementById('s-strong');
+  if(sk) sk.textContent=strong?DOMAINS[parseInt(strong[0])].short+' ('+strong[1]+'%)':'--';
+
+  // Unique tools count
+  var typeSet={};
+  for(var si=0;si<sessions.length;si++) typeSet[sessions[si].type]=1;
+  var uniqueTools=Object.keys(typeSet).length;
+  var st=document.getElementById('s-sess'); if(st) st.textContent=uniqueTools;
+
+  // Domain cards
+  var grid=document.getElementById('dom-grid');
+  if(grid){
+    grid.innerHTML='';
+    for(var di=0;di<dk.length;di++){
+      var d=dk[di];
+      var info=DOMAINS[parseInt(d)];
+      var sc=ds[d];
+      var c=scoreColor(sc);
+      var st2=statusFor(sc);
+      var sessCount=0;
+      var typeSet2={};
+      for(var si2=0;si2<sessions.length;si2++){
+        var sess2=sessions[si2];
+        if(sess2.domain==d||sess2.domain===0) typeSet2[sess2.type]=1;
+      }
+      sessCount=Object.keys(typeSet2).length;
+      var stColors={strong:{bg:'rgba(0,255,136,0.08)',c:'#00ff88'},mid:{bg:'rgba(255,204,0,0.08)',c:'#ffcc00'},low:{bg:'rgba(255,61,90,0.08)',c:'#ff3d5a'},none:{bg:'rgba(255,255,255,0.03)',c:'#3a4060'}};
+      var s2=stColors[st2.cls]||stColors.none;
+      var card=document.createElement('div');
+      card.className='dom-card';
+      card.innerHTML='<div class="dom-head">'+
+        '<div class="dom-name">'+info.name+'</div>'+
+        '<div class="dom-pct" style="color:'+c+'">'+st2.label+'</div>'+
+        '</div>'+
+        '<div class="dom-bar-bg"><div class="dom-bar-fill" style="width:'+(sc||0)+'%;background:'+c+'"></div></div>'+
+        '<div class="dom-meta">'+
+          '<span class="dom-weight">'+info.weight+'% of exam</span>'+
+          '<span class="dom-sess">'+sessCount+' tool'+(sessCount!==1?'s':'')+' practiced</span>'+
+        '</div>';
+      grid.appendChild(card);
+    }
+  }
 
   // History
-  document.getElementById('sess-ct').textContent='('+sessions.length+' entries)';
-  const list=document.getElementById('hist-list');list.innerHTML='';
-  if(!sessions.length){list.innerHTML='<div class="empty">No sessions logged yet  --  add your first one above</div>';}
-  else{[...sessions].reverse().forEach(sess=>{
-    const di=sess.domain===0?{name:'All Domains',color:'#00e5ff'}:DOMAINS[sess.domain];
-    const sc=scoreColor(sess.score);
-    const item=document.createElement('div');item.className='h-item';
-    item.innerHTML=`<div class="h-dot" style="background:${di?.color||'#00e5ff'}"></div><div class="h-name">${di?.name||'Unknown'}</div><div class="h-sc" style="color:${sc}">${sess.score}%</div><div class="h-type">${sess.type}</div><div class="h-date">${sess.date}</div><button class="btn-del" onclick="delSession(${sess.ts})" title="Remove">x</button>`;
-    list.appendChild(item);
-  });}
+  var list=document.getElementById('hist-list');
+  if(list){
+    list.innerHTML='';
+    if(!sessions.length){
+      list.innerHTML='<div style="font-family:var(--mono);font-size:11px;color:var(--text3);text-align:center;padding:20px">No sessions yet -- complete a trainer or mock exam to see history here.</div>';
+    } else {
+      var rev=sessions.slice().reverse();
+      for(var ri=0;ri<rev.length;ri++){
+        var sess=rev[ri];
+        var di2=sess.domain===0?{name:'All Domains',color:'#00e5ff'}:DOMAINS[sess.domain];
+        var sc2=scoreColor(sess.score);
+        var item=document.createElement('div');
+        item.className='h-item';
+        item.innerHTML='<div class="h-dot" style="background:'+(di2&&di2.color?di2.color:'#00e5ff')+'"></div>'+
+          '<div class="h-name">'+(di2&&di2.name?di2.name:'Unknown')+'</div>'+
+          '<div class="h-type">'+sess.type+'</div>'+
+          '<div class="h-score" style="color:'+sc2+'">'+sess.score+'%</div>'+
+          '<div class="h-date">'+sess.date+'</div>'+
+          '<button class="btn-del" title="Remove" data-ts="'+sess.ts+'">x</button>';
+        var btn=item.querySelector('.btn-del');
+        if(btn)(function(ts){btn.onclick=function(){delSession(ts);};})(sess.ts);
+        list.appendChild(item);
+      }
+    }
+  }
+  var hct=document.getElementById('sess-ct');
+  if(hct) hct.textContent='('+sessions.length+' entries)';
 
-  // Plan
-  const planItems=[];
-  if(daysLeft>0&&daysLeft<=14&&sessions.length>0)planItems.push({cls:'high',p:'urgent',t:`${daysLeft} days left  --  focus on highest-weight weak domains`,a:'time critical'});
-  Object.entries(DOMAINS).forEach(([d,info])=>{if(ds[d]===null)planItems.push({cls:'high',p:'high',t:`Domain ${d} (${info.name})  --  no data yet`,a:`${info.weight}% of exam`});});
-  scored.filter(([,v])=>v<65).sort((a,b)=>a[1]-b[1]).forEach(([d,v])=>planItems.push({cls:'high',p:'high',t:`D${d} . ${DOMAINS[d].short}  --  ${v}% needs intensive work (target: 80%)`,a:`${DOMAINS[d].weight}% of exam`}));
-  scored.filter(([,v])=>v>=65&&v<80).forEach(([d,v])=>planItems.push({cls:'mid',p:'review',t:`D${d} . ${DOMAINS[d].short}  --  ${v}%  --  push this above 80%`,a:`${DOMAINS[d].weight}% of exam`}));
-  scored.filter(([,v])=>v>=80).forEach(([d,v])=>planItems.push({cls:'low',p:'maintain',t:`D${d} . ${DOMAINS[d].short}  --  ${v}% above 80% target [OK]`,a:'keep reviewing'}));
-  if(!planItems.length)planItems.push({cls:'mid',p:'start',t:'Log study sessions to get personalized recommendations',a:'^ log below'});
-  const pc={high:{bg:'rgba(255,61,90,0.08)',b:'rgba(255,61,90,0.2)',c:'#ff3d5a'},mid:{bg:'rgba(255,204,0,0.08)',b:'rgba(255,204,0,0.2)',c:'#ffcc00'},low:{bg:'rgba(0,255,136,0.08)',b:'rgba(0,255,136,0.15)',c:'#00ff88'}};
-  const pl=document.getElementById('plan-list');pl.innerHTML='';
-  planItems.slice(0,6).forEach(item=>{const c=pc[item.cls]||pc.mid;const el=document.createElement('div');el.className='plan-item';el.style.cssText=`background:${c.bg};border:1px solid ${c.b}`;el.innerHTML=`<span class="p-pri" style="color:${c.c}">${item.p}</span><span class="p-txt">${item.t}</span><span class="p-act">${item.a}</span>`;pl.appendChild(el);});
+  // Study plan
+  var planItems=[];
+  for(var pi=0;pi<dk.length;pi++){
+    if(ds[dk[pi]]===null||ds[dk[pi]]===undefined) planItems.push({cls:'high',p:'Not started -- begin '+DOMAINS[parseInt(dk[pi])].short,d:dk[pi]});
+  }
+  for(var si3=0;si3<scored.length;si3++){
+    var sv=scored[si3];
+    if(sv[1]<65) planItems.push({cls:'high',p:'Critical gap: '+DOMAINS[parseInt(sv[0])].short+' ('+sv[1]+'%) -- daily practice needed',d:sv[0]});
+    else if(sv[1]<80) planItems.push({cls:'mid',p:'Below threshold: '+DOMAINS[parseInt(sv[0])].short+' ('+sv[1]+'%) -- review weak topics',d:sv[0]});
+    else planItems.push({cls:'low',p:'Maintain: '+DOMAINS[parseInt(sv[0])].short+' ('+sv[1]+'%) -- occasional review',d:sv[0]});
+  }
+  var pc={high:{bg:'rgba(255,61,90,0.08)',b:'rgba(255,61,90,0.2)',c:'#ff3d5a'},mid:{bg:'rgba(255,204,0,0.08)',b:'rgba(255,204,0,0.2)',c:'#ffcc00'},low:{bg:'rgba(0,255,136,0.08)',b:'rgba(0,255,136,0.2)',c:'#00ff88'}};
+  var pl=document.getElementById('plan-list');
+  if(pl){
+    pl.innerHTML='';
+    var items=planItems.slice(0,6);
+    for(var ii=0;ii<items.length;ii++){
+      var pi2=items[ii];var pc2=pc[pi2.cls]||pc.mid;
+      var el=document.createElement('div');
+      el.className='plan-item';
+      el.style.background=pc2.bg;
+      el.style.borderColor=pc2.b;
+      el.innerHTML='<span class="plan-dot" style="background:'+pc2.c+'"></span><span class="plan-text" style="color:'+pc2.c+'">'+pi2.p+'</span>';
+      pl.appendChild(el);
+    }
+    if(!items.length){
+      pl.innerHTML='<div style="font-family:var(--mono);font-size:11px;color:var(--text3);text-align:center;padding:16px">Complete some tools to generate your study plan.</div>';
+    }
+  }
+
+  // Last updated
+  var lu=document.getElementById('sync-lbl');
+  if(lu){
+    var t=new Date().toLocaleTimeString('en-CA',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+    lu.textContent='Updated '+t;
+  }
 }
 
-function logSession(){
-  const domain=parseInt(document.getElementById('log-domain').value);
-  const type=document.getElementById('log-type').value;
-  const score=parseInt(document.getElementById('log-score').value);
-  const now=new Date();
-  sessions.push({domain,type,score,date:now.toLocaleDateString('en-CA',{month:'short',day:'numeric'}),ts:now.getTime()});
-  save('sessions',sessions);renderAll();
-  document.getElementById('log-score').value=75;
-  document.getElementById('score-lbl').textContent='75%';
-  document.getElementById('score-disp').textContent='75%';
-  const btn=document.getElementById('btn-log');btn.textContent='[OK] Saved!';btn.classList.add('saved');
-  setTimeout(()=>{btn.textContent='+ Log Session';btn.classList.remove('saved');},2000);
-  setSynced();
+function delSession(ts){
+  var newSessions=[];
+  for(var i=0;i<sessions.length;i++){if(sessions[i].ts!==ts) newSessions.push(sessions[i]);}
+  sessions=newSessions;
+  save('sessions',sessions);
+  renderAll();
 }
 
-function delSession(ts){sessions=sessions.filter(s=>s.ts!==ts);save('sessions',sessions);renderAll();setSynced();}
-function clearHistory(){if(!confirm('Clear all history? Cannot be undone.'))return;sessions=[];save('sessions',sessions);renderAll();}
-function manualRefresh(){sessions=load('sessions',[]);examDate=load('examDate','2025-06-23');updateDateDisplay();renderAll();setSynced();}
-
-function setSynced(){
-  const t=new Date().toLocaleTimeString('en-CA',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
-  document.getElementById('sync-lbl').innerHTML=`<span class="dot" style="background:var(--green)"></span>saved ${t}`;
+function refreshData(){
+  sessions=load('sessions',[]);
+  renderAll();
 }
 
-// Init
-document.getElementById('today').textContent=new Date().toLocaleDateString('en-CA',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
-updateDateDisplay();updateCountdown();setInterval(updateCountdown,1000);renderAll();
+startCountdown();
+renderAll();
 </script>
 </body>
 </html>

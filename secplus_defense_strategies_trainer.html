@@ -145,14 +145,14 @@ h1 em{font-style:normal;color:var(--green)}
 <script>
 function logToDashboard(domain,type,score){
   try{
-    const s=JSON.parse(localStorage.getItem('sp_sessions')||'[]');
-    const now=new Date();
+    var s=JSON.parse(localStorage.getItem('sp_sessions')||'[]');
+    var now=new Date();
     s.push({domain,type,score,date:now.toLocaleDateString('en-CA',{month:'short',day:'numeric'}),ts:now.getTime()});
     localStorage.setItem('sp_sessions',JSON.stringify(s));
   }catch(e){}
 }
 
-const TERMS=[
+var TERMS=[
   {name:'IAM',def:'Identity and Access Management  --  the policies and technologies that ensure the right people have the right access to the right resources at the right time.',tag:'tag-purple',tagLabel:'IAM',key:'Covers identification, authentication, authorisation, and accounting (AAA)'},
   {name:'SSO',def:'Single Sign-On  --  one authentication grants access to multiple connected systems without re-authenticating.',tag:'tag-purple',tagLabel:'IAM',key:'Improves UX but makes credential theft higher risk  --  pair with MFA'},
   {name:'Federation',def:'Cross-organisational trust allowing users to authenticate at their home organisation and access partner systems.',tag:'tag-purple',tagLabel:'IAM',key:'SAML, OAuth 2.0, and OIDC are common federation protocols'},
@@ -178,8 +178,8 @@ const TERMS=[
   {name:'Deception Technology',def:'Tools like honeypots and canary tokens that detect attackers already inside the network by triggering on attacker behaviour.',tag:'tag-accent',tagLabel:'Detection',key:'Zero false positives  --  legitimate users never touch decoys'},
 ];
 
-const CATS=['Identity and Access Management','Endpoint and Application Security','Data Protection','Cryptography and PKI','Monitoring and Detection','Scenario'];
-const CAT_COLORS={
+var CATS=['Identity and Access Management','Endpoint and Application Security','Data Protection','Cryptography and PKI','Monitoring and Detection','Scenario'];
+var CAT_COLORS={
   'Identity and Access Management':'var(--purple)',
   'Endpoint and Application Security':'var(--accent)',
   'Data Protection':'var(--amber)',
@@ -187,7 +187,7 @@ const CAT_COLORS={
   'Monitoring and Detection':'var(--green)',
   'Scenario':'var(--amber)'
 };
-const BADGE_MAP={
+var BADGE_MAP={
   'Identity and Access Management':'badge-iam',
   'Endpoint and Application Security':'badge-endpoint',
   'Data Protection':'badge-data',
@@ -196,7 +196,7 @@ const BADGE_MAP={
   'Scenario':'badge-scenario'
 };
 
-const Q_BANK=[
+var Q_BANK=[
 // -- IDENTITY AND ACCESS MANAGEMENT --
 {type:'identify',cat:'Identity and Access Management',q:"Which access control model assigns permissions to roles and then assigns users to those roles?",o:["DAC","MAC","RBAC","ABAC"],a:2,e:"<strong>RBAC</strong> (Role-Based Access Control)  --  users inherit permissions through their role. When someone changes jobs, you change their role rather than individual permissions. Most common enterprise model."},
 {type:'identify',cat:'Identity and Access Management',q:"Which access control model evaluates multiple attributes including user, resource, and environmental conditions at runtime?",o:["RBAC","DAC","MAC","ABAC"],a:3,e:"<strong>ABAC</strong> (Attribute-Based Access Control)  --  the most flexible model. Evaluates user role, department, time of day, device health, and location to make access decisions. Used in zero trust architectures."},
@@ -270,23 +270,33 @@ const Q_BANK=[
 {type:'scenario',cat:'Scenario',scenario:"During an audit, the team discovers that a terminated contractor's VPN account and Active Directory account remain active six months after contract end. The accounts have not been used since termination.",q:"Which control gap does this represent and what process addresses it?",o:["Weak password policy for contractor accounts","Failure of identity lifecycle management  --  specifically deprovisioning and access review processes","Insufficient network monitoring","Lack of MFA on contractor accounts"],a:1,e:"<strong>Identity lifecycle management failure</strong>  --  joiner-mover-leaver processes must deactivate accounts immediately on departure. Periodic access reviews (quarterly) catch dormant accounts that slip through. Automated integration between HR systems and IAM prevents manual failures."},
 ];
 
-let questions=[],qi=0,correct=0,wrong=0;
-let catStats={};
+var questions=[],qi=0,correct=0,wrong=0;
+var catStats={};
 CATS.forEach(c=>catStats[c]={c:0,t:0});
 
 function shuffle(a){return[...a].sort(()=>Math.random()-.5)}
 
 function buildQuestions(){
-  const pool=shuffle([...Q_BANK]).slice(0,80);
-  return pool.map(q=>{
-    const idxs=q.o.map((_,i)=>i);
-    const shuf=shuffle(idxs);
-    return{...q,o:shuf.map(i=>q.o[i]),a:shuf.indexOf(q.a)};
-  });
+  var pool=shuffle(Q_BANK.slice()).slice(0,80);
+  var result=[];
+  for(var k=0;k<pool.length;k++){
+    var q=pool[k];
+    var idxs=[];
+    for(var m=0;m<q.o.length;m++) idxs.push(m);
+    var shuf=shuffle(idxs);
+    var newO=[];
+    for(var n=0;n<shuf.length;n++) newO.push(q.o[shuf[n]]);
+    var nq={};
+    for(var p in q) nq[p]=q[p];
+    nq.o=newO;
+    nq.a=shuf.indexOf(q.a);
+    result.push(nq);
+  }
+  return result;
 }
 
 function updateStats(){
-  const total=correct+wrong;
+  var total=correct+wrong;
   document.getElementById('s-prog').textContent=qi+'/80';
   document.getElementById('s-correct').textContent=correct;
   document.getElementById('s-wrong').textContent=wrong;
@@ -296,10 +306,10 @@ function updateStats(){
 
 function renderQ(){
   if(qi>=80){showResults();return;}
-  const q=questions[qi];
-  const letters=['A','B','C','D'];
-  const catBadge=BADGE_MAP[q.cat]||'badge-monitoring';
-  const scenHTML=q.type==='scenario'&&q.scenario
+  var q=questions[qi];
+  var letters=['A','B','C','D'];
+  var catBadge=BADGE_MAP[q.cat]||'badge-monitoring';
+  var scenHTML=q.type==='scenario'&&q.scenario
     ?'<div class="scenario-box"><div class="scenario-lbl">Scenario</div><div class="scenario-text">'+q.scenario+'</div></div>'
     :'';
   document.getElementById('q-area').innerHTML=
@@ -311,46 +321,55 @@ function renderQ(){
       scenHTML+
       '<div class="q-text">'+q.q+'</div>'+
       '<div class="opts" id="opts">'+
-        q.o.map((o,i)=>'<button class="opt" id="opt-'+i+'" onclick="answer('+i+')"><span class="opt-letter">'+letters[i]+'</span><span class="opt-text">'+o+'</span></button>').join('')+
+        (function(){var _h='';for(var _i=0;_i<q.o.length;_i++){_h+='<button class="opt" id="opt-'+_i+'">'+'<span class="opt-letter">'+['A','B','C','D'][_i]+'</span>'+'<span class="opt-text">'+q.o[_i]+'</span>'+'</button>';}return _h;})()+
       '</div>'+
       '<div class="explanation" id="explanation"><div class="exp-lbl">Explanation</div><div class="exp-text" id="exp-text"></div></div>'+
-      '<button class="btn-next" id="btn-next" onclick="nextQ()">'+(qi===79?'See results \u2192':'Next \u2192')+'</button>'+
+      '<button class="btn-next" id="btn-next">'+(qi===79?'See results \u2192':'Next \u2192')+'</button>'+
     '</div>';
+  for(var _j=0;_j<q.o.length;_j++){(function(_idx){var _b=document.getElementById('opt-'+_idx);if(_b) _b.onclick=function(){answer(_idx);};}(_j));}
 }
 
 function answer(idx){
-  const q=questions[qi];
-  const isCorrect=idx===q.a;
-  if(isCorrect){correct++;catStats[q.cat].c++;}else wrong++;
-  catStats[q.cat].t++;qi++;updateStats();
-  q.o.forEach((_,i)=>document.getElementById('opt-'+i).disabled=true);
-  const cb=document.getElementById('opt-'+idx);
-  const rb=document.getElementById('opt-'+q.a);
-  if(isCorrect){cb.classList.add('correct');}else{cb.classList.add('wrong');if(rb)rb.classList.add('reveal');}
-  document.getElementById('exp-text').innerHTML=q.e;
-  document.getElementById('explanation').classList.add('show');
+  var q=questions[qi];
+  var isCorrect=idx===q.a;
+  if(isCorrect){correct++;if(catStats[q.cat])catStats[q.cat].c++;}else{wrong++;}
+  if(!catStats[q.cat]) catStats[q.cat]={c:0,t:0};
+  catStats[q.cat].t++;
+  qi++;
+  updateStats();
+  for(var i=0;i<q.o.length;i++){
+    var b=document.getElementById('opt-'+i);
+    if(b) b.disabled=true;
+  }
+  var cb=document.getElementById('opt-'+idx);
+  var rb=document.getElementById('opt-'+q.a);
+  if(isCorrect){if(cb)cb.classList.add('correct');}
+  else{if(cb)cb.classList.add('wrong');if(rb)rb.classList.add('reveal');}
+  var et=document.getElementById('exp-text');
+  var eb=document.getElementById('explanation');
   var nb=document.getElementById('btn-next');
-  nb.style.display='block';
-  nb.onclick=function(){nextQ();};
-  if(qi>0&&qi%20===0) logToDashboard(4,'Defense Strategies Trainer',Math.round(correct/qi*100));
+  if(et) et.innerHTML=q.e;
+  if(eb) eb.classList.add('show');
+  if(nb){nb.style.display='block';nb.onclick=function(){nextQ();};}
+  logToDashboard(4,'Defense Strategies Trainer',Math.round(correct/qi*100));
 }
 
 function nextQ(){renderQ();}
 
 function showResults(){
   document.getElementById('q-area').style.display='none';
-  const res=document.getElementById('results-area');
+  var res=document.getElementById('results-area');
   res.style.display='block';
-  const pct=Math.round(correct/80*100);
+  var pct=Math.round(correct/80*100);
   logToDashboard(4,'Defense Strategies Trainer',pct);
-  const passed=pct>=80;
-  const msg=pct>=90?'Outstanding \u2014 exam-ready!':pct>=80?'Solid \u2014 above pass threshold.':pct>=65?'Getting there \u2014 keep reviewing.':'More study needed.';
-  const ringColor=passed?'#00ff88':'#ff3d5a';
-  const circ=339.3,offset=circ-(pct/100)*circ;
-  const topCats=CATS.filter(c=>catStats[c].t>0).sort((a,b)=>(catStats[b].c/catStats[b].t)-(catStats[a].c/catStats[a].t));
-  const bdHTML=topCats.slice(0,6).map(c=>{
-    const s=catStats[c];const p=s.t?Math.round(s.c/s.t*100):0;
-    const col=CAT_COLORS[c]||'var(--green)';
+  var passed=pct>=80;
+  var msg=pct>=90?'Outstanding \u2014 exam-ready!':pct>=80?'Solid \u2014 above pass threshold.':pct>=65?'Getting there \u2014 keep reviewing.':'More study needed.';
+  var ringColor=passed?'#00ff88':'#ff3d5a';
+  var circ=339.3,offset=circ-(pct/100)*circ;
+  var topCats=CATS.filter(c=>catStats[c].t>0).sort((a,b)=>(catStats[b].c/catStats[b].t)-(catStats[a].c/catStats[a].t));
+  var bdHTML=topCats.slice(0,6).map(c=>{
+    var s=catStats[c];var p=s.t?Math.round(s.c/s.t*100):0;
+    var col=CAT_COLORS[c]||'var(--green)';
     return '<div class="bd-card"><div class="bd-title" style="color:'+col+'">'+c+'</div><div class="bd-bar-bg"><div class="bd-bar-fill" style="width:0%;background:'+col+'" data-pct="'+p+'"></div></div><div class="bd-score" style="color:'+col+'">'+p+'%</div><div class="bd-detail">'+s.c+'/'+s.t+' correct</div></div>';
   }).join('');
   res.innerHTML=
@@ -366,7 +385,7 @@ function showResults(){
       '<button class="btn-retake" onclick="showRef()" style="border-color:var(--green);color:var(--green)">View Reference</button>'+
     '</div>';
   setTimeout(()=>{
-    const ring=document.getElementById('ring-anim');
+    var ring=document.getElementById('ring-anim');
     if(ring){ring.style.transition='stroke-dashoffset 1.5s ease';ring.style.strokeDashoffset=offset;}
     document.querySelectorAll('.bd-bar-fill').forEach(el=>{el.style.transition='width 1s ease';el.style.width=el.dataset.pct+'%';});
   },100);
@@ -405,13 +424,13 @@ function setTab(t){
 }
 
 function buildRef(){
-  const chart=document.getElementById('acc-chart');chart.innerHTML='';
+  var chart=document.getElementById('acc-chart');chart.innerHTML='';
   CATS.forEach(c=>{
-    const s=catStats[c];const pct=s.t?Math.round(s.c/s.t*100):0;
-    const col=CAT_COLORS[c]||'var(--green)';
+    var s=catStats[c];var pct=s.t?Math.round(s.c/s.t*100):0;
+    var col=CAT_COLORS[c]||'var(--green)';
     chart.innerHTML+='<div class="acc-row"><div class="acc-lbl">'+c+'</div><div class="acc-bg"><div class="acc-fill" style="width:'+(s.t?pct:0)+'%;background:'+col+'"></div></div><div class="acc-pct">'+(s.t?pct+'%':' -- ')+'</div></div>';
   });
-  const cards=document.getElementById('ref-cards');cards.innerHTML='';
+  var cards=document.getElementById('ref-cards');cards.innerHTML='';
   TERMS.forEach(t=>{
     cards.innerHTML+='<div class="ref-card"><div class="ref-name">'+t.name+'</div><div class="ref-def">'+t.def+'</div><span class="ref-tag '+t.tag+'">'+t.tagLabel+'</span><div class="ref-key">'+t.key+'</div></div>';
   });
