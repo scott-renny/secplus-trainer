@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Identity & Access Management Trainer -- Security+</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#07080c;--panel:#0e1018;--panel2:#141720;--panel3:#1a1e29;
+  --border:rgba(255,255,255,0.06);--border2:rgba(255,255,255,0.1);--border3:rgba(255,255,255,0.18);
+  --text:#e4e8f5;--text2:#6b7494;--text3:#3a4060;
+  --accent:#00e5ff;--green:#00ff88;--red:#ff3d5a;--amber:#ffcc00;--purple:#bf87ff;--teal:#4fd1c5;--indigo:#818cf8;
+  --mono:'Courier New',monospace;
+}
+*{font-family:'Segoe UI',sans-serif}
+body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 60% 50% at 20% 0%,rgba(129,140,248,0.04) 0%,transparent 60%),radial-gradient(ellipse 50% 40% at 80% 100%,rgba(0,229,255,0.03) 0%,transparent 60%);pointer-events:none;z-index:0}
+body::after{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(129,140,248,0.012) 1px,transparent 1px),linear-gradient(90deg,rgba(129,140,248,0.012) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;z-index:0}
+.wrap{position:relative;z-index:1;max-width:760px;margin:0 auto;padding:32px 20px 80px}
+.eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:var(--indigo);margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'';width:20px;height:1px;background:var(--indigo)}
+h1{font-size:clamp(26px,5vw,40px);font-weight:700;line-height:1.1;letter-spacing:-.02em;margin-bottom:8px}
+h1 em{font-style:normal;color:var(--indigo)}
+.subtitle{font-family:var(--mono);font-size:11px;color:var(--text2);margin-bottom:28px}
+.tabs{display:flex;gap:5px;margin-bottom:20px;background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:5px}
+.tab{flex:1;padding:10px 4px;font-family:var(--mono);font-size:10px;letter-spacing:.05em;text-transform:uppercase;border:none;background:transparent;color:var(--text3);cursor:pointer;border-radius:8px;transition:all .2s;touch-action:manipulation}
+.tab.active{background:var(--panel3);color:var(--indigo);border:1px solid rgba(129,140,248,0.2)}
+.stats-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px}
+.sb{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:13px;position:relative;overflow:hidden}
+.sb::before{content:'';position:absolute;top:0;left:0;right:0;height:2px}
+.sb.s-prog::before{background:var(--indigo)}.sb.s-correct::before{background:var(--green)}.sb.s-wrong::before{background:var(--red)}.sb.s-acc::before{background:var(--amber)}
+.sb-val{font-family:var(--mono);font-size:22px;font-weight:500;line-height:1}
+.sb.s-correct .sb-val{color:var(--green)}.sb.s-wrong .sb-val{color:var(--red)}.sb.s-acc .sb-val{color:var(--amber)}
+.sb-lbl{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--text2);margin-top:4px}
+.prog-wrap{height:3px;background:rgba(255,255,255,0.06);border-radius:99px;margin-bottom:20px;overflow:hidden}
+.prog-fill{height:100%;background:var(--indigo);border-radius:99px;transition:width .4s ease}
+.q-card{background:var(--panel);border:1px solid var(--border2);border-radius:20px;padding:28px;margin-bottom:14px;position:relative;overflow:hidden}
+.q-card::after{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(129,140,248,0.4),transparent)}
+.q-meta{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.q-badge{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;padding:3px 10px;border-radius:5px}
+.badge-iam{background:rgba(129,140,248,0.1);color:var(--indigo);border:1px solid rgba(129,140,248,0.2)}
+.badge-pam{background:rgba(255,61,90,0.1);color:var(--red);border:1px solid rgba(255,61,90,0.2)}
+.badge-federation{background:rgba(0,229,255,0.1);color:var(--accent);border:1px solid rgba(0,229,255,0.2)}
+.badge-access{background:rgba(255,204,0,0.1);color:var(--amber);border:1px solid rgba(255,204,0,0.2)}
+.badge-directory{background:rgba(79,209,197,0.1);color:var(--teal);border:1px solid rgba(79,209,197,0.2)}
+.badge-lifecycle{background:rgba(191,135,255,0.1);color:var(--purple);border:1px solid rgba(191,135,255,0.2)}
+.badge-scenario{background:rgba(255,204,0,0.1);color:var(--amber);border:1px solid rgba(255,204,0,0.2)}
+.q-num{font-family:var(--mono);font-size:10px;color:var(--text3)}
+.scenario-box{background:var(--panel2);border:1px solid var(--border2);border-left:3px solid var(--indigo);border-radius:10px;padding:13px 16px;margin-bottom:16px}
+.scenario-lbl{font-family:var(--mono);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--indigo);margin-bottom:6px}
+.scenario-text{font-size:13px;color:var(--text2);line-height:1.7;font-family:var(--mono)}
+.q-text{font-size:15px;font-weight:500;line-height:1.65;color:var(--text);margin-bottom:18px}
+.opts{display:flex;flex-direction:column;gap:9px;margin-bottom:14px}
+.opt{display:flex;align-items:flex-start;gap:14px;padding:13px 16px;border-radius:10px;border:1px solid var(--border2);background:var(--panel2);cursor:pointer;text-align:left;width:100%;transition:all .15s;touch-action:manipulation}
+.opt:hover:not(:disabled){border-color:var(--border3);background:var(--panel3)}
+.opt-letter{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--text2);min-width:18px;margin-top:1px;flex-shrink:0}
+.opt-text{font-size:14px;color:var(--text);line-height:1.5}
+.opt.correct{border-color:var(--green)!important;background:rgba(0,255,136,0.07)!important}
+.opt.correct .opt-letter,.opt.correct .opt-text{color:var(--green)!important}
+.opt.wrong{border-color:var(--red)!important;background:rgba(255,61,90,0.07)!important}
+.opt.wrong .opt-letter,.opt.wrong .opt-text{color:var(--red)!important}
+.opt.reveal{border-color:rgba(0,255,136,0.3)!important;background:rgba(0,255,136,0.04)!important}
+.opt.reveal .opt-letter,.opt.reveal .opt-text{color:var(--green)!important;opacity:.6}
+.opt:disabled{cursor:default}
+.explanation{display:none;background:var(--panel2);border:1px solid var(--border2);border-left:3px solid var(--indigo);border-radius:10px;padding:13px 16px;margin-bottom:12px}
+.explanation.show{display:block}
+.exp-lbl{font-family:var(--mono);font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--indigo);margin-bottom:7px}
+.exp-text{font-size:13px;color:var(--text2);line-height:1.7}
+.exp-text strong{color:var(--text);font-weight:600}
+.btn-next{width:100%;padding:12px;border-radius:10px;border:1px solid var(--border2);background:transparent;color:var(--text2);font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;display:none;transition:all .15s;touch-action:manipulation}
+.btn-next:hover{border-color:var(--indigo);color:var(--indigo)}
+.results-wrap{text-align:center;padding:32px 0 20px}
+.results-ring{width:140px;height:140px;margin:0 auto 20px;position:relative}
+.results-ring svg{transform:rotate(-90deg)}
+.ring-score{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center}
+.ring-pct{font-family:var(--mono);font-size:32px;font-weight:600}
+.ring-lbl{font-family:var(--mono);font-size:9px;color:var(--text3);letter-spacing:.1em;text-transform:uppercase}
+.results-verdict{font-size:22px;font-weight:700;margin-bottom:6px}
+.results-sub{font-family:var(--mono);font-size:11px;color:var(--text2);margin-bottom:28px}
+.breakdown{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:28px;text-align:left}
+.bd-card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:16px}
+.bd-title{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px}
+.bd-bar-bg{height:5px;background:rgba(255,255,255,0.06);border-radius:99px;overflow:hidden;margin-bottom:6px}
+.bd-bar-fill{height:100%;border-radius:99px;transition:width 1s ease}
+.bd-score{font-family:var(--mono);font-size:22px;font-weight:600}
+.bd-detail{font-family:var(--mono);font-size:10px;color:var(--text3);margin-top:4px}
+.btn-retake{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:12px 36px;background:transparent;border:1px solid var(--border2);color:var(--text2);border-radius:10px;cursor:pointer;transition:all .2s;touch-action:manipulation}
+.btn-retake:hover{border-color:var(--indigo);color:var(--indigo)}
+@media(max-width:500px){.stats-bar{grid-template-columns:repeat(2,1fr)}.breakdown{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">CompTIA Security+ &middot; SY0-701 &middot; Domain 4</div>
+  <h1>Identity &amp; Access <em>Management</em></h1>
+  <p class="subtitle">45 questions &middot; IAM &middot; PAM &middot; federation &middot; access control models &middot; directory services &middot; identity lifecycle</p>
+  <div class="tabs">
+    <button class="tab active" id="tab-quiz" onclick="setTab('quiz')">Quiz</button>
+    <button class="tab" id="tab-ref" onclick="setTab('ref')">Reference</button>
+  </div>
+  <div id="view-quiz">
+    <div class="stats-bar">
+      <div class="sb s-prog"><div class="sb-val" id="s-prog">0/45</div><div class="sb-lbl">Progress</div></div>
+      <div class="sb s-correct"><div class="sb-val" id="s-correct">0</div><div class="sb-lbl">Correct</div></div>
+      <div class="sb s-wrong"><div class="sb-val" id="s-wrong">0</div><div class="sb-lbl">Wrong</div></div>
+      <div class="sb s-acc"><div class="sb-val" id="s-acc">--</div><div class="sb-lbl">Accuracy</div></div>
+    </div>
+    <div class="prog-wrap"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
+    <div id="q-area"></div>
+    <div id="results-area" style="display:none"></div>
+  </div>
+  <div id="view-ref" style="display:none">
+    <div style="font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--indigo);margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--border)">Accuracy by Category</div>
+    <div id="acc-chart" style="margin-bottom:24px"></div>
+    <div style="font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--indigo);margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--border)">Key Concepts</div>
+    <div id="ref-cards" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px"></div>
+  </div>
+</div>
+<script>
+function logToDashboard(domain,type,score){
+  try{
+    var s=JSON.parse(localStorage.getItem('sp_sessions')||'[]');
+    var now=new Date();
+    s.push({domain:domain,type:type,score:score,date:now.toLocaleDateString('en-CA',{month:'short',day:'numeric'}),ts:now.getTime()});
+    localStorage.setItem('sp_sessions',JSON.stringify(s));
+  }catch(e){}
+}
+
+var CATS=['IAM Fundamentals','Privileged Access Management','Federation & SSO','Access Control Models','Directory Services','Identity Lifecycle','Scenario'];
+var CAT_COLORS={'IAM Fundamentals':'var(--indigo)','Privileged Access Management':'var(--red)','Federation & SSO':'var(--accent)','Access Control Models':'var(--amber)','Directory Services':'var(--teal)','Identity Lifecycle':'var(--purple)','Scenario':'var(--amber)'};
+var BADGE_MAP={'IAM Fundamentals':'badge-iam','Privileged Access Management':'badge-pam','Federation & SSO':'badge-federation','Access Control Models':'badge-access','Directory Services':'badge-directory','Identity Lifecycle':'badge-lifecycle','Scenario':'badge-scenario'};
+
+var TERMS=[
+  {name:'IAM',def:'Identity and Access Management -- the framework of policies and technologies for ensuring the right people access the right resources at the right time.',key:'Who are you? + What can you do? + When/where?'},
+  {name:'PAM',def:'Privileged Access Management -- controls, monitors, and audits access for accounts with elevated privileges (admin, root, service accounts).',key:'Vault credentials, session recording, JIT access, least privilege for admins'},
+  {name:'RBAC',def:'Role-Based Access Control -- permissions are assigned to roles; users are assigned to roles. Users get permissions through their role.',key:'User -> Role -> Permissions. Most common enterprise model.'},
+  {name:'ABAC',def:'Attribute-Based Access Control -- access decisions based on attributes of the user, resource, and environment (time, location, device).',key:'Fine-grained. If (user.dept=HR AND resource.type=HR AND time=business_hours) THEN allow'},
+  {name:'MAC',def:'Mandatory Access Control -- access governed by security labels (classifications) set by the system, not users. Used in government/military.',key:'Labels: Top Secret > Secret > Confidential. Users cannot change labels.'},
+  {name:'DAC',def:'Discretionary Access Control -- resource owners control access to their own resources. Most flexible but least secure.',key:'Owner sets permissions. File owner grants/revokes. Windows NTFS is DAC.'},
+  {name:'Zero Trust',def:'Never trust, always verify. No implicit trust based on network location. Every request is authenticated, authorised, and validated regardless of origin.',key:'Assume breach. Verify explicitly. Least privilege. Microsegment everything.'},
+  {name:'JIT Access',def:'Just-In-Time access -- privileged access granted only when needed for a specific task and automatically revoked when the task is complete.',key:'No standing privileges. Request -> approve -> grant -> auto-expire.'},
+  {name:'Federation',def:'A trust relationship between identity providers (IdPs) and service providers (SPs) allowing users to authenticate once and access multiple systems.',key:'My IdP vouches for me to your SP. Cross-org SSO. SAML/OIDC/WS-Fed.'},
+  {name:'SAML 2.0',def:'Security Assertion Markup Language -- XML-based protocol for exchanging authentication and authorisation data between IdPs and SPs.',key:'Enterprise SSO. IdP sends XML assertion to SP. Used with corporate SSO portals.'},
+  {name:'OAuth 2.0',def:'An authorisation framework allowing apps to access resources on behalf of a user without sharing credentials.',key:'Delegated access. Access tokens. "Login with Google" grants scope, not identity.'},
+  {name:'OIDC',def:'OpenID Connect -- an identity layer built on top of OAuth 2.0 that adds authentication and returns an ID token with user identity claims.',key:'OAuth = authorisation. OIDC = authentication + authorisation. ID token (JWT).'},
+  {name:'MFA',def:'Multi-Factor Authentication -- requires two or more different factor types: something you know, have, or are.',key:'Factors must be DIFFERENT types. PIN+password = 1 factor (both know). PIN+phone = 2 factors.'},
+  {name:'Provisioning',def:'The process of creating and configuring user accounts, assigning roles, and granting access when a user joins or changes roles.',key:'Joiners: create account, assign role, grant access. Movers: update roles.'},
+  {name:'Deprovisioning',def:'The process of revoking access and disabling/deleting accounts when a user leaves or no longer requires access.',key:'Leavers: disable first, then delete after retention. Revoke all tokens and certs.'},
+];
+
+var Q_BANK=[
+// ── IAM FUNDAMENTALS ──────────────────────────────────────────────────────
+{type:'identify',cat:'IAM Fundamentals',q:'What are the three components of the AAA security framework?',o:['Authentication, Authorisation, Accounting','Authentication, Access, Auditing','Authorisation, Accounting, Auditing','Authentication, Authorisation, Auditing'],a:0,e:'<strong>AAA: Authentication, Authorisation, Accounting</strong>. Authentication: prove identity (who are you?). Authorisation: determine what you can do. Accounting (Auditing): log what you did. RADIUS and TACACS+ are AAA protocols used for network access control.'},
+{type:'identify',cat:'IAM Fundamentals',q:'What is the PRIMARY difference between identification and authentication?',o:['They are identical -- different terms for the same process','Identification claims an identity; authentication proves it','Authentication claims an identity; identification proves it','Identification is for humans; authentication is for systems'],a:1,e:'<strong>Identification: claiming an identity</strong> (entering a username). <strong>Authentication: proving that claim</strong> (entering the correct password, providing a fingerprint). You identify yourself first, then prove it. Both must happen before authorisation can occur.'},
+{type:'identify',cat:'IAM Fundamentals',q:'Which authentication factor type does a hardware security key (FIDO2/YubiKey) represent?',o:['Something you know','Something you are','Something you have','Somewhere you are'],a:2,e:'<strong>Something you have</strong> -- a physical hardware token you possess. FIDO2/WebAuthn hardware keys are phishing-resistant because the cryptographic challenge-response is bound to the legitimate domain. Cannot be phished like OTP codes. Strongest second factor for account takeover prevention.'},
+{type:'identify',cat:'IAM Fundamentals',q:'What is the purpose of a Privileged Access Workstation (PAW)?',o:['A workstation used for general employee productivity tasks','A dedicated, hardened workstation used exclusively for administrative and privileged tasks, isolated from standard user activity','A workstation that stores all PAM vault credentials','A jump server used to reach internal systems from the internet'],a:1,e:'<strong>PAW (Privileged Access Workstation)</strong> -- a dedicated device for admin tasks only. No email, web browsing, or general productivity software. Reduces the attack surface for credential theft. Admins use their normal workstation for daily work and the PAW only when performing privileged tasks.'},
+{type:'identify',cat:'IAM Fundamentals',q:'Which concept ensures that if one set of credentials is compromised, attackers cannot immediately escalate to all systems?',o:['Defence in depth','Credential isolation and least privilege -- separate admin accounts from daily-use accounts','Multi-factor authentication','Account lockout policy'],a:1,e:'<strong>Credential isolation</strong> -- IT admins should have a separate admin account used only for privileged tasks, distinct from their daily-use account used for email and browsing. If their daily account is phished, the admin account remains uncompromised. PAM systems enforce this.'},
+{type:'identify',cat:'IAM Fundamentals',q:'What is the purpose of account lockout policy?',o:['Prevent administrators from forgetting to log out','Automatically disable an account after a defined number of failed authentication attempts to prevent brute force attacks','Enforce password complexity requirements','Terminate idle sessions after a period of inactivity'],a:1,e:'<strong>Account lockout</strong> -- stops brute force and password spray attacks by disabling the account after N failed attempts (typically 5-10). Tradeoff: too aggressive = easy DoS (attacker locks out every account). Too lenient = brute force succeeds. Lockout duration and reset policies are critical to tune.'},
+{type:'identify',cat:'IAM Fundamentals',q:'What does the principle of least privilege state?',o:['Users should have the minimum access required to perform their job functions, and no more','All users should have identical access rights to ensure fairness','Administrators should have access to all systems at all times','Users should be granted temporary elevated privileges on request'],a:0,e:'<strong>Least privilege</strong> -- grant only the permissions required for the specific job function. No excess access. Limits blast radius if an account is compromised. Requires periodic access reviews to ensure privileges haven\'t accumulated over time (privilege creep).'},
+{type:'identify',cat:'IAM Fundamentals',q:'What is privilege creep?',o:['An attacker gradually escalating privileges on a compromised system','The accumulation of access rights beyond what is currently needed, typically as users change roles over time without old access being revoked','A type of malware that steals privileged credentials','A PAM configuration error causing excessive logging'],a:1,e:'<strong>Privilege creep</strong> -- when a user changes roles (moved to a new team, promoted) their old access rights are not revoked. Over time they accumulate permissions far exceeding their current job requirements. Addressed by: access reviews, user lifecycle management, and role-based provisioning that automatically revokes old roles.'},
+{type:'identify',cat:'IAM Fundamentals',q:'Which technology allows a single set of credentials to grant access to multiple applications without re-entering credentials?',o:['MFA','PAM','SSO (Single Sign-On)','RBAC'],a:2,e:'<strong>SSO (Single Sign-On)</strong> -- authenticate once to the identity provider (IdP) and gain access to all connected service providers (SPs) without re-authenticating. Improves user experience and reduces password fatigue. Security concern: if SSO credentials are compromised, all connected applications are at risk -- MFA on SSO is critical.'},
+
+// ── PRIVILEGED ACCESS MANAGEMENT ─────────────────────────────────────────
+{type:'identify',cat:'Privileged Access Management',q:'What is the PRIMARY security benefit of a PAM credential vault?',o:['Storing passwords in plain text for easy recovery','Eliminating the need for passwords entirely','Storing privileged credentials encrypted, checking them out on demand, and rotating them automatically so administrators never know the actual password','Providing a single password for all administrative accounts'],a:2,e:'<strong>PAM credential vault</strong> -- administrators request access to a system through the vault. The vault injects credentials directly into the session. The admin never sees the actual password. After the session ends, the vault auto-rotates the credential. Eliminates shared passwords, enables accountability, and stops credential theft.'},
+{type:'identify',cat:'Privileged Access Management',q:'What is session recording in PAM and why is it important?',o:['Recording training sessions for new administrators','Recording and storing all privileged user sessions (keystroke logging and video) for audit and forensic purposes','Monitoring network traffic during administrator sessions','Logging failed authentication attempts to privileged systems'],a:1,e:'<strong>Session recording</strong> -- PAM records every privileged session: keystrokes, commands, screen activity. Provides: forensic evidence for incident investigation, compliance evidence for audits, deterrence (knowing activity is recorded), and non-repudiation (admin cannot deny actions). Critical for insider threat detection.'},
+{type:'identify',cat:'Privileged Access Management',q:'What is the purpose of Just-In-Time (JIT) privileged access?',o:['Granting permanent administrative access to reduce friction','Granting elevated access only for the duration of a specific approved task, then automatically revoking it to eliminate standing privileges','Providing emergency access when the primary admin is unavailable','Synchronising privileged access across multiple systems simultaneously'],a:1,e:'<strong>JIT access</strong> -- eliminates standing privileges (always-on admin access). Instead: request access -> approval workflow -> time-limited elevation granted -> task completed -> access auto-revoked. If an admin account with JIT access is compromised between tasks, it has no privileges to exploit. Dramatically reduces the window of vulnerability.'},
+{type:'identify',cat:'Privileged Access Management',q:'Which type of account is MOST targeted by attackers for privilege escalation within an organisation?',o:['Standard user accounts with email access','Service accounts and shared administrator accounts with standing privileges','Guest accounts with minimal access','Contractor accounts with temporary access'],a:1,e:'<strong>Service accounts and shared admin accounts</strong> are prime targets: they often have standing privileges, passwords that never expire, and are not tied to a specific person (no accountability). PAM should vault all service account credentials, enforce rotation, and detect anomalous use patterns that differ from the expected service behaviour.'},
+{type:'identify',cat:'Privileged Access Management',q:'What does "break-glass" access refer to in PAM?',o:['Physically breaking into a server room in an emergency','Emergency access procedure for critical systems when normal PAM workflows cannot be used -- all access is heavily logged and reviewed','A method of bypassing MFA in emergency situations','Resetting a PAM vault when the master key is lost'],a:1,e:'<strong>Break-glass access</strong> -- emergency access credentials stored in a sealed process (physical safe or ultra-restricted vault) used only when normal access channels fail (PAM system outage, critical incident). Every break-glass use triggers immediate notifications to senior management and security, and is reviewed post-incident. The very existence of break-glass access is itself a risk to manage.'},
+{type:'identify',cat:'Privileged Access Management',q:'A developer has permanent local admin rights on their workstation "for convenience." Why is this a security risk?',o:['It is not a risk -- developers need admin rights for their work','Permanent local admin means any malware executed by the developer runs with admin privileges, enabling persistence, credential dumping, and lateral movement','It violates software licensing agreements','It increases the cost of PAM licensing'],a:1,e:'<strong>Standing local admin is high risk</strong> -- if the developer is phished or runs malicious code, it executes with admin rights. This enables: malware persistence (registry keys, services), credential dumping (LSASS), disabling security tools, and lateral movement. Solution: remove local admin. Use PAM to grant temporary elevation only when needed.'},
+
+// ── FEDERATION & SSO ─────────────────────────────────────────────────────
+{type:'identify',cat:'Federation & SSO',q:'In a SAML 2.0 federation, what is the role of the Identity Provider (IdP)?',o:['The application the user is trying to access','The system that authenticates the user and issues assertions about their identity to service providers','The network firewall controlling access to services','The user\'s browser acting as an intermediary'],a:1,e:'<strong>IdP (Identity Provider)</strong> -- owns and authenticates user identities. Examples: Okta, Azure AD, Google Workspace. The IdP authenticates the user and issues a digitally signed SAML assertion to the SP confirming the user\'s identity and attributes. The SP trusts the IdP\'s assertion rather than re-authenticating the user.'},
+{type:'identify',cat:'Federation & SSO',q:'What is the key difference between OAuth 2.0 and OpenID Connect (OIDC)?',o:['OAuth 2.0 is for authentication; OIDC is for authorisation','OAuth 2.0 is an authorisation framework; OIDC adds an identity layer on top of OAuth 2.0 for authentication','OIDC is older and less secure than OAuth 2.0','OAuth 2.0 uses XML; OIDC uses JSON'],a:1,e:'<strong>OAuth 2.0 = authorisation only</strong>. It tells you what a user can do (access tokens with scopes) but not who they are. <strong>OIDC = authentication + authorisation</strong>. Built on OAuth 2.0, it adds an ID token (JWT) containing user identity claims (sub, email, name). Use OAuth 2.0 for API access delegation; use OIDC when you need to know who the user is.'},
+{type:'identify',cat:'Federation & SSO',q:'What is a JWT (JSON Web Token) and where is it used in modern authentication?',o:['A username/password encoded in JSON format','A digitally signed token containing claims about the user\'s identity and permissions, used in OIDC and OAuth 2.0 flows','An XML-based security assertion used in SAML','A one-time password delivered via JSON API'],a:1,e:'<strong>JWT (JSON Web Token)</strong> -- a compact, URL-safe token with three parts: header (algorithm), payload (claims: sub, email, exp, roles), signature (ensures integrity). Signed by the IdP\'s private key. Recipients verify with the public key. Used as: ID tokens (OIDC), access tokens (OAuth 2.0), and API authentication. Stateless -- no server-side session storage needed.'},
+{type:'identify',cat:'Federation & SSO',q:'What security risk does SSO introduce if not properly secured?',o:['SSO has no security risks -- it always improves security','SSO creates a single point of failure -- if the SSO credential is compromised, all connected applications are accessible without further authentication','SSO increases the number of passwords users must remember','SSO is incompatible with MFA'],a:1,e:'<strong>SSO single point of failure</strong> -- the SSO credential unlocks every connected application. If compromised without MFA, attackers gain access to everything. Countermeasures: enforce MFA on SSO login (especially for privileged access), implement risk-based authentication (flag unusual location/device), short token lifetimes, and anomaly detection.'},
+{type:'identify',cat:'Federation & SSO',q:'What is a service provider (SP) in a federated identity system?',o:['The organisation that owns and manages user identities','The application or service that relies on the identity provider\'s assertion to grant access','The network infrastructure connecting IdPs and SPs','The user\'s browser or mobile application'],a:1,e:'<strong>Service Provider (SP)</strong> -- the application the user wants to access (Salesforce, GitHub, Slack). The SP trusts the IdP to vouch for the user\'s identity. The SP does not perform its own authentication -- it consumes the assertion from the IdP. The SP configures which attributes it needs (email, role, group membership) in the assertion.'},
+{type:'identify',cat:'Federation & SSO',q:'What does "implicit trust" mean in the context of traditional network security, and why does Zero Trust reject it?',o:['Trust established through digital certificates','Automatically trusting any request originating from within the corporate network perimeter, regardless of user identity or device health','Trust that is implied by long-term employee relationships','A form of mutual authentication between systems'],a:1,e:'<strong>Implicit trust = "inside = trusted"</strong>. Traditional perimeter security assumed that traffic inside the firewall was safe. Zero Trust rejects this because: attackers who breach the perimeter move freely inside, insider threats are not addressed, and remote work/cloud eliminates the concept of "inside." Zero Trust verifies every request regardless of origin.'},
+
+// ── ACCESS CONTROL MODELS ─────────────────────────────────────────────────
+{type:'identify',cat:'Access Control Models',q:'Which access control model assigns permissions based on a user\'s role within an organisation?',o:['MAC -- Mandatory Access Control','DAC -- Discretionary Access Control','RBAC -- Role-Based Access Control','ABAC -- Attribute-Based Access Control'],a:2,e:'<strong>RBAC</strong> -- the most common enterprise model. Users are assigned to roles (HR Manager, Developer, Read-Only User). Roles carry permissions. When a user\'s job changes, you update their role assignment, not hundreds of individual permissions. Simplifies access management at scale.'},
+{type:'identify',cat:'Access Control Models',q:'What is the PRIMARY advantage of ABAC over RBAC?',o:['ABAC is simpler to implement and manage','ABAC enables fine-grained, context-aware access decisions based on multiple attributes simultaneously -- RBAC cannot account for context like time or device health','ABAC is faster at processing access requests','ABAC does not require a central policy engine'],a:1,e:'<strong>ABAC fine-grained context</strong> -- RBAC can say "HR Manager can read HR records." ABAC can say "HR Manager can read HR records IF on a managed device AND during business hours AND in the UK AND the record is not for an executive." ABAC is powerful but complex to implement. Used in Zero Trust architectures and cloud IAM policies.'},
+{type:'identify',cat:'Access Control Models',q:'In a Mandatory Access Control (MAC) system, who defines the classification labels applied to resources?',o:['The resource owner (discretionary)','The user accessing the resource','The system/security policy -- users cannot modify labels','The department manager responsible for the data'],a:2,e:'<strong>MAC labels are system-controlled</strong> -- no user can change security labels. The security policy (administered by a security officer) determines what label each resource gets. Users with sufficient clearance can access resources at or below their clearance level. Used in government/military environments. Bell-LaPadula is the classic MAC model.'},
+{type:'identify',cat:'Access Control Models',q:'In the Bell-LaPadula MAC model, what does the "no write down" rule prevent?',o:['Users from writing files to lower classification levels to prevent data being declassified below its correct level','Users from reading above their clearance level','Administrators from modifying security policies','Sharing classified data between departments'],a:0,e:'<strong>Bell-LaPadula "no write down" (star property)</strong> -- a user with Secret clearance cannot write data to Confidential or Unclassified systems. This prevents a Secret-cleared user from declassifying data by writing it to a lower-level system. Combined with "no read up" (simple security property) -- cannot read above clearance. Together: data flows up, never down.'},
+{type:'identify',cat:'Access Control Models',q:'A file server allows users to share files with specific colleagues by granting them direct read access. Which access control model does this represent?',o:['MAC','RBAC','ABAC','DAC -- Discretionary Access Control'],a:3,e:'<strong>DAC</strong> -- the resource owner (the user who owns the file) grants access to other users at their own discretion. Windows NTFS permissions, Linux file permissions (when set by the file owner), and Google Drive sharing are all DAC. Most flexible but least secure -- if an owner is compromised, they could grant access to attackers.'},
+{type:'identify',cat:'Access Control Models',q:'What is Rule-Based Access Control (often confused with RBAC)?',o:['It is another name for Role-Based Access Control','Access control based on if/then rules applied to all users -- such as "allow all employees to access the system only between 08:00 and 18:00"','Access based on the user\'s group membership in Active Directory','A model where users define their own access rules'],a:1,e:'<strong>Rule-Based Access Control</strong> (not Role-Based!) -- applies uniform rules to all users. Examples: "No access after 18:00", "Block all access from countries outside the UK", "Require MFA for access from unmanaged devices." Often used in firewalls and network access control. Distinguished from RBAC by applying to users based on context, not their assigned role.'},
+{type:'identify',cat:'Access Control Models',q:'What is the concept of "separation of duties" and which access control scenario violates it?',o:['Requiring two factors for authentication','A single user having both the ability to submit AND approve financial transactions','Storing credentials in separate vaults for different roles','Requiring different passwords for different systems'],a:1,e:'<strong>Separation of duties (SoD)</strong> -- no single person should have end-to-end control over a sensitive process. The person who creates a payment cannot also approve it. The developer who writes code cannot also deploy it to production. Access control systems must enforce SoD by ensuring conflicting role combinations cannot be assigned to the same user.'},
+
+// ── DIRECTORY SERVICES ────────────────────────────────────────────────────
+{type:'identify',cat:'Directory Services',q:'What is Active Directory (AD) and what role does it play in enterprise IAM?',o:['A database that stores all company documents','A Microsoft directory service that centralises authentication, authorisation, and account management for Windows domain environments','A cloud-based SSO solution for SaaS applications','A network monitoring tool for tracking user activity'],a:1,e:'<strong>Active Directory</strong> -- Microsoft\'s directory service. Stores user accounts, groups, computers, and policies. Domain controllers authenticate users (Kerberos). Group Policy Objects (GPOs) enforce security settings. AD is the central authority for identity in most enterprise Windows environments. AD compromise = full enterprise compromise.'},
+{type:'identify',cat:'Directory Services',q:'What protocol does Active Directory use for authentication by default?',o:['RADIUS','SAML','Kerberos','LDAP'],a:2,e:'<strong>Kerberos</strong> -- AD\'s primary authentication protocol. Uses tickets: the KDC (Key Distribution Centre) issues a TGT (Ticket Granting Ticket) after initial login. The TGT is used to request service tickets without re-entering credentials. LDAP is used for directory queries (looking up user attributes), not authentication. NTLM is a fallback when Kerberos fails.'},
+{type:'identify',cat:'Directory Services',q:'What is LDAP and how does it relate to Active Directory?',o:['LDAP is Microsoft\'s replacement for Active Directory','LDAP (Lightweight Directory Access Protocol) is the protocol used to query and modify directory services like Active Directory -- AD speaks LDAP on port 389 (or LDAPS 636)','LDAP is used for authentication; Active Directory is used for authorisation','LDAP is only used for Unix/Linux environments, not Windows'],a:1,e:'<strong>LDAP</strong> -- a protocol for querying and managing directory information. Active Directory uses LDAP as its access protocol. Applications can LDAP-bind to AD to look up user attributes, verify group membership, and authenticate. LDAP uses port 389 (plaintext) or 636 (LDAPS/encrypted). Always use LDAPS to prevent credential interception.'},
+{type:'identify',cat:'Directory Services',q:'What is a Golden Ticket attack against Active Directory?',o:['A phishing attack targeting HR staff to steal employee data','An attack that forges a Kerberos TGT using the krbtgt account\'s password hash, giving the attacker unlimited access to any resource in the domain for up to 10 years','An attack that clones an administrator\'s hardware security token','A social engineering attack targeting the service desk to reset admin passwords'],a:1,e:'<strong>Golden Ticket</strong> -- if an attacker obtains the NTLM hash of the krbtgt (Kerberos Ticket Granting Ticket) account, they can forge valid TGTs for any user, including domain admins. The forged ticket is valid without contacting AD. Persists even after password resets unless the krbtgt hash is rotated twice. Requires Domain Admin access to obtain -- late-stage post-exploitation.'},
+{type:'identify',cat:'Directory Services',q:'What is the purpose of Azure AD (Entra ID) compared to on-premises Active Directory?',o:['Azure AD is identical to on-premises AD, just hosted in the cloud','Azure AD is Microsoft\'s cloud-based identity platform designed for cloud and SaaS applications using modern protocols (OAuth 2.0, OIDC, SAML) rather than Kerberos and LDAP','Azure AD replaces on-premises AD and cannot coexist with it','Azure AD is only for Microsoft 365 accounts and cannot integrate with other applications'],a:1,e:'<strong>Azure AD / Entra ID</strong> -- cloud identity platform using modern protocols. Works with SaaS apps, provides Conditional Access (risk-based MFA), and can sync with on-premises AD (hybrid identity). On-premises AD uses Kerberos/LDAP for Windows domain auth. Azure AD uses OAuth 2.0/OIDC/SAML for cloud auth. Hybrid environments use Azure AD Connect to sync identities.'},
+{type:'identify',cat:'Directory Services',q:'What is Group Policy in Active Directory and how does it relate to security?',o:['A tool for creating user groups with shared permissions','A mechanism for centrally defining and enforcing security settings (password policy, screen lock, software restriction) across all domain-joined computers','A SIEM integration for monitoring AD events','A backup mechanism for AD database replication'],a:1,e:'<strong>Group Policy Objects (GPOs)</strong> -- AD administrators define security baselines via GPOs that are automatically applied to computers and users in the domain. Examples: enforce BitLocker encryption, require 14-character passwords, disable USB storage, configure Windows Defender settings. GPO tampering by attackers can compromise security across the entire domain.'},
+
+// ── IDENTITY LIFECYCLE ────────────────────────────────────────────────────
+{type:'identify',cat:'Identity Lifecycle',q:'What does the identity lifecycle (Joiner-Mover-Leaver) model cover?',o:['The process for creating service accounts only','A framework managing identity and access at all stages: onboarding (Joiner), role changes (Mover), and offboarding (Leaver) to ensure correct access at all times','A model for managing privileged access to cloud resources','A PAM framework for rotating service account credentials'],a:1,e:'<strong>Joiner-Mover-Leaver</strong> -- Joiner: provision account, assign role-based access, enrol MFA. Mover: update roles when changing teams (add new, revoke old -- prevent privilege creep). Leaver: immediately disable account on last day, revoke tokens/certs/VPN, archive data, delete after retention period. The Leaver process is most often failed -- stale accounts are a major risk.'},
+{type:'identify',cat:'Identity Lifecycle',q:'An employee is terminated. What should be the FIRST action taken by the IT/IAM team?',o:['Delete the user account and all associated data immediately','Disable the account and revoke all active sessions and tokens -- before the employee is notified if possible','Archive the user\'s email and files, then wait 30 days before disabling','Notify the user to hand over their credentials and device'],a:1,e:'<strong>Disable immediately, before notification if possible</strong> -- a disgruntled employee who knows they\'re being terminated may exfiltrate data or delete critical resources in the moments between notification and account lock. HR and IT should coordinate so the account is disabled simultaneously with (or before) the termination conversation. Token revocation, VPN certificate revocation, and badge deactivation should happen in the same window.'},
+{type:'identify',cat:'Identity Lifecycle',q:'What is the purpose of an access review (user access recertification)?',o:['A one-time audit performed after a security incident','A periodic process where managers confirm that users still require their current access rights, identifying and removing stale or excess permissions','A technical scan of systems to identify admin accounts','A review of MFA enrollment status for all users'],a:1,e:'<strong>Access recertification</strong> -- periodically (quarterly, semi-annually) managers review every direct report\'s access rights and certify they are still appropriate. Identifies: ex-employees whose accounts were not disabled, users whose role changed but old access wasn\'t revoked (privilege creep), and permissions granted for a project that ended. Critical for compliance (SOX, HIPAA) and least privilege.'},
+{type:'identify',cat:'Identity Lifecycle',q:'What is an orphaned account and why is it a security risk?',o:['An account that has never been used','An account that belongs to a user who has left the organisation but was not disabled -- it has no active owner and may be exploited by attackers','An account with no group membership','A temporary account created for a contractor that expired'],a:1,e:'<strong>Orphaned account</strong> -- belongs to someone who left (or a service with no owner). No one is watching it. Attackers who discover orphaned accounts can use them as persistent access with no one to notice unusual activity. Regular account reviews and automated deprovisioning tied to HR systems prevent orphaned accounts.'},
+{type:'identify',cat:'Identity Lifecycle',q:'A contractor is given three months of access to a specific system. When their contract ends, the best practice is to:',o:['Leave the account active in case they return','Immediately disable the account on the contract end date, then delete it after the data retention period','Ask the contractor to delete their own account','Convert the contractor account to a permanent employee account'],a:1,e:'<strong>Disable on end date</strong> -- contractor accounts should have a defined expiry date set at creation. IAM systems should auto-disable accounts on the expiry date. Disable (not delete) first -- in case investigation is needed. Delete after the data retention period. Contractor accounts are frequently forgotten because they\'re outside normal HR systems.'},
+{type:'identify',cat:'Identity Lifecycle',q:'What is role mining?',o:['Searching for hidden admin accounts in Active Directory','Analysing existing user permissions to discover natural role patterns that can be used to define formal RBAC roles -- used when migrating to RBAC from ad-hoc permission assignment','Scanning for privilege escalation vulnerabilities in IAM systems','Identifying users who are members of too many Active Directory groups'],a:1,e:'<strong>Role mining</strong> -- when organisations want to implement RBAC but start with a mess of ad-hoc individual permissions, role mining analyses existing permissions to find clusters of users with similar access patterns. These patterns inform the design of formal roles. Bottom-up approach to RBAC implementation.'},
+
+// ── SCENARIOS ─────────────────────────────────────────────────────────────
+{type:'scenario',cat:'Scenario',scenario:'A security audit reveals that 15 former employees still have active accounts in the corporate directory, including one who left 8 months ago and whose account shows a login from an external IP last week.',q:'What are the TWO most urgent actions to take?',o:['Disable all 15 accounts immediately and investigate the recent external login on the former employee account as a likely security incident','Send a warning email to the former employees asking them to stop using their accounts','Delete all 15 accounts and close the investigation -- former employees have no legitimate access','Change the passwords on all 15 accounts and continue monitoring'],a:0,e:'<strong>Disable all 15 immediately + investigate the breach</strong>. A login from an external IP 8 months after departure is a security incident -- the account may have been used for data theft, lateral movement, or backdoor persistence. Forensics needed: what was accessed, what was copied, is there still an active session? The root cause is a failed Leaver process -- fix the offboarding procedure.'},
+{type:'scenario',cat:'Scenario',scenario:'A developer requests permanent local administrator rights on their laptop, saying they need to install development tools frequently.',q:'What is the MOST security-conscious response?',o:['Grant permanent local admin -- developers genuinely need it and the risk is acceptable','Deny all elevated access -- developers should not install any software','Implement a PAM solution that grants temporary local admin elevation on request, with logging, for specific approved tasks','Grant local admin but monitor the account with EDR'],a:2,e:'<strong>JIT elevation via PAM</strong> -- addresses the legitimate need (developer does need to install tools) without the risk (permanent admin = any malware runs as admin). The developer requests elevation, gets it for a time-limited window, the PAM logs every action, and admin rights auto-expire. Balances productivity and security better than either extreme.'},
+{type:'scenario',cat:'Scenario',scenario:'A large organisation uses on-premises AD for authentication. They are adopting Microsoft 365 and want employees to use the same credentials for cloud services without managing separate cloud accounts.',q:'Which solution BEST achieves this?',o:['Create separate Azure AD accounts with different passwords for each user','Deploy Azure AD Connect to synchronise on-premises AD identities to Azure AD, enabling hybrid identity with the same credentials for both on-premises and cloud services','Require employees to manage two separate passwords -- one for on-premises and one for cloud','Disable on-premises AD and migrate entirely to Azure AD'],a:1,e:'<strong>Azure AD Connect (hybrid identity)</strong> -- synchronises on-premises AD users to Azure AD. Users authenticate once. Password hash sync or pass-through authentication lets on-premises credentials work for cloud apps. Seamless SSO extends Kerberos authentication to Azure AD apps for domain-joined machines. Maintains existing investment in on-premises AD while enabling cloud adoption.'},
+{type:'scenario',cat:'Scenario',scenario:'An attacker gains Domain Admin privileges in an Active Directory environment. The first thing they do is query the krbtgt account hash.',q:'What attack are they preparing to execute and why is it particularly dangerous?',o:['A Pass-the-Hash attack against individual workstations','A Silver Ticket attack targeting a specific service','A Golden Ticket attack -- forged TGTs will give persistent access to any resource, surviving password resets of other accounts','A DCSync attack to replicate all password hashes from the domain controller'],a:2,e:'<strong>Golden Ticket preparation</strong> -- with the krbtgt hash, the attacker can forge TGTs offline. These forged tickets are valid for up to 10 years and grant access to any resource without authenticating to AD. Even if the attacker\'s Domain Admin account is discovered and deleted, the Golden Ticket persists. Remediation requires rotating the krbtgt hash twice (because of AD replication).'},
+{type:'scenario',cat:'Scenario',scenario:'A company wants to allow employees to access a third-party SaaS HR system using their corporate Active Directory credentials, without the HR vendor storing any corporate passwords.',q:'Which technology enables this while keeping credentials managed centrally?',o:['Giving the HR vendor a copy of the AD user database','Federated identity using SAML 2.0 -- the corporate AD acts as IdP, the HR system acts as SP, and assertions are signed and exchanged without passwords being shared','Creating separate HR system passwords for all users and syncing them manually','Using a shared service account for all employee access to the HR system'],a:1,e:'<strong>SAML 2.0 federation</strong> -- the user authenticates to corporate AD (IdP). AD issues a signed SAML assertion to the HR system (SP). The HR system validates the assertion signature against the IdP certificate. No passwords leave the corporate environment. The HR vendor never stores or touches corporate credentials. This is the correct enterprise pattern for SaaS application integration.'},
+];
+
+var questions=[], qi=0, correct=0, wrong=0;
+var catStats={};
+for(var i=0;i<CATS.length;i++) catStats[CATS[i]]={c:0,t:0};
+
+function shuffle(a){return a.slice().sort(function(){return Math.random()-.5;});}
+
+function buildQuestions(){
+  var pool=shuffle(Q_BANK.slice());
+  var result=[];
+  for(var k=0;k<pool.length;k++){
+    var q=pool[k];
+    var idxs=[];for(var m=0;m<q.o.length;m++) idxs.push(m);
+    var shuf=shuffle(idxs);
+    var nq={};for(var p in q) nq[p]=q[p];
+    nq.o=[];for(var n=0;n<shuf.length;n++) nq.o.push(q.o[shuf[n]]);
+    nq.a=shuf.indexOf(q.a);
+    result.push(nq);
+  }
+  return result;
+}
+
+function updateStats(){
+  var total=correct+wrong;
+  document.getElementById('s-prog').textContent=qi+'/'+questions.length;
+  document.getElementById('s-correct').textContent=correct;
+  document.getElementById('s-wrong').textContent=wrong;
+  document.getElementById('s-acc').textContent=total?Math.round(correct/total*100)+'%':'--';
+  document.getElementById('prog-fill').style.width=Math.round(qi/questions.length*100)+'%';
+}
+
+function renderQ(){
+  if(qi>=questions.length){showResults();return;}
+  var q=questions[qi];
+  var letters=['A','B','C','D'];
+  var badgeCls=BADGE_MAP[q.cat]||'badge-iam';
+  var scenHTML='';
+  if(q.type==='scenario'&&q.scenario){
+    scenHTML='<div class="scenario-box"><div class="scenario-lbl">Scenario</div><div class="scenario-text">'+q.scenario+'</div></div>';
+  }
+  var optsHTML='';
+  for(var i=0;i<q.o.length;i++){
+    optsHTML+='<button class="opt" id="opt-'+i+'"><span class="opt-letter">'+letters[i]+'</span><span class="opt-text">'+q.o[i]+'</span></button>';
+  }
+  document.getElementById('q-area').innerHTML=
+    '<div class="q-card"><div class="q-meta"><span class="q-badge '+badgeCls+'">'+q.cat+'</span><span class="q-num">Q'+(qi+1)+' of '+questions.length+'</span></div>'+
+    scenHTML+'<div class="q-text">'+q.q+'</div>'+
+    '<div class="opts" id="opts">'+optsHTML+'</div>'+
+    '<div class="explanation" id="explanation"><div class="exp-lbl">Explanation</div><div class="exp-text" id="exp-text"></div></div>'+
+    '<button class="btn-next" id="btn-next">'+(qi===questions.length-1?'See results':'Next')+'</button></div>';
+  for(var _j=0;_j<q.o.length;_j++){
+    (function(_idx){var _b=document.getElementById('opt-'+_idx);if(_b)_b.onclick=function(){answer(_idx);};}(_j));
+  }
+  var nb=document.getElementById('btn-next');
+  if(nb) nb.onclick=function(){nextQ();};
+}
+
+function answer(idx){
+  var q=questions[qi];
+  var isCorrect=idx===q.a;
+  if(isCorrect){correct++;if(catStats[q.cat])catStats[q.cat].c++;}else{wrong++;}
+  if(!catStats[q.cat])catStats[q.cat]={c:0,t:0};
+  catStats[q.cat].t++;
+  qi++;updateStats();
+  for(var i=0;i<q.o.length;i++){var b=document.getElementById('opt-'+i);if(b)b.disabled=true;}
+  var cb=document.getElementById('opt-'+idx);
+  var rb=document.getElementById('opt-'+q.a);
+  if(isCorrect){if(cb)cb.classList.add('correct');}
+  else{if(cb)cb.classList.add('wrong');if(rb)rb.classList.add('reveal');}
+  var et=document.getElementById('exp-text');var eb=document.getElementById('explanation');var nb=document.getElementById('btn-next');
+  if(et)et.innerHTML=q.e;if(eb)eb.classList.add('show');
+  if(nb){nb.style.display='block';nb.onclick=function(){nextQ();};}
+  if(qi>0&&qi%20===0) logToDashboard(4,'Identity & Access Management Trainer',Math.round(correct/qi*100));
+}
+
+function nextQ(){renderQ();}
+
+function showResults(){
+  document.getElementById('q-area').style.display='none';
+  var res=document.getElementById('results-area');res.style.display='block';
+  var pct=Math.round(correct/questions.length*100);
+  logToDashboard(4,'Identity & Access Management Trainer',pct);
+  var passed=pct>=80;var ringColor=passed?'#00ff88':'#ff3d5a';
+  var msg=pct>=90?'IAM mastered!':pct>=80?'Solid -- above pass threshold.':pct>=65?'Getting there.':'More practice needed.';
+  var circ=339.3,offset=circ-(pct/100)*circ;
+  var bdHTML='';
+  for(var ci=0;ci<CATS.length;ci++){
+    var c=CATS[ci];var s=catStats[c];var p=s.t?Math.round(s.c/s.t*100):0;var col=CAT_COLORS[c]||'var(--indigo)';
+    bdHTML+='<div class="bd-card"><div class="bd-title" style="color:'+col+'">'+c+'</div><div class="bd-bar-bg"><div class="bd-bar-fill" style="width:0%;background:'+col+'" data-pct="'+p+'"></div></div><div class="bd-score" style="color:'+col+'">'+p+'%</div><div class="bd-detail">'+s.c+'/'+s.t+' correct</div></div>';
+  }
+  res.innerHTML='<div class="results-wrap">'+
+    '<div class="results-ring"><svg width="140" height="140" viewBox="0 0 140 140"><circle cx="70" cy="70" r="54" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="10"/><circle cx="70" cy="70" r="54" fill="none" stroke="'+ringColor+'" stroke-width="10" stroke-linecap="round" stroke-dasharray="'+circ+'" stroke-dashoffset="'+circ+'" id="ring-anim"/></svg><div class="ring-score"><div class="ring-pct" style="color:'+ringColor+'">'+pct+'%</div><div class="ring-lbl">score</div></div></div>'+
+    '<div class="results-verdict" style="color:'+ringColor+'">'+(passed?'Passed':'Keep Studying')+'</div>'+
+    '<div class="results-sub">'+correct+'/'+questions.length+' correct -- '+msg+'</div>'+
+    '<div class="breakdown">'+bdHTML+'</div>'+
+    '<button class="btn-retake" onclick="retake()">Retake Quiz</button></div>';
+  setTimeout(function(){
+    var ring=document.getElementById('ring-anim');
+    if(ring){ring.style.transition='stroke-dashoffset 1.5s ease';ring.style.strokeDashoffset=offset;}
+    var fills=document.querySelectorAll('.bd-bar-fill');
+    for(var i=0;i<fills.length;i++){fills[i].style.transition='width 1s ease';fills[i].style.width=fills[i].getAttribute('data-pct')+'%';}
+  },100);
+}
+
+function retake(){
+  document.getElementById('q-area').style.display='block';
+  document.getElementById('results-area').style.display='none';
+  questions=buildQuestions();qi=0;correct=0;wrong=0;
+  for(var i=0;i<CATS.length;i++) catStats[CATS[i]]={c:0,t:0};
+  updateStats();renderQ();
+}
+
+function setTab(t){
+  if(t==='ref'){
+    document.getElementById('view-quiz').style.display='none';document.getElementById('view-ref').style.display='block';
+    document.getElementById('tab-quiz').classList.remove('active');document.getElementById('tab-ref').classList.add('active');
+    buildRef();
+  } else {
+    document.getElementById('view-ref').style.display='none';document.getElementById('view-quiz').style.display='block';
+    document.getElementById('tab-quiz').classList.add('active');document.getElementById('tab-ref').classList.remove('active');
+  }
+}
+
+function buildRef(){
+  var chart=document.getElementById('acc-chart');chart.innerHTML='';
+  for(var ci=0;ci<CATS.length;ci++){
+    var c=CATS[ci];var s=catStats[c]||{c:0,t:0};var pct=s.t?Math.round(s.c/s.t*100):0;var col=CAT_COLORS[c]||'var(--indigo)';
+    chart.innerHTML+='<div style="display:grid;grid-template-columns:200px 1fr 42px;gap:10px;align-items:center;margin-bottom:10px"><div style="font-size:12px;color:var(--text2);text-align:right">'+c+'</div><div style="height:16px;background:var(--panel2);border-radius:8px;overflow:hidden"><div style="height:100%;width:'+(s.t?pct:0)+'%;background:'+col+';border-radius:8px"></div></div><div style="font-family:var(--mono);font-size:11px;color:var(--text2)">'+(s.t?pct+'%':'--')+'</div></div>';
+  }
+  var cards=document.getElementById('ref-cards');cards.innerHTML='';
+  for(var ti=0;ti<TERMS.length;ti++){
+    var t=TERMS[ti];
+    cards.innerHTML+='<div style="background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:14px"><div style="font-size:14px;font-weight:600;color:var(--text);margin-bottom:6px">'+t.name+'</div><div style="font-size:12px;color:var(--text2);line-height:1.6">'+t.def+'</div><div style="font-family:var(--mono);font-size:10px;color:var(--text3);margin-top:8px;border-top:1px solid var(--border);padding-top:6px">'+t.key+'</div></div>';
+  }
+}
+
+questions=buildQuestions();updateStats();renderQ();
+</script>
+</body>
+</html>

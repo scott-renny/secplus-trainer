@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Defense Strategies Trainer -- Security+</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#07080c;--panel:#0e1018;--panel2:#141720;--panel3:#1a1e29;
+  --border:rgba(255,255,255,0.06);--border2:rgba(255,255,255,0.1);--border3:rgba(255,255,255,0.18);
+  --text:#e4e8f5;--text2:#6b7494;--text3:#3a4060;
+  --accent:#00e5ff;--green:#00ff88;--red:#ff3d5a;--amber:#ffcc00;--purple:#bf87ff;--teal:#4fd1c5;
+  --mono:'Courier New',monospace;
+}
+*{font-family:'Segoe UI',sans-serif}
+body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 60% 50% at 15% 0%,rgba(0,255,136,0.03) 0%,transparent 60%),radial-gradient(ellipse 50% 40% at 85% 100%,rgba(0,229,255,0.03) 0%,transparent 60%);pointer-events:none}
+body::after{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(0,255,136,0.012) 1px,transparent 1px),linear-gradient(90deg,rgba(0,255,136,0.012) 1px,transparent 1px);background-size:40px 40px;pointer-events:none}
+.wrap{position:relative;z-index:1;max-width:760px;margin:0 auto;padding:32px 20px 80px}
+.eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:var(--green);margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'';width:20px;height:1px;background:var(--green)}
+h1{font-size:clamp(26px,5vw,40px);font-weight:700;line-height:1.1;letter-spacing:-.02em;margin-bottom:8px}
+h1 em{font-style:normal;color:var(--green)}
+.subtitle{font-family:var(--mono);font-size:11px;color:var(--text2);margin-bottom:28px}
+.tabs{display:flex;gap:5px;margin-bottom:20px;background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:5px}
+.tab{flex:1;padding:10px 4px;font-family:var(--mono);font-size:10px;letter-spacing:.05em;text-transform:uppercase;border:none;background:transparent;color:var(--text3);cursor:pointer;border-radius:8px;transition:all .2s}
+.tab.active{background:var(--panel3);color:var(--green);border:1px solid rgba(0,255,136,0.2)}
+.tab:not(.active):hover{color:var(--text2)}
+.stats-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px}
+.sb{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:13px;position:relative;overflow:hidden}
+.sb::before{content:'';position:absolute;top:0;left:0;right:0;height:2px}
+.sb.s-prog::before{background:var(--green)}
+.sb.s-correct::before{background:var(--green)}
+.sb.s-wrong::before{background:var(--red)}
+.sb.s-acc::before{background:var(--amber)}
+.sb-val{font-family:var(--mono);font-size:22px;font-weight:500;line-height:1}
+.sb.s-correct .sb-val{color:var(--green)}
+.sb.s-wrong .sb-val{color:var(--red)}
+.sb.s-acc .sb-val{color:var(--amber)}
+.sb-lbl{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--text2);margin-top:4px}
+.prog-wrap{height:3px;background:rgba(255,255,255,0.06);border-radius:99px;margin-bottom:20px;overflow:hidden}
+.prog-fill{height:100%;background:var(--green);border-radius:99px;transition:width .4s ease}
+.q-card{background:var(--panel);border:1px solid var(--border2);border-radius:20px;padding:28px;margin-bottom:14px;position:relative;overflow:hidden}
+.q-card::after{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(0,255,136,0.3),transparent)}
+.q-meta{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.q-badge{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;padding:3px 10px;border-radius:5px}
+.badge-iam{background:rgba(191,135,255,0.1);color:var(--purple);border:1px solid rgba(191,135,255,0.2)}
+.badge-endpoint{background:rgba(0,229,255,0.1);color:var(--accent);border:1px solid rgba(0,229,255,0.2)}
+.badge-data{background:rgba(255,204,0,0.1);color:var(--amber);border:1px solid rgba(255,204,0,0.2)}
+.badge-monitoring{background:rgba(0,255,136,0.1);color:var(--green);border:1px solid rgba(0,255,136,0.2)}
+.badge-crypto{background:rgba(79,209,197,0.1);color:var(--teal);border:1px solid rgba(79,209,197,0.2)}
+.badge-scenario{background:rgba(255,204,0,0.1);color:var(--amber);border:1px solid rgba(255,204,0,0.2)}
+.q-num{font-family:var(--mono);font-size:10px;color:var(--text3)}
+.scenario-box{background:var(--panel2);border:1px solid var(--border2);border-left:3px solid var(--amber);border-radius:10px;padding:13px 16px;margin-bottom:16px}
+.scenario-lbl{font-family:var(--mono);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--amber);margin-bottom:6px}
+.scenario-text{font-size:13px;color:var(--text2);line-height:1.7;font-family:var(--mono)}
+.q-text{font-size:15px;font-weight:500;line-height:1.65;color:var(--text);margin-bottom:18px}
+.opts{display:flex;flex-direction:column;gap:9px;margin-bottom:14px}
+.opt{display:flex;align-items:flex-start;gap:14px;padding:13px 16px;border-radius:10px;border:1px solid var(--border2);background:var(--panel2);cursor:pointer;text-align:left;width:100%;transition:all .15s}
+.opt:hover:not(:disabled){border-color:var(--border3);background:var(--panel3)}
+.opt-letter{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--text2);min-width:18px;margin-top:1px;flex-shrink:0}
+.opt-text{font-size:14px;color:var(--text);line-height:1.5}
+.opt.correct{border-color:var(--green)!important;background:rgba(0,255,136,0.07)!important}
+.opt.correct .opt-letter,.opt.correct .opt-text{color:var(--green)!important}
+.opt.wrong{border-color:var(--red)!important;background:rgba(255,61,90,0.07)!important}
+.opt.wrong .opt-letter,.opt.wrong .opt-text{color:var(--red)!important}
+.opt.reveal{border-color:rgba(0,255,136,0.3)!important;background:rgba(0,255,136,0.04)!important}
+.opt.reveal .opt-letter,.opt.reveal .opt-text{color:var(--green)!important;opacity:.6}
+.opt:disabled{cursor:default}
+.explanation{display:none;background:var(--panel2);border:1px solid var(--border2);border-left:3px solid var(--green);border-radius:10px;padding:13px 16px;margin-bottom:12px}
+.explanation.show{display:block}
+.exp-lbl{font-family:var(--mono);font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--green);margin-bottom:7px}
+.exp-text{font-size:13px;color:var(--text2);line-height:1.7}
+.exp-text strong{color:var(--text);font-weight:600}
+.btn-next{width:100%;padding:12px;border-radius:10px;border:1px solid var(--border2);background:transparent;color:var(--text2);font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;display:none;transition:all .15s}
+.btn-next:hover{border-color:var(--green);color:var(--green)}
+.results-wrap{text-align:center;padding:32px 0 20px}
+.results-ring{width:140px;height:140px;margin:0 auto 20px;position:relative}
+.results-ring svg{transform:rotate(-90deg)}
+.ring-score{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center}
+.ring-pct{font-family:var(--mono);font-size:32px;font-weight:600;color:var(--text)}
+.ring-lbl{font-family:var(--mono);font-size:9px;color:var(--text3);letter-spacing:.1em;text-transform:uppercase}
+.results-verdict{font-size:22px;font-weight:700;margin-bottom:6px}
+.results-sub{font-family:var(--mono);font-size:11px;color:var(--text2);margin-bottom:28px}
+.breakdown{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:28px;text-align:left}
+.bd-card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:16px}
+.bd-title{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px}
+.bd-bar-bg{height:5px;background:rgba(255,255,255,0.06);border-radius:99px;overflow:hidden;margin-bottom:6px}
+.bd-bar-fill{height:100%;border-radius:99px;transition:width 1s ease}
+.bd-score{font-family:var(--mono);font-size:22px;font-weight:600}
+.bd-detail{font-family:var(--mono);font-size:10px;color:var(--text3);margin-top:4px}
+.btn-retake{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:12px 36px;background:transparent;border:1px solid var(--border2);color:var(--text2);border-radius:10px;cursor:pointer;transition:all .2s;margin-right:10px}
+.btn-retake:hover{border-color:var(--green);color:var(--green)}
+.ref-section-title{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--green);margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.ref-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px}
+.ref-card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:14px;transition:border-color .15s}
+.ref-card:hover{border-color:var(--border3)}
+.ref-name{font-size:14px;font-weight:600;color:var(--text);margin-bottom:6px}
+.ref-def{font-size:12px;color:var(--text2);line-height:1.6}
+.ref-tag{display:inline-block;font-family:var(--mono);font-size:10px;padding:2px 8px;border-radius:4px;margin-top:8px}
+.tag-green{background:rgba(0,255,136,0.1);color:var(--green)}
+.tag-accent{background:rgba(0,229,255,0.1);color:var(--accent)}
+.tag-purple{background:rgba(191,135,255,0.1);color:var(--purple)}
+.tag-amber{background:rgba(255,204,0,0.1);color:var(--amber)}
+.tag-teal{background:rgba(79,209,197,0.1);color:var(--teal)}
+.ref-key{font-family:var(--mono);font-size:10px;color:var(--text3);margin-top:8px;border-top:1px solid var(--border);padding-top:6px}
+.acc-row{display:grid;grid-template-columns:185px 1fr 42px;gap:10px;align-items:center;margin-bottom:10px}
+.acc-lbl{font-size:13px;color:var(--text2);text-align:right}
+.acc-bg{height:18px;background:var(--panel2);border-radius:8px;overflow:hidden}
+.acc-fill{height:100%;border-radius:8px;transition:width .8s ease}
+.acc-pct{font-family:var(--mono);font-size:11px;color:var(--text2);font-weight:500}
+@media(max-width:500px){.stats-bar{grid-template-columns:repeat(2,1fr)}.breakdown{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">CompTIA Security+ &middot; SY0-701 &middot; Domain 4</div>
+  <h1>Defense <em>Strategies</em></h1>
+  <p class="subtitle">60 questions &middot; identity and access management &middot; endpoint security &middot; data protection &middot; monitoring &middot; cryptography &middot; scenarios</p>
+  <div class="tabs">
+    <button class="tab active" onclick="setTab('quiz')" id="tab-quiz">Quiz</button>
+    <button class="tab" onclick="setTab('ref')" id="tab-ref">Reference</button>
+  </div>
+  <div id="view-quiz">
+    <div class="stats-bar">
+      <div class="sb s-prog"><div class="sb-val" id="s-prog">0/60</div><div class="sb-lbl">Progress</div></div>
+      <div class="sb s-correct"><div class="sb-val" id="s-correct">0</div><div class="sb-lbl">Correct</div></div>
+      <div class="sb s-wrong"><div class="sb-val" id="s-wrong">0</div><div class="sb-lbl">Wrong</div></div>
+      <div class="sb s-acc"><div class="sb-val" id="s-acc">--</div><div class="sb-lbl">Accuracy</div></div>
+    </div>
+    <div class="prog-wrap"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
+    <div id="q-area"></div>
+    <div id="results-area" style="display:none"></div>
+  </div>
+  <div id="view-ref" style="display:none">
+    <div style="margin-bottom:24px">
+      <div class="ref-section-title" style="margin-bottom:12px">Accuracy by Category</div>
+      <div id="acc-chart"></div>
+    </div>
+    <div class="ref-section-title">Key Terms and Concepts</div>
+    <div class="ref-grid" id="ref-cards"></div>
+  </div>
+</div>
+<script>
+function logToDashboard(domain,type,score){
+  try{
+    var s=JSON.parse(localStorage.getItem('sp_sessions')||'[]');
+    var now=new Date();
+    s.push({domain,type,score,date:now.toLocaleDateString('en-CA',{month:'short',day:'numeric'}),ts:now.getTime()});
+    localStorage.setItem('sp_sessions',JSON.stringify(s));
+  }catch(e){}
+}
+
+var TERMS=[
+  {name:'IAM',def:'Identity and Access Management  --  the policies and technologies that ensure the right people have the right access to the right resources at the right time.',tag:'tag-purple',tagLabel:'IAM',key:'Covers identification, authentication, authorisation, and accounting (AAA)'},
+  {name:'SSO',def:'Single Sign-On  --  one authentication grants access to multiple connected systems without re-authenticating.',tag:'tag-purple',tagLabel:'IAM',key:'Improves UX but makes credential theft higher risk  --  pair with MFA'},
+  {name:'Federation',def:'Cross-organisational trust allowing users to authenticate at their home organisation and access partner systems.',tag:'tag-purple',tagLabel:'IAM',key:'SAML, OAuth 2.0, and OIDC are common federation protocols'},
+  {name:'PAM',def:'Privileged Access Management  --  tools and processes to control, monitor, and audit access by privileged accounts.',tag:'tag-purple',tagLabel:'IAM',key:'Just-in-time access, session recording, credential vaulting'},
+  {name:'RBAC',def:'Role-Based Access Control  --  permissions are assigned to roles, and users are assigned to roles rather than directly to permissions.',tag:'tag-purple',tagLabel:'IAM',key:'Most common enterprise model  --  permissions follow job function'},
+  {name:'ABAC',def:'Attribute-Based Access Control  --  access decisions evaluate multiple attributes of the user, resource, and environment at runtime.',tag:'tag-purple',tagLabel:'IAM',key:'Most flexible  --  evaluates user role, time, location, device state'},
+  {name:'MFA',def:'Multi-Factor Authentication  --  requires two or more different factor types: something you know, have, or are.',tag:'tag-purple',tagLabel:'IAM',key:'Most effective single control against credential attacks'},
+  {name:'EDR',def:'Endpoint Detection and Response  --  continuously monitors endpoints, records all activity, and enables rapid investigation and response.',tag:'tag-accent',tagLabel:'Endpoint',key:'Behaviour-based detection  --  catches what signatures miss'},
+  {name:'XDR',def:'Extended Detection and Response  --  unifies telemetry from endpoints, network, email, and cloud into a single detection and response platform.',tag:'tag-accent',tagLabel:'Endpoint',key:'EDR + network + cloud + email in one platform'},
+  {name:'DLP',def:'Data Loss Prevention  --  monitors, detects, and blocks unauthorised transfer of sensitive data at endpoint and network level.',tag:'tag-amber',tagLabel:'Data',key:'Endpoint DLP, network DLP, cloud DLP  --  each a different control point'},
+  {name:'Data Classification',def:'Categorising data by sensitivity to determine appropriate handling, storage, encryption, and access controls.',tag:'tag-amber',tagLabel:'Data',key:'Public, Internal, Confidential, Restricted  --  drives all data controls'},
+  {name:'Tokenisation',def:'Replacing sensitive data with a non-sensitive placeholder token. The original data is stored in a secure vault.',tag:'tag-amber',tagLabel:'Data',key:'PCI-DSS uses this  --  token has no exploitable value outside the vault'},
+  {name:'Data Masking',def:'Replacing real sensitive data with realistic fictional data for use in non-production environments.',tag:'tag-amber',tagLabel:'Data',key:'Developers get realistic data without real PII leaving production'},
+  {name:'Encryption at Rest',def:'Encrypting data stored on disk, in databases, or on backup media to protect against physical theft or unauthorised access.',tag:'tag-teal',tagLabel:'Cryptography',key:'BitLocker, TDE, encrypted backup tapes  --  storage-level protection'},
+  {name:'Encryption in Transit',def:'Encrypting data moving across a network to prevent interception and eavesdropping.',tag:'tag-teal',tagLabel:'Cryptography',key:'TLS 1.3 is the current standard  --  disable TLS 1.0/1.1 and SSL'},
+  {name:'PKI',def:'Public Key Infrastructure  --  the framework of roles, policies, and technology for creating, managing, distributing, and revoking digital certificates.',tag:'tag-teal',tagLabel:'Cryptography',key:'CA signs certificates binding public keys to identities'},
+  {name:'HSM',def:'Hardware Security Module  --  a dedicated physical device for generating, storing, and managing cryptographic keys in tamper-resistant hardware.',tag:'tag-teal',tagLabel:'Cryptography',key:'Crypto operations happen inside HSM  --  keys never leave in plaintext'},
+  {name:'SIEM',def:'Security Information and Event Management  --  aggregates and correlates logs from across the environment, generating alerts and supporting investigation.',tag:'tag-green',tagLabel:'Monitoring',key:'Log collection + correlation + alerting + long-term retention'},
+  {name:'SOAR',def:'Security Orchestration, Automation, and Response  --  automates repetitive SOC tasks and orchestrates incident response workflows.',tag:'tag-green',tagLabel:'Monitoring',key:'Reduces analyst workload  --  automates tier-1 response tasks'},
+  {name:'UEBA',def:'User and Entity Behaviour Analytics  --  establishes behavioural baselines for users and systems, alerting on anomalous deviations.',tag:'tag-green',tagLabel:'Monitoring',key:'Detects insider threats and compromised accounts through behavioural anomalies'},
+  {name:'WAF',def:'Web Application Firewall  --  filters HTTP/HTTPS traffic to web applications, blocking injection attacks, XSS, and other OWASP Top 10 threats.',tag:'tag-accent',tagLabel:'Endpoint/App',key:'Layer 7 filtering  --  understands HTTP methods, headers, and payloads'},
+  {name:'Patch Management',def:'The systematic process of identifying, testing, and deploying software updates to remediate known vulnerabilities.',tag:'tag-green',tagLabel:'Hardening',key:'Emergency patching for critical CVEs  --  scheduled for others'},
+  {name:'Deception Technology',def:'Tools like honeypots and canary tokens that detect attackers already inside the network by triggering on attacker behaviour.',tag:'tag-accent',tagLabel:'Detection',key:'Zero false positives  --  legitimate users never touch decoys'},
+];
+
+var CATS=['Identity and Access Management','Endpoint and Application Security','Data Protection','Cryptography and PKI','Monitoring and Detection','Scenario'];
+var CAT_COLORS={
+  'Identity and Access Management':'var(--purple)',
+  'Endpoint and Application Security':'var(--accent)',
+  'Data Protection':'var(--amber)',
+  'Cryptography and PKI':'var(--teal)',
+  'Monitoring and Detection':'var(--green)',
+  'Scenario':'var(--amber)'
+};
+var BADGE_MAP={
+  'Identity and Access Management':'badge-iam',
+  'Endpoint and Application Security':'badge-endpoint',
+  'Data Protection':'badge-data',
+  'Cryptography and PKI':'badge-crypto',
+  'Monitoring and Detection':'badge-monitoring',
+  'Scenario':'badge-scenario'
+};
+
+var Q_BANK=[
+// -- IDENTITY AND ACCESS MANAGEMENT --
+{type:'identify',cat:'Identity and Access Management',q:"Which access control model assigns permissions to roles and then assigns users to those roles?",o:["DAC","MAC","RBAC","ABAC"],a:2,e:"<strong>RBAC</strong> (Role-Based Access Control)  --  users inherit permissions through their role. When someone changes jobs, you change their role rather than individual permissions. Most common enterprise model."},
+{type:'identify',cat:'Identity and Access Management',q:"Which access control model evaluates multiple attributes including user, resource, and environmental conditions at runtime?",o:["RBAC","DAC","MAC","ABAC"],a:3,e:"<strong>ABAC</strong> (Attribute-Based Access Control)  --  the most flexible model. Evaluates user role, department, time of day, device health, and location to make access decisions. Used in zero trust architectures."},
+{type:'identify',cat:'Identity and Access Management',q:"Which access control model is controlled by the resource owner who decides who can access their files?",o:["RBAC","DAC","MAC","ABAC"],a:1,e:"<strong>DAC</strong> (Discretionary Access Control)  --  the owner of a resource decides who can access it. Windows NTFS permissions are DAC. Flexible but harder to manage at scale."},
+{type:'identify',cat:'Identity and Access Management',q:"Which access control model is enforced by the operating system using sensitivity labels that users cannot override?",o:["DAC","RBAC","MAC","ABAC"],a:2,e:"<strong>MAC</strong> (Mandatory Access Control)  --  the OS enforces access based on sensitivity labels. Users cannot grant access beyond their clearance. Used in government and military systems."},
+{type:'identify',cat:'Identity and Access Management',q:"What is the PRIMARY security risk of Single Sign-On (SSO)?",o:["It requires more passwords for users to remember","A single compromised credential or session token grants access to all connected systems","It slows down authentication","It requires expensive hardware tokens"],a:1,e:"<strong>SSO risk</strong>  --  one set of credentials unlocks everything. This makes credential theft far more valuable to attackers. MFA is essential alongside SSO to mitigate this concentration risk."},
+{type:'identify',cat:'Identity and Access Management',q:"Which protocol is used for federated identity, allowing a user's identity from one organisation to be trusted by another?",o:["LDAP","Kerberos","SAML","NTLM"],a:2,e:"<strong>SAML</strong> (Security Assertion Markup Language)  --  exchanges authentication and authorisation data between an Identity Provider (IdP) and Service Provider (SP). Used for enterprise SSO federation."},
+{type:'identify',cat:'Identity and Access Management',q:"What is the difference between OAuth 2.0 and OIDC?",o:["They are identical protocols with different names","OAuth 2.0 is for authorisation (delegated access); OIDC adds identity verification on top of OAuth 2.0","OAuth 2.0 is for authentication; OIDC is for authorisation","OAuth 2.0 is for enterprise; OIDC is for consumer applications"],a:1,e:"<strong>OAuth 2.0</strong> delegates access (allowing app A to access app B on your behalf) without sharing credentials. <strong>OIDC</strong> (OpenID Connect) adds an identity layer on top of OAuth 2.0  --  it tells you who the user is."},
+{type:'identify',cat:'Identity and Access Management',q:"Which IAM concept involves granting temporary elevated access only when needed, and removing it immediately after?",o:["Permanent privileged accounts","Just-in-time access","Role-based access control","Separation of duties"],a:1,e:"<strong>Just-in-time (JIT) access</strong>  --  privileged access is granted for a specific task and time window, then automatically revoked. Eliminates persistent privileged accounts that are high-value targets."},
+{type:'identify',cat:'Identity and Access Management',q:"What is the purpose of Privileged Access Management (PAM)?",o:["Managing password complexity requirements for all users","Controlling, monitoring, auditing, and securing access by privileged accounts including admins and service accounts","Providing SSO for all enterprise applications","Managing MFA tokens for IT staff"],a:1,e:"<strong>PAM</strong>  --  privileged accounts are the crown jewels. PAM vaults credentials, records sessions, enforces just-in-time access, and provides full audit trails of all privileged activity."},
+{type:'identify',cat:'Identity and Access Management',q:"Which of the following BEST describes a service account?",o:["An account used by helpdesk staff to reset passwords","A non-human account used by applications and services to authenticate to other systems","An account with read-only access to all systems","A shared account used by multiple administrators"],a:1,e:"<strong>Service accounts</strong> are used by applications, scripts, and services. They often have excessive privileges and rarely-changed passwords, making them high-value targets. Managed service accounts and PAM vaulting reduce this risk."},
+{type:'identify',cat:'Identity and Access Management',q:"Which of the following BEST describes the concept of account federation?",o:["Synchronising passwords between two Active Directory forests","Allowing a user to authenticate once at their home organisation and access resources at partner organisations","Combining multiple accounts into a single privileged account","Requiring users to authenticate separately at each external service"],a:1,e:"<strong>Federation</strong>  --  the user's home Identity Provider (IdP) vouches for them to partner Service Providers. No separate credentials needed for each partner. SAML, OIDC, and WS-Federation are the protocols."},
+{type:'identify',cat:'Identity and Access Management',q:"What is the purpose of directory services such as Active Directory?",o:["Store and manage cryptographic keys","Centralise user identity, authentication, and access control across the organisation","Filter web traffic for malicious content","Monitor endpoints for malicious behaviour"],a:1,e:"<strong>Directory services</strong> (AD, LDAP) provide a centralised identity store  --  authenticating users, managing group memberships, enforcing group policies, and controlling access to resources across the domain."},
+{type:'identify',cat:'Identity and Access Management',q:"Which of the following BEST describes an identity provider (IdP)?",o:["A service that stores application data","A system that creates, maintains, and manages user identities and provides authentication assertions to service providers","A tool that monitors user access logs","A server that manages digital certificates"],a:1,e:"<strong>IdP</strong>  --  the system that holds identity information and authenticates users. When a user tries to access a service, the IdP vouches for them. Examples: Okta, Azure AD, Ping Identity."},
+
+// -- ENDPOINT AND APPLICATION SECURITY --
+{type:'identify',cat:'Endpoint and Application Security',q:"What is the PRIMARY difference between EDR and traditional antivirus?",o:["EDR is cheaper than antivirus","EDR uses behavioural detection and provides investigation capabilities; AV relies primarily on signatures","EDR only monitors network traffic; AV monitors endpoints","EDR requires no agent; AV requires an installed agent"],a:1,e:"<strong>EDR</strong>  --  behavioural monitoring, telemetry recording, and investigation tools. Traditional AV matches file signatures against known malware  --  it misses zero-days, fileless malware, and novel techniques. EDR catches what signatures miss."},
+{type:'identify',cat:'Endpoint and Application Security',q:"Which security technology combines EDR with network, email, and cloud telemetry into a unified detection platform?",o:["SIEM","SOAR","XDR","MDR"],a:2,e:"<strong>XDR</strong> (Extended Detection and Response)  --  extends EDR across the full environment. Correlates endpoint, network, email, and cloud signals to detect multi-stage attacks that span multiple vectors."},
+{type:'identify',cat:'Endpoint and Application Security',q:"What is the purpose of a Web Application Firewall (WAF)?",o:["Filter network packets by IP address and port","Analyse and filter HTTP/HTTPS traffic to block application-layer attacks like SQLi and XSS","Monitor and control outbound data transfers","Authenticate users accessing web applications"],a:1,e:"<strong>WAF</strong>  --  operates at Layer 7, understanding HTTP methods, headers, and payloads. Blocks OWASP Top 10 attacks (SQLi, XSS, CSRF) before they reach the application. Deployed as reverse proxy or inline."},
+{type:'identify',cat:'Endpoint and Application Security',q:"Which secure development principle requires security testing to occur throughout the SDLC rather than only at the end?",o:["Shift-right testing","Waterfall security","Shift-left security","Penetration testing only"],a:2,e:"<strong>Shift-left security</strong>  --  moving security earlier in the SDLC where fixes are cheapest. Includes threat modelling in design, SAST in development, DAST in testing  --  not just pen tests before release."},
+{type:'identify',cat:'Endpoint and Application Security',q:"What is the difference between SAST and DAST?",o:["SAST tests running applications; DAST analyses source code","SAST analyses source code without executing it; DAST tests the running application by sending inputs","They are identical tools with different names","SAST is manual; DAST is automated"],a:1,e:"<strong>SAST</strong> (Static Application Security Testing) scans source code without running it  --  finds bugs early. <strong>DAST</strong> (Dynamic Application Security Testing) tests the live running application  --  finds runtime vulnerabilities SAST misses."},
+{type:'identify',cat:'Endpoint and Application Security',q:"Which of the following BEST describes the purpose of an application allowlist?",o:["Block known malicious software by signature","Only permit explicitly approved applications to execute  --  all others are blocked","Scan all applications for vulnerabilities before installation","Encrypt application data at rest"],a:1,e:"<strong>Application allowlisting</strong>  --  default-deny for code execution. Only explicitly listed applications can run. Effective against malware but operationally demanding. The opposite of blacklisting."},
+{type:'identify',cat:'Endpoint and Application Security',q:"What is the PRIMARY security benefit of patch management?",o:["Improving application performance","Eliminating known vulnerabilities before attackers can exploit them","Reducing software licensing costs","Ensuring software compatibility across systems"],a:1,e:"<strong>Patch management</strong>  --  the majority of successful attacks exploit known vulnerabilities with available patches. Timely patching directly reduces the exploitable attack surface. Critical CVEs require emergency patching."},
+{type:'identify',cat:'Endpoint and Application Security',q:"What is the purpose of host-based firewalls?",o:["Inspect traffic between network segments","Control inbound and outbound traffic for individual endpoints independent of network firewalls","Monitor endpoint processes for malicious behaviour","Encrypt all traffic leaving the endpoint"],a:1,e:"<strong>Host-based firewalls</strong> (Windows Defender Firewall, iptables) control traffic at the individual endpoint. Even if a network firewall is bypassed, host firewalls provide a last layer of defence. Critical for remote and mobile workers."},
+{type:'identify',cat:'Endpoint and Application Security',q:"Which of the following BEST describes the purpose of MDM in enterprise mobile security?",o:["Monitoring employee locations","Remotely manage, enforce policies on, and wipe corporate data from mobile devices","Encrypting all mobile app traffic","Providing VPN access for mobile users"],a:1,e:"<strong>MDM</strong> (Mobile Device Management)  --  enforces security policies (encryption, screen lock, patch level), containerises corporate data, and enables remote wipe. Essential for BYOD environments."},
+{type:'identify',cat:'Endpoint and Application Security',q:"What is a canary token?",o:["A hardware authentication token","A lightweight tripwire that alerts when accessed  --  detecting unauthorised access or data theft","A certificate used for code signing","A type of honeypot that simulates a full network"],a:1,e:"<strong>Canary token</strong>  --  a fake credential, document URL, or DNS entry that alerts when touched. Legitimate users have no reason to access it. Zero false positives. Effective for detecting both external attackers and insider threats."},
+
+// -- DATA PROTECTION --
+{type:'identify',cat:'Data Protection',q:"What is the PRIMARY purpose of Data Loss Prevention (DLP)?",o:["Encrypt data at rest on all endpoints","Monitor and block unauthorised transfer of sensitive data outside the organisation","Back up critical data to prevent loss","Classify data by sensitivity level automatically"],a:1,e:"<strong>DLP</strong>  --  inspects content leaving via email, USB, web upload, and cloud sync. Detects and blocks transmission of credit card numbers, SSNs, PHI, and other sensitive data. Endpoint, network, and cloud DLP cover different channels."},
+{type:'identify',cat:'Data Protection',q:"Which data protection technique replaces sensitive data with a non-sensitive placeholder that has no standalone exploitable value?",o:["Encryption","Hashing","Tokenisation","Data masking"],a:2,e:"<strong>Tokenisation</strong>  --  the original data lives in a secure vault; only the token circulates. Even if stolen, the token is useless without vault access. PCI-DSS commonly uses tokenisation for card numbers."},
+{type:'identify',cat:'Data Protection',q:"What is the difference between data masking and tokenisation?",o:["They are identical  --  different names for the same technique","Data masking produces realistic fictional data for non-production use; tokenisation replaces production data with tokens backed by a vault","Data masking is for structured data; tokenisation is for unstructured data","Tokenisation is reversible; data masking is not"],a:1,e:"<strong>Data masking</strong>  --  realistic but fake data for dev/test. No vault, no reversal needed. <strong>Tokenisation</strong>  --  production replacement with a vault-backed token that can be reversed by authorised parties. Different use cases."},
+{type:'identify',cat:'Data Protection',q:"Which of the following BEST describes the purpose of data classification?",o:["Encrypting data before transmission","Categorising data by sensitivity to drive appropriate handling, access, and protection controls","Determining how long data must be retained","Logging all access to sensitive data"],a:1,e:"<strong>Data classification</strong>  --  defines the sensitivity tiers (Public, Internal, Confidential, Restricted) and the controls required at each level. Everything downstream  --  encryption, access control, DLP, retention  --  flows from classification."},
+{type:'identify',cat:'Data Protection',q:"Which of the following BEST describes data retention policy?",o:["Encrypting data after a defined period","Defining how long data must be kept and when it must be securely destroyed","Classifying data by sensitivity on creation","Backing up data to meet recovery objectives"],a:1,e:"<strong>Data retention policy</strong>  --  defines minimum and maximum retention periods by data type, driven by regulation (HIPAA 6 years, GDPR minimisation principle) and legal hold requirements. Data kept beyond its retention period is unnecessary liability."},
+{type:'identify',cat:'Data Protection',q:"Which of the following is an example of data at rest protection?",o:["TLS encrypting database queries in transit","Full disk encryption using BitLocker on a laptop","HTTPS protecting web application traffic","VPN encrypting traffic between branch offices"],a:1,e:"<strong>Full disk encryption</strong>  --  protects data stored on the device. If the laptop is stolen, data is unreadable without the encryption key. BitLocker, FileVault, and LUKS are common implementations."},
+{type:'identify',cat:'Data Protection',q:"What is the role of a data custodian?",o:["Defines the classification and acceptable use policy for data","Implements and maintains the technical controls protecting data on behalf of the data owner","Oversees organisational compliance with privacy regulations","Investigates data breaches and incidents"],a:1,e:"<strong>Data custodian</strong> (typically IT) implements and manages the technical controls  --  backups, encryption, access controls  --  that the data owner has mandated. The owner decides policy; the custodian implements it."},
+{type:'identify',cat:'Data Protection',q:"Which of the following BEST describes the purpose of digital rights management (DRM)?",o:["Encrypting data in transit","Controlling how digital content can be used, copied, or distributed after delivery","Managing digital certificates and keys","Monitoring user access to sensitive files"],a:1,e:"<strong>DRM</strong>  --  persists access controls with the content itself, even after distribution. Controls who can open, copy, print, or forward a document. Applies to media, documents, and software licensing."},
+
+// -- CRYPTOGRAPHY AND PKI --
+{type:'identify',cat:'Cryptography and PKI',q:"What is the purpose of a Hardware Security Module (HSM)?",o:["Encrypt network traffic between servers","Generate, store, and manage cryptographic keys in tamper-resistant dedicated hardware","Manage digital certificates in a PKI","Provide hardware-based MFA for administrators"],a:1,e:"<strong>HSM</strong>  --  keys are generated inside the HSM and never leave in plaintext. Crypto operations happen inside the module. Provides the highest security for key management. Used for CA root keys, payment processing, and code signing."},
+{type:'identify',cat:'Cryptography and PKI',q:"What is the difference between symmetric and asymmetric encryption?",o:["Symmetric is slower; asymmetric is faster","Symmetric uses one shared key; asymmetric uses a public/private key pair","Symmetric is for digital signatures; asymmetric is for bulk data","They provide identical security at the same key length"],a:1,e:"<strong>Symmetric</strong> (AES, 3DES)  --  one shared key for encryption and decryption. Fast but requires secure key exchange. <strong>Asymmetric</strong> (RSA, ECC)  --  key pair: encrypt with public, decrypt with private. Slower but solves key distribution."},
+{type:'identify',cat:'Cryptography and PKI',q:"What is the purpose of a digital signature?",o:["Encrypt a document so only the recipient can read it","Prove the message came from the claimed sender and has not been altered  --  providing authentication and non-repudiation","Store private keys securely","Verify a server's SSL certificate"],a:1,e:"<strong>Digital signature</strong>  --  the sender hashes the message and encrypts the hash with their private key. The recipient decrypts with the sender's public key and compares hashes. Provides integrity, authenticity, and non-repudiation."},
+{type:'identify',cat:'Cryptography and PKI',q:"What is perfect forward secrecy (PFS)?",o:["Using the same session key for all connections","Generating a unique session key for each connection so compromising the long-term key does not decrypt past sessions","Encrypting data with two separate keys simultaneously","A key exchange protocol used by IPSec"],a:1,e:"<strong>PFS</strong>  --  each session uses a fresh ephemeral key derived via Diffie-Hellman. Even if the server's long-term private key is later compromised, recorded past sessions remain encrypted. TLS 1.3 mandates PFS."},
+{type:'identify',cat:'Cryptography and PKI',q:"Which hashing algorithm is currently recommended for security applications?",o:["MD5","SHA-1","SHA-256 or SHA-3","CRC-32"],a:2,e:"<strong>SHA-256 / SHA-3</strong>  --  MD5 and SHA-1 are cryptographically broken  --  collisions have been demonstrated. SHA-256 (SHA-2 family) is the current standard. SHA-3 uses a different internal design (Keccak) as an alternative."},
+{type:'identify',cat:'Cryptography and PKI',q:"What is the purpose of a certificate authority (CA)?",o:["Generate symmetric encryption keys for TLS sessions","Issue and digitally sign certificates binding a public key to an identity  --  acting as a trusted third party","Store private keys on behalf of users","Manage directory service authentication"],a:1,e:"<strong>CA</strong>  --  the trust anchor of PKI. By signing a certificate, the CA vouches that the public key belongs to the named entity. Browsers and OSes come pre-loaded with trusted root CAs."},
+{type:'identify',cat:'Cryptography and PKI',q:"What does certificate pinning do?",o:["Pins a certificate to a specific user account","Hard-codes the expected certificate or public key into an application so it rejects any certificate not matching  --  even if signed by a trusted CA","Prevents certificates from being revoked","Stores certificates in hardware for tamper resistance"],a:1,e:"<strong>Certificate pinning</strong>  --  prevents MITM attacks using fraudulent certificates from rogue CAs. The app only accepts the pre-pinned certificate. Used in mobile apps and high-security connections. Difficult to update if the cert changes."},
+{type:'identify',cat:'Cryptography and PKI',q:"Which of the following BEST describes elliptic curve cryptography (ECC)?",o:["A symmetric encryption algorithm faster than AES","An asymmetric algorithm providing equivalent security to RSA with much shorter key lengths","A hashing algorithm replacing SHA-256","A key exchange protocol for IPSec VPNs"],a:1,e:"<strong>ECC</strong>  --  a 256-bit ECC key provides equivalent security to a 3072-bit RSA key. Faster and less compute-intensive. Preferred for mobile, IoT, and TLS where resources are constrained."},
+{type:'identify',cat:'Cryptography and PKI',q:"What is the purpose of a certificate revocation list (CRL)?",o:["A list of all certificates issued by a CA","A list of certificates that have been invalidated before their expiry date","A list of trusted root certificate authorities","A list of certificates pending renewal"],a:1,e:"<strong>CRL</strong>  --  published by the CA, listing certificates revoked before expiry due to key compromise or policy violations. Clients must check CRLs or use OCSP to verify certificate validity before trusting it."},
+{type:'identify',cat:'Cryptography and PKI',q:"Which cryptographic concept ensures that encrypting the same plaintext twice produces different ciphertext each time?",o:["Key stretching","Initialisation vector (IV) or nonce","Hash salting","Certificate pinning"],a:1,e:"<strong>Initialisation Vector (IV) / Nonce</strong>  --  a random value added to the encryption process so identical plaintexts produce different ciphertexts. Prevents pattern analysis attacks. Reusing IVs (as WEP did) is a critical cryptographic weakness."},
+
+// -- MONITORING AND DETECTION --
+{type:'identify',cat:'Monitoring and Detection',q:"What is the PRIMARY purpose of a SIEM?",o:["Block malicious network traffic in real time","Collect, normalise, and correlate security logs from across the environment to detect threats and support investigation","Automatically remediate detected security incidents","Scan systems for known vulnerabilities on a schedule"],a:1,e:"<strong>SIEM</strong>  --  the central nervous system of a SOC. Aggregates logs from firewalls, endpoints, servers, and applications; correlates events across sources; generates alerts; and retains logs for investigation and compliance."},
+{type:'identify',cat:'Monitoring and Detection',q:"What is the PRIMARY purpose of SOAR?",o:["Replace human analysts with automated systems","Automate repetitive SOC tasks and orchestrate multi-step incident response workflows to reduce analyst workload","Collect and store security logs","Scan for vulnerabilities across the environment"],a:1,e:"<strong>SOAR</strong>  --  automates tier-1 analyst tasks (IP lookups, ticket creation, blocking indicators) and orchestrates complex multi-step response playbooks. Reduces MTTR and analyst fatigue. Works alongside SIEM, not as a replacement."},
+{type:'identify',cat:'Monitoring and Detection',q:"What does UEBA detect that traditional SIEM rules may miss?",o:["Known malware signatures","Anomalous behaviour deviating from an established baseline  --  catching threats rules were not written for","Network intrusions using known attack patterns","Vulnerability scan findings"],a:1,e:"<strong>UEBA</strong>  --  establishes normal behaviour baselines for each user and entity, then alerts on deviations. Detects insider threats, compromised accounts, and novel attacks that don't match any predefined rule."},
+{type:'identify',cat:'Monitoring and Detection',q:"What is the difference between a true positive and a false positive in security monitoring?",o:["A true positive is a high-severity alert; a false positive is low-severity","A true positive is a real threat correctly identified; a false positive is a benign event incorrectly flagged as malicious","A true positive comes from the SIEM; a false positive comes from the IPS","They are the same  --  just different analyst opinions"],a:1,e:"<strong>True positive</strong>  --  real attack, correctly alerted. <strong>False positive</strong>  --  benign event flagged as malicious. <strong>False negative</strong>  --  real attack not detected. False positives cause alert fatigue; false negatives cause breaches."},
+{type:'identify',cat:'Monitoring and Detection',q:"Which of the following BEST describes alert fatigue?",o:["Physical tiredness experienced by SOC analysts on night shifts","Reduced responsiveness to alerts due to an overwhelming volume of low-quality or false positive notifications","A SIEM performance issue causing delayed alerting","Alerts being suppressed by misconfigured correlation rules"],a:1,e:"<strong>Alert fatigue</strong>  --  too many false positives cause analysts to become desensitised and miss genuine threats. Mitigated by tuning correlation rules, implementing alert prioritisation, and using SOAR to handle low-value alerts automatically."},
+{type:'identify',cat:'Monitoring and Detection',q:"What is the purpose of log aggregation?",o:["Compress logs to reduce storage costs","Collect logs from multiple sources into a central repository for unified analysis and retention","Encrypt log files to prevent tampering","Generate automated reports from security tools"],a:1,e:"<strong>Log aggregation</strong>  --  centralises logs from firewalls, endpoints, servers, and applications. Enables correlation across sources, supports investigation, and satisfies compliance retention requirements. The foundation of a SIEM deployment."},
+{type:'identify',cat:'Monitoring and Detection',q:"Which metric measures the average time between when a breach occurs and when it is discovered by the security team?",o:["MTTR","RTO","MTTD","MTBF"],a:2,e:"<strong>MTTD</strong> (Mean Time to Detect)  --  lower MTTD means threats are found faster, limiting the attacker's dwell time and reducing damage. Industry average dwell time has historically exceeded 200 days for APT-level attacks."},
+{type:'identify',cat:'Monitoring and Detection',q:"What is the purpose of a Security Operations Centre (SOC)?",o:["Develop security policies and standards","Provide 24/7 monitoring, threat detection, and coordinated incident response for the organisation","Conduct penetration tests and vulnerability assessments","Manage identity and access provisioning"],a:1,e:"<strong>SOC</strong>  --  the operational hub of the security programme. Analysts monitor SIEM alerts, investigate incidents, coordinate response, and maintain the organisation's detection and response capabilities around the clock."},
+{type:'identify',cat:'Monitoring and Detection',q:"What is the PRIMARY purpose of network traffic analysis (NTA)?",o:["Blocking known malicious IPs at the firewall","Analysing network flow and packet data to detect anomalies, C2 traffic, and lateral movement","Monitoring endpoint processes for malicious behaviour","Correlating logs from multiple security tools"],a:1,e:"<strong>NTA</strong>  --  analyses NetFlow, IPFIX, or raw packets to establish network baselines and detect deviations. Effective at finding C2 beaconing, data exfiltration, and lateral movement that endpoint tools miss."},
+
+// -- SCENARIOS --
+{type:'scenario',cat:'Scenario',scenario:"A SOC analyst receives a SIEM alert: a domain admin account logged in at 3 AM from a country the user has never accessed before, then immediately accessed the HR database and exported 50,000 records.",q:"Which combination of controls would MOST effectively have prevented or detected this earlier?",o:["Longer passwords and regular password changes","MFA, UEBA behavioural baseline alerting, and DLP blocking large database exports","Antivirus and a firewall rule blocking the country","Weekly vulnerability scans and patch management"],a:1,e:"<strong>MFA</strong> prevents the credential-only login. <strong>UEBA</strong> detects the impossible travel and access anomaly. <strong>DLP</strong> blocks or alerts on the mass export. Each control addresses a different point in the attack chain."},
+{type:'scenario',cat:'Scenario',scenario:"A developer accidentally commits AWS access keys to a public GitHub repository. The keys are live and have admin permissions to production infrastructure.",q:"Which sequence of actions is MOST appropriate?",o:["Email the developer and ask them to delete the commit","Immediately revoke the exposed keys, audit CloudTrail logs for any access using them, rotate all access keys, and implement pre-commit scanning","Change the GitHub repository to private and monitor for unusual activity","Wait 24 hours to see if any malicious activity occurs before taking action"],a:1,e:"<strong>Immediate revocation</strong> stops active exploitation. <strong>CloudTrail audit</strong> determines if the keys were already used. <strong>Key rotation</strong> ensures no other stale keys are at risk. <strong>Pre-commit scanning</strong> (git-secrets, truffleHog) prevents recurrence."},
+{type:'scenario',cat:'Scenario',scenario:"An employee leaves the company. Two weeks later, the security team discovers the ex-employee's account was still active and was used to exfiltrate intellectual property the day after their departure.",q:"Which process failure allowed this to occur?",o:["Weak password policy","Failure to complete offboarding  --  specifically deprovisioning the account immediately on departure","Lack of encryption on the exported files","Insufficient logging on the file server"],a:1,e:"<strong>Offboarding/deprovisioning failure</strong>  --  accounts must be disabled immediately on departure, not days later. Automated provisioning workflows tied to HR systems prevent this. The 'day 1' of departure should trigger immediate account suspension."},
+{type:'scenario',cat:'Scenario',scenario:"A web application stores credit card numbers in a database. The security team wants to ensure that even if the database is breached, the card numbers cannot be used by the attacker.",q:"Which data protection technique BEST achieves this?",o:["Encrypting the database at rest with AES-256","Tokenising card numbers  --  storing only tokens in the database with actual numbers in a separate PCI-compliant vault","Hashing the card numbers before storage","Applying access controls to restrict database access to the application only"],a:1,e:"<strong>Tokenisation</strong>  --  even if the database is fully compromised, the attacker only has tokens with no value outside the vault. Encryption at rest protects against physical theft but an attacker with database credentials can decrypt. Hashing card numbers prevents their retrieval even by the application."},
+{type:'scenario',cat:'Scenario',scenario:"A company's EDR alerts that PowerShell executed an encoded command that downloaded a file from an external URL, then spawned a network connection to an external IP on port 4444.",q:"Which attack technique does this sequence describe and what is the BEST immediate response?",o:["DDoS  --  block the external IP at the firewall","Fileless malware delivery via PowerShell LOLBin  --  isolate the endpoint immediately and begin forensic investigation","A routine software update  --  monitor and continue","Ransomware encryption  --  restore from backup"],a:1,e:"<strong>Fileless malware via PowerShell LOLBin</strong>  --  encoded commands evade content filters, downloading the payload into memory. Port 4444 is a common reverse shell indicator. <strong>Isolate immediately</strong> to stop C2 communication, then forensic investigation. PowerShell constrained mode and AMSI logging reduce this risk."},
+{type:'scenario',cat:'Scenario',scenario:"A penetration tester discovers that all service accounts in the domain have passwords set 8 years ago and never changed. Several have Domain Admin membership.",q:"Which two remediations MOST effectively address this risk?",o:["Require service account passwords to be changed monthly","Implement Group Managed Service Accounts (gMSA) for automatic password rotation and remove unnecessary Domain Admin memberships from service accounts","Move all service accounts to a separate OU","Audit service account activity with SIEM alerts"],a:1,e:"<strong>gMSA</strong> automatically rotates passwords without manual intervention  --  eliminating stale credentials. <strong>Removing excessive DA membership</strong> applies least privilege  --  service accounts should have only the permissions they need, not domain admin."},
+{type:'scenario',cat:'Scenario',scenario:"A company processes payments and must comply with PCI-DSS. The security team wants to ensure cardholder data is never visible to developers or in test environments.",q:"Which combination of controls BEST achieves this?",o:["Encrypt the production database and restrict developer access","Use data masking for test environments and tokenisation in production so real card data never appears in non-production systems","Train developers on data handling and require them to sign NDAs","Implement DLP rules blocking developers from copying data"],a:1,e:"<strong>Data masking</strong> gives developers realistic but fictional data  --  real card data never enters test environments. <strong>Tokenisation</strong> in production ensures real card numbers are only in the PCI-compliant vault. Together they satisfy PCI-DSS scope reduction requirements."},
+{type:'scenario',cat:'Scenario',scenario:"A SIEM generates 10,000 alerts per day. Analysts are overwhelmed and are closing alerts without investigation. Three real incidents were missed last month.",q:"Which approach BEST addresses this problem?",o:["Hire more analysts to handle the alert volume","Implement SOAR to automate tier-1 triage and response for low-complexity alerts, and tune SIEM correlation rules to reduce false positives","Disable the SIEM and rely on manual log review","Reduce alert thresholds to generate fewer but higher-severity alerts only"],a:1,e:"<strong>SOAR + SIEM tuning</strong>  --  SOAR handles repetitive tier-1 tasks automatically (IP lookups, ticket creation, auto-blocking), reducing analyst burden by 60-70%. Correlation rule tuning reduces false positives. Together they enable analysts to focus on genuine threats."},
+{type:'scenario',cat:'Scenario',scenario:"An organisation's TLS certificate for their public website uses a 1024-bit RSA key. A security review flags this as a risk.",q:"Why is this a concern and what is the recommended remediation?",o:["1024-bit RSA is computationally expensive  --  upgrade to 512-bit for performance","1024-bit RSA is considered cryptographically weak and breakable  --  upgrade to at least 2048-bit RSA or migrate to 256-bit ECC","TLS certificates should use symmetric keys not RSA","1024-bit is the current NIST recommendation  --  no action needed"],a:1,e:"<strong>1024-bit RSA</strong> is no longer considered secure  --  NIST deprecated it in 2013. Minimum is 2048-bit RSA. Better: migrate to 256-bit ECC which provides equivalent or better security with smaller keys and faster operations. Most modern CAs require at least 2048-bit."},
+{type:'scenario',cat:'Scenario',scenario:"During an audit, the team discovers that a terminated contractor's VPN account and Active Directory account remain active six months after contract end. The accounts have not been used since termination.",q:"Which control gap does this represent and what process addresses it?",o:["Weak password policy for contractor accounts","Failure of identity lifecycle management  --  specifically deprovisioning and access review processes","Insufficient network monitoring","Lack of MFA on contractor accounts"],a:1,e:"<strong>Identity lifecycle management failure</strong>  --  joiner-mover-leaver processes must deactivate accounts immediately on departure. Periodic access reviews (quarterly) catch dormant accounts that slip through. Automated integration between HR systems and IAM prevents manual failures."},
+];
+
+var questions=[],qi=0,correct=0,wrong=0;
+var catStats={};
+CATS.forEach(c=>catStats[c]={c:0,t:0});
+
+function shuffle(a){return[...a].sort(()=>Math.random()-.5)}
+
+function buildQuestions(){
+  var pool=shuffle(Q_BANK.slice());
+  var result=[];
+  for(var k=0;k<pool.length;k++){
+    var q=pool[k];
+    var idxs=[];
+    for(var m=0;m<q.o.length;m++) idxs.push(m);
+    var shuf=shuffle(idxs);
+    var newO=[];
+    for(var n=0;n<shuf.length;n++) newO.push(q.o[shuf[n]]);
+    var nq={};
+    for(var p in q) nq[p]=q[p];
+    nq.o=newO;
+    nq.a=shuf.indexOf(q.a);
+    result.push(nq);
+  }
+  return result;
+}
+
+function updateStats(){
+  var total=correct+wrong;
+  document.getElementById('s-prog').textContent=qi+'/'+questions.length;
+  document.getElementById('s-correct').textContent=correct;
+  document.getElementById('s-wrong').textContent=wrong;
+  document.getElementById('s-acc').textContent=total?Math.round(correct/total*100)+'%':' -- ';
+  document.getElementById('prog-fill').style.width=Math.round(qi/questions.length*100)+'%';
+}
+
+function renderQ(){
+  if(qi>=questions.length){showResults();return;}
+  var q=questions[qi];
+  var letters=['A','B','C','D'];
+  var catBadge=BADGE_MAP[q.cat]||'badge-monitoring';
+  var scenHTML=q.type==='scenario'&&q.scenario
+    ?'<div class="scenario-box"><div class="scenario-lbl">Scenario</div><div class="scenario-text">'+q.scenario+'</div></div>'
+    :'';
+  document.getElementById('q-area').innerHTML=
+    '<div class="q-card">'+
+      '<div class="q-meta">'+
+        '<span class="q-badge '+catBadge+'">'+q.cat+'</span>'+
+        '<span class="q-num">Q'+(qi+1)+' of 80</span>'+
+      '</div>'+
+      scenHTML+
+      '<div class="q-text">'+q.q+'</div>'+
+      '<div class="opts" id="opts">'+
+        (function(){var _h='';for(var _i=0;_i<q.o.length;_i++){_h+='<button class="opt" id="opt-'+_i+'">'+'<span class="opt-letter">'+['A','B','C','D'][_i]+'</span>'+'<span class="opt-text">'+q.o[_i]+'</span>'+'</button>';}return _h;})()+
+      '</div>'+
+      '<div class="explanation" id="explanation"><div class="exp-lbl">Explanation</div><div class="exp-text" id="exp-text"></div></div>'+
+      '<button class="btn-next" id="btn-next">'+(qi===questions.length-1?'See results \u2192':'Next \u2192')+'</button>'+
+    '</div>';
+  for(var _j=0;_j<q.o.length;_j++){(function(_idx){var _b=document.getElementById('opt-'+_idx);if(_b) _b.onclick=function(){answer(_idx);};}(_j));}
+}
+
+function answer(idx){
+  var q=questions[qi];
+  var isCorrect=idx===q.a;
+  if(isCorrect){correct++;if(catStats[q.cat])catStats[q.cat].c++;}else{wrong++;}
+  if(!catStats[q.cat]) catStats[q.cat]={c:0,t:0};
+  catStats[q.cat].t++;
+  qi++;
+  updateStats();
+  for(var i=0;i<q.o.length;i++){
+    var b=document.getElementById('opt-'+i);
+    if(b) b.disabled=true;
+  }
+  var cb=document.getElementById('opt-'+idx);
+  var rb=document.getElementById('opt-'+q.a);
+  if(isCorrect){if(cb)cb.classList.add('correct');}
+  else{if(cb)cb.classList.add('wrong');if(rb)rb.classList.add('reveal');}
+  var et=document.getElementById('exp-text');
+  var eb=document.getElementById('explanation');
+  var nb=document.getElementById('btn-next');
+  if(et) et.innerHTML=q.e;
+  if(eb) eb.classList.add('show');
+  if(nb){nb.style.display='block';nb.onclick=function(){nextQ();};}
+  logToDashboard(4,'Defense Strategies Trainer',Math.round(correct/qi*100));
+}
+
+function nextQ(){renderQ();}
+
+function showResults(){
+  document.getElementById('q-area').style.display='none';
+  var res=document.getElementById('results-area');
+  res.style.display='block';
+  var pct=Math.round(correct/questions.length*100);
+  logToDashboard(4,'Defense Strategies Trainer',pct);
+  var passed=pct>=80;
+  var msg=pct>=90?'Outstanding \u2014 exam-ready!':pct>=80?'Solid \u2014 above pass threshold.':pct>=65?'Getting there \u2014 keep reviewing.':'More study needed.';
+  var ringColor=passed?'#00ff88':'#ff3d5a';
+  var circ=339.3,offset=circ-(pct/100)*circ;
+  var topCats=CATS.filter(c=>catStats[c].t>0).sort((a,b)=>(catStats[b].c/catStats[b].t)-(catStats[a].c/catStats[a].t));
+  var bdHTML=topCats.slice(0,6).map(c=>{
+    var s=catStats[c];var p=s.t?Math.round(s.c/s.t*100):0;
+    var col=CAT_COLORS[c]||'var(--green)';
+    return '<div class="bd-card"><div class="bd-title" style="color:'+col+'">'+c+'</div><div class="bd-bar-bg"><div class="bd-bar-fill" style="width:0%;background:'+col+'" data-pct="'+p+'"></div></div><div class="bd-score" style="color:'+col+'">'+p+'%</div><div class="bd-detail">'+s.c+'/'+s.t+' correct</div></div>';
+  }).join('');
+  res.innerHTML=
+    '<div class="results-wrap">'+
+      '<div class="results-ring"><svg width="140" height="140" viewBox="0 0 140 140">'+
+        '<circle cx="70" cy="70" r="54" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="10"/>'+
+        '<circle cx="70" cy="70" r="54" fill="none" stroke="'+ringColor+'" stroke-width="10" stroke-linecap="round" stroke-dasharray="'+circ+'" stroke-dashoffset="'+circ+'" id="ring-anim"/>'+
+      '</svg><div class="ring-score"><div class="ring-pct">'+pct+'%</div><div class="ring-lbl">score</div></div></div>'+
+      '<div class="results-verdict" style="color:'+ringColor+'">'+(passed?'Passed \u2713':'Keep Studying')+'</div>'+
+      '<div class="results-sub">'+correct+'/'+questions.length+' correct \u2014 '+msg+'</div>'+
+      '<div class="breakdown">'+bdHTML+'</div>'+
+      '<button class="btn-retake" onclick="retake()">Retake Quiz</button>'+
+      '<button class="btn-retake" onclick="showRef()" style="border-color:var(--green);color:var(--green)">View Reference</button>'+
+    '</div>';
+  setTimeout(()=>{
+    var ring=document.getElementById('ring-anim');
+    if(ring){ring.style.transition='stroke-dashoffset 1.5s ease';ring.style.strokeDashoffset=offset;}
+    document.querySelectorAll('.bd-bar-fill').forEach(el=>{el.style.transition='width 1s ease';el.style.width=el.dataset.pct+'%';});
+  },100);
+}
+
+function retake(){
+  document.getElementById('q-area').style.display='block';
+  document.getElementById('results-area').style.display='none';
+  questions=buildQuestions();
+  qi=0;correct=0;wrong=0;
+  CATS.forEach(c=>catStats[c]={c:0,t:0});
+  updateStats();renderQ();
+}
+
+function showRef(){
+  document.getElementById('view-quiz').style.display='none';
+  document.getElementById('view-ref').style.display='block';
+  document.getElementById('tab-quiz').classList.remove('active');
+  document.getElementById('tab-ref').classList.add('active');
+  buildRef();
+}
+
+function setTab(t){
+  if(t==='ref'){
+    document.getElementById('view-quiz').style.display='none';
+    document.getElementById('view-ref').style.display='block';
+    document.getElementById('tab-quiz').classList.remove('active');
+    document.getElementById('tab-ref').classList.add('active');
+    buildRef();
+  } else {
+    document.getElementById('view-ref').style.display='none';
+    document.getElementById('view-quiz').style.display='block';
+    document.getElementById('tab-quiz').classList.add('active');
+    document.getElementById('tab-ref').classList.remove('active');
+  }
+}
+
+function buildRef(){
+  var chart=document.getElementById('acc-chart');chart.innerHTML='';
+  CATS.forEach(c=>{
+    var s=catStats[c];var pct=s.t?Math.round(s.c/s.t*100):0;
+    var col=CAT_COLORS[c]||'var(--green)';
+    chart.innerHTML+='<div class="acc-row"><div class="acc-lbl">'+c+'</div><div class="acc-bg"><div class="acc-fill" style="width:'+(s.t?pct:0)+'%;background:'+col+'"></div></div><div class="acc-pct">'+(s.t?pct+'%':' -- ')+'</div></div>';
+  });
+  var cards=document.getElementById('ref-cards');cards.innerHTML='';
+  TERMS.forEach(t=>{
+    cards.innerHTML+='<div class="ref-card"><div class="ref-name">'+t.name+'</div><div class="ref-def">'+t.def+'</div><span class="ref-tag '+t.tag+'">'+t.tagLabel+'</span><div class="ref-key">'+t.key+'</div></div>';
+  });
+}
+
+questions=buildQuestions();
+updateStats();
+renderQ();
+</script>
+</body>
+</html>

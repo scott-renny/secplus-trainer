@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cloud & Virtualisation Security Trainer -- Security+</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#07080c;--panel:#0e1018;--panel2:#141720;--panel3:#1a1e29;--border:rgba(255,255,255,0.06);--border2:rgba(255,255,255,0.1);--border3:rgba(255,255,255,0.18);--text:#e4e8f5;--text2:#6b7494;--text3:#3a4060;--accent:#00e5ff;--green:#00ff88;--red:#ff3d5a;--amber:#ffcc00;--purple:#bf87ff;--teal:#4fd1c5;--mono:'Courier New',monospace;}
+*{font-family:'Segoe UI',sans-serif}
+body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 60% 50% at 20% 0%,rgba(0,229,255,0.04) 0%,transparent 60%),radial-gradient(ellipse 50% 40% at 80% 100%,rgba(79,209,197,0.03) 0%,transparent 60%);pointer-events:none;z-index:0}
+body::after{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(0,229,255,0.012) 1px,transparent 1px),linear-gradient(90deg,rgba(0,229,255,0.012) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;z-index:0}
+.wrap{position:relative;z-index:1;max-width:760px;margin:0 auto;padding:32px 20px 80px}
+.eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:var(--accent);margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'';width:20px;height:1px;background:var(--accent)}
+h1{font-size:clamp(26px,5vw,40px);font-weight:700;line-height:1.1;letter-spacing:-.02em;margin-bottom:8px}
+h1 em{font-style:normal;color:var(--accent)}
+.subtitle{font-family:var(--mono);font-size:11px;color:var(--text2);margin-bottom:28px}
+.tabs{display:flex;gap:5px;margin-bottom:20px;background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:5px}
+.tab{flex:1;padding:10px 4px;font-family:var(--mono);font-size:10px;letter-spacing:.05em;text-transform:uppercase;border:none;background:transparent;color:var(--text3);cursor:pointer;border-radius:8px;transition:all .2s;touch-action:manipulation}
+.tab.active{background:var(--panel3);color:var(--accent);border:1px solid rgba(0,229,255,0.2)}
+.stats-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px}
+.sb{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:13px;position:relative;overflow:hidden}
+.sb::before{content:'';position:absolute;top:0;left:0;right:0;height:2px}
+.sb.s-prog::before{background:var(--accent)}.sb.s-correct::before{background:var(--green)}.sb.s-wrong::before{background:var(--red)}.sb.s-acc::before{background:var(--amber)}
+.sb-val{font-family:var(--mono);font-size:22px;font-weight:500;line-height:1}
+.sb.s-correct .sb-val{color:var(--green)}.sb.s-wrong .sb-val{color:var(--red)}.sb.s-acc .sb-val{color:var(--amber)}
+.sb-lbl{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--text2);margin-top:4px}
+.prog-wrap{height:3px;background:rgba(255,255,255,0.06);border-radius:99px;margin-bottom:20px;overflow:hidden}
+.prog-fill{height:100%;background:var(--accent);border-radius:99px;transition:width .4s ease}
+.q-card{background:var(--panel);border:1px solid var(--border2);border-radius:20px;padding:28px;margin-bottom:14px;position:relative;overflow:hidden}
+.q-card::after{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(0,229,255,0.3),transparent)}
+.q-meta{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.q-badge{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;padding:3px 10px;border-radius:5px}
+.badge-cloud{background:rgba(0,229,255,0.1);color:var(--accent);border:1px solid rgba(0,229,255,0.2)}
+.badge-virt{background:rgba(191,135,255,0.1);color:var(--purple);border:1px solid rgba(191,135,255,0.2)}
+.badge-container{background:rgba(79,209,197,0.1);color:var(--teal);border:1px solid rgba(79,209,197,0.2)}
+.badge-sase{background:rgba(255,204,0,0.1);color:var(--amber);border:1px solid rgba(255,204,0,0.2)}
+.badge-devsec{background:rgba(0,255,136,0.1);color:var(--green);border:1px solid rgba(0,255,136,0.2)}
+.badge-scenario{background:rgba(255,204,0,0.1);color:var(--amber);border:1px solid rgba(255,204,0,0.2)}
+.q-num{font-family:var(--mono);font-size:10px;color:var(--text3)}
+.scenario-box{background:var(--panel2);border:1px solid var(--border2);border-left:3px solid var(--accent);border-radius:10px;padding:13px 16px;margin-bottom:16px}
+.scenario-lbl{font-family:var(--mono);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+.scenario-text{font-size:13px;color:var(--text2);line-height:1.7;font-family:var(--mono)}
+.q-text{font-size:15px;font-weight:500;line-height:1.65;color:var(--text);margin-bottom:18px}
+.opts{display:flex;flex-direction:column;gap:9px;margin-bottom:14px}
+.opt{display:flex;align-items:flex-start;gap:14px;padding:13px 16px;border-radius:10px;border:1px solid var(--border2);background:var(--panel2);cursor:pointer;text-align:left;width:100%;transition:all .15s;touch-action:manipulation}
+.opt:hover:not(:disabled){border-color:var(--border3);background:var(--panel3)}
+.opt-letter{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--text2);min-width:18px;margin-top:1px;flex-shrink:0}
+.opt-text{font-size:14px;color:var(--text);line-height:1.5}
+.opt.correct{border-color:var(--green)!important;background:rgba(0,255,136,0.07)!important}
+.opt.correct .opt-letter,.opt.correct .opt-text{color:var(--green)!important}
+.opt.wrong{border-color:var(--red)!important;background:rgba(255,61,90,0.07)!important}
+.opt.wrong .opt-letter,.opt.wrong .opt-text{color:var(--red)!important}
+.opt.reveal{border-color:rgba(0,255,136,0.3)!important;background:rgba(0,255,136,0.04)!important}
+.opt.reveal .opt-letter,.opt.reveal .opt-text{color:var(--green)!important;opacity:.6}
+.opt:disabled{cursor:default}
+.explanation{display:none;background:var(--panel2);border:1px solid var(--border2);border-left:3px solid var(--accent);border-radius:10px;padding:13px 16px;margin-bottom:12px}
+.explanation.show{display:block}
+.exp-lbl{font-family:var(--mono);font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);margin-bottom:7px}
+.exp-text{font-size:13px;color:var(--text2);line-height:1.7}
+.exp-text strong{color:var(--text);font-weight:600}
+.btn-next{width:100%;padding:12px;border-radius:10px;border:1px solid var(--border2);background:transparent;color:var(--text2);font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;display:none;transition:all .15s;touch-action:manipulation}
+.btn-next:hover{border-color:var(--accent);color:var(--accent)}
+.results-wrap{text-align:center;padding:32px 0 20px}
+.results-ring{width:140px;height:140px;margin:0 auto 20px;position:relative}
+.results-ring svg{transform:rotate(-90deg)}
+.ring-score{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center}
+.ring-pct{font-family:var(--mono);font-size:32px;font-weight:600}
+.ring-lbl{font-family:var(--mono);font-size:9px;color:var(--text3);letter-spacing:.1em;text-transform:uppercase}
+.results-verdict{font-size:22px;font-weight:700;margin-bottom:6px}
+.results-sub{font-family:var(--mono);font-size:11px;color:var(--text2);margin-bottom:28px}
+.breakdown{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:28px;text-align:left}
+.bd-card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:16px}
+.bd-title{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px}
+.bd-bar-bg{height:5px;background:rgba(255,255,255,0.06);border-radius:99px;overflow:hidden;margin-bottom:6px}
+.bd-bar-fill{height:100%;border-radius:99px;transition:width 1s ease}
+.bd-score{font-family:var(--mono);font-size:22px;font-weight:600}
+.bd-detail{font-family:var(--mono);font-size:10px;color:var(--text3);margin-top:4px}
+.btn-retake{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:12px 36px;background:transparent;border:1px solid var(--border2);color:var(--text2);border-radius:10px;cursor:pointer;transition:all .2s;touch-action:manipulation}
+.btn-retake:hover{border-color:var(--accent);color:var(--accent)}
+@media(max-width:500px){.stats-bar{grid-template-columns:repeat(2,1fr)}.breakdown{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">CompTIA Security+ &middot; SY0-701 &middot; Domain 3</div>
+  <h1>Cloud &amp; Virtualisation <em>Security</em></h1>
+  <p class="subtitle">33 questions &middot; cloud service models &middot; shared responsibility &middot; virtualisation &middot; containers &middot; SASE &middot; SD-WAN &middot; DevSecOps</p>
+  <div class="tabs">
+    <button class="tab active" id="tab-quiz" onclick="setTab('quiz')">Quiz</button>
+    <button class="tab" id="tab-ref" onclick="setTab('ref')">Reference</button>
+  </div>
+  <div id="view-quiz">
+    <div class="stats-bar">
+      <div class="sb s-prog"><div class="sb-val" id="s-prog">0/33</div><div class="sb-lbl">Progress</div></div>
+      <div class="sb s-correct"><div class="sb-val" id="s-correct">0</div><div class="sb-lbl">Correct</div></div>
+      <div class="sb s-wrong"><div class="sb-val" id="s-wrong">0</div><div class="sb-lbl">Wrong</div></div>
+      <div class="sb s-acc"><div class="sb-val" id="s-acc">--</div><div class="sb-lbl">Accuracy</div></div>
+    </div>
+    <div class="prog-wrap"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
+    <div id="q-area"></div>
+    <div id="results-area" style="display:none"></div>
+  </div>
+  <div id="view-ref" style="display:none">
+    <div style="font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--border)">Accuracy by Category</div>
+    <div id="acc-chart" style="margin-bottom:24px"></div>
+    <div style="font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--border)">Key Concepts</div>
+    <div id="ref-cards" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px"></div>
+  </div>
+</div>
+<script>
+function logToDashboard(domain,type,score){
+  try{
+    var s=JSON.parse(localStorage.getItem('sp_sessions')||'[]');
+    var now=new Date();
+    s.push({domain:domain,type:type,score:score,date:now.toLocaleDateString('en-CA',{month:'short',day:'numeric'}),ts:now.getTime()});
+    localStorage.setItem('sp_sessions',JSON.stringify(s));
+  }catch(e){}
+}
+
+var CATS=['Cloud Service Models','Shared Responsibility','Virtualisation Security','Container Security','SASE & SD-WAN','DevSecOps & IaC','Scenario'];
+var CAT_COLORS={'Cloud Service Models':'var(--accent)','Shared Responsibility':'var(--teal)','Virtualisation Security':'var(--purple)','Container Security':'var(--green)','SASE & SD-WAN':'var(--amber)','DevSecOps & IaC':'var(--red)','Scenario':'var(--amber)'};
+var BADGE_MAP={'Cloud Service Models':'badge-cloud','Shared Responsibility':'badge-cloud','Virtualisation Security':'badge-virt','Container Security':'badge-container','SASE & SD-WAN':'badge-sase','DevSecOps & IaC':'badge-devsec','Scenario':'badge-scenario'};
+
+var TERMS=[
+  {name:'IaaS',def:'Infrastructure as a Service. Cloud provider supplies compute, storage, network. Customer manages OS upward. Example: AWS EC2, Azure VMs.',key:'Customer manages: OS, middleware, runtime, apps, data. Provider: physical hardware.'},
+  {name:'PaaS',def:'Platform as a Service. Cloud provider manages hardware and OS. Customer manages applications and data only. Example: AWS Elastic Beanstalk, Azure App Service.',key:'Customer manages: apps and data only. Provider: everything under the app.'},
+  {name:'SaaS',def:'Software as a Service. Provider manages everything. Customer configures and uses the application. Example: Microsoft 365, Salesforce, Gmail.',key:'Customer manages: configuration and data. Provider: everything else.'},
+  {name:'Shared Responsibility',def:'In cloud, security responsibilities are split between the provider (security OF the cloud) and the customer (security IN the cloud). Boundary depends on service model.',key:'IaaS: most customer responsibility. SaaS: least customer responsibility.'},
+  {name:'CSPM',def:'Cloud Security Posture Management. Continuously monitors cloud configurations for misconfigurations and compliance violations. Auto-detects public S3 buckets, over-permissive IAM.',key:'Detects drift from secure baseline. Alerts on misconfiguration. Compliance reporting.'},
+  {name:'CASB',def:'Cloud Access Security Broker. Sits between users and cloud services to enforce security policies. Provides visibility, compliance, DLP, and threat protection for cloud apps.',key:'Visibility + control over shadow IT and approved SaaS. Inline or API-based.'},
+  {name:'SASE',def:'Secure Access Service Edge. Converges networking (SD-WAN) and security (ZTNA, CASB, FWaaS, SWG) into a single cloud-delivered service.',key:'Security and networking delivered from the cloud edge. Replaces MPLS + VPN + perimeter firewall.'},
+  {name:'SD-WAN',def:'Software-Defined Wide Area Network. Virtualises WAN connectivity using software. Can use multiple connections (internet, MPLS) and route traffic intelligently.',key:'Replaces dedicated MPLS circuits. Centralised management. Dynamic path selection.'},
+  {name:'ZTNA',def:'Zero Trust Network Access. Provides application-level access based on identity and context, replacing VPN. Never exposes the network -- only specific applications.',key:'Identity + device health -> access specific app. Never access the full network.'},
+  {name:'Hypervisor',def:'Software that creates and manages virtual machines. Type 1 (bare-metal) runs directly on hardware. Type 2 (hosted) runs on an OS. ESXi, Hyper-V are Type 1.',key:'Type 1: bare-metal (ESXi, Hyper-V). Type 2: hosted (VirtualBox, VMware Workstation).'},
+  {name:'VM Escape',def:'A vulnerability where malicious code in a VM breaks out of the virtualisation layer and accesses the hypervisor or other VMs on the same host.',key:'Most severe VM attack. Hypervisor compromise = all VMs compromised.'},
+  {name:'Container',def:'A lightweight virtualisation unit that packages application code and dependencies together, sharing the host OS kernel. Docker containers are the most common example.',key:'Shares host OS kernel (unlike VMs). Faster, smaller. Less isolation than VM.'},
+  {name:'Infrastructure as Code',def:'Managing and provisioning infrastructure using machine-readable definition files rather than manual configuration. Terraform, CloudFormation, Ansible.',key:'Repeatable, version-controlled, auditable. Security: scan IaC templates for misconfigs before deploy.'},
+  {name:'DevSecOps',def:'Integrating security practices into the DevOps pipeline -- shifting security left so vulnerabilities are found in development, not production.',key:'SAST in CI, DAST against staging, container scanning, IaC scanning, secret detection.'},
+];
+
+var Q_BANK=[
+// ── CLOUD SERVICE MODELS ──────────────────────────────────────────────────
+{type:'identify',cat:'Cloud Service Models',q:'In an IaaS deployment, which layer is the customer responsible for patching?',o:['Physical servers and networking hardware','The hypervisor and virtualisation layer','The operating system, applications, and data -- everything above the hardware layer','The cloud provider\'s management console'],a:2,e:'<strong>IaaS customer patches OS upward</strong>. The provider owns physical hardware, network, and hypervisor. The customer is responsible for: OS patches, runtime environments, middleware, applications, and data. This is why unpatched OS vulnerabilities in IaaS are the customer\'s problem, not the provider\'s.'},
+{type:'identify',cat:'Cloud Service Models',q:'A company uses Microsoft 365 for email. A misconfiguration in email forwarding rules causes data leakage. Who is responsible for this security failure?',o:['Microsoft -- they operate the service','The customer -- in SaaS, the customer is responsible for configuration and data','Both equally -- it is a shared failure','Neither -- cloud misconfigurations are not a security issue'],a:1,e:'<strong>Customer is responsible for SaaS configuration</strong>. Microsoft provides a secure platform (their responsibility: availability, patching, infrastructure). The customer is responsible for how they configure it: sharing permissions, forwarding rules, MFA enforcement, data classification. The most common cloud security failures are customer misconfigurations, not provider breaches.'},
+{type:'identify',cat:'Cloud Service Models',q:'What does "FaaS" (Function as a Service) mean and what security concern does it introduce?',o:['A firewall delivered as a cloud service','Serverless computing where individual functions run on-demand -- security concern: insecure function permissions and secrets in environment variables','A storage service that allows file sharing','A cloud-based authentication service'],a:1,e:'<strong>FaaS/Serverless</strong> -- functions execute on-demand without managing servers. AWS Lambda, Azure Functions. Security concerns: overly permissive IAM roles on functions, secrets stored in environment variables instead of a vault, event injection attacks (malicious input triggering unintended function behaviour), and dependency supply chain attacks via vulnerable packages.'},
+{type:'identify',cat:'Cloud Service Models',q:'What is a multi-cloud strategy and what security challenge does it introduce?',o:['Using multiple cloud regions within a single provider','Using services from two or more cloud providers -- security challenge: inconsistent security controls and fragmented visibility across different cloud environments','Connecting cloud services to on-premises data centres','Using multiple accounts within the same cloud provider'],a:1,e:'<strong>Multi-cloud security complexity</strong> -- different CSPs have different security models, IAM systems, logging formats, and tools. Challenges: unified visibility across providers, consistent policy enforcement, identity federation between clouds, and avoiding shadow IT when teams choose their own cloud services. CSPM tools help, but each provider\'s native tools don\'t cover others.'},
+{type:'identify',cat:'Cloud Service Models',q:'What is a cloud access security broker (CASB)?',o:['A physical gateway device installed on-premises to filter cloud traffic','Software that sits between cloud users and cloud services to enforce security policies, provide visibility, and control access to both approved and shadow IT applications','A cloud-based firewall protecting on-premises data centres','A certificate authority for issuing cloud service TLS certificates'],a:1,e:'<strong>CASB</strong> -- discovers and controls cloud app usage. Two deployment modes: API-based (integrates directly with SaaS APIs for visibility and policy enforcement on approved apps) and inline/proxy (intercepts all cloud traffic for real-time control and DLP). Use cases: discover shadow IT, enforce DLP policies on SaaS uploads, block unapproved cloud storage, enforce MFA on cloud apps.'},
+{type:'identify',cat:'Cloud Service Models',q:'What does Cloud Security Posture Management (CSPM) continuously monitor for?',o:['Network intrusions and DDoS attacks against cloud services','Cloud resource misconfigurations and compliance drift -- such as publicly accessible storage buckets, overly permissive security groups, and unencrypted databases','User authentication attempts to cloud management consoles','Malware in files stored in cloud storage services'],a:1,e:'<strong>CSPM monitors for misconfigurations</strong> -- the leading cause of cloud breaches. CSPM auto-detects: S3 buckets with public access, EC2 security groups allowing 0.0.0.0/0 on port 22, databases without encryption, IAM roles with admin permissions not needing them. Provides continuous compliance scoring and remediation guidance. Essential for any serious cloud deployment.'},
+{type:'identify',cat:'Cloud Service Models',q:'What is the PRIMARY security benefit of immutable infrastructure?',o:['Servers that cannot be connected to the internet','Infrastructure components that are never modified after deployment -- instead they are replaced entirely with a new, known-good version when changes are needed','Cloud instances that automatically scale to prevent downtime','Storage that prevents any data deletion'],a:1,e:'<strong>Immutable infrastructure</strong> -- instead of patching a running server (which might be compromised), you build a new image, test it, deploy it, and destroy the old one. Benefits: no configuration drift, no persistent malware, every deployment is from a known clean state. Counter to: attackers who compromise a server can persist their foothold -- immutable infra forces redeployment to eliminate it.'},
+{type:'identify',cat:'Cloud Service Models',q:'What security risk is associated with cloud account console credentials compared to API keys?',o:['Console credentials are less powerful than API keys','If the root account or highly privileged console credentials are compromised without MFA, an attacker can instantly access and destroy all resources in the account -- more immediately destructive than a single API key compromise','API keys are always more dangerous because they enable programmatic access','Both have identical risk profiles'],a:1,e:'<strong>Root account / console credential risk</strong> -- the root account is the most powerful identity in cloud. If compromised without MFA: attacker can delete all resources, exfiltrate all data, create backdoor accounts, and incur massive charges. Best practices: never use root for daily tasks, enable MFA on root, create IAM admin accounts for normal admin work, and set billing alerts.'},
+
+// ── SHARED RESPONSIBILITY ─────────────────────────────────────────────────
+{type:'identify',cat:'Shared Responsibility',q:'Which of the following is ALWAYS the cloud provider\'s responsibility regardless of service model (IaaS, PaaS, or SaaS)?',o:['Encrypting customer data at rest','Patching the guest operating system','Physical security of data centre hardware and the underlying infrastructure','Configuring network security groups and firewall rules'],a:2,e:'<strong>Physical security is always the provider\'s responsibility</strong>. No matter which service model, the customer never touches physical hardware. Providers implement: biometric/badge access to data centres, 24/7 guards, CCTV, environmental controls, power redundancy. This is the "security OF the cloud" -- the infrastructure itself.'},
+{type:'identify',cat:'Shared Responsibility',q:'In a PaaS environment, who is responsible for securing the database engine used by the application?',o:['The customer -- they chose to use a database','The cloud provider -- the database engine is part of the platform they manage','Shared equally between provider and customer','Neither -- databases are inherently secure in PaaS environments'],a:1,e:'<strong>Provider manages PaaS database engine</strong> -- in PaaS, the provider manages the platform including database engines (AWS RDS, Azure SQL). The customer is responsible for: what data they store in the database, access controls to the database, and encrypting sensitive data. The customer does NOT patch the database engine -- that\'s the provider\'s job. They DO configure who can access it.'},
+{type:'identify',cat:'Shared Responsibility',q:'A company stores sensitive customer data in an AWS S3 bucket without enabling encryption. AWS offers encryption features. Who failed their security responsibility?',o:['AWS -- they should encrypt all data by default without customer action','The customer -- configuring data security controls is the customer\'s responsibility in cloud','AWS and the customer equally -- both should have detected this','Neither -- unencrypted cloud storage is acceptable for non-sensitive data'],a:1,e:'<strong>Customer responsibility: encryption configuration</strong>. AWS provides encryption capabilities (S3 SSE, KMS). Enabling encryption for customer data is the customer\'s responsibility under shared responsibility. AWS has added default encryption on S3 in recent years, but historically customers controlled this. Configuration decisions -- what to encrypt, who can access it, what policies apply -- are always the customer\'s responsibility.'},
+{type:'identify',cat:'Shared Responsibility',q:'What is "shadow IT" in the context of cloud security?',o:['Cloud services deliberately hidden from security teams for testing purposes','Unsanctioned cloud applications and services used by employees without IT knowledge or approval -- creating security gaps outside corporate controls','A cloud provider\'s internal test environment not visible to customers','Encrypted cloud storage used for sensitive data'],a:1,e:'<strong>Shadow IT</strong> -- employees signing up for Dropbox, using personal Gmail for work files, running AWS accounts on personal credit cards. These services bypass DLP controls, may not be encrypted to corporate standards, and create data sovereignty risks. CASB tools discover shadow IT by analysing DNS/proxy logs. The security team cannot protect what they don\'t know about.'},
+
+// ── VIRTUALISATION SECURITY ───────────────────────────────────────────────
+{type:'identify',cat:'Virtualisation Security',q:'What is the difference between a Type 1 and Type 2 hypervisor?',o:['Type 1 is more secure; Type 2 is less secure','Type 1 (bare-metal) runs directly on hardware with no host OS; Type 2 (hosted) runs as an application on a host OS -- Type 1 is generally faster and more secure for enterprise use','Type 1 is for server virtualisation; Type 2 is for desktop virtualisation only','They are functionally identical with different marketing names'],a:1,e:'<strong>Type 1 bare-metal hypervisors</strong> (VMware ESXi, Microsoft Hyper-V, Xen) run directly on hardware. Smaller attack surface -- no host OS vulnerabilities. Used in data centres and cloud. <strong>Type 2 hosted hypervisors</strong> (VirtualBox, VMware Workstation) run as applications on Windows/macOS. Larger attack surface but easier to use. Enterprise production = Type 1.'},
+{type:'identify',cat:'Virtualisation Security',q:'What is a VM escape attack and why is it considered the most severe virtualisation security threat?',o:['An attacker bypassing authentication to log into a VM directly','Malicious code running inside a VM exploiting a hypervisor vulnerability to break out and access the host OS or other VMs -- compromising the entire physical host and all VMs on it','An attacker taking a snapshot of a VM and restoring it to a previous state','Denial of service against a VM to prevent legitimate users from accessing it'],a:1,e:'<strong>VM escape</strong> -- if successful, attacker breaks the virtualisation boundary. From the host, they can: access memory of all other VMs, intercept hypervisor communications, install persistent malware in the hypervisor itself (surviving VM deletion), and access physical network interfaces. Prevented by: keeping hypervisors patched, disabling unnecessary hypervisor features (shared clipboard, drag-and-drop), and network isolation between VMs.'},
+{type:'identify',cat:'Virtualisation Security',q:'What is VM sprawl and why is it a security concern?',o:['Too many users accessing the same VM simultaneously','The uncontrolled proliferation of VMs that are no longer actively managed -- potentially unpatched, forgotten VMs running with security vulnerabilities','A type of denial-of-service attack against virtualised environments','When VMs consume too many physical resources causing performance degradation'],a:1,e:'<strong>VM sprawl</strong> -- VMs are easy to create and easy to forget. Forgotten VMs drift from security baselines: unpatched OS, outdated software, no EDR agent, stale credentials. Attackers finding an old forgotten test VM with full network access can use it as a pivot point. Controls: VM lifecycle management, automated decommissioning policies, regular audits of VM inventory.'},
+{type:'identify',cat:'Virtualisation Security',q:'What is a snapshot in virtualisation and what security risk does storing snapshots long-term introduce?',o:['A backup of VM configuration settings only','A point-in-time copy of an entire VM including memory, disk, and state -- security risk: snapshots may contain sensitive data, old credentials, or unpatched states that could be restored and exploited','An encrypted copy of VM data for disaster recovery','A clone of a VM used for testing purposes'],a:1,e:'<strong>Snapshot security risks</strong> -- snapshots capture everything: encryption keys in memory, plaintext credentials, sensitive data. Long-retained snapshots: may contain compromised credentials that were since rotated (but rotating back via snapshot recovery re-exposes them), sit outside normal patch processes, and consume storage. Treat snapshots like sensitive data: encrypt, control access, implement retention policies.'},
+
+// ── CONTAINER SECURITY ────────────────────────────────────────────────────
+{type:'identify',cat:'Container Security',q:'How does container isolation differ from VM isolation?',o:['Containers are always more secure than VMs','Containers share the host OS kernel (less isolation); VMs have their own OS with hypervisor isolation (more isolation) -- a kernel exploit could affect all containers on a host','VMs share the host OS; containers have fully isolated operating systems','They provide identical levels of isolation -- just different implementation'],a:1,e:'<strong>Containers share the kernel</strong> -- if a vulnerability exists in the host OS kernel, a container breakout could affect all containers. VMs have their own kernel, so a kernel exploit in one VM doesn\'t affect others. Containers offer process-level isolation (namespaces, cgroups), not full OS isolation. For highly sensitive workloads, gVisor or Kata Containers add a lightweight VM layer for stronger isolation.'},
+{type:'identify',cat:'Container Security',q:'What is the security risk of running containers as the root user?',o:['Root containers use more resources','If a process inside a root container escapes the container, it runs as root on the host OS -- with full system access','Root containers cannot access network resources','Running as root is required for containers to function correctly'],a:1,e:'<strong>Root containers = host root risk</strong>. Container best practice: run as a non-root user (USER directive in Dockerfile). If a container running as root is compromised, the attacker may escalate to host root through a container escape. Kubernetes: use PodSecurityContext to enforce non-root, read-only filesystems, and dropped capabilities.'},
+{type:'identify',cat:'Container Security',q:'What does a container image vulnerability scan do?',o:['Scans running containers for unusual network activity','Analyses container images for known CVEs in OS packages and application dependencies before the image is deployed to production','Monitors container CPU and memory usage for anomalies','Validates that container configurations comply with company naming conventions'],a:1,e:'<strong>Image scanning</strong> -- tools (Trivy, Snyk, Clair, AWS ECR scanning) analyse container images layer by layer, checking all OS packages and libraries against vulnerability databases (CVE/NVD). Integrate into CI/CD: block image deployment if critical/high CVEs are found. Images should be scanned at build time, on push to registry, and periodically for new CVEs affecting existing deployed images.'},
+{type:'identify',cat:'Container Security',q:'What is a sidecar container pattern and how can it be used for security?',o:['A secondary container that runs alongside the main container in the same pod -- used for security by injecting a service mesh proxy (e.g. Envoy/Istio) for mTLS, traffic encryption, and policy enforcement without modifying the application','A backup container that activates when the primary container fails','A container that scans other containers for vulnerabilities at runtime','A read-only container that serves static content alongside dynamic application containers'],a:0,e:'<strong>Sidecar for security</strong> -- deploy a security proxy alongside the app container: Istio/Envoy sidecars add mTLS between microservices, encrypt all service-to-service traffic, enforce authorisation policies, and provide observability without changing application code. Service mesh sidecars implement Zero Trust for internal microservice communication.'},
+{type:'identify',cat:'Container Security',q:'What is Kubernetes RBAC and why is it critical to configure correctly?',o:['Role-Based Access Control for the Linux OS running Kubernetes nodes','Kubernetes Role-Based Access Control defines what API actions users and service accounts can perform on cluster resources -- misconfiguration can grant pods access to modify cluster state or access secrets they should not see','A network policy controlling which containers can communicate','An authentication plugin for validating user identities to Kubernetes'],a:1,e:'<strong>Kubernetes RBAC misconfigurations</strong> are a leading cause of K8s compromises. Common mistakes: granting wildcard (*) permissions, mounting the default service account token in pods that don\'t need cluster API access, and using cluster-admin for application workloads. A compromised pod with admin RBAC can delete other workloads, exfiltrate all secrets, and pivot to other nodes.'},
+
+// ── SASE & SD-WAN ─────────────────────────────────────────────────────────
+{type:'identify',cat:'SASE & SD-WAN',q:'What problem does SASE (Secure Access Service Edge) solve that traditional perimeter security cannot?',o:['SASE solves insider threat detection better than perimeter security','With users and applications everywhere (remote work, SaaS, cloud), SASE delivers networking and security services from the cloud edge -- eliminating the need to backhaul traffic to a central data centre for security inspection','SASE provides faster internet speeds for remote workers','SASE replaces identity and access management systems'],a:1,e:'<strong>SASE eliminates traffic backhauling</strong>. Traditional: remote user -> VPN to HQ -> internet via HQ firewall -> SaaS app. Inefficient and slow. SASE: remote user -> nearest SASE PoP -> secure internet breakout -> SaaS app. Security (ZTNA, SWG, CASB, FWaaS) delivered at the edge, not at a central HQ. Critical for distributed organisations.'},
+{type:'identify',cat:'SASE & SD-WAN',q:'What is the difference between VPN and ZTNA (Zero Trust Network Access)?',o:['They are equivalent technologies with different branding','VPN grants access to the full network once authenticated; ZTNA grants access only to specific authorised applications based on identity and device posture, never exposing the network','ZTNA is less secure than VPN because it doesn\'t encrypt traffic','VPN is cloud-based; ZTNA is on-premises'],a:1,e:'<strong>VPN = network access; ZTNA = application access</strong>. VPN places the user on the corporate network -- if their device is compromised, the attacker is also on the network. ZTNA: user authenticates, device health is checked, then access is granted only to specific app(s). The network itself is never exposed. ZTNA is the Zero Trust replacement for VPN.'},
+{type:'identify',cat:'SASE & SD-WAN',q:'What is a Secure Web Gateway (SWG) and how does it protect cloud-connected users?',o:['A hardware appliance that filters emails before delivery to users','A cloud-based proxy that inspects all web traffic, enforces acceptable use policies, blocks malicious URLs and categories, and provides SSL/TLS inspection for encrypted traffic','A VPN concentrator for remote users connecting to SaaS applications','A firewall specifically designed for protecting web servers'],a:1,e:'<strong>SWG</strong> -- sits between users and the internet, inspecting all outbound web traffic. Functions: URL filtering (block social media, malware sites), SSL/TLS inspection (decrypt, inspect, re-encrypt to detect threats in HTTPS), DLP (prevent data upload to personal cloud), and malware protection. In SASE, SWG is cloud-delivered, protecting users wherever they are.'},
+{type:'identify',cat:'SASE & SD-WAN',q:'What is SD-WAN and what security capability does it add beyond traditional WAN?',o:['Software-Defined WAN virtualises multiple WAN connections and intelligently routes traffic -- security additions include integrated firewalling, encrypted overlays, and centralised policy management compared to traditional router-only WAN architectures','SD-WAN is a VPN technology for connecting branch offices','SD-WAN provides SIEM functionality for monitoring WAN traffic','SD-WAN replaces all need for firewalls at branch locations'],a:0,e:'<strong>SD-WAN vs traditional WAN</strong>. Traditional WAN: dedicated MPLS circuits, per-device config, traffic backhauled to HQ for security. SD-WAN: multiple link types (MPLS, broadband, 4G), centralised management, encrypted tunnels, application-aware routing (send VoIP via MPLS, internet via broadband). Next-gen SD-WAN includes integrated FWaaS, reducing the need for separate branch security appliances.'},
+
+// ── DEVSECOPS & IaC ──────────────────────────────────────────────────────
+{type:'identify',cat:'DevSecOps & IaC',q:'What does "shifting security left" mean in a DevSecOps context?',o:['Moving security teams to the left side of the office','Integrating security testing and reviews earlier in the SDLC -- in development and CI/CD -- rather than discovering vulnerabilities only at deployment or post-production','Reducing the number of security controls to speed up development','Allowing developers to define their own security requirements'],a:1,e:'<strong>Shift left</strong> -- finding a vulnerability in development costs $100 to fix. In production: $10,000+. Shift left: SAST in the IDE (developer sees the vulnerability as they write code), SCA in CI (flag vulnerable dependencies on PR), secrets detection in git (block commit of API keys), DAST against staging (before release). Security as part of the development workflow, not a gate at the end.'},
+{type:'identify',cat:'DevSecOps & IaC',q:'What is SAST (Static Application Security Testing) and when in the SDLC is it applied?',o:['Dynamic testing of running applications for runtime vulnerabilities','Analysis of application source code or compiled binaries without executing the code -- applied during development in the IDE or CI/CD pipeline to find vulnerabilities like SQLi, XSS, and insecure functions before the code runs','Network scanning of deployed applications to find open ports and services','Manual code review by security architects before each release'],a:1,e:'<strong>SAST -- analyse code without running it</strong>. Applied: in the developer\'s IDE (real-time feedback), in CI/CD on pull requests (block merge if critical findings). Finds: hardcoded credentials, SQL injection patterns, path traversal, insecure cryptography. Cannot find: runtime-only vulnerabilities, business logic flaws, or issues arising from system integration. Complement with DAST for complete coverage.'},
+{type:'identify',cat:'DevSecOps & IaC',q:'What is the security risk of "secrets in code" (hardcoded credentials in source repositories)?',o:['Code repositories are inherently secure and internal -- secrets are safe there','Once a secret (API key, password, certificate) is committed to a git repository, it exists in version history permanently even after deletion -- anyone with repository access past or present can retrieve it, and public repos expose them globally','Hardcoded secrets are less risky than secrets in environment variables','Only API keys are a risk -- database passwords in code are not a concern'],a:1,e:'<strong>Secrets in git are permanent</strong> -- git history retains every commit. Deleted file still accessible via git history. If the repo is ever made public (common in mergers, acquisitions, or accidental settings change), every historical secret is exposed. Prevention: secrets detection hooks in CI (Gitleaks, truffleHog) that block commits containing secrets; use a secrets manager (AWS Secrets Manager, HashiCorp Vault) for all credentials.'},
+{type:'identify',cat:'DevSecOps & IaC',q:'What is infrastructure as code (IaC) scanning and why is it important?',o:['Scanning physical infrastructure for security vulnerabilities','Analysing IaC templates (Terraform, CloudFormation, Bicep) before deployment to detect security misconfigurations -- like publicly accessible storage, missing encryption, or overly permissive IAM -- before they reach production','A method of automatically patching cloud infrastructure','A compliance audit of deployed cloud resources'],a:1,e:'<strong>IaC scanning shifts cloud security left</strong> -- tools (Checkov, KICS, tfsec) scan Terraform/CloudFormation/Kubernetes YAML before deployment. Find: S3 bucket with public access enabled, security group allowing 0.0.0.0/0, database without encryption at rest, IAM policy with wildcard permissions. Fixing a misconfiguration in a template takes seconds. Fixing it in production (after data has been exposed) is a breach.'},
+{type:'identify',cat:'DevSecOps & IaC',q:'What is a software bill of materials (SBOM) and why has it become important for security?',o:['A document listing software licences used in an application for legal compliance only','A comprehensive inventory of all components, libraries, and dependencies in a software product -- enables rapid identification of which products are affected when a new vulnerability (like Log4Shell) is discovered','A budget document tracking software development costs','A report of security vulnerabilities found in a software product'],a:1,e:'<strong>SBOM: component inventory for security response</strong>. When Log4Shell (CVE-2021-44228) was disclosed, organisations scrambled for weeks to find every system using log4j. With SBOMs, you run a query: "which products use log4j?" and get an instant answer. Executive Order 14028 (US) now requires SBOMs for software sold to the US government. Tools: SPDX, CycloneDX formats; Syft, Grype for generation.'},
+
+// ── SCENARIOS ─────────────────────────────────────────────────────────────
+{type:'scenario',cat:'Scenario',scenario:'A DevOps engineer accidentally commits an AWS access key and secret to a public GitHub repository. The commit was made 3 minutes ago.',q:'What should be the FIRST action taken?',o:['Delete the git repository and hope no one noticed','Immediately revoke and rotate the compromised AWS access key, then check CloudTrail logs for any API calls made using the exposed key in the past 3 minutes','Remove the file from the repository and rebase the commit to eliminate it from history','Send an internal security alert and wait for a security team member to assess the situation'],a:1,e:'<strong>Revoke immediately, THEN investigate</strong>. Automated bots scan public GitHub repos for secrets within seconds of commit -- 3 minutes is an eternity. Rotating the key stops any ongoing use. CloudTrail logs show every API call with timestamps -- if the key was used you\'ll see it. Removing from git history helps but is secondary to stopping active exploitation. GitHub has a secret scanning feature that notifies AWS automatically when it detects AWS keys in public repos.'},
+{type:'scenario',cat:'Scenario',scenario:'A security review finds that a company\'s Kubernetes cluster has 40 pods all running with the default service account, which has cluster-admin permissions inherited from a misconfigured ClusterRoleBinding.',q:'What is the PRIMARY risk and the correct remediation?',o:['The risk is performance degradation -- remove unnecessary service accounts','Any compromised pod has full cluster-admin access, enabling an attacker to read all secrets, delete workloads, and compromise every other pod. Remediate by: removing the cluster-admin ClusterRoleBinding and creating least-privilege roles per application need','The risk is limited to the pods in a single namespace -- remediate by isolating the namespace','The service account poses no risk because Kubernetes network policies prevent lateral movement'],a:1,e:'<strong>Cluster-admin on default service account = full cluster compromise from any pod</strong>. A single compromised pod (via a web vulnerability, supply chain attack, or RCE) can then access the Kubernetes API, read all secrets in all namespaces, modify deployments, create new privileged pods, and exfiltrate credentials from every other workload. Fix: audit all service accounts, remove default cluster-admin bindings, create specific roles per application, disable automounting service account tokens for pods that don\'t need API access.'},
+{type:'scenario',cat:'Scenario',scenario:'A company is migrating a monolithic application to microservices running in containers on Kubernetes. The security team is concerned about east-west (container-to-container) traffic.',q:'What technology addresses this concern?',o:['A traditional perimeter firewall added at the cluster boundary','A service mesh with mTLS (mutual TLS) -- encrypts all inter-service communication and verifies the identity of each service, ensuring only authorised services can communicate with each other','Network segmentation using VLANs around each container','Encrypting all persistent volumes used by the containers'],a:1,e:'<strong>Service mesh with mTLS</strong> -- containers in a cluster can communicate freely by default (east-west traffic). A service mesh (Istio, Linkerd) deploys sidecar proxies that enforce: encryption (mTLS on all service-to-service traffic), authentication (each service has a certificate identity), and authorisation (only service A can call service B\'s /payments endpoint). Invisible to the application -- implemented at the infrastructure layer.'},
+];
+
+var questions=[], qi=0, correct=0, wrong=0;
+var catStats={};
+for(var i=0;i<CATS.length;i++) catStats[CATS[i]]={c:0,t:0};
+
+function shuffle(a){return a.slice().sort(function(){return Math.random()-.5;});}
+function buildQuestions(){
+  var pool=shuffle(Q_BANK.slice());var result=[];
+  for(var k=0;k<pool.length;k++){
+    var q=pool[k];var idxs=[];for(var m=0;m<q.o.length;m++) idxs.push(m);
+    var shuf=shuffle(idxs);var nq={};for(var p in q) nq[p]=q[p];
+    nq.o=[];for(var n=0;n<shuf.length;n++) nq.o.push(q.o[shuf[n]]);
+    nq.a=shuf.indexOf(q.a);result.push(nq);
+  }
+  return result;
+}
+function updateStats(){
+  var total=correct+wrong;
+  document.getElementById('s-prog').textContent=qi+'/'+questions.length;
+  document.getElementById('s-correct').textContent=correct;
+  document.getElementById('s-wrong').textContent=wrong;
+  document.getElementById('s-acc').textContent=total?Math.round(correct/total*100)+'%':'--';
+  document.getElementById('prog-fill').style.width=Math.round(qi/questions.length*100)+'%';
+}
+function renderQ(){
+  if(qi>=questions.length){showResults();return;}
+  var q=questions[qi];var letters=['A','B','C','D'];
+  var badgeCls=BADGE_MAP[q.cat]||'badge-cloud';
+  var scenHTML='';
+  if(q.type==='scenario'&&q.scenario) scenHTML='<div class="scenario-box"><div class="scenario-lbl">Scenario</div><div class="scenario-text">'+q.scenario+'</div></div>';
+  var optsHTML='';
+  for(var i=0;i<q.o.length;i++) optsHTML+='<button class="opt" id="opt-'+i+'"><span class="opt-letter">'+letters[i]+'</span><span class="opt-text">'+q.o[i]+'</span></button>';
+  document.getElementById('q-area').innerHTML='<div class="q-card"><div class="q-meta"><span class="q-badge '+badgeCls+'">'+q.cat+'</span><span class="q-num">Q'+(qi+1)+' of '+questions.length+'</span></div>'+scenHTML+'<div class="q-text">'+q.q+'</div><div class="opts" id="opts">'+optsHTML+'</div><div class="explanation" id="explanation"><div class="exp-lbl">Explanation</div><div class="exp-text" id="exp-text"></div></div><button class="btn-next" id="btn-next">'+(qi===questions.length-1?'See results':'Next')+'</button></div>';
+  for(var _j=0;_j<q.o.length;_j++){(function(_idx){var _b=document.getElementById('opt-'+_idx);if(_b)_b.onclick=function(){answer(_idx);};}(_j));}
+  var nb=document.getElementById('btn-next');if(nb) nb.onclick=function(){nextQ();};
+}
+function answer(idx){
+  var q=questions[qi];var isCorrect=idx===q.a;
+  if(isCorrect){correct++;if(catStats[q.cat])catStats[q.cat].c++;}else{wrong++;}
+  if(!catStats[q.cat])catStats[q.cat]={c:0,t:0};catStats[q.cat].t++;
+  qi++;updateStats();
+  for(var i=0;i<q.o.length;i++){var b=document.getElementById('opt-'+i);if(b)b.disabled=true;}
+  var cb=document.getElementById('opt-'+idx);var rb=document.getElementById('opt-'+q.a);
+  if(isCorrect){if(cb)cb.classList.add('correct');}else{if(cb)cb.classList.add('wrong');if(rb)rb.classList.add('reveal');}
+  var et=document.getElementById('exp-text');var eb=document.getElementById('explanation');var nb=document.getElementById('btn-next');
+  if(et)et.innerHTML=q.e;if(eb)eb.classList.add('show');
+  if(nb){nb.style.display='block';nb.onclick=function(){nextQ();};}
+  if(qi>0&&qi%20===0) logToDashboard(3,'Cloud & Virtualisation Security Trainer',Math.round(correct/qi*100));
+}
+function nextQ(){renderQ();}
+function showResults(){
+  document.getElementById('q-area').style.display='none';
+  var res=document.getElementById('results-area');res.style.display='block';
+  var pct=Math.round(correct/questions.length*100);
+  logToDashboard(3,'Cloud & Virtualisation Security Trainer',pct);
+  var passed=pct>=80;var ringColor=passed?'#00ff88':'#ff3d5a';
+  var msg=pct>=90?'Cloud security mastered!':pct>=80?'Solid -- above pass threshold.':pct>=65?'Getting there.':'More practice needed.';
+  var circ=339.3,offset=circ-(pct/100)*circ;
+  var bdHTML='';
+  for(var ci=0;ci<CATS.length;ci++){
+    var c=CATS[ci];var s=catStats[c];var p=s.t?Math.round(s.c/s.t*100):0;var col=CAT_COLORS[c]||'var(--accent)';
+    bdHTML+='<div class="bd-card"><div class="bd-title" style="color:'+col+'">'+c+'</div><div class="bd-bar-bg"><div class="bd-bar-fill" style="width:0%;background:'+col+'" data-pct="'+p+'"></div></div><div class="bd-score" style="color:'+col+'">'+p+'%</div><div class="bd-detail">'+s.c+'/'+s.t+' correct</div></div>';
+  }
+  res.innerHTML='<div class="results-wrap"><div class="results-ring"><svg width="140" height="140" viewBox="0 0 140 140"><circle cx="70" cy="70" r="54" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="10"/><circle cx="70" cy="70" r="54" fill="none" stroke="'+ringColor+'" stroke-width="10" stroke-linecap="round" stroke-dasharray="'+circ+'" stroke-dashoffset="'+circ+'" id="ring-anim"/></svg><div class="ring-score"><div class="ring-pct" style="color:'+ringColor+'">'+pct+'%</div><div class="ring-lbl">score</div></div></div><div class="results-verdict" style="color:'+ringColor+'">'+(passed?'Passed':'Keep Studying')+'</div><div class="results-sub">'+correct+'/'+questions.length+' correct -- '+msg+'</div><div class="breakdown">'+bdHTML+'</div><button class="btn-retake" onclick="retake()">Retake Quiz</button></div>';
+  setTimeout(function(){
+    var ring=document.getElementById('ring-anim');if(ring){ring.style.transition='stroke-dashoffset 1.5s ease';ring.style.strokeDashoffset=offset;}
+    var fills=document.querySelectorAll('.bd-bar-fill');for(var i=0;i<fills.length;i++){fills[i].style.transition='width 1s ease';fills[i].style.width=fills[i].getAttribute('data-pct')+'%';}
+  },100);
+}
+function retake(){
+  document.getElementById('q-area').style.display='block';document.getElementById('results-area').style.display='none';
+  questions=buildQuestions();qi=0;correct=0;wrong=0;
+  for(var i=0;i<CATS.length;i++) catStats[CATS[i]]={c:0,t:0};
+  updateStats();renderQ();
+}
+function setTab(t){
+  if(t==='ref'){
+    document.getElementById('view-quiz').style.display='none';document.getElementById('view-ref').style.display='block';
+    document.getElementById('tab-quiz').classList.remove('active');document.getElementById('tab-ref').classList.add('active');buildRef();
+  } else {
+    document.getElementById('view-ref').style.display='none';document.getElementById('view-quiz').style.display='block';
+    document.getElementById('tab-quiz').classList.add('active');document.getElementById('tab-ref').classList.remove('active');
+  }
+}
+function buildRef(){
+  var chart=document.getElementById('acc-chart');chart.innerHTML='';
+  for(var ci=0;ci<CATS.length;ci++){
+    var c=CATS[ci];var s=catStats[c]||{c:0,t:0};var pct=s.t?Math.round(s.c/s.t*100):0;var col=CAT_COLORS[c]||'var(--accent)';
+    chart.innerHTML+='<div style="display:grid;grid-template-columns:200px 1fr 42px;gap:10px;align-items:center;margin-bottom:10px"><div style="font-size:12px;color:var(--text2);text-align:right">'+c+'</div><div style="height:16px;background:var(--panel2);border-radius:8px;overflow:hidden"><div style="height:100%;width:'+(s.t?pct:0)+'%;background:'+col+';border-radius:8px"></div></div><div style="font-family:var(--mono);font-size:11px;color:var(--text2)">'+(s.t?pct+'%':'--')+'</div></div>';
+  }
+  var cards=document.getElementById('ref-cards');cards.innerHTML='';
+  for(var ti=0;ti<TERMS.length;ti++){
+    var t=TERMS[ti];
+    cards.innerHTML+='<div style="background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:14px"><div style="font-size:14px;font-weight:600;color:var(--text);margin-bottom:6px">'+t.name+'</div><div style="font-size:12px;color:var(--text2);line-height:1.6">'+t.def+'</div><div style="font-family:var(--mono);font-size:10px;color:var(--text3);margin-top:8px;border-top:1px solid var(--border);padding-top:6px">'+t.key+'</div></div>';
+  }
+}
+questions=buildQuestions();updateStats();renderQ();
+</script>
+</body>
+</html>

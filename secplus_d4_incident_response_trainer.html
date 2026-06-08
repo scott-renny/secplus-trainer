@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Incident Response Trainer -- Security+</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#07080c;--panel:#0e1018;--panel2:#141720;--panel3:#1a1e29;
+  --border:rgba(255,255,255,0.06);--border2:rgba(255,255,255,0.1);--border3:rgba(255,255,255,0.18);
+  --text:#e4e8f5;--text2:#6b7494;--text3:#3a4060;
+  --accent:#00e5ff;--green:#00ff88;--red:#ff3d5a;--amber:#ffcc00;--purple:#bf87ff;--teal:#4fd1c5;
+  --mono:'Courier New',monospace;
+}
+*{font-family:'Segoe UI',sans-serif}
+body{background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 60% 50% at 20% 0%,rgba(255,61,90,0.03) 0%,transparent 60%),radial-gradient(ellipse 50% 40% at 80% 100%,rgba(0,229,255,0.03) 0%,transparent 60%);pointer-events:none}
+body::after{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(255,61,90,0.012) 1px,transparent 1px),linear-gradient(90deg,rgba(255,61,90,0.012) 1px,transparent 1px);background-size:40px 40px;pointer-events:none}
+.wrap{position:relative;z-index:1;max-width:760px;margin:0 auto;padding:32px 20px 80px}
+.eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:var(--red);margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'';width:20px;height:1px;background:var(--red)}
+h1{font-size:clamp(26px,5vw,40px);font-weight:700;line-height:1.1;letter-spacing:-.02em;margin-bottom:8px}
+h1 em{font-style:normal;color:var(--red)}
+.subtitle{font-family:var(--mono);font-size:11px;color:var(--text2);margin-bottom:28px}
+.tabs{display:flex;gap:5px;margin-bottom:20px;background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:5px}
+.tab{flex:1;padding:10px 4px;font-family:var(--mono);font-size:10px;letter-spacing:.05em;text-transform:uppercase;border:none;background:transparent;color:var(--text3);cursor:pointer;border-radius:8px;transition:all .2s;touch-action:manipulation}
+.tab.active{background:var(--panel3);color:var(--red);border:1px solid rgba(255,61,90,0.2)}
+.tab:not(.active):hover{color:var(--text2)}
+.stats-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px}
+.sb{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:13px;position:relative;overflow:hidden}
+.sb::before{content:'';position:absolute;top:0;left:0;right:0;height:2px}
+.sb.s-prog::before{background:var(--red)}
+.sb.s-correct::before{background:var(--green)}
+.sb.s-wrong::before{background:var(--red)}
+.sb.s-acc::before{background:var(--amber)}
+.sb-val{font-family:var(--mono);font-size:22px;font-weight:500;line-height:1}
+.sb.s-correct .sb-val{color:var(--green)}
+.sb.s-wrong .sb-val{color:var(--red)}
+.sb.s-acc .sb-val{color:var(--amber)}
+.sb-lbl{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--text2);margin-top:4px}
+.prog-wrap{height:3px;background:rgba(255,255,255,0.06);border-radius:99px;margin-bottom:20px;overflow:hidden}
+.prog-fill{height:100%;background:var(--red);border-radius:99px;transition:width .4s ease}
+.q-card{background:var(--panel);border:1px solid var(--border2);border-radius:20px;padding:28px;margin-bottom:14px;position:relative;overflow:hidden}
+.q-card::after{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,61,90,0.3),transparent)}
+.q-meta{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.q-badge{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;padding:3px 10px;border-radius:5px}
+.badge-phases{background:rgba(255,61,90,0.1);color:var(--red);border:1px solid rgba(255,61,90,0.2)}
+.badge-forensics{background:rgba(0,229,255,0.1);color:var(--accent);border:1px solid rgba(0,229,255,0.2)}
+.badge-comms{background:rgba(191,135,255,0.1);color:var(--purple);border:1px solid rgba(191,135,255,0.2)}
+.badge-tools{background:rgba(79,209,197,0.1);color:var(--teal);border:1px solid rgba(79,209,197,0.2)}
+.badge-legal{background:rgba(255,204,0,0.1);color:var(--amber);border:1px solid rgba(255,204,0,0.2)}
+.badge-scenario{background:rgba(255,204,0,0.1);color:var(--amber);border:1px solid rgba(255,204,0,0.2)}
+.q-num{font-family:var(--mono);font-size:10px;color:var(--text3)}
+.scenario-box{background:var(--panel2);border:1px solid var(--border2);border-left:3px solid var(--amber);border-radius:10px;padding:13px 16px;margin-bottom:16px}
+.scenario-lbl{font-family:var(--mono);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--amber);margin-bottom:6px}
+.scenario-text{font-size:13px;color:var(--text2);line-height:1.7;font-family:var(--mono)}
+.q-text{font-size:15px;font-weight:500;line-height:1.65;color:var(--text);margin-bottom:18px}
+.opts{display:flex;flex-direction:column;gap:9px;margin-bottom:14px}
+.opt{display:flex;align-items:flex-start;gap:14px;padding:13px 16px;border-radius:10px;border:1px solid var(--border2);background:var(--panel2);cursor:pointer;text-align:left;width:100%;transition:all .15s;touch-action:manipulation}
+.opt:hover:not(:disabled){border-color:var(--border3);background:var(--panel3)}
+.opt-letter{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--text2);min-width:18px;margin-top:1px;flex-shrink:0}
+.opt-text{font-size:14px;color:var(--text);line-height:1.5}
+.opt.correct{border-color:var(--green)!important;background:rgba(0,255,136,0.07)!important}
+.opt.correct .opt-letter,.opt.correct .opt-text{color:var(--green)!important}
+.opt.wrong{border-color:var(--red)!important;background:rgba(255,61,90,0.07)!important}
+.opt.wrong .opt-letter,.opt.wrong .opt-text{color:var(--red)!important}
+.opt.reveal{border-color:rgba(0,255,136,0.3)!important;background:rgba(0,255,136,0.04)!important}
+.opt.reveal .opt-letter,.opt.reveal .opt-text{color:var(--green)!important;opacity:.6}
+.opt:disabled{cursor:default}
+.explanation{display:none;background:var(--panel2);border:1px solid var(--border2);border-left:3px solid var(--red);border-radius:10px;padding:13px 16px;margin-bottom:12px}
+.explanation.show{display:block}
+.exp-lbl{font-family:var(--mono);font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--red);margin-bottom:7px}
+.exp-text{font-size:13px;color:var(--text2);line-height:1.7}
+.exp-text strong{color:var(--text);font-weight:600}
+.btn-next{width:100%;padding:12px;border-radius:10px;border:1px solid var(--border2);background:transparent;color:var(--text2);font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;display:none;transition:all .15s;touch-action:manipulation}
+.btn-next:hover{border-color:var(--red);color:var(--red)}
+.results-wrap{text-align:center;padding:32px 0 20px}
+.results-ring{width:140px;height:140px;margin:0 auto 20px;position:relative}
+.results-ring svg{transform:rotate(-90deg)}
+.ring-score{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center}
+.ring-pct{font-family:var(--mono);font-size:32px;font-weight:600;color:var(--text)}
+.ring-lbl{font-family:var(--mono);font-size:9px;color:var(--text3);letter-spacing:.1em;text-transform:uppercase}
+.results-verdict{font-size:22px;font-weight:700;margin-bottom:6px}
+.results-sub{font-family:var(--mono);font-size:11px;color:var(--text2);margin-bottom:28px}
+.breakdown{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:28px;text-align:left}
+.bd-card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:16px}
+.bd-title{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px}
+.bd-bar-bg{height:5px;background:rgba(255,255,255,0.06);border-radius:99px;overflow:hidden;margin-bottom:6px}
+.bd-bar-fill{height:100%;border-radius:99px;transition:width 1s ease}
+.bd-score{font-family:var(--mono);font-size:22px;font-weight:600}
+.bd-detail{font-family:var(--mono);font-size:10px;color:var(--text3);margin-top:4px}
+.btn-retake{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:12px 36px;background:transparent;border:1px solid var(--border2);color:var(--text2);border-radius:10px;cursor:pointer;transition:all .2s;margin-right:10px;touch-action:manipulation}
+.btn-retake:hover{border-color:var(--red);color:var(--red)}
+.ref-section-title{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--red);margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.ref-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px}
+.ref-card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:14px;transition:border-color .15s}
+.ref-card:hover{border-color:var(--border3)}
+.ref-name{font-size:14px;font-weight:600;color:var(--text);margin-bottom:6px}
+.ref-def{font-size:12px;color:var(--text2);line-height:1.6}
+.ref-tag{display:inline-block;font-family:var(--mono);font-size:10px;padding:2px 8px;border-radius:4px;margin-top:8px}
+.tag-red{background:rgba(255,61,90,0.1);color:var(--red)}
+.tag-accent{background:rgba(0,229,255,0.1);color:var(--accent)}
+.tag-amber{background:rgba(255,204,0,0.1);color:var(--amber)}
+.tag-purple{background:rgba(191,135,255,0.1);color:var(--purple)}
+.tag-teal{background:rgba(79,209,197,0.1);color:var(--teal)}
+.tag-green{background:rgba(0,255,136,0.1);color:var(--green)}
+.ref-key{font-family:var(--mono);font-size:10px;color:var(--text3);margin-top:8px;border-top:1px solid var(--border);padding-top:6px}
+.acc-row{display:grid;grid-template-columns:185px 1fr 42px;gap:10px;align-items:center;margin-bottom:10px}
+.acc-lbl{font-size:13px;color:var(--text2);text-align:right}
+.acc-bg{height:18px;background:var(--panel2);border-radius:8px;overflow:hidden}
+.acc-fill{height:100%;border-radius:8px;transition:width .8s ease}
+.acc-pct{font-family:var(--mono);font-size:11px;color:var(--text2);font-weight:500}
+@media(max-width:500px){.stats-bar{grid-template-columns:repeat(2,1fr)}.breakdown{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">CompTIA Security+ &middot; SY0-701 &middot; Domain 4</div>
+  <h1>Incident <em>Response</em></h1>
+  <p class="subtitle">57 questions &middot; IR phases &middot; digital forensics &middot; evidence handling &middot; communications &middot; tools &middot; legal &middot; scenarios</p>
+  <div class="tabs">
+    <button class="tab active" onclick="setTab('quiz')" id="tab-quiz">Quiz</button>
+    <button class="tab" onclick="setTab('ref')" id="tab-ref">Reference</button>
+  </div>
+  <div id="view-quiz">
+    <div class="stats-bar">
+      <div class="sb s-prog"><div class="sb-val" id="s-prog">0/57</div><div class="sb-lbl">Progress</div></div>
+      <div class="sb s-correct"><div class="sb-val" id="s-correct">0</div><div class="sb-lbl">Correct</div></div>
+      <div class="sb s-wrong"><div class="sb-val" id="s-wrong">0</div><div class="sb-lbl">Wrong</div></div>
+      <div class="sb s-acc"><div class="sb-val" id="s-acc">--</div><div class="sb-lbl">Accuracy</div></div>
+    </div>
+    <div class="prog-wrap"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
+    <div id="q-area"></div>
+    <div id="results-area" style="display:none"></div>
+  </div>
+  <div id="view-ref" style="display:none">
+    <div style="margin-bottom:24px">
+      <div class="ref-section-title" style="margin-bottom:12px">Accuracy by Category</div>
+      <div id="acc-chart"></div>
+    </div>
+    <div class="ref-section-title">Key Terms and Concepts</div>
+    <div class="ref-grid" id="ref-cards"></div>
+  </div>
+</div>
+<script>
+function logToDashboard(domain,type,score){
+  try{
+    var s=JSON.parse(localStorage.getItem('sp_sessions')||'[]');
+    var now=new Date();
+    s.push({domain:domain,type:type,score:score,date:now.toLocaleDateString('en-CA',{month:'short',day:'numeric'}),ts:now.getTime()});
+    localStorage.setItem('sp_sessions',JSON.stringify(s));
+  }catch(e){}
+}
+
+var TERMS=[
+  {name:'NIST IR Lifecycle',def:'Preparation, Detection and Analysis, Containment/Eradication/Recovery, Post-Incident Activity. The four phases of the NIST SP 800-61 incident response process.',tag:'tag-red',tagLabel:'IR Framework',key:'Prep -> Detect/Analyse -> Contain/Eradicate/Recover -> Post-Incident'},
+  {name:'Preparation Phase',def:'Establishing IR capability before incidents occur: policies, playbooks, tools, training, and communication plans.',tag:'tag-red',tagLabel:'IR Phase',key:'Everything done BEFORE an incident -- policies, tools, training, contacts'},
+  {name:'Detection and Analysis',def:'Identifying that an incident has occurred and determining its scope, impact, and root cause.',tag:'tag-red',tagLabel:'IR Phase',key:'What happened? How bad is it? What systems are affected?'},
+  {name:'Containment',def:'Stopping the spread of an incident while preserving evidence. Short-term: immediate isolation. Long-term: stable temporary fixes.',tag:'tag-red',tagLabel:'IR Phase',key:'Short-term: stop the bleeding. Long-term: stable temp fix. Both preserve evidence.'},
+  {name:'Eradication',def:'Removing the root cause of the incident -- malware, compromised accounts, vulnerabilities -- from all affected systems.',tag:'tag-red',tagLabel:'IR Phase',key:'Remove malware, patch vuln, disable compromised accounts, rebuild systems'},
+  {name:'Recovery',def:'Restoring systems to normal operation and monitoring to confirm the threat is gone before returning to production.',tag:'tag-red',tagLabel:'IR Phase',key:'Restore from clean backup, monitor closely, confirm no reinfection'},
+  {name:'Post-Incident Activity',def:'Lessons learned review, root cause analysis, IR report, process improvement, and evidence retention after an incident closes.',tag:'tag-red',tagLabel:'IR Phase',key:'What happened? What did we miss? What do we change? Write the report.'},
+  {name:'Order of Volatility',def:'The sequence for collecting digital evidence based on how quickly it disappears: CPU registers/cache, RAM, network state, running processes, disk, logs, archived media.',tag:'tag-accent',tagLabel:'Forensics',key:'Most volatile first: CPU cache -> RAM -> network state -> disk -> archives'},
+  {name:'Chain of Custody',def:'A documented record of everyone who has handled evidence, when, and why -- ensuring evidence integrity and admissibility in court.',tag:'tag-accent',tagLabel:'Forensics',key:'Every handler documented -- breaks chain = evidence inadmissible in court'},
+  {name:'Write Blocker',def:'A hardware or software device that prevents any write operations to forensic media, ensuring the original evidence is not modified.',tag:'tag-accent',tagLabel:'Forensics',key:'Prevents accidental modification -- required before imaging a drive'},
+  {name:'Forensic Image',def:'A bit-for-bit copy of a storage device capturing every sector, including deleted files and unallocated space. Hash verified against original.',tag:'tag-accent',tagLabel:'Forensics',key:'Work from the image, never the original. Verify with MD5/SHA-256 hash.'},
+  {name:'IOC',def:'Indicator of Compromise -- artefacts that suggest a system has been compromised: unusual processes, outbound connections, file hashes, registry changes.',tag:'tag-red',tagLabel:'Detection',key:'Evidence of past compromise -- reactive. File hashes, IPs, domains.'},
+  {name:'IOA',def:'Indicator of Attack -- behaviours and patterns suggesting an attack is in progress, even before compromise is confirmed.',tag:'tag-red',tagLabel:'Detection',key:'Evidence of ongoing attack -- proactive. Behaviours, not artefacts.'},
+  {name:'SIEM Correlation',def:'SIEM aggregates logs from multiple sources and applies correlation rules to identify patterns that indicate an incident.',tag:'tag-teal',tagLabel:'Tools',key:'Multiple low-severity events correlated = high-severity incident alert'},
+  {name:'EDR',def:'Endpoint Detection and Response -- continuously monitors endpoints, records all activity, and enables rapid investigation and isolation.',tag:'tag-teal',tagLabel:'Tools',key:'Records endpoint telemetry -- enables investigate, contain, and respond'},
+  {name:'Sandbox',def:'An isolated environment for safely executing and analysing potentially malicious files or code without risk to production systems.',tag:'tag-teal',tagLabel:'Tools',key:'Run malware safely to observe behaviour -- detonation chamber'},
+  {name:'Legal Hold',def:'A directive to preserve all relevant data and stop normal deletion procedures when litigation or investigation is anticipated.',tag:'tag-amber',tagLabel:'Legal',key:'Litigation anticipated -> preserve everything, suspend retention policies'},
+  {name:'Incident Severity',def:'Classification of incidents by impact: P1 (critical/all hands), P2 (high/urgent), P3 (medium/business hours), P4 (low/scheduled).',tag:'tag-purple',tagLabel:'Communications',key:'Severity drives response urgency, escalation path, and notification timing'},
+  {name:'Escalation',def:'The process of notifying higher authority (management, legal, CISO, regulators) when an incident exceeds defined thresholds.',tag:'tag-purple',tagLabel:'Communications',key:'Who gets told, when, and by what means -- defined in advance in the IR plan'},
+  {name:'Lessons Learned',def:'A structured post-incident review that documents what happened, what worked, what failed, and what improvements are needed.',tag:'tag-red',tagLabel:'Post-Incident',key:'Held within 2 weeks of closure -- blameless, improvement-focused'},
+  {name:'Root Cause Analysis',def:'The process of identifying the fundamental cause of an incident -- the vulnerability, misconfiguration, or gap that allowed it to occur.',tag:'tag-red',tagLabel:'Post-Incident',key:'Fix the root cause, not just the symptom -- prevents recurrence'},
+  {name:'Tabletop Exercise',def:'A discussion-based simulation where the IR team walks through a hypothetical scenario without activating actual IR procedures.',tag:'tag-red',tagLabel:'Preparation',key:'No real systems activated -- tests plans and team decision-making'},
+  {name:'Functional Exercise',def:'A simulation that activates actual IR procedures and tools but without real systems -- tests operational capability.',tag:'tag-red',tagLabel:'Preparation',key:'Actually uses IR tools and procedures -- but no real incident'},
+  {name:'Full-Scale Exercise',def:'A complete simulation involving all stakeholders, real systems where safe, and full activation of IR and BC/DR plans.',tag:'tag-red',tagLabel:'Preparation'},
+];
+TERMS[TERMS.length-1].key='Most comprehensive -- tests everything including comms, escalation, and recovery';
+
+var CATS=['IR Phases','Digital Forensics','Detection and Analysis','Communications and Escalation','IR Tools','Legal and Compliance','Scenario'];
+var CAT_COLORS={
+  'IR Phases':'var(--red)',
+  'Digital Forensics':'var(--accent)',
+  'Detection and Analysis':'var(--red)',
+  'Communications and Escalation':'var(--purple)',
+  'IR Tools':'var(--teal)',
+  'Legal and Compliance':'var(--amber)',
+  'Scenario':'var(--amber)'
+};
+var BADGE_MAP={
+  'IR Phases':'badge-phases',
+  'Digital Forensics':'badge-forensics',
+  'Detection and Analysis':'badge-phases',
+  'Communications and Escalation':'badge-comms',
+  'IR Tools':'badge-tools',
+  'Legal and Compliance':'badge-legal',
+  'Scenario':'badge-scenario'
+};
+
+var Q_BANK=[
+// -- IR PHASES --
+{type:'identify',cat:'IR Phases',q:"What is the FIRST phase of the NIST SP 800-61 incident response lifecycle?",o:["Detection and Analysis","Containment","Preparation","Post-Incident Activity"],a:2,e:"<strong>Preparation</strong> -- everything done before an incident occurs. Policies, IR plans, playbooks, tools, team training, and communication trees. Without preparation, the other phases fail."},
+{type:'identify',cat:'IR Phases',q:"Which NIST IR phase involves determining the scope, root cause, and impact of an incident?",o:["Preparation","Containment","Post-Incident Activity","Detection and Analysis"],a:3,e:"<strong>Detection and Analysis</strong> -- once an event is detected, analysts determine whether it is a true incident, what systems are affected, how it entered, and the severity. This drives all subsequent decisions."},
+{type:'identify',cat:'IR Phases',q:"What is the PRIMARY goal of the containment phase?",o:["Remove malware from all affected systems","Restore systems to normal operation","Stop the spread of the incident while preserving evidence","Identify the root cause of the breach"],a:2,e:"<strong>Containment</strong> -- stops the incident from spreading further. Short-term containment (immediate isolation) is followed by long-term containment (stable temporary fixes). Both must preserve evidence for forensics."},
+{type:'identify',cat:'IR Phases',q:"What is the difference between short-term and long-term containment?",o:["Short-term removes malware; long-term patches systems","Short-term immediately isolates to stop spread; long-term implements stable temporary fixes while investigation continues","Short-term is for critical systems; long-term is for non-critical","They are identical -- just different names for the same action"],a:1,e:"<strong>Short-term containment</strong>: immediate isolation (pull the network cable, firewall rule). <strong>Long-term containment</strong>: stable enough to operate temporarily while forensics and eradication proceed -- e.g., applying a workaround patch, removing a compromised account."},
+{type:'identify',cat:'IR Phases',q:"Which phase comes AFTER containment in the NIST IR lifecycle?",o:["Post-Incident Activity","Recovery","Detection and Analysis","Eradication"],a:3,e:"<strong>Eradication</strong> follows containment. After stopping the spread, the root cause must be removed: malware deleted, compromised accounts disabled, vulnerable systems patched or rebuilt from clean images."},
+{type:'identify',cat:'IR Phases',q:"What is the PRIMARY difference between eradication and recovery?",o:["Eradication is for malware; recovery is for hardware failures","Eradication removes the root cause from affected systems; recovery restores systems to normal production operation","They are the same phase with different names","Eradication is performed by IT; recovery is performed by management"],a:1,e:"<strong>Eradication</strong>: remove the threat (malware, compromised accounts, vulnerabilities). <strong>Recovery</strong>: restore systems to production with monitoring to confirm the threat is truly gone. Recovery without eradication leads to reinfection."},
+{type:'identify',cat:'IR Phases',q:"What MUST happen before returning systems to production during recovery?",o:["Management must sign off on the incident report","Systems must be monitored to confirm the threat is not present before resuming normal operations","All users must change their passwords","A new firewall rule must be created"],a:1,e:"<strong>Monitor before returning to production</strong> -- systems should be observed for signs of reinfection or residual attacker presence. Returning too quickly risks a recurrence. Monitoring period length depends on the incident type and severity."},
+{type:'identify',cat:'IR Phases',q:"What is the purpose of post-incident activity?",o:["Shut down affected systems permanently","Document lessons learned, improve processes, and retain evidence for potential legal action","Bill the client for incident response services","Notify all users about the breach"],a:1,e:"<strong>Post-incident activity</strong> includes: lessons learned meeting, root cause documentation, IR report, process improvements, evidence retention per legal requirements. Should occur within two weeks of incident closure."},
+{type:'identify',cat:'IR Phases',q:"A security team isolates an infected server from the network and creates a forensic image before touching anything else. Which IR principle are they demonstrating?",o:["Eradication before containment","Evidence preservation during containment","Recovery before analysis","Post-incident documentation"],a:1,e:"<strong>Evidence preservation during containment</strong> -- containment actions must not destroy evidence. Creating a forensic image before making changes, using write blockers, and documenting system state are critical. Investigators need the evidence intact for root cause analysis and potential prosecution."},
+{type:'identify',cat:'IR Phases',q:"Which of the following is a PRIMARY output of the post-incident activity phase?",o:["A restored backup","A patch for the exploited vulnerability","A lessons learned report documenting what happened and how to improve","A new firewall rule blocking the attacker IP"],a:2,e:"<strong>Lessons learned report</strong> -- the formal documentation of the incident: timeline, root cause, what worked, what failed, and recommended improvements to prevent recurrence. This feeds directly into the next preparation phase."},
+{type:'identify',cat:'IR Phases',q:"Which of the following BEST describes an IR playbook?",o:["A training document for new security staff","A pre-written step-by-step response procedure for a specific incident type","A log of all past security incidents","A legal document outlining breach notification requirements"],a:1,e:"<strong>IR playbook</strong> -- a pre-defined procedure for a specific incident type (ransomware, phishing, insider threat). Reduces response time and ensures consistent handling. Created during preparation so analysts can execute under pressure."},
+{type:'identify',cat:'IR Phases',q:"What is the MAIN advantage of having pre-written IR playbooks?",o:["They eliminate the need for trained security analysts","They reduce response time and ensure consistent actions under pressure","They satisfy all regulatory notification requirements","They automatically remediate incidents without human involvement"],a:1,e:"<strong>Playbooks reduce MTTR</strong> -- analysts under pressure make mistakes. Pre-written, tested procedures for common incident types ensure nothing is skipped and actions are consistent. Playbooks are validated through tabletop exercises."},
+
+// -- DIGITAL FORENSICS --
+{type:'identify',cat:'Digital Forensics',q:"What is the correct order of volatility for evidence collection?",o:["Hard disk, RAM, CPU registers, network connections","CPU registers and cache, RAM, network state, running processes, disk storage, logs, archived media","Logs, disk, RAM, CPU cache","Network connections, disk, RAM, CPU registers"],a:1,e:"<strong>Most volatile first</strong>: CPU registers/cache (lost on reboot) -> RAM (lost on power off) -> network connections (change constantly) -> running processes -> disk storage -> logs -> archived media. Collect in this order to preserve the most fragile evidence first."},
+{type:'identify',cat:'Digital Forensics',q:"Why must a forensic analyst use a write blocker before imaging a drive?",o:["To speed up the imaging process","To prevent any accidental write operations that would modify the original evidence","To decrypt encrypted drives before imaging","To verify the hash of the original drive"],a:1,e:"<strong>Write blocker</strong> -- any interaction with a drive (even mounting it) can modify timestamps and metadata. A hardware or software write blocker intercepts write commands, ensuring the original is forensically sound. Required for evidence admissibility."},
+{type:'identify',cat:'Digital Forensics',q:"What is the purpose of hashing a forensic image immediately after capture?",o:["Compressing the image to save storage space","Encrypting the image to prevent unauthorised access","Creating a unique fingerprint to verify the image is an exact copy and has not been modified","Indexing the image for faster searching"],a:2,e:"<strong>Hash verification</strong> -- MD5 or SHA-256 of the original drive and the forensic image must match. Any difference proves tampering or error. The hash is documented in the chain of custody and rechecked before analysis and in court."},
+{type:'identify',cat:'Digital Forensics',q:"Which of the following BEST describes the purpose of chain of custody?",o:["Tracking the sequence of events during an incident","Documenting everyone who handled evidence, when, and why to ensure admissibility","The order in which systems are restored after an incident","A record of all network connections during an attack"],a:1,e:"<strong>Chain of custody</strong> -- a forensic evidence log. Every person who handles evidence signs and documents the handover. A broken chain casts doubt on integrity and can make evidence inadmissible in court. Critical for criminal prosecution."},
+{type:'identify',cat:'Digital Forensics',q:"Why should forensic analysts NEVER work directly on original evidence?",o:["It is too time-consuming","Working on originals risks modifying data and destroying evidence integrity","Originals must be returned to the system owner immediately","It is too expensive to work on original hardware"],a:1,e:"<strong>Work on forensic copies only</strong> -- analysis processes (searching, mounting, extracting) can modify file access times and metadata. The original is preserved as evidence. Work is done on verified bit-for-bit copies. The original is bagged, tagged, and stored securely."},
+{type:'identify',cat:'Digital Forensics',q:"What does RAM capture preserve that disk forensics cannot?",o:["Deleted files from the recycle bin","Encryption keys, running processes, network connections, and cleartext passwords in memory","User account credentials stored in the registry","Log files generated by the OS"],a:1,e:"<strong>RAM (volatile memory)</strong> contains: running processes, open network connections, encryption keys (including full-disk encryption keys), cleartext passwords, malware that never touches disk (fileless malware). Lost on power off -- must be captured first."},
+{type:'identify',cat:'Digital Forensics',q:"Which of the following is an example of anti-forensics?",o:["Using a write blocker before imaging a drive","An attacker clearing Windows Event Logs and using timestomping to alter file metadata","Creating a forensic image of a compromised system","Documenting the chain of custody for collected evidence"],a:1,e:"<strong>Anti-forensics</strong> -- techniques attackers use to hinder investigation: clearing logs, timestomping (altering file timestamps), using fileless malware, data wiping, encryption, and steganography. Analysts look for evidence of anti-forensics as an IOC itself."},
+{type:'identify',cat:'Digital Forensics',q:"What is network forensics?",o:["Physically examining network hardware for damage","Capturing and analysing network traffic to reconstruct events and identify attacker activity","Reviewing firewall rule sets for misconfigurations","Scanning network devices for vulnerabilities"],a:1,e:"<strong>Network forensics</strong> -- captures and analyses packet data (PCAP files) and NetFlow records to reconstruct attack timelines, identify C2 communication, trace data exfiltration, and corroborate endpoint findings. Tools: Wireshark, tcpdump, Zeek."},
+{type:'identify',cat:'Digital Forensics',q:"What is the FIRST action an analyst should take when arriving at a potentially compromised live system?",o:["Shut the system down immediately to prevent further damage","Photograph the screen and document the system state before touching anything","Run antivirus immediately","Disconnect it from the network and begin disk imaging"],a:1,e:"<strong>Document before touching</strong> -- photograph the screen, record running processes, open connections, and logged-in users before any action. Every action changes state. Shutting down destroys RAM. Disconnecting changes network state. Document first."},
+{type:'identify',cat:'Digital Forensics',q:"Which forensics principle requires that any action taken during investigation must be documented, reproducible, and not alter the original evidence?",o:["Principle of least privilege","Forensic soundness","Chain of custody","Order of volatility"],a:1,e:"<strong>Forensic soundness</strong> -- all investigative actions must be documented, defensible, and reproducible. Another investigator following the same documented steps should reach the same conclusion. Undocumented actions or evidence modification can invalidate findings."},
+
+// -- DETECTION AND ANALYSIS --
+{type:'identify',cat:'Detection and Analysis',q:"What is the difference between an IOC and an IOA?",o:["IOCs are network-based; IOAs are host-based","IOCs are evidence of past compromise; IOAs are behavioural indicators suggesting an attack is in progress","IOCs are used by defenders; IOAs are used by attackers","They are identical -- different names for the same concept"],a:1,e:"<strong>IOC</strong> (Indicator of Compromise): artefacts proving past breach -- file hashes, malicious IPs, registry keys. <strong>IOA</strong> (Indicator of Attack): behaviours suggesting active attack -- unusual process spawning, lateral movement, privilege escalation attempts. IOAs enable earlier detection."},
+{type:'identify',cat:'Detection and Analysis',q:"Which of the following is an example of an IOC?",o:["A user working outside their normal hours","A known malware file hash found on a system","An employee downloading an unusually large file","A new admin account created by the IT department"],a:1,e:"<strong>Known malware hash</strong> is a definitive IOC -- proof that specific malware was present. Other IOCs include: malicious IPs/domains in logs, specific registry keys created by malware, C2 callback patterns. Behavioural items (unusual hours, large downloads) are IOAs."},
+{type:'identify',cat:'Detection and Analysis',q:"What is the purpose of threat intelligence sharing platforms such as MISP or TAXII/STIX?",o:["Storing encryption keys for incident responders","Allowing organisations to share IOCs and threat intelligence to improve collective defences","Automating incident response playbooks","Scanning systems for vulnerabilities"],a:1,e:"<strong>Threat intelligence sharing</strong> -- STIX (structured format for threat data) and TAXII (protocol for sharing it) allow organisations to share IOCs, TTPs, and threat actor information. Receiving shared IOCs allows defenders to block known threats before they hit. MISP is an open-source platform."},
+{type:'identify',cat:'Detection and Analysis',q:"What does triage mean in incident response?",o:["The legal process of preserving evidence","Prioritising and classifying incidents by severity to allocate response resources appropriately","Removing malware from affected systems","Notifying affected users about a breach"],a:1,e:"<strong>Triage</strong> -- rapid initial assessment to classify severity and prioritise response. A SOC analyst triages hundreds of alerts to identify which are true positives requiring escalation. Without triage, P1 incidents can be buried under noise."},
+{type:'identify',cat:'Detection and Analysis',q:"A SIEM generates an alert for a real attack that was correctly identified. What is this called?",o:["False positive","True negative","False negative","True positive"],a:3,e:"<strong>True positive</strong> -- a real threat that is correctly detected and alerted. The goal of detection tuning is to maximise true positives while minimising false positives (benign events incorrectly flagged) and false negatives (real attacks that generate no alert)."},
+{type:'identify',cat:'Detection and Analysis',q:"What is the purpose of baselining in incident detection?",o:["Setting the minimum security configuration for all systems","Establishing normal behaviour patterns so deviations can be flagged as anomalies","Creating a backup of all system configurations","Defining the acceptable use policy for all users"],a:1,e:"<strong>Baselining</strong> -- establishes what normal looks like: typical network traffic volumes, standard process execution, usual login times and locations. Anomaly-based detection compares current activity against the baseline. No baseline means no meaningful anomaly detection."},
+{type:'identify',cat:'Detection and Analysis',q:"A SOC analyst receives 5,000 alerts per day but only 50 are real incidents. What problem does this create?",o:["Insufficient storage for log data","Alert fatigue -- analysts become desensitised and miss real threats","The SIEM is misconfigured and needs replacement","The organisation has too many security tools"],a:1,e:"<strong>Alert fatigue</strong> -- overwhelming volumes of low-quality alerts cause analysts to stop investigating them thoroughly. Real incidents are missed. Mitigated by: SIEM tuning, alert prioritisation, SOAR automation for tier-1 tasks, and improving detection quality over quantity."},
+
+// -- COMMUNICATIONS AND ESCALATION --
+{type:'identify',cat:'Communications and Escalation',q:"Who typically makes the decision to notify law enforcement during a security incident?",o:["The SOC analyst who detected the incident","Senior management and/or legal counsel, not the IR team alone","The incident commander","The CISO without consulting management"],a:1,e:"<strong>Law enforcement notification</strong> is a management and legal decision -- not made by the IR team alone. Involves legal counsel assessing: evidence preservation requirements, potential criminal prosecution, regulatory obligations. Premature notification can compromise investigations."},
+{type:'identify',cat:'Communications and Escalation',q:"What is the purpose of a communications plan in incident response?",o:["Documenting all technical details of an incident","Defining who is notified, what information they receive, and through what channels during an incident","Setting the technical response procedures for each incident type","Training staff on how to avoid phishing attacks"],a:1,e:"<strong>IR communications plan</strong> -- pre-defines: internal escalation paths, external notification requirements (regulators, customers, press), approved spokespersons, and out-of-band communication channels (in case primary comms are compromised). Critical for P1 incidents."},
+{type:'identify',cat:'Communications and Escalation',q:"Why might incident responders use out-of-band communication channels during an active incident?",o:["Out-of-band channels are faster than standard email","If the attacker has access to the organisation's email or messaging systems, internal communications could be monitored","Out-of-band channels are required by regulation","Standard communication channels are not secure enough for routine use"],a:1,e:"<strong>Out-of-band communications</strong> -- if the attacker is in the email system or monitoring Slack/Teams, they can see the IR team's plans. Use separate channels: personal phones, encrypted messaging apps, or a completely separate email domain. Critical for insider threat cases."},
+{type:'identify',cat:'Communications and Escalation',q:"Which of the following BEST describes the role of an incident commander?",o:["The person who writes the incident report","The individual responsible for coordinating the overall response, making priority decisions, and ensuring communication flow","The forensic analyst responsible for evidence collection","The legal counsel advising on notification requirements"],a:1,e:"<strong>Incident commander</strong> -- leads the IR effort. Assigns roles, coordinates between technical teams, management, legal, and comms. Makes prioritisation decisions. Uses a command structure (often based on ICS -- Incident Command System) for P1 incidents to prevent confusion."},
+{type:'identify',cat:'Communications and Escalation',q:"What is the purpose of a status update cadence during an active incident?",o:["Satisfying audit requirements","Keeping stakeholders informed with regular structured updates so decisions can be made with current information","Documenting evidence for potential legal action","Measuring analyst performance during the incident"],a:1,e:"<strong>Status update cadence</strong> -- regular scheduled updates (every 30 min for P1, hourly for P2) to management and stakeholders. Prevents constant ad-hoc interruptions, ensures decision-makers have current information, and creates an incident timeline for the post-incident report."},
+{type:'identify',cat:'Communications and Escalation',q:"Which of the following would typically trigger mandatory external notification?",o:["A malware infection contained within 30 minutes with no data accessed","A phishing email caught by email filtering before any user interaction","A confirmed breach of customer PII or health records subject to GDPR or HIPAA","A DDoS attack that caused 10 minutes of website downtime"],a:2,e:"<strong>Breach notification triggers</strong> -- GDPR requires notification within 72 hours of confirmed PII breach. HIPAA requires breach notification for PHI. A contained malware infection with no data access, or a phishing email that was blocked, typically does not require external notification."},
+
+// -- IR TOOLS --
+{type:'identify',cat:'IR Tools',q:"What is the PRIMARY use of a SIEM in incident response?",o:["Blocking malicious traffic at the network perimeter","Aggregating and correlating logs from multiple sources to detect and investigate incidents","Performing automated vulnerability scanning","Encrypting communications between IR team members"],a:1,e:"<strong>SIEM</strong> -- the central hub for IR detection and investigation. Aggregates firewall, endpoint, AD, and application logs. Correlation rules detect multi-step attacks. Log retention enables historical investigation. During IR, the SIEM is the primary source of timeline reconstruction."},
+{type:'identify',cat:'IR Tools',q:"What is the PRIMARY advantage of EDR over traditional antivirus in IR?",o:["EDR is cheaper to deploy","EDR uses signature-based detection for faster blocking","EDR records full endpoint telemetry enabling investigation, not just detection","EDR requires no agent on endpoints"],a:2,e:"<strong>EDR investigative capability</strong> -- EDR records process trees, network connections, file operations, and registry changes. During IR, analysts can see exactly what the malware did, where it spread, and what data it accessed. AV can only block -- it cannot answer 'what happened?'"},
+{type:'identify',cat:'IR Tools',q:"What does a sandbox environment enable during incident analysis?",o:["Storing forensic images securely","Safely executing suspicious files to observe malware behaviour without risking production systems","Scanning network traffic for known malware signatures","Isolating compromised hosts from the network"],a:1,e:"<strong>Sandbox</strong> -- a controlled isolated environment (Cuckoo, Any.run, Joe Sandbox) where analysts can detonate malware and observe: network connections it makes, files it creates, registry keys it modifies, C2 domains it contacts. Safe from production systems."},
+{type:'identify',cat:'IR Tools',q:"What is the purpose of Volatility in digital forensics?",o:["A network packet capture and analysis tool","An open-source framework for analysing RAM dumps to extract processes, network connections, and artefacts from memory","A vulnerability scanner for identifying unpatched systems","A log management platform for SIEM integration"],a:1,e:"<strong>Volatility</strong> -- the standard open-source memory forensics framework. Analyses RAM dumps to extract: running processes (including hidden ones), network connections, encryption keys, user activity, and injected malicious code. Critical for fileless malware investigations."},
+{type:'identify',cat:'IR Tools',q:"Which tool is commonly used for network packet capture and analysis during IR?",o:["Metasploit","Nessus","Wireshark","Volatility"],a:2,e:"<strong>Wireshark</strong> -- captures and analyses network packets (PCAP files). During IR: reconstructs attacker traffic, identifies C2 beaconing, finds exfiltrated data, and traces lateral movement. tcpdump captures packets from the command line. Both produce PCAP files."},
+{type:'identify',cat:'IR Tools',q:"What is the purpose of SOAR in incident response?",o:["Replacing human SOC analysts entirely","Automating repetitive tier-1 response tasks and orchestrating multi-step IR workflows to reduce MTTR","Providing threat intelligence feeds to the SIEM","Scanning endpoints for malware signatures"],a:1,e:"<strong>SOAR</strong> (Security Orchestration, Automation, and Response) -- automates: IP lookups, ticket creation, blocking IOCs at the firewall, isolating hosts via EDR. Orchestrates multi-step playbooks. Reduces analyst workload and MTTR by handling routine tasks at machine speed."},
+{type:'identify',cat:'IR Tools',q:"What does Autopsy provide in a forensic investigation?",o:["Memory analysis of RAM dumps","A GUI-based digital forensics platform for analysing disk images, recovering deleted files, and building timelines","Network traffic capture and analysis","Automated vulnerability scanning of forensic targets"],a:1,e:"<strong>Autopsy</strong> -- a free, open-source, GUI-based forensics platform built on The Sleuth Kit. Analyses disk images: recovers deleted files, extracts browser history, email, and documents, builds event timelines, and supports hash lookups against NSRL known-good databases."},
+
+// -- LEGAL AND COMPLIANCE --
+{type:'identify',cat:'Legal and Compliance',q:"What is the purpose of a legal hold?",o:["Encrypting evidence for secure storage","A directive to preserve all relevant data and suspend normal deletion procedures when litigation or investigation is anticipated","Setting evidence retention periods for routine compliance","Preventing users from deleting their own files"],a:1,e:"<strong>Legal hold</strong> -- when litigation or regulatory investigation is anticipated, all potentially relevant data must be preserved immediately. Normal retention/deletion schedules are suspended. Failure to comply with a legal hold can result in sanctions for spoliation of evidence."},
+{type:'identify',cat:'Legal and Compliance',q:"What is e-discovery?",o:["A vulnerability scanning tool","The process of identifying, collecting, and producing electronically stored information for legal proceedings","An automated IR response platform","A method of encrypting forensic evidence"],a:1,e:"<strong>e-Discovery</strong> -- identifying, preserving, collecting, reviewing, and producing ESI (Electronically Stored Information) for litigation or regulatory proceedings. Encompasses emails, documents, databases, and logs. Triggered by a legal hold. Governed by FRCP in the US."},
+{type:'identify',cat:'Legal and Compliance',q:"Under GDPR, how quickly must a personal data breach be reported to the supervisory authority?",o:["Within 24 hours","Within 72 hours of becoming aware","Within 7 days","Within 30 days"],a:1,e:"<strong>GDPR 72-hour notification</strong> -- Article 33 requires notification to the supervisory authority within 72 hours of becoming aware of a breach involving personal data. If the breach is unlikely to result in risk to individuals, notification may not be required. Affected individuals must also be notified without undue delay."},
+{type:'identify',cat:'Legal and Compliance',q:"What is the PRIMARY legal risk of destroying or altering evidence after litigation is anticipated?",o:["Breach of the confidentiality agreement","Spoliation of evidence -- which can result in adverse inference instructions, sanctions, or criminal charges","Violation of data retention regulations","Breach of the incident response policy"],a:1,e:"<strong>Spoliation</strong> -- destruction or alteration of evidence relevant to anticipated litigation. Courts can impose severe sanctions: adverse inference instructions (assume the destroyed evidence was damaging), monetary penalties, or criminal obstruction charges. Legal holds prevent spoliation."},
+{type:'identify',cat:'Legal and Compliance',q:"Which of the following BEST describes the difference between a privacy breach and a security incident?",o:["They are identical","A security incident is any violation of security policy; a privacy breach specifically involves unauthorised access to or disclosure of personal data","A privacy breach only applies to healthcare data","Security incidents always require law enforcement notification; privacy breaches do not"],a:1,e:"<strong>Privacy breach</strong>: specifically involves PII/PHI. Triggers regulatory notification requirements (GDPR, HIPAA, CCPA). <strong>Security incident</strong>: broader -- any violation of security policy or control. A DDoS attack is a security incident but not a privacy breach. A ransomware attack encrypting PII is both."},
+{type:'identify',cat:'Legal and Compliance',q:"What is the purpose of evidence retention policies after an incident?",o:["Keeping evidence indefinitely to satisfy potential future investigations","Defining how long incident-related evidence must be kept before secure destruction, balancing legal requirements with storage costs","Ensuring all evidence is deleted within 30 days to protect privacy","Sharing evidence with law enforcement on a schedule"],a:1,e:"<strong>Evidence retention</strong> -- retention periods are defined by: applicable regulations (HIPAA 6 years), litigation holds, and organisational policy. Evidence must be kept long enough to support legal proceedings but eventually securely destroyed. Indefinite retention creates unnecessary risk."},
+
+// -- SCENARIOS --
+{type:'scenario',cat:'Scenario',scenario:"At 2am, a SOC analyst detects a SIEM alert: a server is making outbound connections to an unknown external IP every 60 seconds on port 443, and a new scheduled task was created three days ago.",q:"What is the FIRST action the analyst should take?",o:["Immediately shut down the server to stop the threat","Isolate the server from the network while preserving its current state for forensic analysis","Delete the suspicious scheduled task and monitor for recurrence","Wait until business hours to escalate to the IR team"],a:1,e:"<strong>Isolate and preserve</strong> -- network isolation stops C2 communication while preserving the system state for forensics. Shutting down destroys RAM evidence (encryption keys, process list). Deleting the scheduled task removes evidence and misses other persistence. IR must be activated immediately for a live C2 session."},
+{type:'scenario',cat:'Scenario',scenario:"A ransomware attack has encrypted files across 40% of the corporate network. The IR team has confirmed the initial entry point was a phishing email opened 10 days ago.",q:"Place these actions in the correct order: (1) Restore from clean backups, (2) Isolate all affected systems, (3) Identify all infected systems, (4) Patch the exploited vulnerability",o:["1, 2, 3, 4","3, 2, 4, 1","2, 3, 4, 1","4, 3, 2, 1"],a:1,e:"<strong>Correct order: Identify -> Isolate -> Patch -> Restore</strong>. First identify all affected systems (3) to know the full scope. Then isolate them (2) to stop spread. Patch the vulnerability (4) before restoring or attackers re-enter through the same hole. Finally restore from clean backups (1)."},
+{type:'scenario',cat:'Scenario',scenario:"A forensic analyst is imaging a hard drive from a compromised server. They connect the drive directly to their forensic workstation without using any intermediary device.",q:"What critical error has the analyst made?",o:["They should have taken a photo before disconnecting the drive","They failed to use a write blocker before connecting the drive, risking modification of the original evidence","They should have captured RAM before imaging the disk","They did not notify management before starting forensic analysis"],a:1,e:"<strong>Missing write blocker</strong> -- connecting a drive directly to a workstation without a write blocker allows the OS to write to the drive (mount timestamps, swap file, etc.), potentially modifying evidence. A hardware write blocker is mandatory for forensically sound imaging. The image hash would not match the original."},
+{type:'scenario',cat:'Scenario',scenario:"During IR, the incident commander discovers the attacker has been in the email system for two weeks and may be monitoring internal communications.",q:"What communication approach should the IR team take?",o:["Continue using email but use coded language","Switch to out-of-band communication channels such as personal phones and encrypted messaging apps","Stop all communications until the attacker is evicted","Notify all staff via email about the breach immediately"],a:1,e:"<strong>Out-of-band communications</strong> -- if the attacker is reading email, every IR plan, credential reset, and eviction step is compromised. Switch immediately to personal phones, Signal, or a separate email domain. Notifying all staff via the compromised email system tips off the attacker."},
+{type:'scenario',cat:'Scenario',scenario:"A company discovers they were breached six months ago and customer PII was exfiltrated. They are based in the EU and process EU citizen data.",q:"What immediate legal obligation must they fulfil?",o:["Notify customers within 24 hours","Notify the relevant supervisory authority within 72 hours of becoming aware of the breach","Wait 30 days while completing internal investigation before notifying anyone","Notification is not required because the breach occurred six months ago"],a:1,e:"<strong>GDPR 72-hour notification</strong> -- the clock starts when the organisation becomes aware, not when the breach occurred. Even if the breach was six months ago, discovery triggers a 72-hour notification obligation to the supervisory authority. Individual notification may also be required if individuals are at high risk."},
+{type:'scenario',cat:'Scenario',scenario:"During a lessons learned meeting after a major breach, a manager suggests skipping detailed root cause analysis to avoid assigning blame to specific team members.",q:"Why is this approach problematic?",o:["Root cause analysis is only required for breaches involving PII","Without identifying the actual root cause, the same vulnerability or process gap will likely lead to another incident","Root cause analysis is only valuable for malware incidents","The lessons learned meeting is optional after contained incidents"],a:1,e:"<strong>Root cause analysis is essential</strong> -- without identifying the fundamental cause, teams fix symptoms not problems. The breach will recur through the same gap. Effective lessons learned is blameless -- focused on process and control failures, not individual blame. Skipping it wastes the primary learning opportunity."},
+{type:'scenario',cat:'Scenario',scenario:"An HR employee reports their laptop was stolen from their car. The laptop contains an encrypted HR database and the encryption key is stored in a separate secure vault.",q:"Which combination of factors determines whether this is a reportable breach?",o:["All stolen laptops must be reported as breaches regardless of encryption","Whether the laptop contains PII and whether the encryption renders the data unreadable without the key (safe harbour)","Whether the laptop was company-owned or personal","Whether the employee signed the acceptable use policy"],a:1,e:"<strong>Encryption safe harbour</strong> -- GDPR and many breach notification laws include a safe harbour: if the stolen data was encrypted with a strong key stored separately, the data is unreadable and the incident may not require breach notification. The analysis must confirm: strong encryption was in place, the key was not on the device, and there is no evidence the encryption was compromised."},
+{type:'scenario',cat:'Scenario',scenario:"An analyst runs strings and network analysis on a suspicious executable and finds it connects to a domain registered 48 hours ago. The domain resolves to an IP with no prior threat intelligence hits.",q:"Which response is MOST appropriate given limited threat intel on this IOC?",o:["Take no action because there are no threat intel hits confirming it is malicious","Block the domain proactively and escalate for deeper analysis including sandbox detonation","Whitelist the domain to prevent false positive alerts","Wait 30 days for threat intelligence to update before making a decision"],a:1,e:"<strong>Proactive blocking and deeper analysis</strong> -- recently registered domains with no history are a red flag even without prior threat intel hits. Block proactively (minimal business impact), then sandbox detonate to observe behaviour. Threat intelligence on brand new IOCs takes time to propagate -- waiting is not appropriate for active suspected malware."},
+{type:'scenario',cat:'Scenario',scenario:"A company's legal team receives a preservation letter related to a lawsuit. The IT team continues their standard 30-day log retention and deletion schedule.",q:"What has occurred and what is the appropriate response?",o:["Nothing -- log retention policies take precedence over legal letters","Spoliation of evidence -- the IT team must immediately implement a legal hold to preserve all relevant data and suspend deletion","The company can delete logs as long as they notify the court","Legal letters only apply to physical documents, not electronic data"],a:1,e:"<strong>Spoliation via failure to implement legal hold</strong> -- a preservation letter triggers the legal hold obligation immediately. Continuing to delete logs after receiving it constitutes spoliation and can result in severe sanctions. IT must suspend all deletion for in-scope data. Legal holds apply to ESI including logs, emails, and databases."},
+];
+
+var questions=[],qi=0,correct=0,wrong=0;
+var catStats={};
+CATS.forEach(function(c){catStats[c]={c:0,t:0};});
+
+function shuffle(a){return[].concat(a).sort(function(){return Math.random()-.5;});}
+
+function buildQuestions(){
+  var pool=shuffle(Q_BANK.slice());
+  return pool.map(function(q){
+    var idxs=q.o.map(function(_,i){return i;});
+    var shuf=shuffle(idxs);
+    var nq={};
+    for(var k in q) nq[k]=q[k];
+    nq.o=shuf.map(function(i){return q.o[i];});
+    nq.a=shuf.indexOf(q.a);
+    return nq;
+  });
+}
+
+function updateStats(){
+  var total=correct+wrong;
+  document.getElementById('s-prog').textContent=qi+'/'+questions.length;
+  document.getElementById('s-correct').textContent=correct;
+  document.getElementById('s-wrong').textContent=wrong;
+  document.getElementById('s-acc').textContent=total?Math.round(correct/total*100)+'%':'--';
+  document.getElementById('prog-fill').style.width=Math.round(qi/questions.length*100)+'%';
+}
+
+function renderQ(){
+  if(qi>=questions.length){showResults();return;}
+  var q=questions[qi];
+  var letters=['A','B','C','D'];
+  var catBadge=BADGE_MAP[q.cat]||'badge-phases';
+  var scenHTML='';
+  if(q.type==='scenario'&&q.scenario){
+    scenHTML='<div class="scenario-box"><div class="scenario-lbl">Scenario</div><div class="scenario-text">'+q.scenario+'</div></div>';
+  }
+  var optsHTML='';
+  for(var i=0;i<q.o.length;i++){
+    optsHTML+='<button class="opt" id="opt-'+i+'"><span class="opt-letter">'+letters[i]+'</span><span class="opt-text">'+q.o[i]+'</span></button>';
+  }
+  document.getElementById('q-area').innerHTML=
+    '<div class="q-card">'+
+      '<div class="q-meta">'+
+        '<span class="q-badge '+catBadge+'">'+q.cat+'</span>'+
+        '<span class="q-num">Q'+(qi+1)+' of 80</span>'+
+      '</div>'+
+      scenHTML+
+      '<div class="q-text">'+q.q+'</div>'+
+      '<div class="opts" id="opts">'+optsHTML+'</div>'+
+      '<div class="explanation" id="explanation"><div class="exp-lbl">Explanation</div><div class="exp-text" id="exp-text"></div></div>'+
+      '<button class="btn-next" id="btn-next">'+(qi===questions.length-1?'See results':'Next')+'</button>'+
+    '</div>';
+  for(var j=0;j<q.o.length;j++){
+    (function(idx){
+      var btn=document.getElementById('opt-'+idx);
+      if(btn) btn.onclick=function(){answer(idx);};
+    })(j);
+  }
+  var nb=document.getElementById('btn-next');
+  if(nb) nb.onclick=function(){nextQ();};
+}
+
+function answer(idx){
+  var q=questions[qi];
+  var isCorrect=idx===q.a;
+  if(isCorrect){correct++;catStats[q.cat].c++;}else{wrong++;}
+  if(!catStats[q.cat]) catStats[q.cat]={c:0,t:0};
+  catStats[q.cat].t++;
+  qi++;
+  updateStats();
+  for(var i=0;i<q.o.length;i++){
+    var b=document.getElementById('opt-'+i);
+    if(b) b.disabled=true;
+  }
+  var cb=document.getElementById('opt-'+idx);
+  var rb=document.getElementById('opt-'+q.a);
+  if(isCorrect){if(cb)cb.classList.add('correct');}
+  else{if(cb)cb.classList.add('wrong');if(rb)rb.classList.add('reveal');}
+  var et=document.getElementById('exp-text');
+  var eb=document.getElementById('explanation');
+  var nb=document.getElementById('btn-next');
+  if(et) et.innerHTML=q.e;
+  if(eb) eb.classList.add('show');
+  if(nb){nb.style.display='block';nb.onclick=function(){nextQ();};}
+  if(qi>0&&qi%20===0) logToDashboard(4,'Incident Response Trainer',Math.round(correct/qi*100));
+}
+
+function nextQ(){renderQ();}
+
+function showResults(){
+  document.getElementById('q-area').style.display='none';
+  var res=document.getElementById('results-area');
+  res.style.display='block';
+  var pct=Math.round(correct/questions.length*100);
+  logToDashboard(4,'Incident Response Trainer',pct);
+  var passed=pct>=80;
+  var msg=pct>=90?'Outstanding -- exam-ready!':pct>=80?'Solid -- above pass threshold.':pct>=65?'Getting there -- keep reviewing.':'More study needed.';
+  var ringColor=passed?'#00ff88':'#ff3d5a';
+  var circ=339.3,offset=circ-(pct/100)*circ;
+  var topCats=CATS.filter(function(c){return catStats[c]&&catStats[c].t>0;}).sort(function(a,b){return(catStats[b].c/catStats[b].t)-(catStats[a].c/catStats[a].t);});
+  var bdHTML='';
+  for(var ci=0;ci<Math.min(6,topCats.length);ci++){
+    var c=topCats[ci];var s=catStats[c];var p=s.t?Math.round(s.c/s.t*100):0;
+    var col=CAT_COLORS[c]||'var(--red)';
+    bdHTML+='<div class="bd-card"><div class="bd-title" style="color:'+col+'">'+c+'</div><div class="bd-bar-bg"><div class="bd-bar-fill" style="width:0%;background:'+col+'" data-pct="'+p+'"></div></div><div class="bd-score" style="color:'+col+'">'+p+'%</div><div class="bd-detail">'+s.c+'/'+s.t+' correct</div></div>';
+  }
+  res.innerHTML=
+    '<div class="results-wrap">'+
+      '<div class="results-ring"><svg width="140" height="140" viewBox="0 0 140 140">'+
+        '<circle cx="70" cy="70" r="54" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="10"/>'+
+        '<circle cx="70" cy="70" r="54" fill="none" stroke="'+ringColor+'" stroke-width="10" stroke-linecap="round" stroke-dasharray="'+circ+'" stroke-dashoffset="'+circ+'" id="ring-anim"/>'+
+      '</svg><div class="ring-score"><div class="ring-pct">'+pct+'%</div><div class="ring-lbl">score</div></div></div>'+
+      '<div class="results-verdict" style="color:'+ringColor+'">'+(passed?'Passed':'Keep Studying')+'</div>'+
+      '<div class="results-sub">'+correct+'/'+questions.length+' correct -- '+msg+'</div>'+
+      '<div class="breakdown">'+bdHTML+'</div>'+
+      '<button class="btn-retake" onclick="retake()">Retake Quiz</button>'+
+      '<button class="btn-retake" onclick="showRef()" style="border-color:var(--red);color:var(--red)">View Reference</button>'+
+    '</div>';
+  setTimeout(function(){
+    var ring=document.getElementById('ring-anim');
+    if(ring){ring.style.transition='stroke-dashoffset 1.5s ease';ring.style.strokeDashoffset=offset;}
+    var fills=document.querySelectorAll('.bd-bar-fill');
+    for(var i=0;i<fills.length;i++){fills[i].style.transition='width 1s ease';fills[i].style.width=fills[i].getAttribute('data-pct')+'%';}
+  },100);
+}
+
+function retake(){
+  document.getElementById('q-area').style.display='block';
+  document.getElementById('results-area').style.display='none';
+  questions=buildQuestions();
+  qi=0;correct=0;wrong=0;
+  CATS.forEach(function(c){catStats[c]={c:0,t:0};});
+  updateStats();renderQ();
+}
+
+function showRef(){
+  document.getElementById('view-quiz').style.display='none';
+  document.getElementById('view-ref').style.display='block';
+  document.getElementById('tab-quiz').classList.remove('active');
+  document.getElementById('tab-ref').classList.add('active');
+  buildRef();
+}
+
+function setTab(t){
+  if(t==='ref'){
+    document.getElementById('view-quiz').style.display='none';
+    document.getElementById('view-ref').style.display='block';
+    document.getElementById('tab-quiz').classList.remove('active');
+    document.getElementById('tab-ref').classList.add('active');
+    buildRef();
+  } else {
+    document.getElementById('view-ref').style.display='none';
+    document.getElementById('view-quiz').style.display='block';
+    document.getElementById('tab-quiz').classList.add('active');
+    document.getElementById('tab-ref').classList.remove('active');
+  }
+}
+
+function buildRef(){
+  var chart=document.getElementById('acc-chart');
+  chart.innerHTML='';
+  CATS.forEach(function(c){
+    var s=catStats[c]||{c:0,t:0};var pct=s.t?Math.round(s.c/s.t*100):0;
+    var col=CAT_COLORS[c]||'var(--red)';
+    chart.innerHTML+='<div class="acc-row"><div class="acc-lbl">'+c+'</div><div class="acc-bg"><div class="acc-fill" style="width:'+(s.t?pct:0)+'%;background:'+col+'"></div></div><div class="acc-pct">'+(s.t?pct+'%':'--')+'</div></div>';
+  });
+  var cards=document.getElementById('ref-cards');
+  cards.innerHTML='';
+  TERMS.forEach(function(t){
+    cards.innerHTML+='<div class="ref-card"><div class="ref-name">'+t.name+'</div><div class="ref-def">'+t.def+'</div><span class="ref-tag '+t.tag+'">'+t.tagLabel+'</span><div class="ref-key">'+t.key+'</div></div>';
+  });
+}
+
+questions=buildQuestions();
+updateStats();
+renderQ();
+</script>
+</body>
+</html>
