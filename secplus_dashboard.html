@@ -272,6 +272,15 @@ function startCountdown(){
   if(el) el.textContent=fmt;
 }
 
+function startEdit(){
+  document.getElementById('date-row').style.display='none';
+  document.getElementById('edit-row').style.display='flex';
+  document.getElementById('date-input').value=examDate;
+}
+function cancelEdit(){
+  document.getElementById('edit-row').style.display='none';
+  document.getElementById('date-row').style.display='flex';
+}
 function saveDate(){
   var v=document.getElementById('date-input').value;
   if(!v) return;
