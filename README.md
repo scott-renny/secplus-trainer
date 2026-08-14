@@ -51,7 +51,7 @@ The current suite is complete and preserved as part of my cybersecurity learning
 ## Author
 
 **Scott Renny**  
-Aspiring SOC Analyst • Cybersecurity and Infrastructure Engineering
+Security+ Certified • Cybersecurity and Infrastructure Engineering
 
 ## License
 
