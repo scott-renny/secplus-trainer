@@ -1,8 +1,18 @@
-# Security+ Trainer
+<div align="center">
 
-![Status](https://img.shields.io/badge/status-complete-success)
-![Platform](https://img.shields.io/badge/platform-browser--based-blue)
-![License](https://img.shields.io/badge/license-MIT-green)
+# Security+ Trainer
+### Offline Study · Domain Practice · Mock Examinations
+
+![edition: independent study](https://img.shields.io/badge/edition-independent%20study-22d3ee?style=flat-square)
+![platform: browser](https://img.shields.io/badge/platform-browser-2563eb?style=flat-square)
+
+[License](LICENSE)
+
+</div>
+
+[Overview](#overview) · [Included Learning Tools](#included-learning-tools) · [Getting Started](#getting-started) · [Repository Structure](#repository-structure) · [Learning Objectives](#learning-objectives) · [Project Status](#project-status)
+
+---
 
 A browser-based study suite created to reinforce the concepts, terminology, and practical reasoning covered by the CompTIA Security+ certification objectives.
 
